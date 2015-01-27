@@ -2,11 +2,39 @@
 
 /**
  * @ngdoc overview
- * @name amnohfelsClientApp
+ * @name webappApp
  * @description
- * # amnohfelsClientApp
+ * # webappApp
  *
  * Main module of the application.
  */
 angular
-  .module('amnohfelsClientApp', []);
+    .module('amnohfelsClientApp', ['ngRoute'])
+    .config(
+    function($routeProvider) {
+        $routeProvider
+            .when('/cafe', {
+                templateUrl: 'views/cafe.html',
+                controller: 'CafeCtrl'
+            })
+            .when('/minigolf', {
+                templateUrl: 'views/minigolf.html',
+                controller: 'MinigolfCtrl'
+            })
+            .when('/reisemobilstellplatz', {
+                templateUrl: 'views/reisemobilstellplatz.html',
+                controller: 'ReisemobilstellplatzCtrl'
+            })
+            .when('/psgh', {
+                templateUrl: 'views/psgh.html',
+                controller: 'PsghCtrl'
+            })
+            .when('/nachtigallental', {
+                templateUrl: 'views/nachtigallental.html',
+                controller: 'NachtigallentalCtrl'
+            })
+            .otherwise({
+                redirectTo: '/cafe'
+            });
+    })
+    .value('phpServerRoot','http://amnohfels');

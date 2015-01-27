@@ -2,16 +2,12 @@
 
 /**
  * @ngdoc function
- * @name amnohfelsClientApp.controller:CafeCtrl
+ * @name webappApp.controller:CafeCtrl
  * @description
  * # CafeCtrl
- * Controller of the amnohfelsClientApp
+ * Controller of the webappApp
  */
 angular.module('amnohfelsClientApp')
-  .controller('CafeCtrl', function ($scope) {
-    $scope.awesomeThings = [
-      'HTML5 Boilerplate',
-      'AngularJS',
-      'Karma'
-    ];
-  });
+    .controller('CafeCtrl', function () {
+
+    });

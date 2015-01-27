@@ -2,16 +2,18 @@
 
 /**
  * @ngdoc function
- * @name amnohfelsClientApp.controller:MinigolfCtrl
+ * @name webappApp.controller:MinigolfCtrl
  * @description
  * # MinigolfCtrl
- * Controller of the amnohfelsClientApp
+ * Controller of the webappApp
  */
 angular.module('amnohfelsClientApp')
-  .controller('MinigolfCtrl', function ($scope) {
-    $scope.awesomeThings = [
-      'HTML5 Boilerplate',
-      'AngularJS',
-      'Karma'
-    ];
-  });
+    .controller('MinigolfCtrl', function ($scope, $http, phpServerRoot) {
+        var page = '/index.php';
+        $http.get(phpServerRoot + page)
+            .success(function(response) {
+                $scope.sectionData = response;
+                //$scope.test = response[1];
+                //$scope.foobar = response[2];
+            });
+    });

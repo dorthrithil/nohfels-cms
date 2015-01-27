@@ -2,16 +2,14 @@
 
 /**
  * @ngdoc function
- * @name amnohfelsClientApp.controller:NavigationCtrl
+ * @name webappApp.controller:NavigationCtrl
  * @description
  * # NavigationCtrl
- * Controller of the amnohfelsClientApp
+ * Controller of the webappApp
  */
 angular.module('amnohfelsClientApp')
-  .controller('NavigationCtrl', function ($scope) {
-    $scope.awesomeThings = [
-      'HTML5 Boilerplate',
-      'AngularJS',
-      'Karma'
-    ];
-  });
+    .controller('NavigationCtrl', function ($scope, $location) {
+        $scope.isOnPath = function(path) {
+            return path === $location.path();
+        };
+    });
