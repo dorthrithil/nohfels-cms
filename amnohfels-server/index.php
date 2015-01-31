@@ -2,12 +2,7 @@
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
 
-$conn = new mysqli("localhost", "root", "", "amnohfels");
-
-/* change character set to utf8 */
-if (!$conn->set_charset("utf8")) {
-    printf("Error loading character set utf8: %s\n", $conn->error);
-}
+include("connectDB.php");
 
 $result = $conn->query("SELECT content, title, position FROM sections WHERE topic = 'cafe' ORDER BY position ASC");
 
@@ -19,6 +14,7 @@ while($rs = $result->fetch_array(MYSQLI_ASSOC)) {
     $outp[] = $section;
 }
 
-$conn->close();
+include("disconnectDB.php");
+
 echo json_encode($outp);
 ?>

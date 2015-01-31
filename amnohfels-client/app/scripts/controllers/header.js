@@ -34,6 +34,12 @@ angular.module('amnohfelsClientApp')
                 case '/reisemobilstellplatz':
                     $rootScope.imageUrl = 'images/header/reisemobilstellplatz.jpg';
                     break;
+                case '/contact':
+                    $rootScope.imageUrl = 'images/header/contact.jpg';//TODO image
+                    break;
+                case '/imprint':
+                    $rootScope.imageUrl = 'images/header/imprint.jpg';//TODO image
+                    break;
                 default:
                     $rootScope.imageUrl = 'images/header/reisemobilstellplatz.jpg';
             }

@@ -1,8 +1,14 @@
-$icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/bootstrap/";
-@import "navigation.scss";
+@import "_variables.scss";
+@import "_navigation.scss";
+@import "_parallax-module.scss";
+@import "_footer.scss";
 // bower:scss
 @import "bootstrap-sass-official/assets/stylesheets/_bootstrap.scss";
 // endbower
+
+//TODO font as files
+//font
+@import "http://fonts.googleapis.com/css?family=PT+Sans+Caption:400,700";
 
 .browsehappy {
   margin: 0.2em 0;
@@ -11,14 +17,15 @@ $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/boots
   padding: 0.2em 0;
 }
 
+// Set properties for sticky footer
 body {
   height: 100%;
   margin: 0;
 }
+
 html {
   padding-bottom: 90px;
   min-height: 100%;
-  //box-sizing: border-box;
   position: relative;
 }
 
@@ -26,36 +33,7 @@ html {
 body {
   padding-top: 51px;
   padding-bottom: 0px;
-  background-image: url("../images/wood.png");
-}
-
-/* Custom page footer */
-.footer {
-  width: 100%;
-  font-size: 12px;
-  height: 50px;
-  line-height: 50px;
-  vertical-align: middle;
-  margin: 40px 0px 0px 0px;
-  text-align: right;
-  color: #777777;
-  border-top: 1px solid #121212;
-  background-image: url("../images/dark_wall.png");
-  position: absolute;
-  bottom:0px;
-
-  .container{
-    padding:0px;
-  }
-}
-
-header{
-  height: 210px;
-  display: block;
-  background-size: cover;
-  transition: background-image 0.7s ease;
-  background-repeat: no-repeat;
-  box-shadow: inset 6px 0 4px rgba(0,0,0,0.5);
+  background-color: $bgcolor;
 }
 
 .main{
@@ -64,9 +42,13 @@ header{
   border-radius: 0px 0px 4px 4px;
 }
 
+.alert{
+  margin: 15px 0px 15px 0px;
+}
+
 /* Responsive: Portrait tablets and up */
 @media screen and (min-width: 768px) {
   .container {
-    max-width: 730px;
+    max-width: 1000px;
   }
 }

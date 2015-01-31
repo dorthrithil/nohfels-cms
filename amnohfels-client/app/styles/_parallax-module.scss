@@ -1,0 +1,76 @@
+header{
+  height: 410px;
+  display: block;
+  background-size: cover;
+  transition: background-image 0.7s ease;
+  background-repeat: no-repeat;
+  position: relative;
+
+  .wrapper{
+    position: absolute;
+    top: 50px;
+    left: 0px;
+    max-width: 90%;
+
+    > *{
+      background-color: $bgcolor;
+      display: table;
+      text-transform: uppercase;
+      font-family: 'PT Sans Caption', sans-serif;
+      margin: 0px 0px 0px 50px;
+    }
+
+    .title{
+      margin-bottom: 10px;
+    }
+  }
+}
+
+@media(max-width:767px){
+  header{
+    .title{
+      padding: 7px;
+      font-size: 30px;
+    }
+    .caption{
+      padding: 4px;
+      font-size: 16px;
+    }
+  }
+}
+@media(min-width:768px){
+  header{
+    .title{
+      padding: 8px;
+      font-size: 35px;
+    }
+    .caption{
+      padding: 5px;
+      font-size: 18px;
+    }
+  }
+}
+@media(min-width:992px){
+  header{
+    .title{
+      padding: 9px;
+      font-size: 40px;
+    }
+    .caption{
+      padding: 6px;
+      font-size: 20px;
+    }
+  }
+}
+@media(min-width:1200px){
+  header{
+    .title{
+      padding: 10px;
+      font-size: 45px;
+    }
+    .caption{
+      padding: 7px;
+      font-size: 22px;
+    }
+  }
+}

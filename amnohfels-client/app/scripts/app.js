@@ -33,8 +33,16 @@ angular
                 templateUrl: 'views/nachtigallental.html',
                 controller: 'NachtigallentalCtrl'
             })
+            .when('/contact', {
+                templateUrl: 'views/contact.html',
+                controller: 'ContactCtrl'
+            })
+            .when('/imprint', {
+                templateUrl: 'views/imprint.html',
+                controller: 'ImprintCtrl'
+            })
             .otherwise({
                 redirectTo: '/cafe'
             });
     })
-    .value('phpServerRoot','http://amnohfels');
+    .value('phpServerRoot','http://amnohfels.local');

@@ -23,9 +23,10 @@
     <div ng-include src="'views/navigation.html'"></div>
     <div ng-include src="'views/header.html'"></div>
     <div class="container main" ng-view=""></div>
-    <div class="footer">
-        <div class="container">copyright, impressum usw.</div>
-    </div>
+    <div ng-include src="'views/footer.html'"></div>
+    <!--<div class="footer">-->
+        <!--<div class="container">copyright, impressum usw.</div>-->
+    <!--</div>-->
 
 
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
@@ -69,7 +70,6 @@
 
         <!-- build:js({.tmp,app}) scripts/scripts.js -->
         <script src="scripts/app.js"></script>
-        <script src="scripts/controllers/main.js"></script>
         <script src="scripts/controllers/cafe.js"></script>
         <script src="scripts/controllers/header.js"></script>
         <script src="scripts/controllers/minigolf.js"></script>
@@ -78,6 +78,11 @@
         <script src="scripts/controllers/psgh.js"></script>
         <script src="scripts/controllers/reisemobilstellplatz.js"></script>
         <script src="scripts/directives/fesection.js"></script>
+        <script src="scripts/controllers/footer.js"></script>
+        <script src="scripts/controllers/contact.js"></script>
+        <script src="scripts/controllers/imprint.js"></script>
+        <script src="scripts/services/fesectionService.js"></script>
+        <script src="scripts/directives/parallax-module.js"></script>
         <!-- endbuild -->
 </body>
 </html>
