@@ -9,9 +9,7 @@
  */
 angular.module('amnohfelsClientApp')
   .controller('NachtigallentalCtrl', function ($scope) {
-    $scope.awesomeThings = [
-      'HTML5 Boilerplate',
-      'AngularJS',
-      'Karma'
-    ];
+    $scope.sectionData = {};
+    $scope.sectionData.title = 'title';
+    $scope.sectionData.caption = 'caption';
   });

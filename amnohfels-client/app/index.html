@@ -21,8 +21,8 @@
 
     <!-- Add your site or application content here -->
     <div ng-include src="'views/navigation.html'"></div>
-    <div ng-include src="'views/header.html'"></div>
-    <div class="container main" ng-view=""></div>
+    <!--<div ng-include src="'views/header.html'"></div>&lt;!&ndash;TODO remove this when finished&ndash;&gt;-->
+    <div class="main" ng-view=""></div>
     <div ng-include src="'views/footer.html'"></div>
     <!--<div class="footer">-->
         <!--<div class="container">copyright, impressum usw.</div>-->
@@ -71,7 +71,6 @@
         <!-- build:js({.tmp,app}) scripts/scripts.js -->
         <script src="scripts/app.js"></script>
         <script src="scripts/controllers/cafe.js"></script>
-        <script src="scripts/controllers/header.js"></script>
         <script src="scripts/controllers/minigolf.js"></script>
         <script src="scripts/controllers/nachtigallental.js"></script>
         <script src="scripts/controllers/navigation.js"></script>
