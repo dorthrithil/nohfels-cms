@@ -1,6 +1,6 @@
 'use strict';
 
-describe('Directive: fesection', function () {
+describe('Directive: scaffoldModules', function () {
 
   // load the directive's module
   beforeEach(module('amnohfelsClientApp'));
@@ -13,8 +13,8 @@ describe('Directive: fesection', function () {
   }));
 
   it('should make hidden element visible', inject(function ($compile) {
-    element = angular.element('<fesection></fesection>');
+    element = angular.element('<scaffold-modules></scaffold-modules>');
     element = $compile(element)(scope);
-    expect(element.text()).toBe('this is the fesection directive');
+    expect(element.text()).toBe('this is the scaffoldModules directive');
   }));
 });

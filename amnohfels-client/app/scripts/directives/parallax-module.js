@@ -8,21 +8,25 @@
  */
 
 angular.module('amnohfelsClientApp')
-    .directive('parallaxModule', function () {
+    .directive('parallaxModule', function ($timeout, $window) {
         return {
             templateUrl: 'views/parallax-module.html',
             restrict: 'E',
             scope: {
                 data: '='
             },
-            controller: function() {
-               $(function(){
-                    $(this).attr('data-stellar-background-ratio', 0.2).stellar({
+            link: function() {
+                $timeout(function () {
+                    angular.element($window).stellar({
                         horizontalScrolling: false,
                         verticalScrolling: true,
-                        verticalOffset: 53
+                        verticalOffset: 50
                     });
                 });
+            },
+            controller: function($scope, $sce) {
+                $scope.data.title = $sce.trustAsHtml($scope.data.title);
+                $scope.data.caption = $sce.trustAsHtml($scope.data.caption);
             }
         };
     });

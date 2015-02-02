@@ -22,7 +22,5 @@
 
 
 angular.module('amnohfelsClientApp')
-    .controller('MinigolfCtrl', function ($scope, feSectionService) {
-        console.log(feSectionService.sectionData);
-        //$scope.sectionData = feSectionService.sectionData;
+    .controller('MinigolfCtrl', function () {
     });

@@ -1,10 +1,11 @@
-parallax-module{
+.parallax-module{
   height: 410px;
   display: block;
   background-size: cover;
   background-repeat: no-repeat;
   position: relative;
   background-image: url("../images/header/nachtigallental.jpg");
+  background-attachment: fixed;
 
   .wrapper{
     position: absolute;
@@ -27,7 +28,7 @@ parallax-module{
 }
 
 @media(max-width:767px){
-  parallax-module{
+  .parallax-module{
     .title{
       padding: 7px;
       font-size: 30px;
@@ -39,7 +40,7 @@ parallax-module{
   }
 }
 @media(min-width:768px){
-  parallax-module{
+  .parallax-module{
     .title{
       padding: 8px;
       font-size: 35px;
@@ -51,7 +52,7 @@ parallax-module{
   }
 }
 @media(min-width:992px){
-  parallax-module{
+  .parallax-module{
     .title{
       padding: 9px;
       font-size: 40px;
@@ -63,7 +64,7 @@ parallax-module{
   }
 }
 @media(min-width:1200px){
-  parallax-module{
+  .parallax-module{
     .title{
       padding: 10px;
       font-size: 45px;
