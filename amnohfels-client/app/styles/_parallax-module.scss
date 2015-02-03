@@ -1,11 +1,12 @@
 .parallax-module{
   height: 410px;
   display: block;
-  background-size: cover;
-  background-repeat: no-repeat;
   position: relative;
-  background-image: url("../images/header/nachtigallental.jpg");
   background-attachment: fixed;
+  background-position: center;
+  background-size: 100%;
+  background-repeat: no-repeat;
+  background-image: url("../images/parallax/sample.jpg");
 
   .wrapper{
     position: absolute;

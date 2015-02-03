@@ -19,7 +19,7 @@ angular.module('amnohfelsClientApp')
         $scope.response[0].data.caption = 'Ein ungeheim spaßiger Spaß für die ganze Familie';
         $scope.response[1].type = 'text-module';
         $scope.response[1].data.title = 'Unser Grillplatz';
-        $scope.response[1].data.content = 'Hier steht ein Text<br> über den Grillplatz';
+        $scope.response[1].data.content = 'Hier steht ein Text<br> über den Grillplatz<div style="height: 700px"></div>';
         $scope.response[2] = {};
         $scope.response[2].data = {};
         $scope.response[2].type = 'parallax-module';

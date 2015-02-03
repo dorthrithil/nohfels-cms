@@ -20,7 +20,7 @@ angular.module('amnohfelsClientApp')
                     angular.element($window).stellar({
                         horizontalScrolling: false,
                         verticalScrolling: true,
-                        verticalOffset: 50
+                        verticalOffset: 0
                     });
                 });
             },
