@@ -9,14 +9,20 @@
  */
 angular.module('amnohfelsClientApp')
   .controller('NachtigallentalCtrl', function ($scope) {
-    $scope.sectionData = {};
-    $scope.sectionData.para = {};
-    $scope.sectionData.para2 = {};
-    $scope.sectionData.textx = {};
-    $scope.sectionData.para.title = 'Grillplatz im Nachtigallental';
-    $scope.sectionData.para.caption = 'Ein ungeheim spaßiger Spaß für die ganze Familie';
-    $scope.sectionData.para2.title = 'XXGrillplatz im NachtigallentalXX';
-    $scope.sectionData.para2.caption = 'XXEin ungeheim spaßiger Spaß für die ganze FamilieXX';
-    $scope.sectionData.textx.title = 'Unser Grillplatz';
-    $scope.sectionData.textx.content = 'Hier steht ein Text über den Grillplatz';
+        $scope.response = [];
+        $scope.response[0] = {};
+        $scope.response[1] = {};
+        $scope.response[0].data = {};
+        $scope.response[1].data = {};
+        $scope.response[0].type = 'parallax-module';
+        $scope.response[0].data.title = 'XXXGrillplatz im Nachtigallental';
+        $scope.response[0].data.caption = 'XXXEin ungeheim spaßiger Spaß für die ganze Familie';
+        $scope.response[1].type = 'text-module';
+        $scope.response[1].data.title = 'XXXUnser Grillplatz';
+        $scope.response[1].data.content = 'XXXHier steht ein Text<br> über den Grillplatz<div style="height: 700px"></div>';
+        $scope.response[2] = {};
+        $scope.response[2].data = {};
+        $scope.response[2].type = 'parallax-module';
+        $scope.response[2].data.title = 'XXXHier ist ein Titel';
+        $scope.response[2].data.caption = 'XXXDas ist ja toll <br> lalala';
   });

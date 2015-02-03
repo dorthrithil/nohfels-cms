@@ -8,21 +8,18 @@
  */
 
 angular.module('amnohfelsClientApp')
-    .directive('parallaxModule', function ($timeout, $window) {
+    .directive('parallaxModule', function () {
         return {
             templateUrl: 'views/parallax-module.html',
             restrict: 'E',
             scope: {
                 data: '='
             },
-            link: function() {
-                $timeout(function () {
-                    angular.element($window).stellar({
-                        horizontalScrolling: false,
-                        verticalScrolling: true,
-                        verticalOffset: 0
-                    });
-                });
+            require: '^scaffoldModules',
+            link: {
+                pre: function(scope, element, attrs, scaffoldModules){
+                    scope.notifyLoaded = scaffoldModules.notifyElementLoaded();
+                }
             },
             controller: function($scope, $sce) {
                 $scope.data.title = $sce.trustAsHtml($scope.data.title);
