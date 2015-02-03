@@ -11,12 +11,12 @@ angular.module('amnohfelsClientApp')
     .controller('CafeCtrl', function ($scope) {
         $scope.response = [];
         $scope.response[0] = {};
-        $scope.response[1] = {};
         $scope.response[0].data = {};
-        $scope.response[1].data = {};
         $scope.response[0].type = 'parallax-module';
         $scope.response[0].data.title = 'Grillplatz im Nachtigallental';
         $scope.response[0].data.caption = 'Ein ungeheim spaßiger Spaß für die ganze Familie';
+        $scope.response[1] = {};
+        $scope.response[1].data = {};
         $scope.response[1].type = 'text-module';
         $scope.response[1].data.title = 'Unser Grillplatz';
         $scope.response[1].data.content = 'Hier steht ein Text<br> über den Grillplatz<div style="height: 700px"></div>';
@@ -25,4 +25,13 @@ angular.module('amnohfelsClientApp')
         $scope.response[2].type = 'parallax-module';
         $scope.response[2].data.title = 'Hier ist ein Titel';
         $scope.response[2].data.caption = 'Das ist ja toll <br> lalala';
+        $scope.response[3] = {};
+        $scope.response[4] = {};
+        $scope.response[4].data = {};
+        $scope.response[4].type = 'parallax-module';
+        $scope.response[4].data.title = 'Hier ist noch ein Titel';
+        $scope.response[4].data.caption = 'Das ist ja nich toll <br> lalala';
+        $scope.response[5] = {};
+        $scope.response[5].data = {};
+        $scope.response[5].type = 'this schoulndt exist';
     });

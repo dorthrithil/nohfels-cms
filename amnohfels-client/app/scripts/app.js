@@ -41,7 +41,8 @@ angular
                     controller: 'ImprintCtrl'
                 })
                 .otherwise({
-                    redirectTo: '/cafe'
+                    templateUrl: 'views/notfound.html',
+                    controller: 'NotfoundCtrl'
             });
         })
     .value('phpServerRoot','http://amnohfels.local');

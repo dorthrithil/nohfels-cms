@@ -19,16 +19,24 @@ angular.module('amnohfelsClientApp')
         link: function (scope, element) {
             angular.forEach(scope.modules, function(value, key) {
                 var compileStream = '';
-                switch(value.type) {
-                    case 'parallax-module':
-                        parallaxElementsCount++;
-                        compileStream += '<parallax-module data="modules[' + key + '].data"></parallax-module>';
-                        break;
-                    case 'text-module':
-                        compileStream += '<text-module data="modules[' + key + '].data"></text-module>';
-                        break;
-                    default:
-                        console.log('Err: No Match for ' + value.type + ' in in scaffoldModules directive.');
+                var badRequest = false;
+                if (value.type !== undefined) {
+                    switch (value.type) {
+                        case 'parallax-module':
+                            parallaxElementsCount++;
+                            compileStream += '<parallax-module data="modules[' + key + '].data"></parallax-module>';
+                            break;
+                        case 'text-module':
+                            compileStream += '<text-module data="modules[' + key + '].data"></text-module>';
+                            break;
+                        default:
+                            badRequest = true; //TODO error messages entsprechend
+                    }
+                } else {
+                    badRequest = true;
+                }
+                if(badRequest){
+                    compileStream += '<error-module data=""><h3>Error 400: Bad Request</h3><p>Es konnte kein passendes Modul zur Anfrage gefunden werden.</p></error-module>';
                 }
                 element.append($compile(compileStream)(scope));
             });
