@@ -19,8 +19,6 @@ angular.module('amnohfelsClientApp')
             link: {
                 pre: function(scope, element, attrs, scaffoldModules){
                     var bgImgHeight = 0, bgImgWidth = 0;
-                    //TODO use ngStyle
-                    element.children().css('background-image', 'url(../' + scope.data.bgImgSrc + ')');
 
                     scope.calcBgImgSize = function(imgHeight, imgWidth){
                         //this is the resulting height, if we strech the image to 100% window width

@@ -1,0 +1,14 @@
+image-module{
+  .image-wrapper{
+    text-align: center;
+    .image-container {
+      height: 200px;
+      background-size: cover;
+      background-position: center;
+      margin-bottom: 30px;
+    }
+    .image-large{
+      height: 430px;
+    }
+  }
+}

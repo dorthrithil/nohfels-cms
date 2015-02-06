@@ -29,6 +29,9 @@ angular.module('amnohfelsClientApp')
                         case 'text-module':
                             compileStream += '<text-module data="modules[' + key + '].data"></text-module>';
                             break;
+                        case 'image-module':
+                            compileStream += '<image-module data="modules[' + key + '].data"></image-module>';
+                            break;
                         default:
                             badRequest = true; //TODO error messages entsprechend
                     }

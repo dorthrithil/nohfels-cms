@@ -1,0 +1,14 @@
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12 image-wrapper"
+             ng-repeat="thumbnail in data.thumbnails"
+             ng-class="{'col-md-3 col-sm-4' : thumbnail.imageSize == 'small'}"
+             >
+            <div class="image-container"
+                 ng-style="{'background-image' : 'url(' + thumbnail.imageSrc + ')'}"
+                 ng-class="{'image-large' : thumbnail.imageSize == 'large'}"
+                 >
+            </div>
+        </div>
+    </div>
+</div>
