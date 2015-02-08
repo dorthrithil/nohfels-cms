@@ -12,3 +12,37 @@ image-module{
     }
   }
 }
+
+.lightbox-backdrop{
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  background-color: rgba(0,0,0,0.9);
+  width: 100%;
+  height: 100%;
+  z-index: 9998;
+  -webkit-transition: all linear 2s;
+  transition: all linear 2s;
+  opacity: 0;
+}
+
+.lightbox-backdrop-active{
+  opacity: 1;
+}
+
+.lightbox-image{
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  z-index: 9999;
+  -webkit-transition: all linear 2s;
+  transition: all linear 2s;
+  opacity: 1;
+}
+
+.lightbox-image-active{
+  opacity: 1;
+}
