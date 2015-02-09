@@ -1,12 +1,12 @@
 <div class="container">
     <div class="row">
         <div class="col-xs-12 image-wrapper"
-             ng-repeat="thumbnail in data.thumbnails"
-             ng-class="{'col-md-3 col-sm-4' : thumbnail.imageSize == 'small'}"
+             ng-repeat="image in data.images"
+             ng-class="{'col-md-3 col-sm-4' : image.imageSize == 'small'}"
              >
             <div class="image-container"
-                 ng-style="{'background-image' : 'url(' + thumbnail.imageSrc + ')'}"
-                 ng-class="{'image-large' : thumbnail.imageSize == 'large'}"
+                 ng-style="{'background-image' : 'url(' + image.imageThumbSrc + ')'}"
+                 ng-class="{'image-large' : image.imageSize == 'large'}"
                  ng-click="lbOpen($index)"
                  >
             </div>

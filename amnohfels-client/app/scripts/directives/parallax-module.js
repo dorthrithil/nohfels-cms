@@ -50,6 +50,7 @@ angular.module('amnohfelsClientApp')
                 $scope.data.title = $sce.trustAsHtml($scope.data.title);
                 $scope.data.caption = $sce.trustAsHtml($scope.data.caption);
 
+                //TODO this doesn't belong into the controller
                 //watch for window resize to change background size
                 return angular.element($window).bind('resize', function() {
                     $scope.refreshBackgroundSize();
