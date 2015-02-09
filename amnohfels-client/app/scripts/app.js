@@ -9,7 +9,7 @@
  * Main module of the application.
  */
 angular
-    .module('amnohfelsClientApp', ['ngRoute'])
+    .module('amnohfelsClientApp', ['ngRoute', 'ngAnimate'])
         .config(function($routeProvider) {
             $routeProvider
                 .when('/cafe', {
