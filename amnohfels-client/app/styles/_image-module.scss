@@ -21,34 +21,18 @@ image-module{
   width: 100%;
   height: 100%;
   z-index: 9998;
-  transition: opacity .3s linear 0s;
   opacity: 0;
-}
-
-.lb-backdrop-active{
-  opacity: 1;
 }
 
 .lb-image{
   position: fixed;
   margin: auto;
   z-index: 9999;
-  transition:
-    opacity .3s linear 0s,
-    left .3s linear 0.15s,
-    bottom .3s linear 0s,
-    right .3s linear .15s;
-    //width .3s linear 0s,
-    //height .3s linear 0s;
   opacity: 0;
   top: 0;
   bottom: 0;
   left: 0;
   right: 0;
-}
-
-.lb-image-active{
-  opacity: 1;
 }
 
 .lb-image-vanish-left{
@@ -64,4 +48,8 @@ image-module{
 
 .lb-image-enter-left{
   right: 100%;
+}
+
+.lb-image-active{
+  opacity: 1;
 }
