@@ -2,9 +2,10 @@
 
 /**
  * @ngdoc directive
- * @name amnohfelsClientApp.directive:calcRealDimensions
+ * @name amnohfelsClientApp.directive:lbCalcDimensions
  * @description
- * # calcRealDimensions
+ * # lbCalcDimensions
+ * Calculates and sets the dimensions of the lightbox overlay image responsively
  */
 angular.module('amnohfelsClientApp')
   .directive('lbCalcDimensions', function ($window) {
@@ -15,15 +16,17 @@ angular.module('amnohfelsClientApp')
           var buffer = new Image();
           buffer.src = element.attr("src");
 
+          //initialize dimensions onload
           buffer.onload = function() {
               scope.setDimensions();
-          }
+          };
 
           scope.setDimensions = function(){
               var margin = 150;
               //difference * weighting
               var widthError = (buffer.width - $window.innerWidth + margin) * buffer.height / buffer.width;
               var heightError = (buffer.height - $window.innerHeight + margin) * buffer.width / buffer.height;
+              //decide how to set the dimensions based on width/heightError
               if (widthError > 0 || heightError > 0) {
                   if (widthError > heightError) {
                       element.css('width', $window.innerWidth - margin + 'px');
