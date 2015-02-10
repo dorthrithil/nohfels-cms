@@ -18,7 +18,7 @@ angular.module('amnohfelsClientApp')
                 var body = angular.element(document).find('body');
                 var backdrop = angular.element('<div class="lb-backdrop" ng-click="lbClose()"></div>');
                 scope.lbOpen = function(index){
-                    var image = angular.element('<img alt="" index="' + index + '" src="' + scope.data.images[index].imageSrc + '" class="lb-image" ng-click="lbNextImage()" no-propagation/>');
+                    var image = angular.element('<img alt="" index="' + index + '" src="' + scope.data.images[index].imageSrc + '" class="lb-image" ng-click="lbNextImage()" no-propagation lb-calc-dimensions/>');
                     body.append($compile(backdrop)(scope));
                     backdrop.append($compile(image)(scope));
                     $animate.addClass(backdrop, 'lb-backdrop-active');
