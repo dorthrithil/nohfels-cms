@@ -52,7 +52,7 @@ angular.module('amnohfelsClientApp')
                     angular.element($window).stellar({
                         horizontalScrolling: false,
                         verticalScrolling: true,
-                        verticalOffset: 50 //TODO why is this necessary to get rid of the weird background jumping bug?
+                        verticalOffset: 51 //TODO why is this necessary to get rid of the weird background jumping bug?
                     });
                 } else if (parallaxElementsCount !== 0 && parallaxElementsCount === parallaxElementsLoaded && stellarInitialized === true) {
                     angular.element($window).stellar('refresh');
