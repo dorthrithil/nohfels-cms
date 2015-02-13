@@ -8,16 +8,15 @@
  */
 
 angular.module('amnohfelsClientApp')
-    .directive('parallaxModule', function ($document, $window) {
+    .directive('parallaxModule', function ($document, $window, scrollMagic) {
         return {
             templateUrl: 'views/parallax-module.html',
             restrict: 'E',
             scope: {
                 data: '='
             },
-            require: '^scaffoldModules',
             link: {
-                pre: function(scope, element, attrs, scaffoldModules){
+                pre: function(scope, element){
                     var bgImgHeight = 0, bgImgWidth = 0;
 
                     scope.calcBgImgSize = function(imgHeight, imgWidth){
@@ -42,8 +41,9 @@ angular.module('amnohfelsClientApp')
                         element.children().css('background-size', scope.calcBgImgSize(bgImgHeight, bgImgWidth));
                     };
 
-                    //notify scaffoldModules for stellar initialization
-                    scope.notifyLoaded = scaffoldModules.notifyElementLoaded();
+                    new ScrollScene({triggerElement: element.children()})
+                        .setTween(TweenMax.from(element.children().children('.parallax-image'), 2, {top: '-80%', ease: Linear.easeNone}))
+                        .addTo(scrollMagic.get());
                 }
             },
             controller: function($scope, $sce) {

@@ -7,7 +7,7 @@
  * # imageModule
  */
 angular.module('amnohfelsClientApp')
-    .directive('imageModule', function ($compile, $animate) {
+    .directive('imageModule', function ($compile){ //, $animate) {
         return {
             templateUrl: 'views/image-module.html',
             restrict: 'E',
@@ -25,13 +25,13 @@ angular.module('amnohfelsClientApp')
                     body.append($compile(backdrop)(scope));
                     backdrop.append($compile(image)(scope));
                     //TODO put this in animate service?
-                    $animate.addClass(backdrop, 'lb-fade').then(function(){console.log('resolvd');});
-//                    backdrop.velocity({
-//                        opacity: 1
-//                    },{
-//                        duration: 200,
-//                        easing: 'easeInSine'
-//                    });
+                    //$animate.addClass(backdrop, 'lb-fade').then(function(){console.log('resolvd');});
+                    backdrop.velocity({
+                        opacity: 1
+                    },{
+                        duration: 200,
+                        easing: 'easeInSine'
+                    });
                     image.velocity({
                         opacity: 1
                     },{
