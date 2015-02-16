@@ -20,6 +20,10 @@
   "smarttabs": true,
   "globals": {
       "angular": false,
-      "$": false
+      "$": false,
+      "TweenMax": false,
+      "ScrollMagic": false,
+      "ScrollScene": false,
+      "Linear": false
   }
 }

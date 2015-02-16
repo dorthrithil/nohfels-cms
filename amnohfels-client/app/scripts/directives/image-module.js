@@ -26,6 +26,7 @@ angular.module('amnohfelsClientApp')
                     backdrop.append($compile(image)(scope));
                     //TODO put this in animate service?
                     //$animate.addClass(backdrop, 'lb-fade').then(function(){console.log('resolvd');});
+                    //TODO Use gsap to get rid of two animation libraries
                     backdrop.velocity({
                         opacity: 1
                     },{

@@ -18,14 +18,23 @@ angular.module('amnohfelsClientApp')
             link: {
                 pre: function(scope, element){
                     var bgImgHeight = 0, bgImgWidth = 0;
+                    var parallaxRatio = 0.2;
 
-                    scope.calcBgImgSize = function(imgHeight, imgWidth){
+                    scope.calcBgImgSizes = function(imgHeight, imgWidth){
+                        var sizes = {};
                         //this is the resulting height, if we strech the image to 100% window width
                         var strechedImgHeight = imgHeight * ($document.width() / imgWidth);
                         //our image has to be at least as high as the window + the extra hight needed for parallax scolling
-                        var nominalValue = $document.height() * element.children().attr('data-stellar-background-ratio') + imgHeight;
+                        var nominalValue = $document.height() * parallaxRatio + imgHeight;
                         //if it's higher, we can use 100% width (this way we can see more), otherwise use nominalValue as height
-                        return (strechedImgHeight > nominalValue) ? '100%' : 'auto ' + nominalValue + 'px';
+                        if(strechedImgHeight > nominalValue){
+                            sizes.bg = '100%';
+                            sizes.margin = '-50%';
+                        } else {
+                            sizes.bg = 'auto ' + nominalValue + 'px';
+                            sizes.margin = '-50%';
+                        }
+                        return sizes;
                     };
 
                     //Get orininal image properties and initialize background-size
@@ -33,16 +42,20 @@ angular.module('amnohfelsClientApp')
                     bgImg.onload = function() {
                         bgImgHeight = this.height;
                         bgImgWidth = this.width;
-                        scope.refreshBackgroundSize();
+                        scope.refreshBackgroundSizes();
                     };
                     bgImg.src = scope.data.bgImgSrc;
 
-                    scope.refreshBackgroundSize = function(){
-                        element.children().css('background-size', scope.calcBgImgSize(bgImgHeight, bgImgWidth));
+                    scope.refreshBackgroundSizes = function(){
+                        var sizes = scope.calcBgImgSizes(bgImgHeight, bgImgWidth);
+                        element.children().children('.parallax-image')
+                            .css('background-size', sizes.bg);
+                            //.css('margin-left', sizes.margin);
                     };
 
+                    //TODO calcBgImageSize has to fit new view structure
                     new ScrollScene({triggerElement: element.children()})
-                        .setTween(TweenMax.from(element.children().children('.parallax-image'), 2, {top: '-80%', ease: Linear.easeNone}))
+                        .setTween(TweenMax.from(element.children().children('.parallax-image'), 1, {top: '-150%', ease: Linear.easeNone, force3D: true}))
                         .addTo(scrollMagic.get());
                 }
             },
@@ -50,10 +63,10 @@ angular.module('amnohfelsClientApp')
                 $scope.data.title = $sce.trustAsHtml($scope.data.title);
                 $scope.data.caption = $sce.trustAsHtml($scope.data.caption);
 
-                //TODO this doesn't belong into the controller
+                //TODO this doesn't belong into the controllerx
                 //watch for window resize to change background size
                 return angular.element($window).bind('resize', function() {
-                    $scope.refreshBackgroundSize();
+                    $scope.refreshBackgroundSizes();
                 });
             }
         };

@@ -8,6 +8,6 @@
  * Controller of the amnohfelsClientApp
  */
 angular.module('amnohfelsClientApp')
-  .controller('PsghCtrl', function (scrollMagic) {
+  .controller('PsghCtrl', function () {
 
   });

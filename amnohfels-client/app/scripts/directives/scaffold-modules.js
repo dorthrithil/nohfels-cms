@@ -7,10 +7,7 @@
  * # scaffoldModules
  */
 angular.module('amnohfelsClientApp')
-  .directive('scaffoldModules', function ($compile, $window) {
-    var parallaxElementsCount = 0;
-    var parallaxElementsLoaded = 0;
-    var stellarInitialized = false;
+  .directive('scaffoldModules', function ($compile) {
     return {
         restrict: 'A',
         scope: {
@@ -23,7 +20,6 @@ angular.module('amnohfelsClientApp')
                 if (value.type !== undefined) {
                     switch (value.type) {
                         case 'parallax-module':
-                            parallaxElementsCount++;
                             compileStream += '<parallax-module data="modules[' + key + '].data"></parallax-module>';
                             break;
                         case 'text-module':
@@ -43,21 +39,6 @@ angular.module('amnohfelsClientApp')
                 }
                 element.append($compile(compileStream)(scope));
             });
-        },
-        controller: function(){
-            this.notifyElementLoaded = function(){
-                parallaxElementsLoaded++;
-                if (parallaxElementsCount !== 0 && parallaxElementsCount === parallaxElementsLoaded && stellarInitialized === false){
-                    stellarInitialized = true;
-                    angular.element($window).stellar({
-                        horizontalScrolling: false,
-                        verticalScrolling: true,
-                        verticalOffset: 51 //TODO why is this necessary to get rid of the weird background jumping bug?
-                    });
-                } else if (parallaxElementsCount !== 0 && parallaxElementsCount === parallaxElementsLoaded && stellarInitialized === true) {
-                    angular.element($window).stellar('refresh');
-                }
-            };
         }
     };
   });

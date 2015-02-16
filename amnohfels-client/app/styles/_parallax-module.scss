@@ -1,5 +1,5 @@
 .parallax-module{
-  height: 410px;
+  height: 100vh;//410px;
   display: block;
   position: relative;
   overflow: hidden;
@@ -10,7 +10,6 @@
     -webkit-transform: translateZ(0);
     -webkit-backface-visibility: hidden;
     -webkit-perspective: 1000;
-    background-size: 100vw;
   }
 
   .wrapper{
