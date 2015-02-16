@@ -1,16 +1,26 @@
+.parallax-image{
+  overflow: hidden;
+  height: 410px;
+  width: 100%;
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  display: block;
+}
+
+.parallax-image img{
+  position: absolute;
+  width: 100vw;
+  left: 0px;
+  top: 0px;
+  border: 0;
+}
+
 .parallax-module{
-  height: 100vh;//410px;
+  height: 410px;
   display: block;
   position: relative;
   overflow: hidden;
-
-  .parallax-image {
-    position: relative;
-    height: 200%;
-    -webkit-transform: translateZ(0);
-    -webkit-backface-visibility: hidden;
-    -webkit-perspective: 1000;
-  }
 
   .wrapper{
     position: absolute;
