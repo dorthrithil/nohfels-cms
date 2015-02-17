@@ -1,6 +1,6 @@
 .parallax-image{
   overflow: hidden;
-  height: 410px;
+  height: 100vh;
   width: 100%;
   position: fixed;
   top: 0px;
@@ -17,7 +17,7 @@
 }
 
 .parallax-module{
-  height: 410px;
+  height: 100vh;
   display: block;
   position: relative;
   overflow: hidden;
@@ -29,94 +29,52 @@
     max-width: 90%;
 
     > *{
-      background-color: $bgcolor;
+      background-color: $dark;
       display: table;
-      text-transform: uppercase;
-      font-family: 'PT Sans Caption', sans-serif;
+      font-family: 'Playfair Display', serif;
+      font-weight: 400;
+      font-style: normal;
       margin: 0px 0px 0px 50px;
+      color: $bright;
     }
 
     .title{
       margin-bottom: 10px;
+      font-family: 'Playfair Display', serif;
+      font-weight: 400;
+      font-style: italic;
     }
   }
 
+}
+
+$bp: 14px; //base padding (because font isn't spaced symmetrically)
+$sp: $bp * 1.4; //spaced padding
+$bfs: 55px; //base font-size
+
+@mixin parallax-module($factor){
+  .parallax-module{
+    .title{
+      padding: round($factor * $bp) round($factor * $sp) round($factor * $sp) round($factor * $sp);
+      font-size: round($factor * $bfs);
+      line-height: round($factor * $bfs);
+    }
+    .caption{
+      padding: round($factor * 0.5 * $bp) round($factor * 0.5 * $sp) round($factor * 0.5 * $sp) round($factor * 0.5 * $sp);
+      font-size: round($factor * 0.5 * $bfs);
+    }
+  }
 }
 
 @media(max-width:767px){
-  .parallax-module{
-    .title{
-      padding: 7px;
-      font-size: 30px;
-    }
-    .caption{
-      padding: 4px;
-      font-size: 16px;
-    }
-  }
+  @include parallax-module(0.56);
 }
 @media(min-width:768px){
-  .parallax-module{
-    .title{
-      padding: 8px;
-      font-size: 35px;
-    }
-    .caption{
-      padding: 5px;
-      font-size: 18px;
-    }
-  }
+  @include parallax-module(0.64);
 }
 @media(min-width:992px){
-  .parallax-module{
-    .title{
-      padding: 9px;
-      font-size: 40px;
-    }
-    .caption{
-      padding: 6px;
-      font-size: 20px;
-    }
-  }
+  @include parallax-module(0.826666);
 }
 @media(min-width:1200px){
-  .parallax-module{
-    .title{
-      padding: 10px;
-      font-size: 45px;
-    }
-    .caption{
-      padding: 7px;
-      font-size: 22px;
-    }
-  }
+  @include parallax-module(1);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//#parallax1, #parallax2, #parallax3 {
-//  position: relative;
-//  overflow: hidden;
-//  height: 100vh;
-//}
-//#parallax1 > div, #parallax2 > div, #parallax3 > div, .parallax-module > div {
-//  position: relative;
-//  height: 200%;
-//  -webkit-transform: translateZ(0);
-//  -webkit-backface-visibility: hidden;
-//  -webkit-perspective: 1000;
-//  background-size: 100vw;
-//}
-

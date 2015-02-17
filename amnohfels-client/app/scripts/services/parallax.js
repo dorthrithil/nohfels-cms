@@ -16,6 +16,8 @@ angular.module('amnohfelsClientApp')
 
     //TODO proper image sizing
 
+    //TODO test if touchmove event also works
+
     function init(){
         $('body').prepend($parallaxImagesContainer);
         angular.element($window).bind('resize', function() {

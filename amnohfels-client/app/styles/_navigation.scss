@@ -1,3 +1,28 @@
+$nav-height: 66px;
+
 .navbar{
   box-shadow: 0px 2px 3px rgba(80,80,80,0.1);
+  height: $nav-height;
+}
+
+.navbar-default .navbar-nav > li > a{
+  color: $bright;
+}
+
+.navbar-nav > li > a{
+  padding-top: 23px;
+  padding-bottom: 23px;
+}
+
+.navbar-brand{
+  padding: 23px;
+}
+
+.navbar-default{
+  background-color: $dark;
+  border-color: darken($dark, 5%);
+}
+
+.navbar-default .navbar-brand{
+  color: $bright;
 }

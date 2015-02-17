@@ -1,15 +1,15 @@
 @import "_variables.scss";
-@import "_navigation.scss";
-@import "_parallax-module.scss";
-@import "_image-module.scss";
-@import "_footer.scss";
 // bower:scss
 @import "bootstrap-sass-official/assets/stylesheets/_bootstrap.scss";
 // endbower
 
-//TODO font as files
-//font
-@import "http://fonts.googleapis.com/css?family=PT+Sans+Caption:400,700";
+@import "_navigation.scss";
+@import "_parallax-module.scss";
+@import "_image-module.scss";
+@import "_footer.scss";
+
+//fonts
+@import url(http://fonts.googleapis.com/css?family=Playfair+Display:400,400italic);
 
 .browsehappy {
   margin: 0.2em 0;
@@ -32,9 +32,9 @@ html {
 
 /* Space out content a bit */
 body {
-  padding-top: 51px;
+  padding-top: $nav-height + 1;
   padding-bottom: 0px;
-  background-color: $bgcolor;
+  background-color: $bright;
 }
 
 .alert{
