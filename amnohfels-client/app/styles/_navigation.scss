@@ -1,5 +1,6 @@
-
 $nav-height: 66px;
+
+//TODO refactor into bootstrap scss files
 
 .navbar{
   box-shadow: 0px 2px 3px rgba(80,80,80,0.1);
@@ -28,7 +29,3 @@ $nav-height: 66px;
 .navbar-default .navbar-brand{
   color: $bright;
 }
-
-
-
-//TODO breakpoint richtig setzen
