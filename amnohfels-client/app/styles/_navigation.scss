@@ -1,3 +1,4 @@
+
 $nav-height: 66px;
 
 .navbar{
@@ -7,6 +8,7 @@ $nav-height: 66px;
 
 .navbar-default .navbar-nav > li > a{
   color: $bright;
+  font-size: 16px;
 }
 
 .navbar-nav > li > a{
@@ -26,3 +28,7 @@ $nav-height: 66px;
 .navbar-default .navbar-brand{
   color: $bright;
 }
+
+
+
+//TODO breakpoint richtig setzen
