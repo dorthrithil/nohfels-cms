@@ -5,7 +5,6 @@
 @import "_variables.scss";
 
 //modules
-@import "_navigation.scss";
 @import "_parallax-module.scss";
 @import "_image-module.scss";
 @import "_footer.scss";
@@ -24,7 +23,7 @@
 
 /* Space out content a bit */
 body {
-  padding-top: $nav-height + 1;
+  padding-top: $navbar-height;
   padding-bottom: 0px;
   background-color: $bright;
   font-family: "adelle",serif;
