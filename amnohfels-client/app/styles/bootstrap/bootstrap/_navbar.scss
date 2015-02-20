@@ -234,6 +234,10 @@
     padding-top:    10px;
     padding-bottom: 10px;
     line-height: $line-height-computed;
+    transition: color 0.15s linear, background-color 0.15s linear;
+    -webkit-transition: color 0.15s linear, background-color 0.15s linear;
+    -moz-transition: color 0.15s linear, background-color 0.15s linear;
+    -ms-transition: color 0.15s linear, background-color 0.15s linear;
   }
 
   @media (max-width: $grid-float-breakpoint-max) {

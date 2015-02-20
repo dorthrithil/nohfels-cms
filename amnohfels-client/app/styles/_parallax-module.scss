@@ -1,6 +1,6 @@
 .parallax-image{
   overflow: hidden;
-  height: 100vh;
+  height: 100vh; //TODO fallback
   width: 100%;
   position: fixed;
   top: 0px;
@@ -10,14 +10,13 @@
 
 .parallax-image img{
   position: absolute;
-  width: 100vw;
   left: 0px;
   top: 0px;
   border: 0;
 }
 
 .parallax-module{
-  height: 100vh;
+  height: 100vh;  //TODO fallback
   display: block;
   position: relative;
   overflow: hidden;
@@ -29,13 +28,13 @@
     max-width: 90%;
 
     > *{
-      background-color: $dark;
+      background-color: $gray-dark;
       display: table;
       font-family: 'Playfair Display', serif;
       font-weight: 400;
       font-style: normal;
       margin: 0px 0px 0px 50px;
-      color: $bright;
+      color: $gray-super-light;
     }
 
     .title{

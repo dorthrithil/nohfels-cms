@@ -11,21 +11,25 @@ angular.module('amnohfelsClientApp')
   .service('parallax', function parallax($window, util, $timeout) {
     var images = [];
     var $parallaxImagesContainer = angular.element('<div class="parallax-images" />');
-
-    //TODO route change functionality
-
-    //TODO proper image sizing
+    var parallaxRatio = 0.25;
 
     //TODO test if touchmove event also works
+
+    //TODO while loops in extra functions?
+
+    //TODO container height minus navbar height
 
     function init(){
         $('body').prepend($parallaxImagesContainer);
         angular.element($window).bind('resize', function() {
-            util.throttle(refresh(), 10);
+            //TODO in one throttle!
+            util.throttle(setImageSizes(), 10);
+            util.throttle(parallaxScroll(), 10);
         });
         angular.element($window).bind('scroll', function() {
-            util.throttle(refresh(), 10);
+            util.throttle(parallaxScroll(), 10);
         });
+        console.log('parallax init');
     }
 
     this.add = function($section, bgImgSrc){
@@ -34,24 +38,48 @@ angular.module('amnohfelsClientApp')
         var $image = angular.element('<img src="'+bgImgSrc+'" />');
         $imageContainer.append($image);
         images.push({
-            container : $imageContainer,
+            container : $imageContainer, //TODO which values should i really cache?
             image : $image,
             section : $section,
-            sectionOffset : null
+            sectionOffset : null,
+            dimensions : {
+                height : null,
+                width : null
+            }
         });
+        initDimensions(bgImgSrc, images.length - 1);
         $timeout(function(){
             images[images.length - 1].sectionOffset = $section.offset().top;
-            refresh();
+            parallaxScroll();
         });
-
+        console.log('parallax section add');
     };
 
-    function refresh(){
+    this.clear = function(){
+        console.log('cleared');
+        images = [];
+        $parallaxImagesContainer.children().remove();
+    };
+
+    //TODO bind this to the dom image load event?
+    function initDimensions(src, index){
+        var bgImg = new Image();
+        bgImg.onload = function() {
+            images[index].dimensions.height = this.height;
+            images[index].dimensions.width = this.width;
+            setImageSizes();
+        };
+        bgImg.src = src;
+    }
+
+
+    //scrolls all registered parallax elements
+    function parallaxScroll(){
         for(var i = 0; i < images.length; i++){
-            if(inViewport(images[i].section)) {
+            if(util.inViewport(images[i].section)) {
                 images[i].container.show();
-                var sectionPosition = window.pageYOffset - images[i].sectionOffset;
-                var imagePosition = parseInt(0.75 * sectionPosition);
+                var sectionPosition = parseInt(window.pageYOffset - images[i].sectionOffset);
+                var imagePosition = parseInt((1 - parallaxRatio) * sectionPosition);
                 var containerPosition = -sectionPosition;
                 images[i].container.css({'transform': 'translate3d(0, ' + containerPosition + 'px, 0)'});
                 images[i].image.css({'transform': 'translate3d(0, ' + imagePosition + 'px, 0)'});
@@ -61,54 +89,39 @@ angular.module('amnohfelsClientApp')
         }
     }
 
-    function inViewport($element){
-        var bounds = $element.get(0).getBoundingClientRect();
-        return bounds.top < window.innerHeight && bounds.bottom > 0;
+    //resizes all images to a size where maximum information is shown while being able to parallax scroll it
+    //TODO comment this
+    function setImageSizes(){
+        for(var i = 0; i < images.length; i++){
+            images[i].sectionOffset = images[i].section.offset().top;//TODO best way to do this?
+            var imgHeight = images[i].dimensions.height;
+            var imgWidth = images[i].dimensions.width;
+            var containerHeight = parseInt(images[i].container.css('height')); //TODO is there a way to do this without parseInt?
+            var containerWidth = parseInt(images[i].container.css('width'));
+            var nominalValue = containerHeight * (parallaxRatio + 1);
+            var strechedImgHeight = imgHeight * containerWidth / imgWidth;
+            var strechedImgWidth = nominalValue / imgHeight * imgWidth;
+
+            console.log(containerHeight);
+            console.log(containerWidth);
+
+            if(strechedImgHeight > nominalValue){
+                images[i].image.css({
+                    'width':    '100%',
+                    'height':   strechedImgHeight + 'px',
+                    'top' :     parseInt(-(strechedImgHeight - containerHeight) / 2) + 'px',
+                    'left' :    '0px'
+                });
+            } else {
+                images[i].image.css({
+                    'width'     : strechedImgWidth + 'px',
+                    'height'    : nominalValue + 'px',
+                    'top'       : '0px',
+                    'left'      : parseInt(-(strechedImgWidth - containerWidth) / 2) + 'px'
+                });
+            }
+        }
     }
 
     init();
   });
-
-
-
-
-
-
-
-
-
-//                    var bgImgHeight = 0, bgImgWidth = 0;
-//                    var parallaxRatio = 0.2;
-//
-//                    scope.calcBgImgSizes = function(imgHeight, imgWidth){
-//                        var sizes = {};
-//                        //this is the resulting height, if we strech the image to 100% window width
-//                        var strechedImgHeight = imgHeight * ($document.width() / imgWidth);
-//                        //our image has to be at least as high as the window + the extra hight needed for parallax scolling
-//                        var nominalValue = $document.height() * parallaxRatio + imgHeight;
-//                        //if it's higher, we can use 100% width (this way we can see more), otherwise use nominalValue as height
-//                        if(strechedImgHeight > nominalValue){
-//                            sizes.bg = '100%';
-//                            sizes.margin = '-50%';
-//                        } else {
-//                            sizes.bg = 'auto ' + nominalValue + 'px';
-//                            sizes.margin = '-50%';
-//                        }
-//                        return sizes;
-//                    };
-
-//Get orininal image properties and initialize background-size
-//                    var bgImg = new Image();
-//                    bgImg.onload = function() {
-//                        bgImgHeight = this.height;
-//                        bgImgWidth = this.width;
-//                        scope.refreshBackgroundSizes();
-//                    };
-//                    bgImg.src = scope.data.bgImgSrc;
-//
-//                    scope.refreshBackgroundSizes = function(){
-//                        var sizes = scope.calcBgImgSizes(bgImgHeight, bgImgWidth);
-//                        element.children().children('.parallax-image')
-//                            .css('background-size', sizes.bg);
-//                            //.css('margin-left', sizes.margin);
-//                    };

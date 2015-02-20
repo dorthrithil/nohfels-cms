@@ -31,4 +31,9 @@ angular.module('amnohfelsClientApp')
             }
         };
     };
+
+    this.inViewport = function($element){
+        var bounds = $element.get(0).getBoundingClientRect();
+        return bounds.top < window.innerHeight && bounds.bottom > 0;
+    };
   });
