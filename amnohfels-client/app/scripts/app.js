@@ -12,6 +12,10 @@ angular
     .module('amnohfelsClientApp', ['ngRoute', 'ngAnimate'])
         .config(function($routeProvider) {
             $routeProvider
+                .when('/', {
+                    templateUrl: 'views/cafe.html',
+                    controller: 'CafeCtrl'
+                })
                 .when('/cafe', {
                     templateUrl: 'views/cafe.html',
                     controller: 'CafeCtrl'

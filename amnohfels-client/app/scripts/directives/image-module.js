@@ -6,8 +6,14 @@
  * @description
  * # imageModule
  */
+
+//TODO what happens when we have multiple image modules on one page?
+//TODO templates for spaghetti angular element definitions
+//TODO factor out animations - maybe use animate service?
+//TODO trigger image change animations directly with the onload event, not with a watcher which watches an attribute which gets set by the onload even
+
 angular.module('amnohfelsClientApp')
-    .directive('imageModule', function ($compile){
+    .directive('imageModule', function ($compile, animator){
         return {
             templateUrl: 'views/image-module.html',
             restrict: 'E',
@@ -19,7 +25,6 @@ angular.module('amnohfelsClientApp')
                 var changeImageMutex = false;
 
                 scope.lbOpen = function(index){
-                    //TODO can i use a template for this ugly monster?
                     var backdrop = angular.element('<div class="lb-backdrop" ng-click="lbClose()"></div>');
                     var image = angular.element('<img alt="" index="' + index + '" src="' + scope.data.images[index].imageSrc + '" class="lb-image" ng-click="lbNextImage()" no-propagation lb-calc-dimensions/>');
                     var closeIcon = angular.element('<div class="lb-close" ng-click="lbClose()" no-propagation><div class="lb-navigation-wrapper"><div class="lb-navigation-center"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></div></div></div>');
@@ -30,46 +35,15 @@ angular.module('amnohfelsClientApp')
                     backdrop.append($compile(closeIcon)(scope));
                     backdrop.append($compile(nextImageIcon)(scope));
                     backdrop.append($compile(previousImageIcon)(scope));
-                    //TODO put this in animate service?
-                    //$animate.addClass(backdrop, 'lb-fade').then(function(){console.log('resolvd');});
-                    //TODO Use gsap to get rid of two animation libraries
-                    backdrop.velocity({
-                        opacity: 1
-                    },{
-                        duration: 200,
-                        easing: 'easeInSine'
-                    });
-                    image.velocity({
-                        opacity: 1
-                    },{
-                        duration: 200,
-                        delay: 200,
-                        easing: 'easeInSine'
-                    });
+                    animator.fadeIn(backdrop);
+                    animator.fadeIn(image, 200);
                 };
 
                 scope.lbClose = function(){
                     var image = angular.element(document.querySelector('.lb-image'));
                     var backdrop = angular.element(document.querySelector('.lb-backdrop'));
-                    image.velocity({
-                        opacity: 0
-                    },{
-                        duration: 200,
-                        easing: 'easeInSine',
-                        complete: function() {
-                            image.remove();
-                        }
-                    });
-                    backdrop.velocity({
-                        opacity: 0
-                    },{
-                        duration: 200,
-                        delay: 200,
-                        easing: 'easeInSine',
-                        complete: function(){
-                            backdrop.remove();
-                        }
-                    });
+                    animator.fadeOutAndRemove(image);
+                    animator.fadeOutAndRemove(backdrop, 200);
                 };
 
                 scope.lbNextImage = function() {
@@ -79,7 +53,6 @@ angular.module('amnohfelsClientApp')
                         var oldImage = angular.element(document.querySelector('.lb-image'));
                         var oldIndex = parseInt(oldImage.attr('index'));
                         var newIndex = (scope.data.images.length - 1 === oldIndex) ? 0 : oldIndex + 1;
-                        //TODO use templates for huge angular elements
                         var newImage = angular.element('<img alt="" index="' + newIndex + '" src="' + scope.data.images[newIndex].imageSrc + '" class="lb-image lb-image-active lb-image-enter-right" ng-click="lbNextImage()" no-propagation preloadable lb-calc-dimensions/>');
                         backdrop.append($compile(newImage)(scope));
                         //watch for image getting loaded, then animate it
@@ -87,25 +60,8 @@ angular.module('amnohfelsClientApp')
                             return newImage.attr('loaded');
                         }, function (newValue) {
                             if (newValue === 'true') {
-                                oldImage.velocity({
-                                    opacity: 0,
-                                    width: '0px',
-                                    height: '0px',
-                                    right: '100%',
-                                    bottom: '100%'
-                                }, {
-                                    duration: 400,
-                                    complete: function () {
-                                        oldImage.remove();
-                                        changeImageMutex = false;
-                                    }
-                                });
-                                newImage.velocity({
-                                    left: '0'
-                                }, {
-                                    duration: 200,
-                                    delay: 200
-                                });
+                                animator.flyOutLeft(oldImage).then(function(){changeImageMutex = false;});
+                                animator.slideInFromRight(newImage, 200);
                             }
                         });
                     }
@@ -117,7 +73,6 @@ angular.module('amnohfelsClientApp')
                         var oldImage = angular.element(document.querySelector('.lb-image'));
                         var oldIndex = parseInt(oldImage.attr('index'));
                         var newIndex = (oldIndex === 0) ? scope.data.images.length - 1 : oldIndex - 1;
-                        //TODO use templates for huge angular elements
                         var newImage = angular.element('<img alt="" index="' + newIndex + '" src="' + scope.data.images[newIndex].imageSrc + '" class="lb-image lb-image-active lb-image-enter-left" ng-click="lbNextImage()" no-propagation preloadable lb-calc-dimensions/>');
                         backdrop.append($compile(newImage)(scope));
                         //watch for image getting loaded, then animate it
@@ -125,25 +80,8 @@ angular.module('amnohfelsClientApp')
                             return newImage.attr('loaded');
                         }, function (newValue) {
                             if (newValue === 'true') {
-                                oldImage.velocity({
-                                    opacity: 0,
-                                    width: '0px',
-                                    height: '0px',
-                                    left: '100%',
-                                    bottom: '100%'
-                                }, {
-                                    duration: 400,
-                                    complete: function () {
-                                        oldImage.remove();
-                                        changeImageMutex = false;
-                                    }
-                                });
-                                newImage.velocity({
-                                    right: '0'
-                                }, {
-                                    duration: 200,
-                                    delay: 200
-                                });
+                                animator.flyOutRight(oldImage).then(function(){changeImageMutex = false;});
+                                animator.slideInFromLeft(newImage, 200);
                             }
                         });
                     }
