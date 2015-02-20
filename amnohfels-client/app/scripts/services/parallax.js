@@ -29,7 +29,6 @@ angular.module('amnohfelsClientApp')
         angular.element($window).bind('scroll', function() {
             util.throttle(parallaxScroll(), 10);
         });
-        console.log('parallax init');
     }
 
     this.add = function($section, bgImgSrc){
@@ -48,26 +47,23 @@ angular.module('amnohfelsClientApp')
             }
         });
         initDimensions(bgImgSrc, images.length - 1);
-        $timeout(function(){
-            images[images.length - 1].sectionOffset = $section.offset().top;
-            parallaxScroll();
-        });
-        console.log('parallax section add');
     };
 
     this.clear = function(){
-        console.log('cleared');
         images = [];
         $parallaxImagesContainer.children().remove();
     };
 
-    //TODO bind this to the dom image load event?
     function initDimensions(src, index){
         var bgImg = new Image();
         bgImg.onload = function() {
             images[index].dimensions.height = this.height;
             images[index].dimensions.width = this.width;
-            setImageSizes();
+            $timeout(function(){
+                images[index].sectionOffset = images[index].section.offset().top;
+                setImageSizes();
+                parallaxScroll();
+            });
         };
         bgImg.src = src;
     }
@@ -99,12 +95,8 @@ angular.module('amnohfelsClientApp')
             var containerHeight = parseInt(images[i].container.css('height')); //TODO is there a way to do this without parseInt?
             var containerWidth = parseInt(images[i].container.css('width'));
             var nominalValue = containerHeight * (parallaxRatio + 1);
-            var strechedImgHeight = imgHeight * containerWidth / imgWidth;
+            var strechedImgHeight = parseInt(imgHeight * containerWidth / imgWidth);
             var strechedImgWidth = nominalValue / imgHeight * imgWidth;
-
-            console.log(containerHeight);
-            console.log(containerWidth);
-
             if(strechedImgHeight > nominalValue){
                 images[i].image.css({
                     'width':    '100%',

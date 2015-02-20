@@ -23,7 +23,7 @@
 
   .wrapper{
     position: absolute;
-    top: 50px;
+    top: $navbar-height;//50px;
     left: 0px;
     max-width: 90%;
 
@@ -33,7 +33,7 @@
       font-family: 'Playfair Display', serif;
       font-weight: 400;
       font-style: normal;
-      margin: 0px 0px 0px 50px;
+      margin: 0px 0px 0px $navbar-height;//50px;
       color: $gray-super-light;
     }
 
