@@ -9,11 +9,11 @@
 
 //TODO what happens when we have multiple image modules on one page?
 //TODO templates for spaghetti angular element definitions
-//TODO factor out animations - maybe use animate service?
 //TODO trigger image change animations directly with the onload event, not with a watcher which watches an attribute which gets set by the onload even
+//TODO comment
 
 angular.module('amnohfelsClientApp')
-    .directive('imageModule', function ($compile, animator){
+    .directive('imageModule', function ($compile, animator, $document){
         return {
             templateUrl: 'views/image-module.html',
             restrict: 'E',
@@ -37,6 +37,7 @@ angular.module('amnohfelsClientApp')
                     backdrop.append($compile(previousImageIcon)(scope));
                     animator.fadeIn(backdrop);
                     animator.fadeIn(image, 200);
+                    $document.bind('keyup', lbMapKeyup);
                 };
 
                 scope.lbClose = function(){
@@ -44,6 +45,7 @@ angular.module('amnohfelsClientApp')
                     var backdrop = angular.element(document.querySelector('.lb-backdrop'));
                     animator.fadeOutAndRemove(image);
                     animator.fadeOutAndRemove(backdrop, 200);
+                    $document.unbind('keydown', lbMapKeyup);
                 };
 
                 scope.lbNextImage = function() {
@@ -84,6 +86,18 @@ angular.module('amnohfelsClientApp')
                                 animator.slideInFromLeft(newImage, 200);
                             }
                         });
+                    }
+                };
+
+                var lbMapKeyup = function(keyEvent){
+                    if (keyEvent.which === 39){
+                        scope.lbNextImage();
+                    }
+                    if (keyEvent.which === 37){
+                        scope.lbPreviousImage();
+                    }
+                    if (keyEvent.which === 27){
+                        scope.lbClose();
                     }
                 };
             }
