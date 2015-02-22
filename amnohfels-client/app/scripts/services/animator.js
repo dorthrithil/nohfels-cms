@@ -9,12 +9,21 @@
  */
 
 //TODO allow staggered animations to get rid of delay arguments
-//TODO fly out animations better
 
 angular.module('amnohfelsClientApp')
-  .service('animator', function animator($q) {
+  .service('animator', function animator($q, $window) {
 
     var animationStepDuration = 200;
+
+    //TODO pass an object and call the animations with a delay
+    this.stagger = function(animations){
+        angular.forEach(animations, function(animation) {
+            animation[0](animation[1]);
+        });
+//        angular.forEach(animations, function(animation) {
+//            animation.call();
+//        });
+    };
 
     this.fadeIn = function($element, delay){
         delay = delay || 0;
@@ -41,34 +50,54 @@ angular.module('amnohfelsClientApp')
         });
     };
 
-    this.slideInFromRight = function($element, delay){
+    this.slideInRight = function($element, delay){
         delay = delay || 0;
-        $element.velocity({
-            left: '0'
-        }, {
-            duration: animationStepDuration,
-            delay: delay
+        return $q(function(resolve) {
+            $element.css({
+                right : '0px',
+                left : $window.innerWidth - parseInt($element.css('width')) + 'px'
+            });
+            $element.velocity({
+                right : '0',
+                left: '0',
+                opacity: '1'
+            }, {
+                duration: animationStepDuration,
+                delay: delay,
+                complete: function () {
+                    resolve();
+                }
+            });
         });
     };
 
-    this.slideInFromLeft = function($element, delay){
+    this.slideInLeft = function($element, delay){
         delay = delay || 0;
-        $element.velocity({
-            right: '0'
-        }, {
-            duration: animationStepDuration,
-            delay: delay
+        return $q(function(resolve) {
+            $element.css({
+                left : '0px',
+                right : $window.innerWidth - parseInt($element.css('width')) + 'px'
+            });
+            $element.velocity({
+                right: '0',
+                left: '0',
+                opacity: '1'
+            }, {
+                duration: animationStepDuration,
+                delay: delay,
+                complete: function () {
+                    resolve();
+                }
+            });
         });
     };
 
-    this.flyOutLeft = function($element) {
+    this.slideOutLeft = function($element) {
         return $q(function(resolve) {
             $element.velocity({
                 opacity: 0,
-                width: '0px',
-                height: '0px',
-                right: '100%',
-                bottom: '100%'
+                left: '0px',
+                right: $window.innerWidth - parseInt($element.css('width')) + 'px'
             }, {
                 duration: animationStepDuration * 2,
                 complete: function () {
@@ -79,14 +108,12 @@ angular.module('amnohfelsClientApp')
         });
     };
 
-    this.flyOutRight = function($element) {
+    this.slideOutRight = function($element) {
         return $q(function(resolve) {
             $element.velocity({
                 opacity: 0,
-                width: '0px',
-                height: '0px',
-                left: '100%',
-                bottom: '100%'
+                right: '0px',
+                left: $window.innerWidth - parseInt($element.css('width')) + 'px'
             }, {
                 duration: animationStepDuration * 2,
                 complete: function () {

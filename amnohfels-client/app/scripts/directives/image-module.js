@@ -11,6 +11,10 @@
 //TODO templates for spaghetti angular element definitions
 //TODO trigger image change animations directly with the onload event, not with a watcher which watches an attribute which gets set by the onload even
 //TODO comment
+//TODO 'loading' gif while next image is loading if it takes too long
+//TODO template pattern for next/previous image functions
+//TODO css class lb-image-enter-left & function slideInLeft: consistent naming
+//TODO css: lb-image as child of backdrop
 
 angular.module('amnohfelsClientApp')
     .directive('imageModule', function ($compile, animator, $document){
@@ -21,49 +25,56 @@ angular.module('amnohfelsClientApp')
                 data: '='
             },
             link: function(scope){
+                //init
                 var body = angular.element(document).find('body');
-                var changeImageMutex = false;
+                var backdrop = angular.element('<div class="lb-backdrop" ng-click="lbClose()"></div>');
+                var closeIcon = angular.element('<div class="lb-close" ng-click="lbClose()" no-propagation><div class="lb-navigation-wrapper"><div class="lb-navigation-center"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></div></div></div>');
+                var nextImageIcon = angular.element('<div class="lb-next-image" ng-click="lbNextImage()" no-propagation><div class="lb-navigation-wrapper"><div class="lb-navigation-center"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></div></div></div>');
+                var previousImageIcon = angular.element('<div class="lb-previous-image" ng-click="lbPreviousImage()" no-propagation><div class="lb-navigation-wrapper"><div class="lb-navigation-center"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span></div></div></div>');
+                backdrop.append(closeIcon);
+                backdrop.append(nextImageIcon);
+                backdrop.append(previousImageIcon);
+                var image = null;
+                var changeImageMutex = false; //make sure only one image gets changed at a time
 
                 scope.lbOpen = function(index){
-                    var backdrop = angular.element('<div class="lb-backdrop" ng-click="lbClose()"></div>');
-                    var image = angular.element('<img alt="" index="' + index + '" src="' + scope.data.images[index].imageSrc + '" class="lb-image" ng-click="lbNextImage()" no-propagation lb-calc-dimensions/>');
-                    var closeIcon = angular.element('<div class="lb-close" ng-click="lbClose()" no-propagation><div class="lb-navigation-wrapper"><div class="lb-navigation-center"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></div></div></div>');
-                    var nextImageIcon = angular.element('<div class="lb-next-image" ng-click="lbNextImage()" no-propagation><div class="lb-navigation-wrapper"><div class="lb-navigation-center"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></div></div></div>');
-                    var previousImageIcon = angular.element('<div class="lb-previous-image" ng-click="lbPreviousImage()" no-propagation><div class="lb-navigation-wrapper"><div class="lb-navigation-center"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span></div></div></div>');
-                    body.append($compile(backdrop)(scope));
-                    backdrop.append($compile(image)(scope));
-                    backdrop.append($compile(closeIcon)(scope));
-                    backdrop.append($compile(nextImageIcon)(scope));
-                    backdrop.append($compile(previousImageIcon)(scope));
+                    //setup
+                    image = angular.element('<img alt="" index="' + index + '" src="' + scope.data.images[index].imageSrc + '" class="lb-image" ng-click="lbNextImage()" no-propagation lb-calc-dimensions/>');
+                    backdrop.append(image);
+                    body.append($compile(backdrop)(scope)); //compiling is necessary to wire up the used directives
+                    $document.bind('keyup', lbMapKeyup);
+                    //show
                     animator.fadeIn(backdrop);
                     animator.fadeIn(image, 200);
-                    $document.bind('keyup', lbMapKeyup);
                 };
 
                 scope.lbClose = function(){
-                    var image = angular.element(document.querySelector('.lb-image'));
-                    var backdrop = angular.element(document.querySelector('.lb-backdrop'));
-                    animator.fadeOutAndRemove(image);
-                    animator.fadeOutAndRemove(backdrop, 200);
+                    animator.stagger([
+                        [animator.fadeOutAndRemove,  image],
+                        [animator.fadeOutAndRemove,  backdrop]
+                        //function(){animator.fadeOutAndRemove(image);},
+                        //function(){animator.fadeOutAndRemove(backdrop);}
+                    ]);
+                    //tear down everything we set up in lbOpen
+                    //animator.fadeOutAndRemove(image);
+                    //animator.fadeOutAndRemove(backdrop, 200);
                     $document.unbind('keydown', lbMapKeyup);
                 };
 
                 scope.lbNextImage = function() {
                     if (!changeImageMutex) {
                         changeImageMutex = true;
-                        var backdrop = angular.element(document.querySelector('.lb-backdrop'));
-                        var oldImage = angular.element(document.querySelector('.lb-image'));
-                        var oldIndex = parseInt(oldImage.attr('index'));
-                        var newIndex = (scope.data.images.length - 1 === oldIndex) ? 0 : oldIndex + 1;
-                        var newImage = angular.element('<img alt="" index="' + newIndex + '" src="' + scope.data.images[newIndex].imageSrc + '" class="lb-image lb-image-active lb-image-enter-right" ng-click="lbNextImage()" no-propagation preloadable lb-calc-dimensions/>');
+                        var index = parseInt(image.attr('index'));
+                        var newIndex = (scope.data.images.length - 1 === index) ? 0 : index + 1;
+                        var newImage = angular.element('<img alt="" index="' + newIndex + '" src="' + scope.data.images[newIndex].imageSrc + '" class="lb-image" ng-click="lbNextImage()" no-propagation preloadable lb-calc-dimensions/>');
                         backdrop.append($compile(newImage)(scope));
                         //watch for image getting loaded, then animate it
                         scope.$watch(function () {
                             return newImage.attr('loaded');
                         }, function (newValue) {
                             if (newValue === 'true') {
-                                animator.flyOutLeft(oldImage).then(function(){changeImageMutex = false;});
-                                animator.slideInFromRight(newImage, 200);
+                                animator.slideOutLeft(image).then(function(){changeImageMutex = false;});
+                                animator.slideInRight(newImage, 200).then(function(){image = newImage;});
                             }
                         });
                     }
@@ -71,31 +82,32 @@ angular.module('amnohfelsClientApp')
                 scope.lbPreviousImage = function() {
                     if (!changeImageMutex) {
                         changeImageMutex = true;
-                        var backdrop = angular.element(document.querySelector('.lb-backdrop'));
-                        var oldImage = angular.element(document.querySelector('.lb-image'));
-                        var oldIndex = parseInt(oldImage.attr('index'));
-                        var newIndex = (oldIndex === 0) ? scope.data.images.length - 1 : oldIndex - 1;
-                        var newImage = angular.element('<img alt="" index="' + newIndex + '" src="' + scope.data.images[newIndex].imageSrc + '" class="lb-image lb-image-active lb-image-enter-left" ng-click="lbNextImage()" no-propagation preloadable lb-calc-dimensions/>');
+                        var index = parseInt(image.attr('index'));
+                        var newIndex = (index === 0) ? scope.data.images.length - 1 : index - 1;
+                        var newImage = angular.element('<img alt="" index="' + newIndex + '" src="' + scope.data.images[newIndex].imageSrc + '" class="lb-image" ng-click="lbNextImage()" no-propagation preloadable lb-calc-dimensions/>');
                         backdrop.append($compile(newImage)(scope));
                         //watch for image getting loaded, then animate it
                         scope.$watch(function () {
                             return newImage.attr('loaded');
                         }, function (newValue) {
                             if (newValue === 'true') {
-                                animator.flyOutRight(oldImage).then(function(){changeImageMutex = false;});
-                                animator.slideInFromLeft(newImage, 200);
+                                animator.slideOutRight(image).then(function(){changeImageMutex = false;});
+                                animator.slideInLeft(newImage, 200).then(function(){image = newImage;});
                             }
                         });
                     }
                 };
 
                 var lbMapKeyup = function(keyEvent){
+                    //right arrow
                     if (keyEvent.which === 39){
                         scope.lbNextImage();
                     }
+                    //left arrow
                     if (keyEvent.which === 37){
                         scope.lbPreviousImage();
                     }
+                    //esc
                     if (keyEvent.which === 27){
                         scope.lbClose();
                     }

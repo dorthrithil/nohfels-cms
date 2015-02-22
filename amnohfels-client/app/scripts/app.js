@@ -8,8 +8,12 @@
  *
  * Main module of the application.
  */
+
+//TODO don't stuff everything in the same module
+//TODO protect dep injection against minification https://thinkster.io/egghead/scope-vs-scope at ~5:10
+
 angular
-    .module('amnohfelsClientApp', ['ngRoute', 'ngAnimate'])
+    .module('amnohfelsClientApp', ['ngRoute'])
         .config(function($routeProvider) {
             $routeProvider
                 .when('/', {
