@@ -44,21 +44,15 @@ angular.module('amnohfelsClientApp')
                     body.append($compile(backdrop)(scope)); //compiling is necessary to wire up the used directives
                     $document.bind('keyup', lbMapKeyup);
                     //show
-                    animator.fadeIn(backdrop);
-                    animator.fadeIn(image, 200);
+                    animator.stagger().fadeIn(backdrop);
+                    animator.stagger().fadeIn(image);
                 };
 
                 scope.lbClose = function(){
-                    animator.stagger([
-                        [animator.fadeOutAndRemove,  image],
-                        [animator.fadeOutAndRemove,  backdrop]
-                        //function(){animator.fadeOutAndRemove(image);},
-                        //function(){animator.fadeOutAndRemove(backdrop);}
-                    ]);
                     //tear down everything we set up in lbOpen
-                    //animator.fadeOutAndRemove(image);
-                    //animator.fadeOutAndRemove(backdrop, 200);
-                    $document.unbind('keydown', lbMapKeyup);
+                    animator.stagger().fadeOutAndRemove(image);
+                    animator.stagger().fadeOutAndRemove(backdrop);
+                    $document.unbind('keyup', lbMapKeyup);
                 };
 
                 scope.lbNextImage = function() {
@@ -73,8 +67,11 @@ angular.module('amnohfelsClientApp')
                             return newImage.attr('loaded');
                         }, function (newValue) {
                             if (newValue === 'true') {
-                                animator.slideOutLeft(image).then(function(){changeImageMutex = false;});
-                                animator.slideInRight(newImage, 200).then(function(){image = newImage;});
+                                animator.stagger().slideOutLeft(image);
+                                animator.stagger().slideInRight(newImage).then(function(){
+                                    image = newImage;
+                                    changeImageMutex = false;
+                                });
                             }
                         });
                     }
@@ -91,8 +88,11 @@ angular.module('amnohfelsClientApp')
                             return newImage.attr('loaded');
                         }, function (newValue) {
                             if (newValue === 'true') {
-                                animator.slideOutRight(image).then(function(){changeImageMutex = false;});
-                                animator.slideInLeft(newImage, 200).then(function(){image = newImage;});
+                                animator.stagger().slideOutRight(image);
+                                animator.stagger().slideInLeft(newImage).then(function(){
+                                    image = newImage;
+                                    changeImageMutex = false;
+                                });
                             }
                         });
                     }
