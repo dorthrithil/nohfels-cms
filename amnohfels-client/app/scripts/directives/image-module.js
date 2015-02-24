@@ -15,6 +15,8 @@
 //TODO template pattern for next/previous image functions
 //TODO css class lb-image-enter-left & function slideInLeft: consistent naming
 //TODO css: lb-image as child of backdrop
+//TODO make navigation z-index higher then image z-index
+//TODO correct hover for close icon
 
 angular.module('amnohfelsClientApp')
     .directive('imageModule', function ($compile, animator, $document){
@@ -50,8 +52,8 @@ angular.module('amnohfelsClientApp')
 
                 scope.lbClose = function(){
                     //tear down everything we set up in lbOpen
-                    animator.stagger().fadeOutAndRemove(image);
-                    animator.stagger().fadeOutAndRemove(backdrop);
+                    animator.stagger().fadeOut(image).then(function(){image.remove();});
+                    animator.stagger().fadeOut(backdrop).then(function(){backdrop.remove();});
                     $document.unbind('keyup', lbMapKeyup);
                 };
 
@@ -67,7 +69,7 @@ angular.module('amnohfelsClientApp')
                             return newImage.attr('loaded');
                         }, function (newValue) {
                             if (newValue === 'true') {
-                                animator.stagger().slideOutLeft(image);
+                                animator.stagger().slideOutLeft(image).then(function(){image.remove();});
                                 animator.stagger().slideInRight(newImage).then(function(){
                                     image = newImage;
                                     changeImageMutex = false;
@@ -88,7 +90,7 @@ angular.module('amnohfelsClientApp')
                             return newImage.attr('loaded');
                         }, function (newValue) {
                             if (newValue === 'true') {
-                                animator.stagger().slideOutRight(image);
+                                animator.stagger().slideOutRight(image).then(function(){image.remove();});
                                 animator.stagger().slideInLeft(newImage).then(function(){
                                     image = newImage;
                                     changeImageMutex = false;
