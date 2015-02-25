@@ -12,7 +12,6 @@
 //i can use a real queue for that. use array.push() to build up the queue in image-module
 //and use something like queue.start to start the animation which iterates with array.shift()
 //the problem would be solved then because i could bring the delay in exclusively this way. also it's way cleaner.
-//TODO comment stagger, animation, deStagger
 
 angular.module('amnohfelsClientApp')
     .service('animator', function animator($q, $window) {

@@ -9,6 +9,17 @@
   height: 100%;
   z-index: 9997;
   opacity: 0;
+
+  img{
+    position: fixed;
+    margin: auto;
+    z-index: 9997;
+    opacity: 0;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
 }
 
 
@@ -34,6 +45,9 @@ $lb-navigation-bg-hover: #191919;
   background-color: $lb-navigation-bg;
   position: fixed;
   cursor: pointer;
+  -webkit-transition: background-color linear 0.1s;
+  -moz-transition: background-color linear 0.1s;
+  transition: background-color linear 0.1s;
 }
 
 .lb-next-image{
@@ -65,11 +79,11 @@ $lb-navigation-bg-hover: #191919;
 .lb-close{
   z-index: 9999;
   top: 0px;
-  position: fixed;
-  width: round($lb-navigation-width / 2);
-  height: round($lb-navigation-width / 2);
-  cursor: pointer;
   right: 0;
+  position: fixed;
+  width: $lb-navigation-width;
+  height: $lb-navigation-width;
+  cursor: pointer;
 
   .lb-navigation-center{
     right: 30px;
@@ -83,13 +97,19 @@ $lb-navigation-bg-hover: #191919;
   }
 }
 
-.lb-image{
-  position: fixed;
-  margin: auto;
-  z-index: 9999;
-  opacity: 0;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
+//spinning loading glyphicon
+
+.glyphicon-refresh-animate {
+  -animation: spin .7s infinite linear;
+  -webkit-animation: spin2 .7s infinite linear;
+}
+
+@-webkit-keyframes spin2 {
+  from { -webkit-transform: rotate(0deg);}
+  to { -webkit-transform: rotate(360deg);}
+}
+
+@keyframes spin {
+  from { transform: scale(1) rotate(0deg);}
+  to { transform: scale(1) rotate(360deg);}
 }

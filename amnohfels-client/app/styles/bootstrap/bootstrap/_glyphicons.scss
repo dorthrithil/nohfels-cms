@@ -24,6 +24,9 @@
 // Catchall baseclass
 .glyphicon {
   color: $gray-super-light;
+  -webkit-transition: color linear 0.1s;
+  -moz-transition: color linear 0.1s;
+  transition: color linear 0.1s;
   position: relative;
   top: 1px;
   display: inline-block;

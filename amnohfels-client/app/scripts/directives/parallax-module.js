@@ -7,6 +7,8 @@
  * # parallaxModule
  */
 
+//TODO fadeIn image onload
+
 angular.module('amnohfelsClientApp')
     .directive('parallaxModule', function (parallax) {
         return {
