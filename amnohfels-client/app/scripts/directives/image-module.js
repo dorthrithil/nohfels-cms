@@ -9,8 +9,6 @@
 
 //TODO what happens when we have multiple image modules on one page?
 //TODO templates for spaghetti angular element definitions
-//TODO trigger image change animations directly with the onload event, not with a watcher which watches an attribute which gets set by the onload even
-//TODO comment
 
 angular.module('amnohfelsClientApp')
     .directive('imageModule', function ($compile, animator, $document, $timeout){
@@ -31,21 +29,21 @@ angular.module('amnohfelsClientApp')
                 backdrop.append(nextImageIcon);
                 backdrop.append(previousImageIcon);
                 var image = null;
-                var changeImageMutex = false; //make sure only one image gets changed at a time
+                var changeImageMutex = false; //makes sure only one image gets changed at a time
 
+                //appends lightbox to dom with animation
                 scope.lbOpen = function(index){
-                    //setup
                     image = angular.element('<img alt="" index="' + index + '" src="' + scope.data.images[index].imageSrc + '" ng-click="lbChangeImage(\'right\')" no-propagation lb-calc-dimensions/>');
                     backdrop.append(image);
                     body.append($compile(backdrop)(scope)); //compiling is necessary to wire up the used directives
                     $document.bind('keyup', lbMapKeyup);
-                    //show
                     animator.stagger().fadeIn(backdrop);
                     animator.stagger().fadeIn(image);
+                    //TODO wai for load event here too!
                 };
 
+                //removes all lightbox from dom with animation
                 scope.lbClose = function(){
-                    //tear down everything we set up in lbOpen
                     animator.stagger().fadeOut(image).then(function(){image.remove();});
                     animator.stagger().fadeOut(backdrop).then(function(){backdrop.remove();});
                     $document.unbind('keyup', lbMapKeyup);
@@ -54,9 +52,9 @@ angular.module('amnohfelsClientApp')
                 scope.lbChangeImage = function(direction){
                     if (!changeImageMutex) {
                         changeImageMutex = true;
-                        var index = parseInt(image.attr('index'));
+                        var index = parseInt(image.attr('index')); //get the actual index
                         var newIndex, $icon;
-                        if(direction === 'right'){
+                        if(direction === 'right'){ //initialize icon and new index
                             $icon = nextImageIcon.children().children().children();
                             newIndex = (scope.data.images.length - 1 === index) ? 0 : index + 1;
                         } else {
@@ -64,39 +62,39 @@ angular.module('amnohfelsClientApp')
                             newIndex = (index === 0) ? scope.data.images.length - 1 : index - 1;
                         }
                         var newImage = angular.element('<img alt="" index="' + newIndex + '" src="' + scope.data.images[newIndex].imageSrc + '" ng-click="lbChangeImage(right)" no-propagation preloadable lb-calc-dimensions/>');
-                        backdrop.append($compile(newImage)(scope));
-                        //watch for image getting loaded, then animate it
+                        backdrop.append($compile(newImage)(scope)); //append new image (outside of viewport)
                         var startLoadingAnimation = true;
                         var loadingAnimationStarted = false;
-                        $timeout(function(){
+                        $timeout(function(){ //if loading the new image takes long, indicate with spinning glyphicon
                             if(startLoadingAnimation){
                                 loadingAnimationStarted = true;
                                 $icon.removeClass('glyphicon-chevron-' + direction).addClass('glyphicon-refresh glyphicon-refresh-animate');
                             }
                         },500);
-                        scope.$watch(function () {
-                            return newImage.attr('loaded');
-                        }, function (newValue) {
-                            if (newValue === 'true') {
-                                startLoadingAnimation = false;
-                                if(loadingAnimationStarted){
-                                    $icon.removeClass('glyphicon-refresh glyphicon-refresh-animate').addClass('glyphicon-chevron-' + direction);
-                                }
-                                if(direction === 'right'){
-                                    animator.stagger().slideOutLeft(image).then(function(){image.remove();});
-                                    animator.stagger().slideInRight(newImage).then(function(){
-                                        image = newImage;
-                                        changeImageMutex = false;
-                                    });
-                                } else {
-                                    animator.stagger().slideOutRight(image).then(function(){image.remove();});
-                                    animator.stagger().slideInLeft(newImage).then(function(){
-                                        image = newImage;
-                                        changeImageMutex = false;
-                                    });
-                                }
+
+                        var performAnimation = function(){
+                            unbindLbImageLoaded();
+                            startLoadingAnimation = false;
+                            if(loadingAnimationStarted){ //remove spinning icon
+                                $icon.removeClass('glyphicon-refresh glyphicon-refresh-animate').addClass('glyphicon-chevron-' + direction);
                             }
-                        });
+                            if(direction === 'right'){ //...animate
+                                animator.stagger().slideOutLeft(image).then(function(){image.remove();});
+                                animator.stagger().slideInRight(newImage).then(function(){
+                                    image.remove();
+                                    image = newImage; //make it reentrantable
+                                    changeImageMutex = false;
+                                });
+                            } else {
+                                animator.stagger().slideOutRight(image).then(function(){image.remove();});
+                                animator.stagger().slideInLeft(newImage).then(function(){
+                                    image = newImage;
+                                    changeImageMutex = false;
+                                });
+                            }
+                        };
+
+                        var unbindLbImageLoaded = scope.$on('lbImageLoaded', performAnimation);
                     }
                 };
 
