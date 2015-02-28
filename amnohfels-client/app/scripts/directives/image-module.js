@@ -7,7 +7,6 @@
  * # imageModule
  */
 
-//TODO what happens when we have multiple image modules on one page?
 //TODO templates for spaghetti angular element definitions
 
 angular.module('amnohfelsClientApp')
@@ -25,6 +24,7 @@ angular.module('amnohfelsClientApp')
                 var closeIcon = angular.element('<div class="lb-close" ng-click="lbClose()" no-propagation><div class="lb-navigation-wrapper"><div class="lb-navigation-center"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></div></div></div>');
                 var nextImageIcon = angular.element('<div class="lb-next-image" ng-click="lbChangeImage(\'right\')" no-propagation><div class="lb-navigation-wrapper"><div class="lb-navigation-center"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></div></div></div>');
                 var previousImageIcon = angular.element('<div class="lb-previous-image" ng-click="lbChangeImage(\'left\')" no-propagation><div class="lb-navigation-wrapper"><div class="lb-navigation-center"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span></div></div></div>');
+                var loadingIcon = angular.element('<div class="loading"><span class="glyphicon glyphicon-refresh glyphicon-refresh-animate" aria-hidden="true"></span></div>');
                 backdrop.append(closeIcon);
                 backdrop.append(nextImageIcon);
                 backdrop.append(previousImageIcon);
@@ -33,13 +33,29 @@ angular.module('amnohfelsClientApp')
 
                 //appends lightbox to dom with animation
                 scope.lbOpen = function(index){
-                    image = angular.element('<img alt="" index="' + index + '" src="' + scope.data.images[index].imageSrc + '" ng-click="lbChangeImage(\'right\')" no-propagation lb-calc-dimensions/>');
+                    image = angular.element('<img alt="" index="' + index + '" src="' + scope.data.images[index].imageSrc + '" ng-click="lbChangeImage(\'right\')" no-propagation lb-calc-dimensions preloadable/>');
                     backdrop.append(image);
                     body.append($compile(backdrop)(scope)); //compiling is necessary to wire up the used directives
                     $document.bind('keyup', lbMapKeyup);
                     animator.stagger().fadeIn(backdrop);
-                    animator.stagger().fadeIn(image);
-                    //TODO wai for load event here too!
+                    var startLoadingAnimation = true;
+                    var loadingAnimationStarted = false;
+                    $timeout(function(){ //if loading the image takes long, indicate with spinning glyphicon
+                        if(startLoadingAnimation){
+                            backdrop.append(loadingIcon);
+                            loadingAnimationStarted = true;
+                            animator.stagger().fadeIn(loadingIcon);
+                        }
+                    },500);
+                    var performAnimation = function(){
+                        unbindLbImageLoaded();
+                        startLoadingAnimation = false;
+                        if(loadingAnimationStarted){ //remove spinning icon
+                            animator.stagger().fadeOut(loadingIcon).then(function(){loadingIcon.remove();});
+                        }
+                        animator.stagger().fadeIn(image);
+                    };
+                    var unbindLbImageLoaded = scope.$on('lbImageLoaded', performAnimation);
                 };
 
                 //removes all lightbox from dom with animation
@@ -61,7 +77,7 @@ angular.module('amnohfelsClientApp')
                             $icon = previousImageIcon.children().children().children();
                             newIndex = (index === 0) ? scope.data.images.length - 1 : index - 1;
                         }
-                        var newImage = angular.element('<img alt="" index="' + newIndex + '" src="' + scope.data.images[newIndex].imageSrc + '" ng-click="lbChangeImage(right)" no-propagation preloadable lb-calc-dimensions/>');
+                        var newImage = angular.element('<img alt="" index="' + newIndex + '" src="' + scope.data.images[newIndex].imageSrc + '" ng-click="lbChangeImage(' + direction + ')" no-propagation preloadable lb-calc-dimensions/>');
                         backdrop.append($compile(newImage)(scope)); //append new image (outside of viewport)
                         var startLoadingAnimation = true;
                         var loadingAnimationStarted = false;

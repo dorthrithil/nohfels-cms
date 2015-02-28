@@ -1,11 +1,15 @@
 image-module{
+  .container{
+    margin-top: $grid-gutter-width;
+  }
+
   .image-wrapper{
     text-align: center;
     .image-container {
       height: 200px;
       background-size: cover;
       background-position: center;
-      margin-bottom: 30px;
+      margin-bottom: $grid-gutter-width;
       cursor: pointer;
     }
     .image-large{

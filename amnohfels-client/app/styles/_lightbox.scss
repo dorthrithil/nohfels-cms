@@ -20,6 +20,19 @@
     left: 0;
     right: 0;
   }
+
+  .loading{
+    position: fixed;
+    margin: auto;
+    z-index: 9997;
+    opacity: 0;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 19px;
+    width: 16px;
+  }
 }
 
 

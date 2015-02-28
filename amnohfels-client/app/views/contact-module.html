@@ -1,0 +1,20 @@
+<div class="container">
+    <h3>Haben Sie Fragen?</h3>
+    <form name="contactForm">
+        <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" class="form-control" id="name" placeholder="Vorname Nachname">
+        </div>
+        <div class="form-group" ng-class="{'has-success has-feedback': contactForm.emailInput.$valid}">
+            <label for="email">E-Mail Adresse</label>
+            <input type="email" name="emailInput" class="form-control" id="email" placeholder="E-Mail Adresse" ng-model="email.text"  aria-describedby="inputSuccess2Status"><!--TODO aria describedby-->
+            <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
+            <span id="inputSuccess2Status" class="sr-only">(success)</span>
+        </div>
+        <div class="form-group">
+            <label for="content">Ihre Nachricht</label>
+            <textarea class="form-control" rows="3" id="content" placeholder="Ihre Nachricht"></textarea>
+        </div>
+        <button type="submit" class="btn btn-default">Absenden</button>
+    </form>
+</div>

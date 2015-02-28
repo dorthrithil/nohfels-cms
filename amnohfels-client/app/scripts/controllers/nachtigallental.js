@@ -51,4 +51,23 @@ angular.module('amnohfelsClientApp')
         $scope.response[4].data.title = 'Hier ist ein Titel';
         $scope.response[4].data.caption = 'Das ist ja toll <br> lalala';
         $scope.response[4].data.bgImgSrc = 'images/parallax/sample2.jpg';
+
+        $scope.response[5] = {};
+        $scope.response[5].data = {};
+        $scope.response[5].type = 'image-module';
+        $scope.response[5].data.images = [
+            {imageSize : 'large', imageThumbSrc : 'images/gallery/large.jpg', imageSrc : 'images/gallery/large.jpg'},
+            {imageSize : 'small', imageThumbSrc : 'images/gallery/gallery1.jpg', imageSrc : 'http://deelay.me/1000/http://media1.santabanta.com/full1/Outdoors/Landscapes/landscapes-267a.jpg'},
+            {imageSize : 'small', imageThumbSrc : 'images/gallery/gallery2.jpg', imageSrc : 'images/gallery/gallery2.jpg'},
+            {imageSize : 'small', imageThumbSrc : 'images/gallery/gallery3.jpg', imageSrc : 'images/gallery/gallery3.jpg'},
+            {imageSize : 'small', imageThumbSrc : 'images/gallery/gallery4.jpg', imageSrc : 'images/gallery/gallery4.jpg'},
+            {imageSize : 'small', imageThumbSrc : 'images/gallery/gallery5.jpg', imageSrc : 'images/gallery/gallery5.jpg'},
+            {imageSize : 'small', imageThumbSrc : 'images/gallery/gallery6.jpg', imageSrc : 'images/gallery/gallery6.jpg'},
+            {imageSize : 'small', imageThumbSrc : 'images/gallery/gallery7.jpg', imageSrc : 'images/gallery/gallery7.jpg'},
+            {imageSize : 'small', imageThumbSrc : 'images/gallery/gallery8.jpg', imageSrc : 'images/gallery/gallery8.jpg'}
+        ];
+
+        $scope.response[6] = {};
+        $scope.response[6].data = {};
+        $scope.response[6].type = 'contact-module';
   });
