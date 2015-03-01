@@ -5,10 +5,20 @@
             <label for="name">Name</label>
             <input type="text" class="form-control" id="name" placeholder="Vorname Nachname">
         </div>
-        <div class="form-group" ng-class="{'has-success has-feedback': contactForm.emailInput.$valid}">
-            <label for="email">E-Mail Adresse</label>
-            <input type="email" name="emailInput" class="form-control" id="email" placeholder="E-Mail Adresse" ng-model="email.text"  aria-describedby="inputSuccess2Status"><!--TODO aria describedby-->
-            <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
+        <div class="form-group has-feedback">
+            <label for="email">E-Mail Adresse</label> <!--  ng-class="{'has-success': contactForm.emailInput.$valid}"-->
+            <input type="email"
+                   name="emailInput"
+                   class="form-control"
+                   id="email"
+                   placeholder="E-Mail Adresse"
+                   ng-model="email.text"
+                   ng-keyup="keydownTrigger($event, contactForm.emailInput.$error.pattern, contactForm.emailInput.$valid)"
+                   ng-blur="blurTrigger($event, contactForm.emailInput.$error.pattern, contactForm.emailInput.$valid)"
+                   required
+                   pattern=".{1,}@[_a-z0-9A-Z]+(\.[a-z0-9A-Z]+)+"
+                   aria-describedby="inputSuccess2Status"><!--TODO aria describedby-->
+            <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
             <span id="inputSuccess2Status" class="sr-only">(success)</span>
         </div>
         <div class="form-group">
