@@ -33,6 +33,7 @@ angular.module('amnohfelsClientApp')
     };
 
     //TODO comment + what happens when the scope of the function changes? will the old function be executed? (e.g. when i tab into another input and start tying there)
+    //works in my case as i have the blur function. but using promises would be better here
     var debouncedFunctionNotExecutedYet = false,
         debouncedFunction = null;
 

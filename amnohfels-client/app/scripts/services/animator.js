@@ -63,6 +63,9 @@ angular.module('amnohfelsClientApp')
                 }
                 var abstractSettings = { //complete actions
                     complete: function () {
+                        if (typeof args.postFormatting !== 'undefined') { //apply postFormatting
+                            $element.css(args.postFormatting);
+                        }
                         resolve(); //resolve promise
                         deStagger();
                     }
@@ -155,6 +158,46 @@ angular.module('amnohfelsClientApp')
                 left: $window.innerWidth - parseInt($element.css('width')) + 'px'
             };
             var args = {
+                concreteSettings: {
+                    duration: animationStepDuration * 2,
+                    delay: delay
+                }
+            };
+            return animation($element, properties, args);
+        };
+
+        this.expandHeightTo = function ($element, height, delay) {
+            var properties = {
+                height: height
+            };
+            var args = {
+                preFormatting : {
+                    display: 'block',
+                    overflow: 'hidden'
+                },
+                postFormatting : {
+                    //overflow: 'visible'
+                },
+                concreteSettings: {
+                    duration: animationStepDuration * 2,
+                    delay: delay
+                }
+            };
+            return animation($element, properties, args);
+        };
+
+        this.shrinkHeightTo = function ($element, height, delay) {
+            var properties = {
+                height: height
+            };
+            var args = {
+                preFormatting : {
+                    display: 'block',
+                    overflow: 'hidden'
+                },
+                postFormatting : {
+                    //overflow: 'visible'
+                },
                 concreteSettings: {
                     duration: animationStepDuration * 2,
                     delay: delay

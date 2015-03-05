@@ -5,7 +5,7 @@
 
 // Wrapper and base class
 //
-// Provide a static navbar from which we expand to create full-width, fixed, and
+// Provide a static navbar from which we expandHeightTo to create full-width, fixed, and
 // other navbar variations.
 
 .navbar {
@@ -42,7 +42,7 @@
 //
 // Group your navbar content into this for easy collapsing and expanding across
 // various device sizes. By default, this content is collapsed when <768px, but
-// will expand past that for a horizontal display.
+// will expandHeightTo past that for a horizontal display.
 //
 // To start (on mobile devices) the navbar links, forms, and buttons are stacked
 // vertically and include a `max-height` to overflow in case you have too much

@@ -13,7 +13,7 @@
 //TODO protect dep injection against minification https://thinkster.io/egghead/scope-vs-scope at ~5:10
 
 angular
-    .module('amnohfelsClientApp', ['ngRoute'])
+    .module('amnohfelsClientApp', ['ngRoute', 'ngAnimate'])
         .config(function($routeProvider) {
             $routeProvider
                 .when('/', {

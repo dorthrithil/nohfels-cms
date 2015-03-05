@@ -1,30 +1,61 @@
 <div class="container">
     <h3>Haben Sie Fragen?</h3>
-    <form name="contactForm">
-        <div class="form-group">
-            <label for="name">Name</label>
-            <input type="text" class="form-control" id="name" placeholder="Vorname Nachname">
-        </div>
+    <form name="contactForm" novalidate ng-submit="submit()">
+
         <div class="form-group has-feedback">
-            <label for="email">E-Mail Adresse</label> <!--  ng-class="{'has-success': contactForm.emailInput.$valid}"-->
+            <label for="name">Name</label>
+            <input type="text"
+                   name="nameInput"
+                   class="form-control"
+                   id="name"
+                   ng-model="name.text"
+                   placeholder="Ihr Name"
+                   ng-keyup="keydownTrigger($event, contactForm.nameInput.$error, contactForm.nameInput.$valid)"
+                   ng-blur="blurTrigger($event, contactForm.nameInput.$error, contactForm.nameInput.$valid)"
+                   required
+                   aria-describedby="inputSuccess2Status"><!--TODO aria describedby-->
+            <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+            <span class="sr-only">(success)</span>
+            <alert type="'nameRequired'" measure-offscreen></alert>
+        </div>
+
+        <div class="form-group has-feedback">
+            <label for="email">E-Mail Adresse</label>
             <input type="email"
                    name="emailInput"
                    class="form-control"
                    id="email"
-                   placeholder="E-Mail Adresse"
                    ng-model="email.text"
-                   ng-keyup="keydownTrigger($event, contactForm.emailInput.$error.pattern, contactForm.emailInput.$valid)"
-                   ng-blur="blurTrigger($event, contactForm.emailInput.$error.pattern, contactForm.emailInput.$valid)"
+                   placeholder="Ihre E-Mail Adresse"
+                   ng-keyup="keydownTrigger($event, contactForm.emailInput.$error, contactForm.emailInput.$valid)"
+                   ng-blur="blurTrigger($event, contactForm.emailInput.$error, contactForm.emailInput.$valid)"
                    required
                    pattern=".{1,}@[_a-z0-9A-Z]+(\.[a-z0-9A-Z]+)+"
-                   aria-describedby="inputSuccess2Status"><!--TODO aria describedby-->
+                   aria-describedby="inputSuccess2Status"><!--TODO aria describedby--><!--TODO wrong regex: asfwf@t-online.de -->
             <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
-            <span id="inputSuccess2Status" class="sr-only">(success)</span>
+            <span class="sr-only">(success)</span>
+            <alert type="'emailRequired'" measure-offscreen></alert>
+            <alert type="'emailInvalid'" measure-offscreen></alert>
         </div>
-        <div class="form-group">
-            <label for="content">Ihre Nachricht</label>
-            <textarea class="form-control" rows="3" id="content" placeholder="Ihre Nachricht"></textarea>
+
+        <div class="form-group has-feedback">
+            <label for="message">Nachricht</label>
+            <textarea type="text"
+                   name="messageInput"
+                   class="form-control"
+                   id="message"
+                   rows="3"
+                   ng-model="message.text"
+                   placeholder="Ihre Nachricht"
+                   ng-keyup="keydownTrigger($event, contactForm.messageInput.$error, contactForm.messageInput.$valid)"
+                   ng-blur="blurTrigger($event, contactForm.messageInput.$error, contactForm.messageInput.$valid)"
+                   required
+                   aria-describedby="inputSuccess2Status"></textarea><!--TODO aria describedby-->
+            <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+            <span class="sr-only">(success)</span>
+            <alert type="'messageRequired'" measure-offscreen></alert>
         </div>
+
         <button type="submit" class="btn btn-default">Absenden</button>
     </form>
 </div>

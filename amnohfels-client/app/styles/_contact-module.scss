@@ -2,4 +2,9 @@ contact-module {
   .container {
     margin-bottom: $grid-gutter-width;
   }
+
+  alert {
+    display: none;
+    height: 0px;
+  }
 }

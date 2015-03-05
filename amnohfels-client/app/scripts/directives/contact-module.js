@@ -30,34 +30,50 @@ angular.module('amnohfelsClientApp')
                     };
 
                     scope.indicate = function($element, errorCondition, validCondition){
-                        if (errorCondition) {
-                            scope.deIndicate($element);
+                        if (errorCondition.pattern) {
                             scope.indicateError($element);
+                        } else if (errorCondition.required){
+                            scope.indicateWarning($element);
                         }
                         if (validCondition) {
-                            scope.deIndicate($element);
                             scope.indicateSuccess($element);
                         }
                     };
 
+                    scope.indicateWarning = function ($element) {
+                        scope.deIndicate($element);
+                        $element.parent().addClass('has-warning');
+                        $element.next().addClass('glyphicon-warning-sign');
+                    };
                     scope.indicateError = function ($element) {
+                        scope.deIndicate($element);
                         $element.parent().addClass('has-error');
                         $element.next().addClass('glyphicon-remove');
                     };
                     scope.indicateSuccess = function ($element) {
+                        scope.deIndicate($element);
                         $element.parent().addClass('has-success');
                         $element.next().addClass('glyphicon-ok');
                     };
                     scope.deIndicate = function ($element) {
-                        $element.parent().removeClass('has-error has-success');
-                        $element.next().removeClass('glyphicon-remove glyphicon-ok');
+                        $element.parent().removeClass('has-error has-success has-warning');
+                        $element.next().removeClass('glyphicon-remove glyphicon-ok glyphicon-warning-sign');
+                    };
+
+                    scope.submit = function(){
+                        scope.$broadcast('contactFormSubmitted');
                     };
                 }
             },
             controller: function ($scope) {
+                $scope.name = {
+                    text: ''
+                };
                 $scope.email = {
-                    displayError: false,
-                    text: 'tests'
+                    text: ''
+                };
+                $scope.message = {
+                    text: ''
                 };
             }
         };
