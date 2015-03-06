@@ -30,6 +30,7 @@ angular.module('amnohfelsClientApp')
                     };
 
                     scope.indicate = function($element, errorCondition, validCondition){
+                        scope.$broadcast('validate-form');
                         if (errorCondition.pattern) {
                             scope.indicateError($element);
                         } else if (errorCondition.required){
