@@ -20,6 +20,7 @@ angular.module('amnohfelsClientApp')
 
         var staggerCount = -1; //counts the elements that will be staggered
         var deStaggerCount = -1; //counts the finished elements that have been staggered
+        var staggerDelay = 0; //time to wait for staggered animations to begin
 
         //adds an element to the staggerCounter. must be followed by an animation call
         this.stagger = function () {
@@ -35,6 +36,7 @@ angular.module('amnohfelsClientApp')
             if (deStaggerCount === staggerCount) { //resets both counters if all animations are finished
                 staggerCount = -1;
                 deStaggerCount = -1;
+                staggerDelay = 0;
             }
         }
 
@@ -43,7 +45,7 @@ angular.module('amnohfelsClientApp')
         //  concreteSettings: an object of velocity settings
         //  preFormatting: an object of css properties which get applied before the animation
         function animation($element, properties, args) {
-            if (typeof args.concreteSettings === 'undefined'){
+            if (typeof args.concreteSettings === 'undefined') {
                 args.concreteSettings = {}; //concrete settings can't be undefined because we need to assign defaults
             }
             if (typeof args.concreteSettings.delay === 'undefined') {
@@ -54,9 +56,11 @@ angular.module('amnohfelsClientApp')
             if (typeof args.concreteSettings.duration === 'undefined') {
                 angular.extend(args.concreteSettings, {duration: animationStepDuration});
             }
-            if (staggerCount !== 0) { //if it's a staggered animation, we have to wait some time
-                args.concreteSettings.delay += staggerCount * animationStepDuration;
+            if (staggerCount > 0) {
+                args.concreteSettings.delay += staggerDelay; //if there was a staggered animation before, we have to wait for it to finish
+                staggerDelay += args.concreteSettings.duration; //the delay for the next animation is the actual delay plus the actual duration
             }
+
             return $q(function (resolve) { //return a promise for callbacks
                 if (typeof args.preFormatting !== 'undefined') { //apply preFormatting
                     $element.css(args.preFormatting);
@@ -171,15 +175,17 @@ angular.module('amnohfelsClientApp')
                 height: height
             };
             var args = {
-                preFormatting : {
+                preFormatting: {
                     display: 'block',
-                    overflow: 'hidden'
+                    overflow: 'hidden',
+                    height: $element.css('height')
                 },
-                postFormatting : {
-                    //overflow: 'visible'
+                postFormatting: {
+                    overflow: 'auto', //for preventing margin collapsing
+                    height: 'auto'
                 },
                 concreteSettings: {
-                    duration: animationStepDuration * 2,
+                    duration: animationStepDuration,
                     delay: delay
                 }
             };
@@ -191,15 +197,15 @@ angular.module('amnohfelsClientApp')
                 height: height
             };
             var args = {
-                preFormatting : {
-                    display: 'block',
+                preFormatting: {
                     overflow: 'hidden'
                 },
-                postFormatting : {
-                    //overflow: 'visible'
+                postFormatting: {
+                    display: 'none',
+                    overflow: 'auto'
                 },
                 concreteSettings: {
-                    duration: animationStepDuration * 2,
+                    duration: animationStepDuration,
                     delay: delay
                 }
             };

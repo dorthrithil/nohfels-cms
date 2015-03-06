@@ -21,28 +21,28 @@ angular.module('amnohfelsClientApp')
                             case 'emailInvalid':
                                 if (!scope.$parent.contactForm.emailInput.$error.required && !scope.$parent.contactForm.emailInput.$valid) {
                                     animator.expandHeightTo(element, element.attr('actual-height'));
-                                } else {
+                                } else if (element.css('display') !== 'none') {
                                     animator.shrinkHeightTo(element, '0px');
                                 }
                                 break;
                             case 'emailRequired':
                                 if (scope.$parent.contactForm.emailInput.$error.required) {
                                     animator.expandHeightTo(element, element.attr('actual-height'));
-                                } else {
+                                } else if (element.css('display') !== 'none') {
                                     animator.shrinkHeightTo(element, '0px');
                                 }
                                 break;
                             case 'nameRequired':
                                 if (scope.$parent.contactForm.nameInput.$error.required) {
                                     animator.expandHeightTo(element, element.attr('actual-height'));
-                                } else {
+                                } else if (element.css('display') !== 'none') {
                                     animator.shrinkHeightTo(element, '0px');
                                 }
                                 break;
                             case 'messageRequired':
                                 if (scope.$parent.contactForm.messageInput.$error.required) {
                                     animator.expandHeightTo(element, element.attr('actual-height'));
-                                } else {
+                                } else if (element.css('display') !== 'none') {
                                     animator.shrinkHeightTo(element, '0px');
                                 }
                                 break;
