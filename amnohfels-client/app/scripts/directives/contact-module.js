@@ -16,15 +16,25 @@ angular.module('amnohfelsClientApp')
             },
             link: {
                 pre: function (scope) {
-                    scope.keydownTrigger = function ($event, errorCondition, validCondition) {
-                        var $element = angular.element($event.target);
-                        scope.deIndicate($element);
-                        util.debounce(function () {
-                            scope.indicate($element, errorCondition, validCondition);
-                        }, 1000);
+                    var keyupTriggerActivated = false;
+                    scope.activateKeyupTrigger = function(){
+                        console.log('keypress');
+                        keyupTriggerActivated = true;
+                    };
+                    scope.keyupTrigger = function ($event, errorCondition, validCondition) {
+                        console.log('keyup');
+                        if(keyupTriggerActivated){
+                            keyupTriggerActivated = false;
+                            var $element = angular.element($event.target);
+                            scope.deIndicate($element);
+                            util.debounce(function () {
+                                scope.indicate($element, errorCondition, validCondition);
+                            }, 1000);
+                        }
                     };
 
                     scope.blurTrigger = function ($event, errorCondition, validCondition) {
+                        keyupTriggerActivated = false;
                         var $element = angular.element($event.target);
                         scope.indicate($element, errorCondition, validCondition);
                     };

@@ -40,6 +40,8 @@ angular.module('amnohfelsClientApp')
             }
         }
 
+        //TODO stagger bug! i have destroyed something.. maybe reset it to old version (i'm nt using staggered form validation animations either way) or find the bug
+
         //takes an angular/dom element and an object of css properties which will get animated
         //takes an optional argument object which can contain:
         //  concreteSettings: an object of velocity settings

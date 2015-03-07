@@ -10,10 +10,11 @@
                    id="name"
                    ng-model="name.text"
                    placeholder="Ihr Name"
-                   ng-keyup="keydownTrigger($event, contactForm.nameInput.$error, contactForm.nameInput.$valid)"
+                   ng-keypress="activateKeyupTrigger()"
+                   ng-keyup="keyupTrigger($event, contactForm.nameInput.$error, contactForm.nameInput.$valid)"
                    ng-blur="blurTrigger($event, contactForm.nameInput.$error, contactForm.nameInput.$valid)"
                    required
-                   aria-describedby="inputSuccess2Status"><!--TODO aria describedby-->
+                   aria-describedby="inputSuccess2Status"><!--TODO aria describedby--><!--TODO ng change/keyup/down???-->
             <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
             <span class="sr-only">(success)</span>
             <alert type="'nameRequired'" measure-offscreen></alert>
@@ -27,7 +28,8 @@
                    id="email"
                    ng-model="email.text"
                    placeholder="Ihre E-Mail Adresse"
-                   ng-keyup="keydownTrigger($event, contactForm.emailInput.$error, contactForm.emailInput.$valid)"
+                   ng-keypress="activateKeyupTrigger()"
+                   ng-keyup="keyupTrigger($event, contactForm.emailInput.$error, contactForm.emailInput.$valid)"
                    ng-blur="blurTrigger($event, contactForm.emailInput.$error, contactForm.emailInput.$valid)"
                    required
                    pattern=".{1,}@[_a-z0-9A-Z]+(\.[a-z0-9A-Z]+)+"
@@ -47,7 +49,8 @@
                    rows="3"
                    ng-model="message.text"
                    placeholder="Ihre Nachricht"
-                   ng-keyup="keydownTrigger($event, contactForm.messageInput.$error, contactForm.messageInput.$valid)"
+                   ng-keypress="activateKeyupTrigger()"
+                   ng-keyup="keyupTrigger($event, contactForm.messageInput.$error, contactForm.messageInput.$valid)"
                    ng-blur="blurTrigger($event, contactForm.messageInput.$error, contactForm.messageInput.$valid)"
                    required
                    aria-describedby="inputSuccess2Status"></textarea><!--TODO aria describedby-->
