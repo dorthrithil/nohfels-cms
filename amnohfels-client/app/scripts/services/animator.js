@@ -18,8 +18,8 @@ angular.module('amnohfelsClientApp')
 
         var animationStepDuration = 200;
 
-        var staggerCount = -1; //counts the elements that will be staggered
-        var deStaggerCount = -1; //counts the finished elements that have been staggered
+        var staggerCount = 0; //counts the elements that will be staggered
+        var deStaggerCount = 0; //counts the finished elements that have been staggered
         var staggerDelay = 0; //time to wait for staggered animations to begin
 
         //adds an element to the staggerCounter. must be followed by an animation call
@@ -30,12 +30,12 @@ angular.module('amnohfelsClientApp')
 
         //deletes element from the staggerCounter
         function deStagger() {
-            if (staggerCount >= 0) {
+            if (staggerCount > 0) {
                 deStaggerCount++;
             }
             if (deStaggerCount === staggerCount) { //resets both counters if all animations are finished
-                staggerCount = -1;
-                deStaggerCount = -1;
+                staggerCount = 0;
+                deStaggerCount = 0;
                 staggerDelay = 0;
             }
         }
@@ -58,9 +58,10 @@ angular.module('amnohfelsClientApp')
             if (typeof args.concreteSettings.duration === 'undefined') {
                 angular.extend(args.concreteSettings, {duration: animationStepDuration});
             }
-            if (staggerCount > 0) {
-                args.concreteSettings.delay += staggerDelay; //if there was a staggered animation before, we have to wait for it to finish
-                staggerDelay += args.concreteSettings.duration; //the delay for the next animation is the actual delay plus the actual duration
+
+            args.concreteSettings.delay += staggerDelay; //if there was a staggered animation before (staggerDelay will be >0), we have to wait for it to finish
+            if (staggerCount > 0){
+                staggerDelay += args.concreteSettings.duration; //the delay for the next staggered animation is the current delay plus the actual duration
             }
 
             return $q(function (resolve) { //return a promise for callbacks
@@ -72,6 +73,7 @@ angular.module('amnohfelsClientApp')
                         if (typeof args.postFormatting !== 'undefined') { //apply postFormatting
                             $element.css(args.postFormatting);
                         }
+                            console.log('resolved promise at staggerCount ' + staggerCount + ' and staggerDelay ' + staggerDelay);
                         resolve(); //resolve promise
                         deStagger();
                     }
