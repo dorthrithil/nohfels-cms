@@ -73,7 +73,6 @@ angular.module('amnohfelsClientApp')
                         if (typeof args.postFormatting !== 'undefined') { //apply postFormatting
                             $element.css(args.postFormatting);
                         }
-                            console.log('resolved promise at staggerCount ' + staggerCount + ' and staggerDelay ' + staggerDelay);
                         resolve(); //resolve promise
                         deStagger();
                     }

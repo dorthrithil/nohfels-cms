@@ -1,6 +1,6 @@
 <div class="container">
     <h3>Haben Sie Fragen?</h3>
-    <form name="contactForm" novalidate ng-submit="submit()">
+    <form name="contactForm" novalidate ng-submit="submit($event)">
 
         <div class="form-group has-feedback">
             <label for="name">Name</label>
@@ -8,7 +8,7 @@
                    name="nameInput"
                    class="form-control"
                    id="name"
-                   ng-model="name.text"
+                   ng-model="formData.name"
                    placeholder="Ihr Name"
                    ng-keypress="activateKeyupTrigger()"
                    ng-keyup="keyupTrigger($event, contactForm.nameInput.$error, contactForm.nameInput.$valid)"
@@ -26,7 +26,7 @@
                    name="emailInput"
                    class="form-control"
                    id="email"
-                   ng-model="email.text"
+                   ng-model="formData.email"
                    placeholder="Ihre E-Mail Adresse"
                    ng-keypress="activateKeyupTrigger()"
                    ng-keyup="keyupTrigger($event, contactForm.emailInput.$error, contactForm.emailInput.$valid)"
@@ -47,7 +47,7 @@
                    class="form-control"
                    id="message"
                    rows="3"
-                   ng-model="message.text"
+                   ng-model="formData.message"
                    placeholder="Ihre Nachricht"
                    ng-keypress="activateKeyupTrigger()"
                    ng-keyup="keyupTrigger($event, contactForm.messageInput.$error, contactForm.messageInput.$valid)"
@@ -61,4 +61,5 @@
 
         <button type="submit" class="btn btn-default">Absenden</button>
     </form>
+    <modal></modal>
 </div>

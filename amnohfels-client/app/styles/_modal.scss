@@ -1,0 +1,13 @@
+modal{
+  .error{
+    background-color: $alert-danger-bg;
+    color: $alert-danger-text;
+
+    .modal-footer{
+      border-top-color: lighten($alert-danger-text, 35);
+    }
+    .modal-header{
+      border-bottom-color: lighten($alert-danger-text, 35);
+    }
+  }
+}
