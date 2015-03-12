@@ -11,6 +11,7 @@
 
 //TODO don't stuff everything in the same module
 //TODO protect dep injection against minification https://thinkster.io/egghead/scope-vs-scope at ~5:10
+//TODO route change fade?
 
 angular
     .module('amnohfelsClientApp', ['ngRoute', 'ngAnimate'])

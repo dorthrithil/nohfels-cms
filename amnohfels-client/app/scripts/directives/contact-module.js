@@ -6,8 +6,9 @@
  * @description
  * # contactModule
  */
+
 angular.module('amnohfelsClientApp')
-    .directive('contactModule', function ($timeout, util, $http, phpServerRoot) {
+    .directive('contactModule', function ($http, phpServerRoot, $q, $timeout) {
         return {
             templateUrl: 'views/contact-module.html',
             restrict: 'E',
@@ -16,77 +17,64 @@ angular.module('amnohfelsClientApp')
             },
             link: {
                 pre: function (scope) {
-                    var keyupTriggerActivated = false;
-                    scope.activateKeyupTrigger = function () {
-                        keyupTriggerActivated = true;
+                    //ng-change triggers this when the input value changes
+                    scope.contexts = [];
+                    scope.modelChanged = function (context) {
+                        scope.contexts.push(context);
+                        context.initiated = true; //true if model has at least one time changed - if not, no indication will be shown
+                        scope.$broadcast('toggleActiveAlerts');
                     };
-                    scope.keyupTrigger = function ($event, errorCondition, validCondition) {
-                        if (keyupTriggerActivated) {
-                            keyupTriggerActivated = false;
-                            var $element = angular.element($event.target);
-                            scope.deIndicate($element);
-                            util.debounce(function () {
-                                scope.indicate($element, errorCondition, validCondition);
-                            }, 1000);
-                        }
-                    };
-
-                    scope.blurTrigger = function ($event, errorCondition, validCondition) {
-                        keyupTriggerActivated = false;
-                        var $element = angular.element($event.target);
-                        scope.indicate($element, errorCondition, validCondition);
-                    };
-
-                    scope.indicate = function ($element, errorCondition, validCondition) {
-                        scope.$broadcast('validate-form'); //toggles already active alerts
-                        if (errorCondition.pattern) {
-                            scope.indicateError($element);
-                        } else if (errorCondition.required) {
-                            scope.indicateWarning($element);
-                        }
-                        if (validCondition) {
-                            scope.indicateSuccess($element);
-                        }
-                    };
-
-                    scope.indicateWarning = function ($element) {
-                        scope.deIndicate($element);
-                        $element.parent().addClass('has-warning');
-                        $element.next().addClass('glyphicon-warning-sign');
-                    };
-                    scope.indicateError = function ($element) {
-                        scope.deIndicate($element);
-                        $element.parent().addClass('has-error');
-                        $element.next().addClass('glyphicon-remove');
-                    };
-                    scope.indicateSuccess = function ($element) {
-                        scope.deIndicate($element);
-                        $element.parent().addClass('has-success');
-                        $element.next().addClass('glyphicon-ok');
-                    };
-                    scope.deIndicate = function ($element) {
-                        $element.parent().removeClass('has-error has-success has-warning');
-                        $element.next().removeClass('glyphicon-remove glyphicon-ok glyphicon-warning-sign');
-                    };
-
+                    //when submit button is pressed..
                     scope.submit = function ($event) {
-                        scope.$broadcast('contactFormSubmitted'); //toggles all alerts
-                        //TODO find a way to trigger all indicates with a function
+                        scope.$broadcast('toggleAllAlerts'); //we toggle all alerts if necessary
                         if (scope.contactForm.$valid) { //send form to server if form is valid
-                            scope.transferForm($event);
+                            scope.transferForm($event); //transfers form data to server
                         }
+                    };
+                    //indicates, that we are waiting for the servers response
+                    scope.indicateSending = function (target) {
+                        if (scope.indicateSendingFlag === true) {
+                            target.html('Sende<span style="color: transparent">...</span>');
+                        }
+                        $timeout(function () {
+                            if (scope.indicateSendingFlag === true) {
+                                target.html('Sende.<span style="color: transparent">..</span>');
+                            }
+                        }, 300);
+                        $timeout(function () {
+                            if (scope.indicateSendingFlag === true) {
+                                target.html('Sende..<span style="color: transparent">.</span>');
+                            }
+                        }, 600);
+                        $timeout(function () {
+                            if (scope.indicateSendingFlag === true) {
+                                target.html('Sende...');
+                            }
+                        }, 900);
+                        $timeout(function () {
+                            if (scope.indicateSendingFlag === true) {
+                                scope.indicateSending(target); //reenter loop
+                            }
+                        }, 1200);
                     };
                 }
             },
             controller: function ($scope) {
+                $scope.indicateSendingFlag = false;
 
+                //default model for form data
                 $scope.formData = {
                     name: '',
                     email: '',
                     message: ''
                 };
 
+                //alert texts
                 $scope.resetContent = {
+                    title: 'Nachricht gesendet',
+                    text: 'Vielen Dank für Ihre Nachricht. Wir werden Ihnen schnellst möglich antworten.'
+                };
+                $scope.unknownSuccess = {
                     title: 'Nachricht gesendet',
                     text: 'Vielen Dank für Ihre Nachricht. Wir werden Ihnen schnellst möglich antworten.'
                 };
@@ -102,53 +90,90 @@ angular.module('amnohfelsClientApp')
                     title: 'Interner Server Fehler',
                     text: 'Die Nachricht konnte nicht gesendet werden, da ein interner Server Fehler aufgetreten ist. Bitte versuchen Sie es erneut.'
                 };
+                $scope.connectionRefused = {
+                    title: 'Verbindung verweigert',
+                    text: 'Die Nachricht konnte nicht gesendet werden, da die Verbindung zum Server verweigert wurde. Bitte versuchen Sie es erneut.'
+                };
+                $scope.unknownError = {
+                    title: 'Ein unbekannter Fehler ist aufgetreten',
+                    text: 'Die Nachricht konnte nicht gesendet werden, da ein unbekannter Fehler aufgetreten ist. Bitte versuchen Sie es erneut.'
+                };
 
                 $scope.transferForm = function ($event) {
 
-                    $scope.event = $event;
+                    $scope.event = $event; //form element
+                    var submitButton = angular.element($event.target).find('button');
 
+                    //if response takes too long, indicate that we are waiting for response..
+                    $scope.indicateSendingFlag = true;
+                    $timeout(function(){
+                        $scope.indicateSending(submitButton);
+                    }, 200);
+
+                    //get modal element
                     var modal = angular.element($event.target).next().children();
 
+                    //send data
                     $http({
                         method: 'POST',
                         url: phpServerRoot + '?site=contactModule',
                         data: $.param($scope.formData),
-                        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                        headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
                     })
                         .success(function (data, status) {
-                            if(status === 205){
-                                $scope.modal = $scope.resetContent;
-                                $scope.formData = {
-                                    name: '',
-                                    email: '',
-                                    message: ''
-                                };
-                                //TODO find a way to trigger all indicates with a function
+                            //switch success cases
+                            switch (status) {
+                                case 205:
+                                    $scope.modal = $scope.resetContent;
+                                    $scope.formData = {
+                                        name: '',
+                                        email: '',
+                                        message: ''
+                                    };
+                                    break;
+                                default:
+                                    $scope.modal = $scope.unknownSuccess;
                             }
-                            $scope.modal.status = 'success';
-                            modal.modal();
+                            $scope.modal.status = 'success'; //for modal color
+                            for (var i = 0; i < $scope.contexts.length; i++) { //reset indications
+                                $scope.contexts[i].initiated = false;
+                            }
+                            $scope.$broadcast('resetAllAlerts'); //reset alerts
+                            $scope.indicateSendingFlag = false; //stop indicating loop
+                            submitButton.html('Absenden'); //reset submit button text
+                            modal.modal(); //toggle server response modal
                         })
                         .error(function (data, status) {
-                            if(status === 400){
-                                $scope.modal = $scope.badRequest;
+                            //switch error cases
+                            switch (status) {
+                                case 0:
+                                    $scope.modal = $scope.connectionRefused;
+                                    break;
+                                case 400:
+                                    $scope.modal = $scope.badRequest;
+                                    break;
+                                case 408:
+                                    $scope.modal = $scope.requestTimeout;
+                                    break;
+                                case 500:
+                                    $scope.modal = $scope.internalServerError;
+                                    break;
+                                default:
+                                    $scope.modal = $scope.unknownError;
                             }
-                            if(status === 408){
-                                $scope.modal = $scope.requestTimeout;
-                            }
-                            if(status === 500){
-                                $scope.modal = $scope.internalServerError;
-                            }
-                            $scope.modal.status = 'error';
-                            modal.modal();
+                            $scope.modal.status = 'error'; //for modal color
+                            $scope.indicateSendingFlag = false; //stop indicating loop
+                            submitButton.html('Absenden'); //reset submit button text
+                            modal.modal(); //toggle server response modal
                         });
                 };
 
-                $scope.resend = function($event){
-                    var modal = angular.element($event.target).next().children();
-                    modal.modal('hide');
-                    modal.on('hidden.bs.modal', function () {
-                        modal.unbind('hidden.bs.modal');
-                        $scope.transferForm($event);
+                $scope.resend = function ($event) {
+                    var modal = angular.element($event.target).next().children(); //modal dom element
+                    modal.modal('hide'); //hide modal
+                    modal.on('hidden.bs.modal', function () { //when modal hide animation ends...
+                        modal.unbind('hidden.bs.modal'); //unbind event
+                        $scope.transferForm($event); //and reenter transfer function
                     });
                 };
             }

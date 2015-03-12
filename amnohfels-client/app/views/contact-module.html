@@ -2,45 +2,57 @@
     <h3>Haben Sie Fragen?</h3>
     <form name="contactForm" novalidate ng-submit="submit($event)">
 
-        <div class="form-group has-feedback">
+        <!--TODO aria describedby-->
+
+        <div class="form-group has-feedback"
+             ng-class="{'has-warning' : contactForm.nameInput.$error.required && contactForm.nameInput.initiated,
+                        'has-success' : contactForm.nameInput.$valid && contactForm.nameInput.initiated}">
             <label for="name">Name</label>
             <input type="text"
                    name="nameInput"
                    class="form-control"
                    id="name"
-                   ng-model="formData.name"
                    placeholder="Ihr Name"
-                   ng-keypress="activateKeyupTrigger()"
-                   ng-keyup="keyupTrigger($event, contactForm.nameInput.$error, contactForm.nameInput.$valid)"
-                   ng-blur="blurTrigger($event, contactForm.nameInput.$error, contactForm.nameInput.$valid)"
                    required
-                   aria-describedby="inputSuccess2Status"><!--TODO aria describedby--><!--TODO ng change/keyup/down???-->
-            <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                   aria-describedby="inputSuccess2Status"
+                   ng-model="formData.name"
+                   ng-model-options="{allowInvalid: true, updateOn: 'default blur', debounce: {'default': 1000, 'blur': 0}}"
+                   ng-change="modelChanged(contactForm.nameInput)">
+            <span class="glyphicon form-control-feedback" aria-hidden="true"
+                  ng-class="{'glyphicon-warning-sign' : contactForm.nameInput.$error.required && contactForm.nameInput.initiated,
+                             'glyphicon-ok' : contactForm.nameInput.$valid && contactForm.nameInput.initiated}"></span>
             <span class="sr-only">(success)</span>
-            <alert type="'nameRequired'" measure-offscreen></alert>
+            <alert type="'nameRequired'" resizable-alert></alert>
         </div>
 
-        <div class="form-group has-feedback">
+        <div class="form-group has-feedback"
+             ng-class="{'has-warning' : contactForm.emailInput.$error.required && contactForm.emailInput.initiated,
+                        'has-success' : contactForm.emailInput.$valid && contactForm.emailInput.initiated,
+                        'has-error' : !contactForm.emailInput.$valid && contactForm.emailInput.initiated}">
             <label for="email">E-Mail Adresse</label>
             <input type="email"
                    name="emailInput"
                    class="form-control"
                    id="email"
                    ng-model="formData.email"
+                   ng-model-options="{allowInvalid: true, updateOn: 'default blur', debounce: {'default': 1000, 'blur': 0}}"
+                   ng-change="modelChanged(contactForm.emailInput)"
                    placeholder="Ihre E-Mail Adresse"
-                   ng-keypress="activateKeyupTrigger()"
-                   ng-keyup="keyupTrigger($event, contactForm.emailInput.$error, contactForm.emailInput.$valid)"
-                   ng-blur="blurTrigger($event, contactForm.emailInput.$error, contactForm.emailInput.$valid)"
                    required
                    pattern=".{1,}@[_a-z0-9A-Z]+(\.[a-z0-9A-Z]+)+"
-                   aria-describedby="inputSuccess2Status"><!--TODO aria describedby--><!--TODO wrong regex: asfwf@t-online.de -->
-            <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                   aria-describedby="inputSuccess2Status"><!--TODO wrong regex: asfwf@t-online.de -->
+            <span class="glyphicon form-control-feedback" aria-hidden="true"
+                  ng-class="{'glyphicon-warning-sign' : contactForm.emailInput.$error.required && contactForm.emailInput.initiated,
+                             'glyphicon-ok' : contactForm.emailInput.$valid && contactForm.emailInput.initiated,
+                             'glyphicon-remove' : !contactForm.emailInput.$valid && contactForm.emailInput.initiated}"></span>
             <span class="sr-only">(success)</span>
-            <alert type="'emailRequired'" measure-offscreen></alert>
-            <alert type="'emailInvalid'" measure-offscreen></alert>
+            <alert type="'emailRequired'" resizable-alert></alert>
+            <alert type="'emailInvalid'" resizable-alert></alert>
         </div>
 
-        <div class="form-group has-feedback">
+        <div class="form-group has-feedback"
+             ng-class="{'has-warning' : contactForm.messageInput.$error.required && contactForm.messageInput.initiated,
+                        'has-success' : contactForm.messageInput.$valid && contactForm.messageInput.initiated}">
             <label for="message">Nachricht</label>
             <textarea type="text"
                    name="messageInput"
@@ -49,14 +61,15 @@
                    rows="3"
                    ng-model="formData.message"
                    placeholder="Ihre Nachricht"
-                   ng-keypress="activateKeyupTrigger()"
-                   ng-keyup="keyupTrigger($event, contactForm.messageInput.$error, contactForm.messageInput.$valid)"
-                   ng-blur="blurTrigger($event, contactForm.messageInput.$error, contactForm.messageInput.$valid)"
+                   ng-model-options="{allowInvalid: true, updateOn: 'default blur', debounce: {'default': 1000, 'blur': 0}}"
+                   ng-change="modelChanged(contactForm.messageInput)"
                    required
                    aria-describedby="inputSuccess2Status"></textarea><!--TODO aria describedby-->
-            <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+            <span class="glyphicon form-control-feedback" aria-hidden="true"
+                  ng-class="{'glyphicon-warning-sign' : contactForm.messageInput.$error.required && contactForm.messageInput.initiated,
+                             'glyphicon-ok' : contactForm.messageInput.$valid && contactForm.messageInput.initiated}"></span>
             <span class="sr-only">(success)</span>
-            <alert type="'messageRequired'" measure-offscreen></alert>
+            <alert type="'messageRequired'" resizable-alert></alert>
         </div>
 
         <button type="submit" class="btn btn-default">Absenden</button>

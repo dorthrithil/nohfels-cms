@@ -7,7 +7,7 @@
  * # alert
  */
 angular.module('amnohfelsClientApp')
-    .directive('alert', function ($sce, animator) {
+    .directive('alert', function ($sce, animator, $timeout) {
         return {
             templateUrl: 'views/alert.html',
             restrict: 'E',
@@ -18,66 +18,81 @@ angular.module('amnohfelsClientApp')
                 pre: function (scope, element) {
                     var alertCurrentlyVisible = false;
 
-                    var submitPressed = function(){
+                    //reacts to form successfully submitted event
+                    var resetAllAlerts = function(){
+                        alertCurrentlyVisible = false;
+                    };
+                    scope.$on('resetAllAlerts', resetAllAlerts);
+
+                    //reacts to form submit event
+                    var toggleAllAlerts = function(){
                         alertCurrentlyVisible = true;
                         scope.toggleAlert();
                     };
+                    scope.$on('toggleAllAlerts', toggleAllAlerts);
 
+                    //hides the alert on alert-close-button click
                     scope.dismissAlert = function(){
-                        alertCurrentlyVisible = false;
+                        alertCurrentlyVisible = false; //it won't be triggered again when model error/valid-state changes
                         scope.hideAlert();
                     };
 
+                    //hides this specific alert
                     scope.hideAlert = function () {
                         if (element.css('display') !== 'none') {
                             animator.shrinkHeightTo(element, '0px');
                         }
                     };
+
+                    //shows this specific alert
                     scope.showAlert = function () {
                         animator.expandHeightTo(element, element.attr('actual-height'));
                     };
-                    scope.toggleAlert = function () {
-                        if(alertCurrentlyVisible) {
-                            switch (scope.type) {
-                                case 'emailInvalid':
-                                    if (scope.$parent.contactForm.emailInput.$error.pattern) {
-                                        scope.showAlert();
-                                    } else {
-                                        scope.hideAlert();
-                                    }
-                                    break;
-                                case 'emailRequired':
-                                    if (scope.$parent.contactForm.emailInput.$error.required) {
-                                        scope.showAlert();
-                                    } else {
-                                        scope.hideAlert();
-                                    }
-                                    break;
-                                case 'nameRequired':
-                                    if (scope.$parent.contactForm.nameInput.$error.required) {
-                                        scope.showAlert();
-                                    } else {
-                                        scope.hideAlert();
-                                    }
-                                    break;
-                                case 'messageRequired':
-                                    if (scope.$parent.contactForm.messageInput.$error.required) {
-                                        scope.showAlert();
-                                    } else {
-                                        scope.hideAlert();
-                                    }
-                                    break;
-                                default:
-                                    break;
-                            }
-                        }
-                    };
-                    scope.$on('contactFormSubmitted', submitPressed); //bind to form submit event
 
-                    scope.$on('validate-form', scope.toggleAlert); //bind to form submit event
+                    //toggles alert depending on actual error/valid-state
+                    scope.toggleAlert = function () {
+                        $timeout(function(){
+                            if(alertCurrentlyVisible) {
+                                switch (scope.type) {
+                                    case 'emailInvalid':
+                                        if (scope.$parent.contactForm.emailInput.$error.pattern) {
+                                            scope.showAlert();
+                                        } else {
+                                            scope.hideAlert();
+                                        }
+                                        break;
+                                    case 'emailRequired':
+                                        if (scope.$parent.contactForm.emailInput.$error.required) {
+                                            scope.showAlert();
+                                        } else {
+                                            scope.hideAlert();
+                                        }
+                                        break;
+                                    case 'nameRequired':
+                                        if (scope.$parent.contactForm.nameInput.$error.required) {
+                                            scope.showAlert();
+                                        } else {
+                                            scope.hideAlert();
+                                        }
+                                        break;
+                                    case 'messageRequired':
+                                        if (scope.$parent.contactForm.messageInput.$error.required) {
+                                            scope.showAlert();
+                                        } else {
+                                            scope.hideAlert();
+                                        }
+                                        break;
+                                    default:
+                                        break;
+                                }
+                            }
+                        });
+                    };
+                    scope.$on('toggleActiveAlerts', scope.toggleAlert); //reacts to form submit event
                 }
             },
             controller: function ($scope) {
+                //alert text and type depending on type argument
                 switch ($scope.type) {
                     case 'emailInvalid':
                         $scope.priority = 'alert-danger';
@@ -93,7 +108,7 @@ angular.module('amnohfelsClientApp')
                         break;
                     case 'messageRequired':
                         $scope.priority = 'alert-warning';
-                        $scope.text = $sce.trustAsHtml('<strong>Pflichtfeld:</strong> Bitte geben Sie eine Nachricht ein Sie scheiß Penner! Wie dumm kann man denn sein, ne Nachricht absenden wollen und dann die eigentliche Nachricht vergessen, eh, ich checks nicht...');
+                        $scope.text = $sce.trustAsHtml('<strong>Pflichtfeld:</strong> Bitte geben Sie eine Nachricht ein!');
                         break;
                     default:
                         break;
