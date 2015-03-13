@@ -14,15 +14,18 @@ angular.module('amnohfelsClientApp')
             scope: {
                 data: '='
             },
-            link: function postLink(scope, element) {
-                element.text('this is the instagramModule directive');
+            link: function postLink() {
             },
-            controller: function () {
-                var accessToken = '1693418525.1fb234f.fc30d26a0f214e83a5378cb56be78617';
-                var requestUri = 'https://api.instagram.com/v1/users/self/feed?access_token=' + accessToken;
-                $http.get(requestUri)
+            controller: function ($scope) {
+                var accessToken = '1693418525.1fb234f.fc30d26a0f214e83a5378cb56be78617&callback=JSON_CALLBACK';
+                var requestUrl = 'https://api.instagram.com/v1/users/self/feed?access_token=' + accessToken;
+                $scope.images = [];
+                return $http.jsonp(requestUrl)
                     .success(function (response) {
-                        console.log(response);
+                        for(var i = 0; i < response.data.length; i++){
+                            $scope.images.push(response.data[i].images.standard_resolution.url); //jshint ignore:line
+                        }
+                        console.log($scope.images);
                     });
             }
         };
