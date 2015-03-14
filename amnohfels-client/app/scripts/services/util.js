@@ -8,48 +8,57 @@
  * Service in the amnohfelsClientApp.
  */
 angular.module('amnohfelsClientApp')
-  .service('util', function util($timeout) {
-    this.throttle =  function(fn, threshhold, throttleScope) {
-        if(!threshhold){
-            threshhold = 250;
-        }
-        var last,
-            deferTimer;
-        return function () {
-            var context = throttleScope || this;
-            var now = +new Date(),
-                args = arguments;
-            if (last && now < last + threshhold) {
-                clearTimeout(deferTimer);
-                deferTimer = setTimeout(function () {
+    .service('util', function util($timeout) {
+        this.throttle = function (fn, threshhold, throttleScope) {
+            if (!threshhold) {
+                threshhold = 250;
+            }
+            var last,
+                deferTimer;
+            return function () {
+                var context = throttleScope || this;
+                var now = +new Date(),
+                    args = arguments;
+                if (last && now < last + threshhold) {
+                    clearTimeout(deferTimer);
+                    deferTimer = setTimeout(function () {
+                        last = now;
+                        fn.apply(context, args);
+                    }, threshhold);
+                } else {
                     last = now;
                     fn.apply(context, args);
-                }, threshhold);
-            } else {
-                last = now;
-                fn.apply(context, args);
-            }
+                }
+            };
         };
-    };
 
-    //TODO comment + what happens when the scope of the function changes? will the old function be executed? (e.g. when i tab into another input and start tying there)
-    //works in my case as i have the blur function. but using promises would be better here
-    var debouncedFunctionNotExecutedYet = false,
-        debouncedFunction = null;
+        //TODO comment + what happens when the scope of the function changes? will the old function be executed? (e.g. when i tab into another input and start tying there)
+        //works in my case as i have the blur function. but using promises would be better here
+        var debouncedFunctionNotExecutedYet = false,
+            debouncedFunction = null;
 
-    this.debounce = function(fn, delay){
-        if (debouncedFunctionNotExecutedYet) {
-            $timeout.cancel(debouncedFunction);
-        }
-        debouncedFunction = $timeout(function () {
-            fn.apply(this);
-            debouncedFunctionNotExecutedYet = false;
-        }, delay);
-        debouncedFunctionNotExecutedYet = true;
-    };
+        this.debounce = function (fn, delay) {
+            if (debouncedFunctionNotExecutedYet) {
+                $timeout.cancel(debouncedFunction);
+            }
+            debouncedFunction = $timeout(function () {
+                fn.apply(this);
+                debouncedFunctionNotExecutedYet = false;
+            }, delay);
+            debouncedFunctionNotExecutedYet = true;
+        };
 
-    this.inViewport = function($element){
-        var bounds = $element.get(0).getBoundingClientRect();
-        return bounds.top < window.innerHeight && bounds.bottom > 0;
-    };
-  });
+        this.inViewport = function ($element) {
+            var bounds = $element.get(0).getBoundingClientRect();
+            return bounds.top < window.innerHeight && bounds.bottom > 0;
+        };
+
+        this.inArray = function (a, obj) {
+            for (var i = 0; i < a.length; i++) {
+                if (a[i] === obj) {
+                    return true;
+                }
+            }
+            return false;
+        };
+    });

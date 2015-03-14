@@ -39,12 +39,12 @@ angular.module('amnohfelsClientApp')
 //            {imageSize : 'small', imageThumbSrc : 'images/gallery/gallery8.jpg', imageSrc : 'images/gallery/gallery8.jpg'}
 //        ];
 ////
-//        $scope.response[3] = {};
-//        $scope.response[3].type = 'text-module';
-//        $scope.response[3].data = {};
-//        $scope.response[3].data.title = 'XXXUnser Grillplatztt';
-//        $scope.response[3].data.content = 'XXXHier steht ein Text<br> über den Grillplatz<br>XXXHier steht ein Text<br> über den Grillplatz<br>XXXHier steht ein Text<br>XXXHier steht ein Text<br> über den Grillplatz<br>XXXHier steht ein Text<br> über den Grillplatz<br>XXXHier steht ein Text<br>XXXHier steht ein Text<br> über den Grillplatz<br>XXXHier steht ein Text<br> über den Grillplatz<br>XXXHier steht ein Text<br>XXXHier steht ein Text<br> über den Grillplatz<br>XXXHier steht ein Text<br> über den Grillplatz<br>XXXHier steht ein Text<br>XXXHier steht ein Text<br> über den Grillplatz<br>XXXHier steht ein Text<br> über den Grillplatz<br>XXXHier steht ein Text<br>XXXHier steht ein Text<br> über den Grillplatz<br>XXXHier steht ein Text<br> über den Grillplatz<br>XXXHier steht ein Text<br>XXXHier steht ein Text<br> über den Grillplatz<br>XXXHier steht ein Text<br> über den Grillplatz<br>XXXHier steht ein Text<br>XXXHier steht ein Text<br> über den Grillplatz<br>XXXHier steht ein Text<br> über den Grillplatz<br>XXXHier steht ein Text<br> über den Grillplatz<br>XXXHier steht ein Text<br> über den Grillplatz<br>XXXHier steht ein Text<br> über den Grillplatz<br>XXXHier steht ein Text<br> über den Grillplatz<br>XXXHier steht ein Text<br> über den Grillplatz<br>';
-//
+        $scope.response[0] = {};
+        $scope.response[0].type = 'text-module';
+        $scope.response[0].data = {};
+        $scope.response[0].data.title = 'XXXUnser Grillplatztt';
+        $scope.response[0].data.content = 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. <br />Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.<br />Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. ';
+
 //        $scope.response[4] = {};
 //        $scope.response[4].data = {};
 //        $scope.response[4].type = 'parallax-module';
@@ -67,11 +67,15 @@ angular.module('amnohfelsClientApp')
 //            {imageSize : 'small', imageThumbSrc : 'images/gallery/gallery8.jpg', imageSrc : 'images/gallery/gallery8.jpg'}
 //        ];
 
-//        $scope.response[0] = {};
-//        $scope.response[0].data = {};
-//        $scope.response[0].type = 'contact-module';
 
-        $scope.response[0] = {};
-        $scope.response[0].data = {};
-        $scope.response[0].type = 'instagram-module';
+
+        $scope.response[1] = {};
+        $scope.response[1].data = {
+            filterForTag : 'café'
+        };
+        $scope.response[1].type = 'instagram-module';
+
+                $scope.response[2] = {};
+        $scope.response[2].data = {};
+        $scope.response[2].type = 'contact-module';
   });
