@@ -11,7 +11,11 @@
             <!-- Wrapper for slides -->
             <div class="carousel-inner" role="listbox">
                 <div class="item" ng-repeat="image in images" ng-class="{'active' : $index == 0}">
-                    <img src="{{image.url}}" alt="{{image.caption}}">
+                    <div style="height: {{image.dimensions.height + 'px'}}; width: {{image.dimensions.width + 'px'}}"><!--TODO directive for responsive resizing-->
+                        <a href="{{image.link}}" target="_blank">
+                            <img src="{{image.url}}" alt="{{image.caption}}"><!--TODO directive for image preloading indication with spinner-->
+                        </a>
+                    </div>
 
                     <div class="carousel-caption">
                         {{image.caption}}

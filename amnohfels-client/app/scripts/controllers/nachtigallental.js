@@ -71,7 +71,9 @@ angular.module('amnohfelsClientApp')
 
         $scope.response[1] = {};
         $scope.response[1].data = {
-            filterForTag : 'café'
+            filterForTag : ['café'],
+            maxPhotos : 4,
+            filterOutTags : true
         };
         $scope.response[1].type = 'instagram-module';
 

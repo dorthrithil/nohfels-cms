@@ -53,12 +53,41 @@ angular.module('amnohfelsClientApp')
             return bounds.top < window.innerHeight && bounds.bottom > 0;
         };
 
-        this.inArray = function (a, obj) {
+        /**
+         * @arguments:
+         *  a: array
+         *  b: object or an array of objects
+         *
+         * @returns:
+         *  true: if b or an element in b is in array a
+         *  false: if not
+         */
+
+        this.inArray = function (a, b) {
+            b = [].concat(b); //not efficient
             for (var i = 0; i < a.length; i++) {
-                if (a[i] === obj) {
-                    return true;
+                for (var j = 0; j < b.length; j++) {
+                    if (a[i] === b[j]) {
+                        return true;
+                    }
                 }
             }
             return false;
         };
+
+        this.filterOutHashTags = function (s) { //TODO rewrite this as an angular filter
+            var res = '', hashTagDetected = false;
+            for (var i = 0; i < s.length; i++) {
+                if(s.charAt(i) === '#' && !hashTagDetected){
+                    hashTagDetected = true;
+                } else if(!hashTagDetected ){
+                    res += s.charAt(i);
+                }
+                if(hashTagDetected && s.charAt(i) === ' '){
+                    hashTagDetected = false;
+                }
+            }
+            return res;
+        };
+
     });
