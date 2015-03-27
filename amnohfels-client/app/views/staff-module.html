@@ -1,0 +1,9 @@
+<div class="container">
+    <h3>{{data.title}}</h3>
+    <div class="row">
+        <div class="col-xs-12 col-sm-4 image-wrapper" ng-repeat="image in data.images">
+            <div class="image-container" ng-style="{'background-image' : 'url(' + image.imageSrc + ')'}"></div>
+            <div class="caption-container">{{image.caption}}</div>
+        </div>
+    </div>
+</div>

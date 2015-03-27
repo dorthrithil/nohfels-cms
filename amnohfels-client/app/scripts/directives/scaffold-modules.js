@@ -34,6 +34,9 @@ angular.module('amnohfelsClientApp')
                         case 'instagram-module':
                             compileStream += '<instagram-module data="modules[' + key + '].data"></instagram-module>';
                             break;
+                        case 'staff-module':
+                            compileStream += '<staff-module data="modules[' + key + '].data"></staff-module>';
+                            break;
                         default:
                             badRequest = true; //TODO error messages entsprechend
                     }

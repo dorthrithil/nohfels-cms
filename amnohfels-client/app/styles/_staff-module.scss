@@ -1,0 +1,24 @@
+staff-module {
+  .container {
+    margin-top: $grid-gutter-width;
+  }
+
+  h3 {
+    margin-bottom: $grid-gutter-width;
+  }
+
+  .image-wrapper {
+    text-align: center;
+    .image-container {
+      height: 200px;
+      width: 200px;
+      background-size: cover;
+      background-position: center;
+      border-radius: 100px;
+      margin: 0 auto ($grid-gutter-width / 2) auto;
+    }
+    .caption-container {
+      margin: 0 0 $grid-gutter-width 0;
+    }
+  }
+}

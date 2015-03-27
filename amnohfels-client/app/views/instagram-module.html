@@ -1,7 +1,7 @@
-<div class="wrapper" style="background-image: url('images/instagram_module/fabric.png')">
+<div class="wrapper">
     <div class="container">
         <div id="instagram-carousel" class="carousel slide instagram-carousel" data-ride="carousel"
-             data-interval="false">
+             data-interval="false" ng-show="images">
             <!-- Indicators -->
             <ol class="carousel-indicators">
                 <li data-target="#instagram-carousel" ng-class="{'active' : $index == 0}" ng-repeat="image in images"
@@ -11,12 +11,9 @@
             <!-- Wrapper for slides -->
             <div class="carousel-inner" role="listbox">
                 <div class="item" ng-repeat="image in images" ng-class="{'active' : $index == 0}">
-                    <div style="height: {{image.dimensions.height + 'px'}}; width: {{image.dimensions.width + 'px'}}"><!--TODO directive for responsive resizing-->
-                        <a href="{{image.link}}" target="_blank">
-                            <img src="{{image.url}}" alt="{{image.caption}}"><!--TODO directive for image preloading indication with spinner-->
-                        </a>
-                    </div>
-
+                    <a href="{{image.link}}" target="_blank">
+                        <img ng-src="{{image.url}}" width="{{image.dimensions.width}}"  height="{{image.dimensions.height}}" alt="{{image.caption}}"><!--TODO directive for image preloading indication with spinner-->
+                    </a>
                     <div class="carousel-caption">
                         {{image.caption}}
                     </div>

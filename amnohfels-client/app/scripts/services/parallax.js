@@ -13,21 +13,31 @@ angular.module('amnohfelsClientApp')
     var $parallaxImagesContainer = angular.element('<div class="parallax-images" />');
     var parallaxRatio = 0.25;
 
+    //TODO bug: if we have a instagram module followed by a parallax module, you notice a performance lag (bg image position doesn't get updated quickly enough) when scolling. set height + 100px (50 bottom & top). this way you don't realize a white space. only problem: you can't have two parallax modules following each other as they would be overlapping. but scaffold modules could set parameters in this case. this would be an 1.0.1 enhancement
+
     //TODO test if touchmove event also works
 
     //TODO while loops in extra functions?
 
     //TODO container height minus navbar height
 
+    this.refresh = function(){
+        setImageSizes();
+        parallaxScroll();
+    };
+
     function init(){
         $('body').prepend($parallaxImagesContainer);
         angular.element($window).bind('resize', function() {
-            //TODO in one throttle!
-            util.throttle(setImageSizes(), 10);
-            util.throttle(parallaxScroll(), 10);
+            //TODO what's up with throttle??
+            //util.throttle(setImageSizes(), 16);
+            //util.throttle(parallaxScroll(), 16);
+            setImageSizes();
+            parallaxScroll();
         });
         angular.element($window).bind('scroll', function() {
-            util.throttle(parallaxScroll(), 10);
+            //util.throttle(parallaxScroll, 16);
+            parallaxScroll();
         });
     }
 
@@ -67,7 +77,6 @@ angular.module('amnohfelsClientApp')
         };
         bgImg.src = src;
     }
-
 
     //scrolls all registered parallax elements
     function parallaxScroll(){

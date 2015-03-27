@@ -1,10 +1,13 @@
 instagram-module{
+  .wrapper{
+    background-image: url('../images/instagram_module/fabric.png');
+  }
   .container{
     padding: 0 0 0 0;
     margin-top: $grid-gutter-width;
   }
   .instagram-carousel{
-    max-width: 600px;
+    max-width: 640px;
     margin: 0px auto 0px auto;
   }
 }

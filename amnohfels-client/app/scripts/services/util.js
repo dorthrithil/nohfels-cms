@@ -9,27 +9,35 @@
  */
 angular.module('amnohfelsClientApp')
     .service('util', function util($timeout) {
-        this.throttle = function (fn, threshhold, throttleScope) {
+        var lockedUntil;
+        this.throttle = function (fn, threshhold) {
             if (!threshhold) {
                 threshhold = 250;
             }
-            var last,
-                deferTimer;
-            return function () {
-                var context = throttleScope || this;
-                var now = +new Date(),
-                    args = arguments;
-                if (last && now < last + threshhold) {
-                    clearTimeout(deferTimer);
-                    deferTimer = setTimeout(function () {
-                        last = now;
-                        fn.apply(context, args);
-                    }, threshhold);
-                } else {
-                    last = now;
-                    fn.apply(context, args);
-                }
-            };
+            var now = +new Date();
+            if(lockedUntil && now > lockedUntil){
+                fn.apply(this);
+                lockedUntil = now + threshhold;
+            } else if (!lockedUntil) {
+                fn.apply(this);
+                lockedUntil = now + threshhold;
+            }
+
+//            if (last && now < last + threshhold) {
+//                $timeout.cancel(deferTimer);
+//                deferTimer = $timeout(function () {
+//                    last = now;
+//                    fn.apply(this);
+//                    e++;
+//                }, threshhold);
+//            } else {
+//                last = now;
+//                fn.apply(this);
+//                e++;
+//            }
+            //console.log(c);
+            //console.log(e);
+            //TODO throttle function doesn't work correct
         };
 
         //TODO comment + what happens when the scope of the function changes? will the old function be executed? (e.g. when i tab into another input and start tying there)
@@ -78,12 +86,12 @@ angular.module('amnohfelsClientApp')
         this.filterOutHashTags = function (s) { //TODO rewrite this as an angular filter
             var res = '', hashTagDetected = false;
             for (var i = 0; i < s.length; i++) {
-                if(s.charAt(i) === '#' && !hashTagDetected){
+                if (s.charAt(i) === '#' && !hashTagDetected) {
                     hashTagDetected = true;
-                } else if(!hashTagDetected ){
+                } else if (!hashTagDetected) {
                     res += s.charAt(i);
                 }
-                if(hashTagDetected && s.charAt(i) === ' '){
+                if (hashTagDetected && s.charAt(i) === ' ') {
                     hashTagDetected = false;
                 }
             }

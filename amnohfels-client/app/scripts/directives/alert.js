@@ -6,6 +6,9 @@
  * @description
  * # alert
  */
+
+//TODO bug: indication doesn't change from email invalid to email required on deleting the whole input value
+
 angular.module('amnohfelsClientApp')
     .directive('alert', function ($sce, animator, $timeout) {
         return {
@@ -51,6 +54,7 @@ angular.module('amnohfelsClientApp')
 
                     //toggles alert depending on actual error/valid-state
                     scope.toggleAlert = function () {
+                        console.log('t');
                         $timeout(function(){
                             if(alertCurrentlyVisible) {
                                 switch (scope.type) {

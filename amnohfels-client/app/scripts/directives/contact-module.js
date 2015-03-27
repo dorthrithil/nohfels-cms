@@ -102,7 +102,7 @@ angular.module('amnohfelsClientApp')
                 $scope.transferForm = function ($event) {
 
                     $scope.event = $event; //form element
-                    var submitButton = angular.element($event.target).find('button');
+                    var submitButton = angular.element($event.target).find('button'); //TODO targets all buttons! also the dismiss indication buttons
 
                     //if response takes too long, indicate that we are waiting for response..
                     $scope.indicateSendingFlag = true;

@@ -6,6 +6,7 @@
   top: 0px;
   left: 0px;
   display: block;
+  z-index: -2;
 }
 
 .parallax-image img{
@@ -13,6 +14,7 @@
   left: 0px;
   top: 0px;
   border: 0;
+  z-index: -1;
 }
 
 .parallax-module{
