@@ -19,7 +19,7 @@ angular.module('amnohfelsClientApp')
             },
             link: {
                 pre: function(scope, element){
-                    parallax.add(element, scope.data.bgImgSrc);
+                    parallax.add(element, scope.data.bgImgSrc, scope.data.height);
                 }
             },
             controller: function($scope, $sce) {

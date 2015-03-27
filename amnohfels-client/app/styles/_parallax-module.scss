@@ -7,6 +7,7 @@
   left: 0px;
   display: block;
   z-index: -2;
+  transform: translate3d(0px, 0px, 0px);
 }
 
 .parallax-image img{
@@ -15,6 +16,15 @@
   top: 0px;
   border: 0;
   z-index: -1;
+  transform: translate3d(0px, 0px, 0px);
+}
+
+.the-parallax-image{
+  transform: translate3d(0px, 0px, 0px);
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  width: 100%;
 }
 
 .parallax-module{

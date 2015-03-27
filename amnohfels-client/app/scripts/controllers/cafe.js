@@ -15,7 +15,8 @@ angular.module('amnohfelsClientApp')
             data: {
                 caption: 'Ein Stück Schweden in Bad Sobernheim',
                 bgImgSrc: 'images/parallax/cafe.jpg',
-                title: 'Sommercafé am Nohfels'
+                title: 'Sommercafé am Nohfels',
+                height: '100vh'
             },
             type: 'parallax-module'
         };
@@ -50,7 +51,8 @@ angular.module('amnohfelsClientApp')
             data: {
                 caption: 'Mo-Fr: 13:00-19:00 Uhr<br /> Sa+So: 12:00-19:00 Uhr',
                 bgImgSrc: 'images/parallax/kuchen.jpg',
-                title: 'Öffnungszeiten'
+                title: 'Öffnungszeiten',
+                height: '500px'
             },
             type: 'parallax-module'
         };

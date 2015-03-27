@@ -14,7 +14,7 @@
 //TODO (1.0.1) security: get CORS working instead of JSONP
 
 angular.module('amnohfelsClientApp')
-    .directive('instagramModule', function ($http, util, parallax, animator) {
+    .directive('instagramModule', function ($http, util, parallax, animator, $timeout) {
         return {
             templateUrl: 'views/instagram-module.html',
             restrict: 'E',
@@ -68,6 +68,11 @@ angular.module('amnohfelsClientApp')
                                 }
                             }
                         }
+                        if($scope.images.length > 0){ //content height changed: refresh parallax
+                            $timeout(function(){
+                                parallax.refresh();
+                            }, 50); //TODO this has to be bound to image.load - guessing loading times is evil
+                        }
                     })
                     .error(function (response) {
                         handleHttpError(response); //crappy jsonp error handling
@@ -85,7 +90,9 @@ angular.module('amnohfelsClientApp')
                     console.log('Instagram module encountered an error and was shut down for your convenience.');
                     animator.shrinkHeightTo($element.children(), '0px').then(function () {
                         $element.remove();
-                        parallax.refresh();
+                        $timeout(function(){ //content height changed: refresh parallax
+                            parallax.refresh();
+                        });
                     });
                 };
 
