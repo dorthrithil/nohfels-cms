@@ -9,28 +9,64 @@
  */
 angular.module('amnohfelsClientApp')
     .service('parallax', function parallax($window, util, $timeout) {
-        //TODO bug: if we have a instagram module followed by a parallax module, you notice a performance lag (bg image position doesn't get updated quickly enough) when scolling. set height + 100px (50 bottom & top). this way you don't realize a white space. only problem: you can't have two parallax modules following each other as they would be overlapping. but scaffold modules could set parameters in this case. this would be an 1.0.1 enhancement
-
-        //TODO test if touchmove event also works
-
-        //TODO while loops in extra functions?
-
-        //TODO container height minus navbar height
+        //TODO (1.0.1) improvement: navbar height doesn't need to be included in height calculations => more visible image content
 
         //TODO throttle
 
         //TODO image onload fadeIn
 
-        //TODO comment
+        var images = [],
+            parallaxRatio = 0.25;
 
-        var images = [];
-        var parallaxRatio = 0.25;
 
+        /**
+         * @name refresh()
+         * @attrs none
+         * @description
+         * refreshes the positions of all registered parallax elements
+         */
         this.refresh = function () {
             setImageSizes();
             parallaxScroll();
         };
 
+        /**
+         * @name add()
+         * @attrs
+         * $section: parallax section dom element
+         * bgImgSrc: src uri of the parallaxing background image
+         * height: height of the parallax section
+         * @description
+         * adds a new parallax element to the service
+         */
+        this.add = function ($section, bgImgSrc, height) {
+            images.push({
+                image: $section.find('img'),
+                section: $section,
+                height: height,
+                sectionOffset: null,
+                dimensions: {
+                    height: null,
+                    width: null,
+                    ratio: null
+                },
+                src: bgImgSrc
+            });
+            images[images.length - 1].image.attr('src', bgImgSrc); //TODO do that later for fadein
+            initDimensions(images.length - 1);
+        };
+
+        /**
+         * @name clear()
+         * @attrs none
+         * @description
+         * clears the serviced elements
+         */
+        this.clear = function () {
+            images = [];
+        };
+
+        //initializes the watchers for scrolling and window resize
         function init() {
             angular.element($window).bind('resize', function () {
                 setImageSizes();
@@ -41,211 +77,82 @@ angular.module('amnohfelsClientApp')
             });
         }
 
-        this.add = function ($section, bgImgSrc, height) {
-            images.push({
-                image: $section.find('img'),
-                section: $section,
-                height: height,
-                sectionOffset: null,
-                dimensions: {
-                    height: null,
-                    width: null
-                },
-                src: bgImgSrc
-            });
-            images[images.length - 1].image.attr('src', bgImgSrc); //do that later for fadein
-            initDimensions(images.length - 1);
-        };
-
-        this.clear = function () {
-            images = [];
-        };
-
+        //initializes the dimensions of the parallaxing image and the section
         function initDimensions(index) {
-            var bgImg = new Image();
-            bgImg.onload = function () {
-                images[index].dimensions.height = this.height;
-                images[index].dimensions.width = this.width;
-                $timeout(function () {
-                    images[index].sectionOffset = images[index].section.offset().top;
+            images[index].section.children().css('height', images[index].height); //set the height of the section
+            images[index].sectionOffset = images[index].section.offset().top; //cache the sections offset
+            var bgImg = new Image(); //create a temporary image
+            bgImg.onload = function () { //and hook the function for reading the dimensions as soon as the image has loaded
+                images[index].dimensions.height = this.height; //cache height..
+                images[index].dimensions.width = this.width; //width..
+                images[index].dimensions.ratio = this.width / this.height; //and the ratio
+                $timeout(function () { //wait for all actions being performed, then initialize image sizes & scrolling positions
                     setImageSizes();
                     parallaxScroll();
                 });
             };
-            bgImg.src =  images[index].src;
+            bgImg.src = images[index].src; //set the src of the temporary image for starting the above process
         }
 
         //scrolls all registered parallax elements
         function parallaxScroll() {
             for (var i = 0; i < images.length; i++) {
-                if (util.inViewport(images[i].section)) {
-                    var imagePosition = -parseInt(parallaxRatio * (window.pageYOffset - images[i].sectionOffset));
-                    images[i].image.css({'transform': 'translate3d(0, ' + imagePosition + 'px, 0)'});
+                if (util.inViewport(images[i].section)) { //only scroll elements that are in view
+                    var imagePosition = -Math.floor(parallaxRatio * (window.pageYOffset - images[i].sectionOffset)); //calc the distance we need to scoll..
+                    images[i].image.css({'transform': 'translate3d(0, ' + imagePosition + 'px, 0)'}); //..and scroll it
                 }
             }
         }
-
-        //TODO there must be an error somewhere here..
 
         //resizes all images to a size where maximum information is shown while being able to parallax scroll it
         function setImageSizes() {
             for (var i = 0; i < images.length; i++) {
-                images[i].section.children().css('height', images[i].height); //set section height
-                images[i].sectionOffset = images[i].section.offset().top;//TODO best way to do this?
-                var imgHeight = images[i].dimensions.height;
-                var imgWidth = images[i].dimensions.width;
-                var containerHeight = parseInt(window.innerHeight);// it needs to be scrollabe over 100% of the windows height //TODO is there a way to do this without parseInt?
-                var containerWidth = parseInt(images[i].section.parent().css('width'));
-                var nominalValue = containerHeight * (parallaxRatio + 1);
-                var strechedImgHeight = parseInt(imgHeight * containerWidth / imgWidth);
-                var strechedImgWidth = nominalValue / imgHeight * imgWidth;
-                if (strechedImgHeight > nominalValue) {
+                //init
+                var stretchedImgHeight,
+                    stretchedImgWidth,
+                    minHeight = window.innerHeight * parallaxRatio * 2 + window.innerHeight, //image needs to be as high as the viewport + width for scrolling in and out in parallax speed
+                    minWidth = window.innerWidth; //image needs to be as broad as the viewport
+
+                //calculate dimensions depending on original image size
+                if (images[i].dimensions.height < minHeight) {
+                    stretchedImgHeight = minHeight; //start with positive thinking
+                    stretchedImgWidth = stretchedImgHeight * images[i].dimensions.ratio;
+                    if (stretchedImgWidth < minWidth) { //maybe correct errors
+                        stretchedImgWidth = minWidth;
+                        stretchedImgHeight = stretchedImgWidth / images[i].dimensions.ratio;
+                    }
+                } else {
+                    stretchedImgWidth = minWidth; //start with positive thinking
+                    stretchedImgHeight = stretchedImgWidth / images[i].dimensions.ratio;
+                    if (stretchedImgHeight < minHeight) { //maybe correct errors
+                        stretchedImgHeight = minHeight;
+                        stretchedImgWidth = stretchedImgHeight * images[i].dimensions.ratio;
+                    }
+                }
+
+                //floor values (css and double values are slow!), +1 for correcting floor errors
+                stretchedImgHeight = Math.floor(stretchedImgHeight) + 1;
+                stretchedImgWidth = Math.floor(stretchedImgWidth) + 1;
+
+                //set
+                if (stretchedImgHeight >= minHeight) {
                     images[i].image.css({
-                        'width': '100%',
-                        'height': strechedImgHeight + 'px',
-                        'top': parseInt(-(strechedImgHeight - containerHeight) / 2) + 'px',
-                        'left': '0px'
+                        'width': stretchedImgWidth + 'px',
+                        'height': stretchedImgHeight + 'px',
+                        'top': -Math.floor(stretchedImgHeight - window.innerHeight) / 2 + 'px', //when the parallax section is in the center of the viewpost, we also want to see the center of the image
+                        'left': -Math.floor(stretchedImgWidth - window.innerWidth) / 2 + 'px' //if image is broader than viewport, we want to see the middle part
                     });
                 } else {
                     images[i].image.css({
-                        'width': strechedImgWidth + 'px',
-                        'height': nominalValue + 'px',
-                        'top': '0px',
-                        'left': parseInt(-(strechedImgWidth - containerWidth) / 2) + 'px'
+                        'width': stretchedImgWidth + 'px',
+                        'height': stretchedImgHeight + 'px',
+                        'top': -Math.floor(stretchedImgHeight - window.innerHeight) / 2 + 'px', //when the parallax section is in the center of the viewpost, we also want to see the center of the image
+                        'left': -Math.floor(stretchedImgWidth - window.innerWidth) / 2 + 'px' //if image is broader than viewport, we want to see the middle part
                     });
                 }
             }
         }
 
-        init();
+        init(); //init on construction
 
-
-
-
-
-
-
-
-
-
-
-//    var images = [];
-//    var $parallaxImagesContainer = angular.element('<div class="parallax-images" />');
-//    var parallaxRatio = 0.25;
-//
-//    //TODO bug: if we have a instagram module followed by a parallax module, you notice a performance lag (bg image position doesn't get updated quickly enough) when scolling. set height + 100px (50 bottom & top). this way you don't realize a white space. only problem: you can't have two parallax modules following each other as they would be overlapping. but scaffold modules could set parameters in this case. this would be an 1.0.1 enhancement
-//
-//    //TODO test if touchmove event also works
-//
-//    //TODO while loops in extra functions?
-//
-//    //TODO container height minus navbar height
-//
-//    this.refresh = function(){
-//        setImageSizes();
-//        parallaxScroll();
-//    };
-//
-//    function init(){
-//        $('body').prepend($parallaxImagesContainer);
-//        angular.element($window).bind('resize', function() {
-//            //TODO what's up with throttle??
-//            //util.throttle(setImageSizes(), 16);
-//            //util.throttle(parallaxScroll(), 16);
-//            setImageSizes();
-//            parallaxScroll();
-//        });
-//        angular.element($window).bind('scroll', function() {
-//            //util.throttle(parallaxScroll, 16);
-//            parallaxScroll();
-//        });
-//    }
-//
-//    this.add = function($section, bgImgSrc, height){
-//        var $imageContainer = angular.element('<div class="parallax-image" />');
-//        $parallaxImagesContainer.append($imageContainer);
-//        var $image = angular.element('<img src="'+bgImgSrc+'" />');
-//        $imageContainer.append($image);
-//        images.push({
-//            container : $imageContainer, //TODO which values should i really cache?
-//            image : $image,
-//            section : $section,
-//            height: height,
-//            sectionOffset : null,
-//            dimensions : {
-//                height : null,
-//                width : null
-//            }
-//        });
-//        initDimensions(bgImgSrc, images.length - 1); //TODO put src in object
-//    };
-//
-//    this.clear = function(){
-//        images = [];
-//        $parallaxImagesContainer.children().remove();
-//    };
-//
-//    function initDimensions(src, index){
-//        var bgImg = new Image();
-//        bgImg.onload = function() {
-//            images[index].dimensions.height = this.height;
-//            images[index].dimensions.width = this.width;
-//            $timeout(function(){
-//                images[index].sectionOffset = images[index].section.offset().top;
-//                setImageSizes();
-//                parallaxScroll();
-//            });
-//        };
-//        bgImg.src = src;
-//    }
-//
-//    //scrolls all registered parallax elements
-//    function parallaxScroll(){
-//        for(var i = 0; i < images.length; i++){
-//            if(util.inViewport(images[i].section)) {
-//                images[i].container.show();
-//                var sectionPosition = parseInt(window.pageYOffset - images[i].sectionOffset);
-//                var imagePosition = parseInt((1 - parallaxRatio) * sectionPosition);
-//                var containerPosition = -sectionPosition;
-//                images[i].container.css({'transform': 'translate3d(0, ' + containerPosition + 'px, 0)'});
-//                images[i].image.css({'transform': 'translate3d(0, ' + imagePosition + 'px, 0)'});
-//            } else{
-//                images[i].container.hide();
-//            }
-//        }
-//    }
-//
-//    //resizes all images to a size where maximum information is shown while being able to parallax scroll it
-//    //TODO comment this
-//    function setImageSizes(){
-//        for(var i = 0; i < images.length; i++){
-//            images[i].section.children().css('height', images[i].height); //set section height
-//            images[i].container.css('height', images[i].height); //set container height
-//            images[i].sectionOffset = images[i].section.offset().top;//TODO best way to do this?
-//            var imgHeight = images[i].dimensions.height;
-//            var imgWidth = images[i].dimensions.width;
-//            var containerHeight = parseInt(window.innerHeight);// it needs to be scrollabe over 100% of the windows height //TODO is there a way to do this without parseInt?
-//            var containerWidth = parseInt(images[i].container.css('width'));
-//            var nominalValue = containerHeight * (parallaxRatio + 1);
-//            var strechedImgHeight = parseInt(imgHeight * containerWidth / imgWidth);
-//            var strechedImgWidth = nominalValue / imgHeight * imgWidth;
-//            if(strechedImgHeight > nominalValue){
-//                images[i].image.css({
-//                    'width':    '100%',
-//                    'height':   strechedImgHeight + 'px',
-//                    'top' :     parseInt(-(strechedImgHeight - containerHeight) / 2) + 'px',
-//                    'left' :    '0px'
-//                });
-//            } else {
-//                images[i].image.css({
-//                    'width'     : strechedImgWidth + 'px',
-//                    'height'    : nominalValue + 'px',
-//                    'top'       : '0px',
-//                    'left'      : parseInt(-(strechedImgWidth - containerWidth) / 2) + 'px'
-//                });
-//            }
-//        }
-//    }
-//
-//    init();
     });
