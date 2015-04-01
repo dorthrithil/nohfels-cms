@@ -74,13 +74,15 @@ angular.module('amnohfelsClientApp')
         };
 
         $scope.response[5] = {
-            data: {},
+            data: {
+                topic : 'cafe'
+            },
             type: 'contact-module'
         };
 
         $scope.response[6] = {
             data: {
-                filterForTag: ['café', 'cafe'],
+                filterForTags: ['café', 'cafe'],
                 maxPhotos: 10,
                 filterOutTags: true
             },

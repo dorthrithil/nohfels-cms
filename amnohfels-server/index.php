@@ -1,29 +1,66 @@
 <?php
 header("Access-Control-Allow-Origin: *");
-//header("Content-Type: application/json; charset=UTF-8");
+header("Content-Type: application/json; charset=UTF-8");
 
 include("connectDB.php");
 
-//$result = $conn->query("SELECT content, title, position FROM sections WHERE topic = 'cafe' ORDER BY position ASC");
+include("queryProcessers.php");
 
-//$outp = array();
-//while($rs = $result->fetch_array(MYSQLI_ASSOC)) {
-//    $section = new stdClass();
-//    $section->title = $rs['title'];
-//    $section->content = $rs['content'];
-//    $outp[] = $section;
-//}
+$topic = $_GET['topic'];
 
-
-
-$site = (isset($_GET['site'])) ? $_GET['site'] : "start";
-
-
-
-include($site.".php");
-
-
+$response = scaffoldPage($topic, $connection);
 
 include("disconnectDB.php");
 
-//echo json_encode($outp);
+echo json_encode($response);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//
+//$site = (isset($_GET['site'])) ? $_GET['site'] : "start";
+//
+//
+//
+//include($site.".php");

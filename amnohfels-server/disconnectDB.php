@@ -1,4 +1,4 @@
 <?php
 /* close connection */
-$conn->close();
+$connection->close();
 ?>

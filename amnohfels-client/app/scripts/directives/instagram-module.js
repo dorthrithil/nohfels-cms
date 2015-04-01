@@ -28,8 +28,8 @@ angular.module('amnohfelsClientApp')
                 if (typeof $scope.data.maxPhotos === 'undefined') {
                     $scope.data.maxPhotos = 10;
                 }
-                if (typeof $scope.data.filterForTag === 'undefined') {
-                    $scope.data.filterForTag = false;
+                if (typeof $scope.data.filterForTags === 'undefined') {
+                    $scope.data.filterForTags = false;
                 }
                 if (typeof $scope.data.filterOutTags === 'undefined') {
                     $scope.data.filterOutTags = true;
@@ -47,9 +47,9 @@ angular.module('amnohfelsClientApp')
                             var push;
                             for (var i = 0; i < response.data.length; i++) {
                                 push = false;
-                                if ($scope.data.filterForTag !== false && util.inArray(response.data[i].tags, $scope.data.filterForTag)) {
+                                if ($scope.data.filterForTags !== false && util.inArray(response.data[i].tags, $scope.data.filterForTags)) {
                                     push = true;
-                                } else if ($scope.data.filterForTag === false) {
+                                } else if ($scope.data.filterForTags === false) {
                                     push = true;
                                 }
                                 if (push) {
