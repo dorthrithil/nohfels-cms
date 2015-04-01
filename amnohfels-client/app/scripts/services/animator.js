@@ -13,6 +13,8 @@
 //and use something like queue.start to start the animation which iterates with array.shift()
 //the problem would be solved then because i could bring the delay in exclusively this way. also it's way cleaner.
 
+//TODO bug: slide effects dont work like expected when original image width is broader than viewport!
+
 angular.module('amnohfelsClientApp')
     .service('animator', function animator($q, $window) {
 
@@ -39,8 +41,6 @@ angular.module('amnohfelsClientApp')
                 staggerDelay = 0;
             }
         }
-
-        //TODO stagger bug! i have destroyed something.. maybe reset it to old version (i'm nt using staggered form validation animations either way) or find the bug
 
         //takes an angular/dom element and an object of css properties which will get animated
         //takes an optional argument object which can contain:

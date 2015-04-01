@@ -53,6 +53,7 @@ angular.module('amnohfelsClientApp')
                 src: bgImgSrc
             });
             images[images.length - 1].image.attr('src', bgImgSrc); //TODO do that later for fadein
+            //setSectionHeights(images.length - 1);
             initDimensions(images.length - 1);
         };
 
@@ -79,8 +80,6 @@ angular.module('amnohfelsClientApp')
 
         //initializes the dimensions of the parallaxing image and the section
         function initDimensions(index) {
-            images[index].section.children().css('height', images[index].height); //set the height of the section
-            images[index].sectionOffset = images[index].section.offset().top; //cache the sections offset
             var bgImg = new Image(); //create a temporary image
             bgImg.onload = function () { //and hook the function for reading the dimensions as soon as the image has loaded
                 images[index].dimensions.height = this.height; //cache height..
@@ -92,6 +91,11 @@ angular.module('amnohfelsClientApp')
                 });
             };
             bgImg.src = images[index].src; //set the src of the temporary image for starting the above process
+        }
+
+        function setSectionHeights(index){
+            images[index].section.children().css('height', util.convertVh(images[index].height)); //set the height of the section excluding navbar from vh measurement
+            images[index].sectionOffset = images[index].section.offset().top; //cache the sections offset
         }
 
         //scrolls all registered parallax elements
@@ -107,6 +111,8 @@ angular.module('amnohfelsClientApp')
         //resizes all images to a size where maximum information is shown while being able to parallax scroll it
         function setImageSizes() {
             for (var i = 0; i < images.length; i++) {
+                setSectionHeights(i); //section heights need to be resetted on window resize and refresh()
+
                 //init
                 var stretchedImgHeight,
                     stretchedImgWidth,

@@ -22,6 +22,37 @@ angular.module('amnohfelsClientApp')
         };
 
         $scope.response[1] = {
+            type: 'text-module',
+            data: {
+                title: 'Unser Angebot',
+                content: 'Kaffee, Kuchen und Waffeln nach Hausfrauenart, Eisbecher, eine große Auswahl alkoholfreier Getränke, Wein von heimischen Winzern, Kirner Bier und vieles mehr.'
+            }};
+
+        $scope.response[2] = {
+            type: 'image-module',
+            data: {
+                images: [
+                    {imageSize: 'large', imageThumbSrc: 'images/gallery/cafe/1.jpg', imageSrc: 'images/gallery/cafe/1.jpg'},
+                    {imageSize: 'small', imageThumbSrc: 'images/gallery/cafe/2.jpg', imageSrc: 'images/gallery/cafe/2.jpg'},
+                    {imageSize: 'small', imageThumbSrc: 'images/gallery/cafe/3.jpg', imageSrc: 'images/gallery/cafe/3.jpg'},
+                    {imageSize: 'small', imageThumbSrc: 'images/gallery/cafe/4.jpg', imageSrc: 'images/gallery/cafe/4.jpg'},
+                    {imageSize: 'small', imageThumbSrc: 'images/gallery/cafe/5.jpg', imageSrc: 'images/gallery/cafe/5.jpg'},
+                    {imageSize: 'small', imageThumbSrc: 'images/gallery/cafe/6.jpg', imageSrc: 'images/gallery/cafe/6.jpg'}
+                ]
+            }
+        };
+
+        $scope.response[3] = {
+            data: {
+                caption: 'Mo-Fr: 13:00-19:00 Uhr<br /> Sa+So: 12:00-19:00 Uhr',
+                bgImgSrc: 'images/parallax/kuchen.jpg',
+                title: 'Öffnungszeiten',
+                height: '500px'
+            },
+            type: 'parallax-module'
+        };
+
+        $scope.response[4] = {
             type: 'staff-module',
             data: {
                 title: 'Unser Team',
@@ -42,22 +73,12 @@ angular.module('amnohfelsClientApp')
             }
         };
 
-        $scope.response[3] = {
+        $scope.response[5] = {
             data: {},
             type: 'contact-module'
         };
 
-        $scope.response[2] = {
-            data: {
-                caption: 'Mo-Fr: 13:00-19:00 Uhr<br /> Sa+So: 12:00-19:00 Uhr',
-                bgImgSrc: 'images/parallax/kuchen.jpg',
-                title: 'Öffnungszeiten',
-                height: '500px'
-            },
-            type: 'parallax-module'
-        };
-
-        $scope.response[4] = {
+        $scope.response[6] = {
             data: {
                 filterForTag: ['café', 'cafe'],
                 maxPhotos: 10,
@@ -66,9 +87,4 @@ angular.module('amnohfelsClientApp')
             type: 'instagram-module'
         };
 
-
-//        $scope.response[0] = {};
-//        $scope.response[1] = {};
-//        $scope.response[1].data = {};
-//        $scope.response[1].type = 'this shouldn't exist';
     });

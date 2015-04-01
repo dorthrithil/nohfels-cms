@@ -20,7 +20,7 @@ angular.module('amnohfelsClientApp')
                 if (value.type !== undefined) {
                     switch (value.type) {
                         case 'parallax-module':
-                            compileStream += '<parallax-module data="modules[' + key + '].data"></parallax-module>';
+                            compileStream += '<parallax-module first-module="' + (key === 0) + '" data="modules[' + key + '].data"></parallax-module>';
                             break;
                         case 'text-module':
                             compileStream += '<text-module data="modules[' + key + '].data"></text-module>';

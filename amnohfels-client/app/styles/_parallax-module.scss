@@ -35,7 +35,7 @@
 
   .wrapper{
     position: absolute;
-    top: $navbar-height;//50px;
+    top: $navbar-height;
     left: 0px;
     max-width: 90%;
 
@@ -45,7 +45,7 @@
       font-family: 'Playfair Display', serif;
       font-weight: 400;
       font-style: normal;
-      margin: 0px 0px 0px $navbar-height;//50px;
+      margin: 0px 0px 0px $navbar-height;
       color: $gray-super-light;
     }
 
@@ -54,6 +54,25 @@
       font-family: 'Playfair Display', serif;
       font-weight: 400;
       font-style: italic;
+    }
+  }
+
+  .scroll-hint{
+    position: absolute;
+    bottom: 15px;
+    left: 50%;
+    margin-left: -25px;
+    height: 50px;
+    width: 50px;
+    background-color: $gray-dark;
+    border-radius: 25px;
+    line-height: 63px;
+    text-align: center;
+    transition: opacity 0.7s ease;
+
+    .glyphicon{
+      color: $bright;
+      font-size: 23px;
     }
   }
 
