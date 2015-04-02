@@ -9,6 +9,7 @@
 
 //TODO check for token free photo fetching
 //TODO comment & document data object (filterForTag)
+//TODO is tag filtering case sensitive?
 
 //TODO (1.0.1) improvement: image preload indication to get rid of changing carousel height during loading process
 //TODO (1.0.1) security: get CORS working instead of JSONP

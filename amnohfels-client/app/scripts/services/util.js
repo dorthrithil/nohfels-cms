@@ -8,14 +8,14 @@
  * Service in the amnohfelsClientApp.
  */
 angular.module('amnohfelsClientApp')
-    .service('util', function util($timeout) {
+    .service('util', function util($timeout, phpServerRoot, $http) {
         var lockedUntil;
         this.throttle = function (fn, threshhold) {
             if (!threshhold) {
                 threshhold = 250;
             }
             var now = +new Date();
-            if(lockedUntil && now > lockedUntil){
+            if (lockedUntil && now > lockedUntil) {
                 fn.apply(this);
                 lockedUntil = now + threshhold;
             } else if (!lockedUntil) {
@@ -56,6 +56,14 @@ angular.module('amnohfelsClientApp')
             debouncedFunctionNotExecutedYet = true;
         };
 
+        /**
+         * @arguments:
+         *  $element: angular element
+         *
+         * @returns:
+         *  true: if $element is in viewport
+         *  false: if not
+         */
         this.inViewport = function ($element) {
             var bounds = $element.get(0).getBoundingClientRect();
             return bounds.top < window.innerHeight && bounds.bottom > 0;
@@ -70,7 +78,6 @@ angular.module('amnohfelsClientApp')
          *  true: if b or an element in b is in array a
          *  false: if not
          */
-
         this.inArray = function (a, b) {
             b = [].concat(b); //not efficient
             for (var i = 0; i < a.length; i++) {
@@ -83,7 +90,14 @@ angular.module('amnohfelsClientApp')
             return false;
         };
 
-        this.filterOutHashTags = function (s) { //TODO rewrite this as an angular filter
+        /**
+         * @arguments:
+         *  s: string
+         *
+         * @returns:
+         *  s without #hashtags
+         */
+        this.filterOutHashTags = function (s) { //TODO (1.0.1) improvement: rewrite this as an angular filter
             var res = '', hashTagDetected = false;
             for (var i = 0; i < s.length; i++) {
                 if (s.charAt(i) === '#' && !hashTagDetected) {
@@ -98,6 +112,22 @@ angular.module('amnohfelsClientApp')
             return res;
         };
 
+        /**
+         * @arguments:
+         *  topic: the pages topic
+         *  $scope: the $scope from where the function is called (the page will be compiled on this scope)
+         *
+         * @description:
+         *  gets page data from server and invokes scaffold-modules page compilation
+         */
+        this.compilePage = function (topic, $scope) {
+            var page = '/index.php?topic=' + topic;
+            $http.get(phpServerRoot + page)
+                .success(function (response) {
+                    $scope.response = response;
+                    $scope.$broadcast('compile-modules'); //TODO (1.0.1) improvement: as this is the same page, i could use a function instead of events?
+                });
+        };
 
         /**
          * @arguments:
@@ -106,8 +136,8 @@ angular.module('amnohfelsClientApp')
          * @description:
          *  returns the pixel converted vh height excluding the navigation bar
          */
-        this.convertVh = function(h){
-            if(h.charAt(h.length - 2) === 'v' && h.charAt(h.length - 1) === 'h'){
+        this.convertVh = function (h) {
+            if (h.charAt(h.length - 2) === 'v' && h.charAt(h.length - 1) === 'h') {
                 var numeral = h.substring(0, h.length - 2);
                 var navBarHeight = angular.element.find('nav')[0].offsetHeight;
                 return (numeral / 100) * window.innerHeight - navBarHeight + 'px';

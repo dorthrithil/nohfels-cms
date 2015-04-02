@@ -8,10 +8,6 @@
  * Controller of the amnohfelsClientApp
  */
 angular.module('amnohfelsClientApp')
-  .controller('ReisemobilstellplatzCtrl', function ($scope) {
-    $scope.awesomeThings = [
-      'HTML5 Boilerplate',
-      'AngularJS',
-      'Karma'
-    ];
-  });
+    .controller('ReisemobilstellplatzCtrl', function ($scope, util) {
+        util.compilePage('reisemobilstellplatz', $scope);
+    });

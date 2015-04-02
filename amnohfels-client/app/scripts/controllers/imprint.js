@@ -8,13 +8,6 @@
  * Controller of the amnohfelsClientApp
  */
 angular.module('amnohfelsClientApp')
-  .controller('ImprintCtrl', function ($scope, $http, phpServerRoot) {
-        var page = '/index.php&site=imprint';
-        $http.get(phpServerRoot + page)
-            .success(function(response) {
-                $scope.sectionData = response;
-            });
-        $scope.noData = function(sectionData){
-            return (sectionData === undefined);
-        };
-  });
+    .controller('ImprintCtrl', function ($scope, util) {
+        util.compilePage('imprint', $scope);
+    });

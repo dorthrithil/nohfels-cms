@@ -8,11 +8,6 @@
  * Controller of the webappApp
  */
 angular.module('amnohfelsClientApp')
-    .controller('MinigolfCtrl', function ($scope, $http, phpServerRoot) {
-        var page = '/index.php?topic=cafe';
-        $http.get(phpServerRoot + page)
-            .success(function (response) {
-                $scope.response = response;
-                $scope.$broadcast('compile-modules');
-            });
+    .controller('MinigolfCtrl', function ($scope, util) {
+        util.compilePage('minigolf', $scope);
     });
