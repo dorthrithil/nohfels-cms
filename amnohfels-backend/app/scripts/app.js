@@ -45,4 +45,4 @@ angular
                 controller: 'WelcomeCtrl'
             });
     })
-    .value('phpServerRoot', 'http://amnohfels.local');
+    .value('phpServerRoot', 'http://schruemel.de/testnohfels');

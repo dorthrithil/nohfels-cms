@@ -52,19 +52,20 @@ function getImageModule($id, $connection)
 {
     $data = new stdClass();
     try {
-        $result = $connection->query("SELECT id FROM image_modules WHERE id = '$id'");
+        $result = $connection->query("SELECT id, title FROM image_modules WHERE id = '$id'");
         if (!$result) {
             throw new Exception($connection->error);
         } else {
             while ($rs = $result->fetch_array(MYSQLI_ASSOC)) {
                 $image_module_id = $rs['id'];
+                $data->title = $rs['title'];
             }
         }
     } catch (Exception $e) {
         echo $e->getMessage();
     }
 
-    $images = [];
+    $images = array();
     try {
         $result = $connection->query("SELECT image_size, image_src, image_thumb_src FROM image_module_images WHERE image_module = '$image_module_id'");
         if (!$result) {
@@ -94,12 +95,13 @@ function getContactModule($id, $connection)
 {
     $data = new stdClass();
     try {
-        $result = $connection->query("SELECT topic FROM contact_modules WHERE id = '$id'");
+        $result = $connection->query("SELECT topic, title FROM contact_modules WHERE id = '$id'");
         if (!$result) {
             throw new Exception($connection->error);
         } else {
             while ($rs = $result->fetch_array(MYSQLI_ASSOC)) {
                 $data->topic = $rs['topic'];
+                $data->title = $rs['title'];
             }
         }
     } catch (Exception $e) {
@@ -115,7 +117,7 @@ function getInstagramModule($id, $connection)
 {
     $data = new stdClass();
     try {
-        $result = $connection->query("SELECT max_photos, filter_out_tags, filter_for_tags FROM instagram_modules WHERE id = '$id'");
+        $result = $connection->query("SELECT max_photos, filter_out_tags, filter_for_tags, title FROM instagram_modules WHERE id = '$id'");
         if (!$result) {
             throw new Exception($connection->error);
         } else {
@@ -123,6 +125,7 @@ function getInstagramModule($id, $connection)
                 $data->maxPhotos = $rs['max_photos'];
                 $data->filterOutTags = tinyIntToBoolean($rs['filter_out_tags']);
                 $data->filterForTags = tinyIntToBoolean($rs['filter_for_tags']);
+                $data->title = $rs['title'];
             }
         }
     } catch (Exception $e) {
@@ -130,7 +133,7 @@ function getInstagramModule($id, $connection)
     }
 
     if ($data->filterForTags) {
-        $tags = [];
+        $tags = array();
         try {
             $result = $connection->query("SELECT tag FROM instagram_module_tags WHERE instagram_module = '$id'");
             if (!$result) {
@@ -168,7 +171,7 @@ function getStaffModule($id, $connection)
         echo $e->getMessage();
     }
 
-    $images = [];
+    $images = array();
     try {
         $result = $connection->query("SELECT image_src, caption FROM staff_module_images WHERE staff_module = '$id'");
         if (!$result) {
@@ -193,11 +196,13 @@ function getStaffModule($id, $connection)
     return $response;
 }
 
-function scaffoldPage($topic, $connection)
+function getPage($connection, $topic)
 {
-    $response = [];
+    $response = array();
     try {
-        $result = $connection->query("SELECT module_type, module_id FROM pages WHERE topic = '$topic' ORDER BY 'y-index' ASC");
+        $result = $connection->query("SELECT module_type, module_id, name
+                                      FROM (pages LEFT JOIN module_types ON (pages.module_type = module_types.type))
+                                      WHERE topic = '$topic' ORDER BY y_index ASC");
         if (!$result) {
             throw new Exception($connection->error);
         } else {
@@ -222,6 +227,25 @@ function scaffoldPage($topic, $connection)
                         $response[] = getStaffModule($rs['module_id'], $connection);
                         break;
                 }
+                $response[sizeof($response) - 1]->typeName = $rs['name'];
+            }
+        }
+    } catch (Exception $e) {
+        echo $e->getMessage();
+    }
+    return $response;
+}
+
+function getModuleTypes($connection)
+{
+    $response = array();
+    try {
+        $result = $connection->query("SELECT name FROM module_types ORDER BY name ASC");
+        if (!$result) {
+            throw new Exception($connection->error);
+        } else {
+            while ($rs = $result->fetch_array(MYSQLI_ASSOC)) {
+                $response[] = $rs['name'];
             }
         }
     } catch (Exception $e) {

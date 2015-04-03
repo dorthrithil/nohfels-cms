@@ -11,5 +11,14 @@ $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/boots
 }
 
 body{
-  padding-top: $navbar-height;
+  padding-top: $navbar-height * 2;
+}
+
+.actions{
+  text-align: right;
+  margin-bottom: 30px;
+}
+
+.save-button{
+  color: $gray-dark !important;
 }

@@ -6,63 +6,28 @@ include("util.php");
 
 include("connectDB.php");
 
-include("queryProcessers.php");
+include("getters.php");
 
-$topic = $_GET['topic'];
+include("setters.php");
 
-$response = scaffoldPage($topic, $connection);
+$q = $_GET['q'];
+
+switch($q){
+    case "page":
+        $topic = $_GET['topic'];
+        $response = getPage($connection, $topic);
+        break;
+    case "module_types":
+        $response = getModuleTypes($connection);
+        break;
+    case "swap_modules":
+        $upper = $_GET['upper'];
+        $response = swapModules($connection, $upper);
+        break;
+    default:
+        $response = "";
+}
 
 include("disconnectDB.php");
 
 echo json_encode($response);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//
-//$site = (isset($_GET['site'])) ? $_GET['site'] : "start";
-//
-//
-//
-//include($site.".php");

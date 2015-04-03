@@ -121,7 +121,7 @@ angular.module('amnohfelsClientApp')
          *  gets page data from server and invokes scaffold-modules page compilation
          */
         this.compilePage = function (topic, $scope) {
-            var page = '/index.php?topic=' + topic;
+            var page = '/index.php?q=page&topic=' + topic;
             $http.get(phpServerRoot + page)
                 .success(function (response) {
                     $scope.response = response;

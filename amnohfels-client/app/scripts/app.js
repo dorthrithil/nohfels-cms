@@ -61,4 +61,4 @@ angular
                     controller: 'NotfoundCtrl'
             });
         })
-    .value('phpServerRoot','http://amnohfels.local');
+    .value('phpServerRoot','http://schruemel.de/testnohfels/');
