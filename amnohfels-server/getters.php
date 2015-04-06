@@ -240,12 +240,15 @@ function getModuleTypes($connection)
 {
     $response = array();
     try {
-        $result = $connection->query("SELECT name FROM module_types ORDER BY name ASC");
+        $result = $connection->query("SELECT name, type FROM module_types ORDER BY name ASC");
         if (!$result) {
             throw new Exception($connection->error);
         } else {
             while ($rs = $result->fetch_array(MYSQLI_ASSOC)) {
-                $response[] = $rs['name'];
+                $type = new stdClass();
+                $type->name = $rs['name'];
+                $type->typeId = $rs['type']; //TODO change in db to typeId
+                $response[] = $type;
             }
         }
     } catch (Exception $e) {
