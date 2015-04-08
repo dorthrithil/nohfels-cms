@@ -9,8 +9,19 @@
  * Main module of the application.
  */
 angular
-    .module('amnohfelsBackendApp', ['ngRoute'])
-    .config(function ($routeProvider) {
+    .module('amnohfelsBackendApp', ['ngRoute', 'textAngular'])
+    .config(function ($routeProvider, $provide) {
+        //config textAngular
+        $provide.decorator('taOptions', ['$delegate', function(taOptions){
+            taOptions.toolbar = [
+                ['bold', 'italics', 'underline', 'strikeThrough', 'ul', 'ol', 'redo', 'undo'],
+                ['justifyLeft', 'justifyCenter', 'justifyRight', 'indent', 'outdent'],
+                ['insertLink']
+            ];
+            return taOptions;
+        }]);
+
+        //config ngRoute
         $routeProvider
             .when('/cafe', {
                 templateUrl: 'views/cafe.html',

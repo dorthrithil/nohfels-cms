@@ -6,12 +6,21 @@
  * @description
  * # modalTextForm
  */
+
+//TODO validation (required)
+
 angular.module('amnohfelsBackendApp')
-  .directive('modalTextForm', function () {
-    return {
-      templateUrl: 'views/modaltextform.html',
-      restrict: 'E',
-      link: function postLink() {
-      }
-    };
-  });
+    .directive('modalTextForm', function () {
+        return {
+            templateUrl: 'views/modaltextform.html',
+            restrict: 'E',
+            link: function postLink() {
+            },
+            controller: function ($scope) {
+                $scope.data = {
+                    text: '',
+                    title: ''
+                };
+            }
+        };
+    });

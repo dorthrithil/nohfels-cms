@@ -6,11 +6,12 @@ include("util.php");
 
 include("connectDB.php");
 
-include("getters.php");
+include("get.php");
 
-include("setters.php");
+include("post.php");
 
 $q = $_GET['q'];
+if (!isset($q)) $q = $_POST['q'];
 
 switch($q){
     case "page":

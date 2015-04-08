@@ -26,3 +26,7 @@ function swapModules($connection, $upper){
     }
     return;
 }
+
+function createNewTextModule($connection, $title, $content){
+
+}

@@ -33,6 +33,11 @@ angular.module('amnohfelsBackendApp')
                         break;
                 }
                 element.children().modal({backdrop: 'static'});
+            },
+            controller: function($scope){
+                $scope.save = function(){
+                    
+                };
             }
         };
     });
