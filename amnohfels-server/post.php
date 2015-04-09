@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: fengelmann
- * Date: 03/04/15
- * Time: 22:48
- */
 
 function swapModules($connection, $upper){
     $lower = $upper + 1;
@@ -24,9 +18,5 @@ function swapModules($connection, $upper){
     } catch (Exception $e) {
         echo $e->getMessage();
     }
-    return;
-}
-
-function createNewTextModule($connection, $title, $content){
-
+    return true;
 }

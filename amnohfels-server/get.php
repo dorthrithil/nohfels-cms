@@ -6,11 +6,12 @@ function getTextModule($id, $connection)
 {
     $data = new stdClass();
     try {
-        $result = $connection->query("SELECT title, content FROM text_modules WHERE id = '$id'");
+        $result = $connection->query("SELECT id, title, content FROM text_modules WHERE id = '$id'");
         if (!$result) {
             throw new Exception($connection->error);
         } else {
             while ($rs = $result->fetch_array(MYSQLI_ASSOC)) {
+                $data->id = $rs['id'];
                 $data->title = $rs['title'];
                 $data->content = $rs['content'];
             }
@@ -28,11 +29,12 @@ function getParallaxModule($id, $connection)
 {
     $data = new stdClass();
     try {
-        $result = $connection->query("SELECT title, caption, height, bg_img_src FROM parallax_modules WHERE id = '$id'");
+        $result = $connection->query("SELECT id, title, caption, height, bg_img_src FROM parallax_modules WHERE id = '$id'");
         if (!$result) {
             throw new Exception($connection->error);
         } else {
             while ($rs = $result->fetch_array(MYSQLI_ASSOC)) {
+                $data->id = $rs['id'];
                 $data->title = $rs['title'];
                 $data->caption = $rs['caption'];
                 $data->height = $rs['height'];
@@ -57,7 +59,7 @@ function getImageModule($id, $connection)
             throw new Exception($connection->error);
         } else {
             while ($rs = $result->fetch_array(MYSQLI_ASSOC)) {
-                $image_module_id = $rs['id'];
+                $data->id = $rs['id'];
                 $data->title = $rs['title'];
             }
         }
@@ -67,7 +69,7 @@ function getImageModule($id, $connection)
 
     $images = array();
     try {
-        $result = $connection->query("SELECT image_size, image_src, image_thumb_src FROM image_module_images WHERE image_module = '$image_module_id'");
+        $result = $connection->query("SELECT image_size, image_src, image_thumb_src FROM image_module_images WHERE image_module = '$data->id'");
         if (!$result) {
             throw new Exception($connection->error);
         } else {
@@ -95,11 +97,12 @@ function getContactModule($id, $connection)
 {
     $data = new stdClass();
     try {
-        $result = $connection->query("SELECT topic, title FROM contact_modules WHERE id = '$id'");
+        $result = $connection->query("SELECT id, topic, title FROM contact_modules WHERE id = '$id'");
         if (!$result) {
             throw new Exception($connection->error);
         } else {
             while ($rs = $result->fetch_array(MYSQLI_ASSOC)) {
+                $data->id = $rs['id'];
                 $data->topic = $rs['topic'];
                 $data->title = $rs['title'];
             }
@@ -117,11 +120,12 @@ function getInstagramModule($id, $connection)
 {
     $data = new stdClass();
     try {
-        $result = $connection->query("SELECT max_photos, filter_out_tags, filter_for_tags, title FROM instagram_modules WHERE id = '$id'");
+        $result = $connection->query("SELECT id, max_photos, filter_out_tags, filter_for_tags, title FROM instagram_modules WHERE id = '$id'");
         if (!$result) {
             throw new Exception($connection->error);
         } else {
             while ($rs = $result->fetch_array(MYSQLI_ASSOC)) {
+                $data->id = $rs['id'];
                 $data->maxPhotos = $rs['max_photos'];
                 $data->filterOutTags = tinyIntToBoolean($rs['filter_out_tags']);
                 $data->filterForTags = tinyIntToBoolean($rs['filter_for_tags']);
@@ -159,11 +163,12 @@ function getStaffModule($id, $connection)
 {
     $data = new stdClass();
     try {
-        $result = $connection->query("SELECT title FROM staff_modules WHERE id = '$id'");
+        $result = $connection->query("SELECT id, title FROM staff_modules WHERE id = '$id'");
         if (!$result) {
             throw new Exception($connection->error);
         } else {
             while ($rs = $result->fetch_array(MYSQLI_ASSOC)) {
+                $data->id = $rs['id'];
                 $data->title = $rs['title'];
             }
         }

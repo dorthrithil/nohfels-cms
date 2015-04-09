@@ -26,12 +26,28 @@ angular.module('amnohfelsBackendApp')
                     };
                     element.append($compile(angular.element('<modal></modal>'))(scope));
                 };
+                scope.confirmDeleteModule = function(index){
+                    scope.confirmationModalData = {
+                        performAction : function(){
+                            scope.deleteModule(index);
+                        },
+                        title : 'Sind Sie sich sicher?',
+                        text:'Wollen Sie das ' + scope.response[index].typeName + '-Modul "' + scope.response[index].data.title + '" wirklich löschen? Dieser Schritt kann nicht rückgängig gemacht werden!',
+                        okButtonText:'Löschen',
+                        dismissButtonText:'Abbrechen'
+                    };
+                    element.append($compile(angular.element('<confirmation-modal></confirmation-modal>'))(scope));
+                };
             },
             controller: function ($scope) {
-                $http.get(phpServerRoot + '/index.php?q=page&topic=' + $scope.topic)
-                    .success(function (response) {
-                        $scope.response = response;
-                    });
+                $scope.refreshPageData = function(){
+                    $http.get(phpServerRoot + '/index.php?q=page&topic=' + $scope.topic)
+                        .success(function (response) {
+                            $scope.response = response;
+                        });
+                };
+                $scope.refreshPageData();
+                $scope.$on('sq-http-request-successful', $scope.refreshPageData);
                 $http.get(phpServerRoot + '/index.php?q=module_types')
                     .success(function (response) {
                         $scope.moduleTypes = response;
@@ -41,14 +57,18 @@ angular.module('amnohfelsBackendApp')
                     var moduleBuffer = $scope.response[moduleYIndex - 1];
                     $scope.response[moduleYIndex - 1] = module;
                     $scope.response[moduleYIndex] = moduleBuffer;
-                    syncQueue.push('q=swap_modules&upper=' + (moduleYIndex - 1));
+                    syncQueue.push('get', 'q=swap_modules&upper=' + (moduleYIndex - 1));
                 };
                 $scope.down = function (module) {
                     var moduleYIndex = $scope.response.indexOf(module);
                     var moduleBuffer = $scope.response[moduleYIndex + 1];
                     $scope.response[moduleYIndex + 1] = module;
                     $scope.response[moduleYIndex] = moduleBuffer;
-                    syncQueue.push('q=swap_modules&upper=' + moduleYIndex);
+                    syncQueue.push('get', 'q=swap_modules&upper=' + moduleYIndex);
+                };
+                $scope.deleteModule = function(index){
+                    syncQueue.push('delete', '/module/text/' + $scope.response[index].data.id);
+                    $scope.response.splice(index, 1);
                 };
                 $scope.isSynced = function () {
                     return syncQueue.isSynced();

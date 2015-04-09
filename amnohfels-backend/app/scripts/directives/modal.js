@@ -7,7 +7,7 @@
  * # modal
  */
 angular.module('amnohfelsBackendApp')
-    .directive('modal', function ($compile) {
+    .directive('modal', function ($compile, syncQueue) {
         return {
             templateUrl: 'views/modal.html',
             restrict: 'E',
@@ -34,9 +34,10 @@ angular.module('amnohfelsBackendApp')
                 }
                 element.children().modal({backdrop: 'static'});
             },
-            controller: function($scope){
+            controller: function($scope, $element){
                 $scope.save = function(){
-                    
+                    syncQueue.push('post', '/module/text', $scope.data);
+                    $element.children().modal('hide');
                 };
             }
         };

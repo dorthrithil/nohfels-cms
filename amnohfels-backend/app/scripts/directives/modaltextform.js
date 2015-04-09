@@ -18,7 +18,8 @@ angular.module('amnohfelsBackendApp')
             },
             controller: function ($scope) {
                 $scope.data = {
-                    text: '',
+                    page: 'cafe', //TODO set real page
+                    content: '',
                     title: ''
                 };
             }
