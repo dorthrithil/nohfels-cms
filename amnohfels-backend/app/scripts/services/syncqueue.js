@@ -20,7 +20,7 @@ angular.module('amnohfelsBackendApp')
             //TODO set empty string default data
             queue.push({
                 method: method,
-                query: query,
+                query: query, //TODO rename to route
                 data: data
             });
             if(!syncMutex){

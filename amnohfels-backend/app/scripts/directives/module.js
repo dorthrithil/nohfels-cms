@@ -10,6 +10,7 @@
 //TODO this should be named "page"
 //TODO don't name it response in scope
 //TODO better compile whole modal (pass type as argument), not only the forms. this way we can get the modal logic in the modal file. soc!
+//TODO disable all buttons until syncqueue is finished
 
 angular.module('amnohfelsBackendApp')
     .directive('module', function (phpServerRoot, $http, syncQueue, $compile) {
@@ -20,27 +21,40 @@ angular.module('amnohfelsBackendApp')
                 topic: '='
             },
             link: function postLink(scope, element) {
-                scope.showModal = function (moduleType) {
+                scope.createModule = function (moduleType) {
                     scope.modalVars = {
-                        type: moduleType
+                        type: moduleType,
+                        action: 'new',
+                        data: {
+                            content: '',
+                            title: ''
+                        }
                     };
                     element.append($compile(angular.element('<modal></modal>'))(scope));
                 };
-                scope.confirmDeleteModule = function(index){
+                scope.editModule = function (index) {
+                    scope.modalVars = {
+                        type: scope.response[index].type,
+                        action: 'edit',
+                        data: scope.response[index].data
+                    };
+                    element.append($compile(angular.element('<modal></modal>'))(scope));
+                };
+                scope.confirmDeleteModule = function (index) {
                     scope.confirmationModalData = {
-                        performAction : function(){
+                        performAction: function () {
                             scope.deleteModule(index);
                         },
-                        title : 'Sind Sie sich sicher?',
-                        text:'Wollen Sie das ' + scope.response[index].typeName + '-Modul "' + scope.response[index].data.title + '" wirklich löschen? Dieser Schritt kann nicht rückgängig gemacht werden!',
-                        okButtonText:'Löschen',
-                        dismissButtonText:'Abbrechen'
+                        title: 'Sind Sie sich sicher?',
+                        text: 'Wollen Sie das ' + scope.response[index].type.name + '-Modul "' + scope.response[index].data.title + '" wirklich löschen? Dieser Schritt kann nicht rückgängig gemacht werden!',
+                        okButtonText: 'Löschen',
+                        dismissButtonText: 'Abbrechen'
                     };
                     element.append($compile(angular.element('<confirmation-modal></confirmation-modal>'))(scope));
                 };
             },
             controller: function ($scope) {
-                $scope.refreshPageData = function(){
+                $scope.refreshPageData = function () {
                     $http.get(phpServerRoot + '/index.php?q=page&topic=' + $scope.topic)
                         .success(function (response) {
                             $scope.response = response;
@@ -66,7 +80,7 @@ angular.module('amnohfelsBackendApp')
                     $scope.response[moduleYIndex] = moduleBuffer;
                     syncQueue.push('get', 'q=swap_modules&upper=' + moduleYIndex);
                 };
-                $scope.deleteModule = function(index){
+                $scope.deleteModule = function (index) {
                     syncQueue.push('delete', '/module/text/' + $scope.response[index].data.id);
                     $scope.response.splice(index, 1);
                 };
@@ -74,5 +88,7 @@ angular.module('amnohfelsBackendApp')
                     return syncQueue.isSynced();
                 };
             }
-        };
-    });
+        }
+            ;
+    })
+;

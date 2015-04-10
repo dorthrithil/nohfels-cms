@@ -16,23 +16,23 @@ angular.module('amnohfelsClientApp')
                         var compileStream = '';
                         var badRequest = false;
                         if (value.type !== undefined) {
-                            switch (value.type) {
-                                case 'parallax-module':
+                            switch (value.type.typeId) {
+                                case 'parallax_module':
                                     compileStream += '<parallax-module first-module="' + (key === 0) + '" data="response[' + key + '].data"></parallax-module>';
                                     break;
-                                case 'text-module':
+                                case 'text_module':
                                     compileStream += '<text-module data="response[' + key + '].data"></text-module>';
                                     break;
-                                case 'image-module':
+                                case 'image_module':
                                     compileStream += '<image-module data="response[' + key + '].data"></image-module>';
                                     break;
-                                case 'contact-module':
+                                case 'contact_module':
                                     compileStream += '<contact-module data="response[' + key + '].data"></image-module>';
                                     break;
-                                case 'instagram-module':
+                                case 'instagram_module':
                                     compileStream += '<instagram-module data="response[' + key + '].data"></instagram-module>';
                                     break;
-                                case 'staff-module':
+                                case 'staff_module':
                                     compileStream += '<staff-module data="response[' + key + '].data"></staff-module>';
                                     break;
                                 default:

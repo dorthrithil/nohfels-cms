@@ -12,7 +12,7 @@
             </button>
             <!--TODO dropdown alignment on mobile devices (fix right)-->
             <ul class="dropdown-menu" role="menu">
-                <li ng-repeat="moduleType in moduleTypes"><a ng-click="showModal(moduleType)">{{moduleType.name}}</a></li>
+                <li ng-repeat="moduleType in moduleTypes"><a ng-click="createModule(moduleType)">{{moduleType.name}}</a></li>
             </ul>
         </div>
     </div>
@@ -31,10 +31,10 @@
         <tbody>
         <tr ng-repeat="module in response">
             <td>{{module.data.title}}</td>
-            <td>{{module.typeName}}</td>
+            <td>{{module.type.name}}</td>
             <td>
                 <div class="btn-group" role="group">
-                    <button type="button" class="btn btn-default">
+                    <button type="button" class="btn btn-default" ng-click="editModule($index)">
                         <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Bearbeiten
                     </button>
                     <button type="button" class="btn btn-default" ng-click="confirmDeleteModule($index)">

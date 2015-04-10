@@ -59,6 +59,24 @@ function createNewTextModule($page, $title, $content){
 
 
 
+function editTextModule($id, $title, $content){
+    $connection = getConnection();
+
+    //edit module
+    try {
+        $result = $connection->query("UPDATE text_modules SET content = '$content', title = '$title' WHERE id = '$id'"); //TODO topic should be renamed to page in db
+        if (!$result) {
+            throw new Exception($connection->error);
+        }
+    } catch (Exception $e) {
+        echo $e->getMessage();
+    }
+
+    $connection->close();
+}
+
+
+
 function deleteTextModule($id){
     $connection = getConnection();
 
@@ -96,6 +114,8 @@ function deleteTextModule($id){
     } catch (Exception $e) {
         echo $e->getMessage();
     }
+
+    //TODO delete from text_modules! doesn't work?
 
     //delete module
     try {

@@ -17,11 +17,7 @@ angular.module('amnohfelsBackendApp')
             link: function postLink() {
             },
             controller: function ($scope) {
-                $scope.data = {
-                    page: 'cafe', //TODO set real page
-                    content: '',
-                    title: ''
-                };
+                $scope.modalVars.data.page = 'cafe';
             }
         };
     });

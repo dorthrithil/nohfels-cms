@@ -8,6 +8,9 @@
  *
  * Main module of the application.
  */
+
+//TODO update rangy to get rid of error
+
 angular
     .module('amnohfelsBackendApp', ['ngRoute', 'textAngular'])
     .config(function ($routeProvider, $provide) {

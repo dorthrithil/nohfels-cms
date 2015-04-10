@@ -6,6 +6,9 @@
  * @description
  * # modal
  */
+
+//TODO replace data dismiss actions with own hide function and delete modal from dom
+
 angular.module('amnohfelsBackendApp')
     .directive('modal', function ($compile, syncQueue) {
         return {
@@ -36,7 +39,14 @@ angular.module('amnohfelsBackendApp')
             },
             controller: function($scope, $element){
                 $scope.save = function(){
-                    syncQueue.push('post', '/module/text', $scope.data);
+                    switch($scope.modalVars.action){
+                        case 'new':
+                            syncQueue.push('post', '/module/text', $scope.modalVars.data);
+                            break;
+                        case 'edit':
+                            syncQueue.push('post', '/module/text/' + $scope.modalVars.data.id, $scope.modalVars.data);
+                            break;
+                    }
                     $element.children().modal('hide');
                 };
             }

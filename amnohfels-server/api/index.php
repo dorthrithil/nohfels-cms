@@ -40,6 +40,13 @@ $app->group('/module', function () use ($app) {
         createNewTextModule($data['page'], $data['title'], $data['content']);
     });
 
+    //edit text module
+    $app->post('/text/:id', function ($id) use ($app) {
+        $json = $app->request->getBody();
+        $data = json_decode($json, true);
+        editTextModule($id, $data['title'], $data['content']);
+    });
+
     //delete text module
     $app->delete('/text/:id', function ($id){
         deleteTextModule($id);

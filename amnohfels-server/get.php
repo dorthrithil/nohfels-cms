@@ -20,7 +20,6 @@ function getTextModule($id, $connection)
         echo $e->getMessage();
     }
     $response = new stdClass();
-    $response->type = "text-module";
     $response->data = $data;
     return $response;
 }
@@ -45,7 +44,6 @@ function getParallaxModule($id, $connection)
         echo $e->getMessage();
     }
     $response = new stdClass();
-    $response->type = "parallax-module";
     $response->data = $data;
     return $response;
 }
@@ -88,7 +86,6 @@ function getImageModule($id, $connection)
     $data->images = $images;
 
     $response = new stdClass();
-    $response->type = "image-module";
     $response->data = $data;
     return $response;
 }
@@ -111,7 +108,6 @@ function getContactModule($id, $connection)
         echo $e->getMessage();
     }
     $response = new stdClass();
-    $response->type = "contact-module";
     $response->data = $data;
     return $response;
 }
@@ -154,7 +150,6 @@ function getInstagramModule($id, $connection)
     }
 
     $response = new stdClass();
-    $response->type = "instagram-module";
     $response->data = $data;
     return $response;
 }
@@ -196,7 +191,6 @@ function getStaffModule($id, $connection)
     $data->images = $images;
 
     $response = new stdClass();
-    $response->type = "staff-module";
     $response->data = $data;
     return $response;
 }
@@ -232,7 +226,10 @@ function getPage($connection, $topic)
                         $response[] = getStaffModule($rs['module_id'], $connection);
                         break;
                 }
-                $response[sizeof($response) - 1]->typeName = $rs['name'];
+                $type = new stdClass();
+                $type->name = $rs['name'];
+                $type->typeId = $rs['module_type']; //TODO change in db to typeId
+                $response[sizeof($response) - 1]->type = $type;
             }
         }
     } catch (Exception $e) {
