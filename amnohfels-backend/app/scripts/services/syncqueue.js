@@ -30,6 +30,7 @@ angular.module('amnohfelsBackendApp')
 
         var sync = function(){
             syncMutex = true;
+            console.log(phpServerRoot + '/api' + queue[0].query);
             switch(queue[0].method){
                 case 'get':
                     $http.get(phpServerRoot + '/index.php?' + queue[0].query)
@@ -54,6 +55,7 @@ angular.module('amnohfelsBackendApp')
                             //TODO maybe better update the view asynchonically like in post requests?
                         });
                     break;
+                //TODO posiion change nt working anymore
                 case 'post':
                     $http.post(phpServerRoot + '/api' + queue[0].query, queue[0].data) //TODO api has to go to phpServerRoot
                         .success(function () {

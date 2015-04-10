@@ -1,4 +1,11 @@
 <?php
+/**
+ * Created by PhpStorm.
+ * User: fengelmann
+ * Date: 10/04/15
+ * Time: 20:35
+ */
+
 function tinyIntToBoolean($int)
 {
     if ($int == 1) return true;

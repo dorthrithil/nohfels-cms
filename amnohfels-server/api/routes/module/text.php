@@ -1,6 +1,31 @@
 <?php
 //TODO one try catch per function is enough
 
+function getTextModule($id)
+{
+    $connection = getConnection();
+    $data = new stdClass();
+    try {
+        $result = $connection->query("SELECT id, title, content FROM text_modules WHERE id = '$id'");
+        if (!$result) {
+            throw new Exception($connection->error);
+        } else {
+            while ($rs = $result->fetch_array(MYSQLI_ASSOC)) {
+                $data->id = $rs['id'];
+                $data->title = $rs['title'];
+                $data->content = $rs['content'];
+            }
+        }
+    } catch (Exception $e) {
+        echo $e->getMessage();
+    }
+    $response = new stdClass();
+    $response->data = $data;
+    $connection->close();
+    return $response;
+}
+
+
 function createNewTextModule($page, $title, $content){
     $connection = getConnection();
 

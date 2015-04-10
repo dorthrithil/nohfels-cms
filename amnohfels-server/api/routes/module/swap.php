@@ -1,6 +1,17 @@
 <?php
+/**
+ * Created by PhpStorm.
+ * User: fengelmann
+ * Date: 10/04/15
+ * Time: 14:32
+ */
 
-function swapModules($connection, $upper){
+//TODO bad naming
+/**
+ * swaps y_index of upper with the module listed below it
+ */
+function swapModules($upper){
+    $connection = getConnection();
     $lower = $upper + 1;
     try {
         $result = $connection->query("UPDATE pages SET y_index = -1 WHERE y_index = '$upper'");
@@ -18,5 +29,5 @@ function swapModules($connection, $upper){
     } catch (Exception $e) {
         echo $e->getMessage();
     }
-    return true;
+    $connection->close();
 }

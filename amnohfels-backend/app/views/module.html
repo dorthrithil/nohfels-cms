@@ -1,7 +1,7 @@
 <div class="actions">
     <div class="btn-group" role="group" aria-label="...">
 
-        <button type="button" class="btn btn-default save-button" ng-class="{'btn-success' : isSynced(), 'btn-danger' : !isSynced()}">
+        <button type="button" class="btn btn-default save-button" ng-class="{'btn-success' : isSynced(), 'btn-danger' : !isSynced()}" ng-disabled="true">
             <span class="glyphicon" ng-class="{'glyphicon-floppy-saved' : isSynced(), 'glyphicon-floppy-disk' : !isSynced()}" aria-hidden="true"></span>
         </button>
 

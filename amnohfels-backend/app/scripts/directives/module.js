@@ -55,14 +55,14 @@ angular.module('amnohfelsBackendApp')
             },
             controller: function ($scope) {
                 $scope.refreshPageData = function () {
-                    $http.get(phpServerRoot + '/index.php?q=page&topic=' + $scope.topic)
+                    $http.get(phpServerRoot + '/api/page/' + $scope.topic)
                         .success(function (response) {
                             $scope.response = response;
                         });
                 };
                 $scope.refreshPageData();
                 $scope.$on('sq-http-request-successful', $scope.refreshPageData);
-                $http.get(phpServerRoot + '/index.php?q=module_types')
+                $http.get(phpServerRoot + '/api/module/types')
                     .success(function (response) {
                         $scope.moduleTypes = response;
                     });
@@ -71,14 +71,14 @@ angular.module('amnohfelsBackendApp')
                     var moduleBuffer = $scope.response[moduleYIndex - 1];
                     $scope.response[moduleYIndex - 1] = module;
                     $scope.response[moduleYIndex] = moduleBuffer;
-                    syncQueue.push('get', 'q=swap_modules&upper=' + (moduleYIndex - 1));
+                    syncQueue.push('post', '/module/swap/' + (moduleYIndex - 1));
                 };
                 $scope.down = function (module) {
                     var moduleYIndex = $scope.response.indexOf(module);
                     var moduleBuffer = $scope.response[moduleYIndex + 1];
                     $scope.response[moduleYIndex + 1] = module;
                     $scope.response[moduleYIndex] = moduleBuffer;
-                    syncQueue.push('get', 'q=swap_modules&upper=' + moduleYIndex);
+                    syncQueue.push('post', '/module/swap/' + moduleYIndex);
                 };
                 $scope.deleteModule = function (index) {
                     syncQueue.push('delete', '/module/text/' + $scope.response[index].data.id);
