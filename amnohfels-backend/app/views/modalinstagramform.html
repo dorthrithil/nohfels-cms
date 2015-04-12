@@ -3,18 +3,34 @@
         <label for="title">Titel</label>
         <input type="text" class="form-control" id="title" placeholder="Titel eingeben" ng-model="modalVars.data.title">
     </div>
-    <input id="ex5" type="text" data-slider-min="1" data-slider-max="20" data-slider-step="1" data-slider-value="1" ng-model="modalVars.data.maxPhotos"/>
-    <button id="destroyEx5Slider" class="btn btn-danger">Wert eintippen</button>
-    <div class="checkbox">
-        <label>
-            <input ng-model="modalVars.data.filterOutTags" ng-checked="modalVars.data.filterOutTags" type="checkbox"> Hashtags aus Bild-Caption entfernen
-        </label>
+    <div class="form-group">
+        <label>Maximale Anzahl an Fotos</label>
+
+        <div>
+            <span class="badge">{{modalVars.data.maxPhotos}}</span>
+            <slider ng-model="modalVars.data.maxPhotos" min="1" step="1" max="30" value="modalVars.data.maxPhotos"
+                    style="display: inline-block" tooltip="hide"></slider>
+        </div>
     </div>
-    <div class="checkbox">
-        <label>
-            <input ng-model="modalVars.data.filterForTags" ng-checked="modalVars.data.filterForTags" type="checkbox"> Nach Hashtags filtern
-        </label>
+    <div class="form-group">
+        <label>Optionen</label>
+
+        <div class="checkbox">
+            <label>
+                <input ng-model="modalVars.data.filterOutTags" ng-checked="modalVars.data.filterOutTags"
+                       type="checkbox">
+                Hashtags aus Bild-Caption entfernen
+            </label>
+        </div>
+        <div class="checkbox">
+            <label>
+                <input ng-model="modalVars.data.filterForTags" ng-checked="modalVars.data.filterForTags"
+                       type="checkbox">
+                Nach Hashtags filtern
+            </label>
+        </div>
     </div>
+
     <div class="form-group" ng-show="showTagsInput()">
         <label for="tags">Nur Fotos mit diesen Tags anzeigen:</label>
         <input type="text" class="form-control" id="tags" placeholder="Tags eingeben" ng-model="modalVars.data.tags">

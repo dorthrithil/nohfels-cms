@@ -18,7 +18,7 @@ angular.module('amnohfelsBackendApp')
         controller: function ($scope) {
             if ($scope.modalVars.action === 'new') {
                 $scope.modalVars.data.title = '';
-                $scope.modalVars.data.maxPhotos = '';
+                $scope.modalVars.data.maxPhotos = 10;
                 $scope.modalVars.data.filterOutTags = true;
                 $scope.modalVars.data.filterForTags = true;
                 $scope.modalVars.data.tags = [];
