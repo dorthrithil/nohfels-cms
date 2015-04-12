@@ -16,23 +16,23 @@ angular.module('amnohfelsClientApp')
                         var compileStream = '';
                         var badRequest = false;
                         if (value.type !== undefined) {
-                            switch (value.type.typeId) {
-                                case 'parallax_module':
+                            switch (value.type.id) {
+                                case 'parallax':
                                     compileStream += '<parallax-module first-module="' + (key === 0) + '" data="response[' + key + '].data"></parallax-module>';
                                     break;
-                                case 'text_module':
+                                case 'text':
                                     compileStream += '<text-module data="response[' + key + '].data"></text-module>';
                                     break;
-                                case 'image_module':
+                                case 'image':
                                     compileStream += '<image-module data="response[' + key + '].data"></image-module>';
                                     break;
-                                case 'contact_module':
+                                case 'contact':
                                     compileStream += '<contact-module data="response[' + key + '].data"></image-module>';
                                     break;
-                                case 'instagram_module':
+                                case 'instagram':
                                     compileStream += '<instagram-module data="response[' + key + '].data"></instagram-module>';
                                     break;
-                                case 'staff_module':
+                                case 'staff':
                                     compileStream += '<staff-module data="response[' + key + '].data"></staff-module>';
                                     break;
                                 default:

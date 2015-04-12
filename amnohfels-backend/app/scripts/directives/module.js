@@ -25,10 +25,7 @@ angular.module('amnohfelsBackendApp')
                     scope.modalVars = {
                         type: moduleType,
                         action: 'new',
-                        data: {
-                            content: '',
-                            title: ''
-                        }
+                        data : {}
                     };
                     element.append($compile(angular.element('<modal></modal>'))(scope));
                 };
@@ -71,17 +68,17 @@ angular.module('amnohfelsBackendApp')
                     var moduleBuffer = $scope.response[moduleYIndex - 1];
                     $scope.response[moduleYIndex - 1] = module;
                     $scope.response[moduleYIndex] = moduleBuffer;
-                    syncQueue.push('post', '/module/swap/' + (moduleYIndex - 1));
+                    syncQueue.push('post', '/module/swapwithlower/' + (moduleYIndex - 1));
                 };
                 $scope.down = function (module) {
                     var moduleYIndex = $scope.response.indexOf(module);
                     var moduleBuffer = $scope.response[moduleYIndex + 1];
                     $scope.response[moduleYIndex + 1] = module;
                     $scope.response[moduleYIndex] = moduleBuffer;
-                    syncQueue.push('post', '/module/swap/' + moduleYIndex);
+                    syncQueue.push('post', '/module/swapwithlower/' + moduleYIndex);
                 };
                 $scope.deleteModule = function (index) {
-                    syncQueue.push('delete', '/module/text/' + $scope.response[index].data.id);
+                    syncQueue.push('delete', '/module/' + $scope.response[index].type.id + '/' + $scope.response[index].data.id); //TODO get real route (change module ids to ids without redundant _module suffix?)
                     $scope.response.splice(index, 1);
                 };
                 $scope.isSynced = function () {

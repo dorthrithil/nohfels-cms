@@ -1,16 +1,9 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: fengelmann
- * Date: 10/04/15
- * Time: 14:32
- */
 
-//TODO bad naming
 /**
  * swaps y_index of upper with the module listed below it
  */
-function swapModules($upper){
+function swapWithLowerModule($upper){
     $connection = getConnection();
     $lower = $upper + 1;
     try {

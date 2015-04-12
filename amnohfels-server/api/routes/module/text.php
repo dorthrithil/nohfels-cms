@@ -1,5 +1,49 @@
 <?php
-//TODO one try catch per function is enough
+
+function createTextModule($page, $title, $content)
+{
+    $connection = getConnection();
+
+    //create new text module
+    try {
+        $result = $connection->query("INSERT INTO text_modules (title, content) VALUES  ('$title', '$content')");
+        if (!$result) {
+            throw new Exception($connection->error);
+        }
+
+        //get id of created module
+        $module_id = -1;
+        $result = $connection->query("SELECT id FROM text_modules GROUP BY id HAVING MAX(id)");
+        if (!$result) {
+            throw new Exception($connection->error);
+        } else {
+            while ($rs = $result->fetch_array(MYSQLI_ASSOC)) {
+                $module_id = $rs['id'];
+            }
+        }
+
+        //get y_index of new module
+        $y_index = -1;
+        $result = $connection->query("SELECT y_index FROM pages WHERE topic = '$page' GROUP BY y_index HAVING MAX(y_index)");
+        if (!$result) {
+            throw new Exception($connection->error);
+        } else {
+            while ($rs = $result->fetch_array(MYSQLI_ASSOC)) {
+                $y_index = $rs['y_index'] + 1;
+            }
+        }
+
+        //register module for page
+        $result = $connection->query("INSERT INTO pages (topic, module_type_id, module_id, y_index) VALUES  ('$page', 'text', '$module_id', '$y_index')");
+        if (!$result) {
+            throw new Exception($connection->error);
+        }
+    } catch (Exception $e) {
+        echo $e->getMessage();
+    }
+
+    $connection->close();
+}
 
 function getTextModule($id)
 {
@@ -10,6 +54,7 @@ function getTextModule($id)
         if (!$result) {
             throw new Exception($connection->error);
         } else {
+            if(mysqli_num_rows($result) == 0) return false;
             while ($rs = $result->fetch_array(MYSQLI_ASSOC)) {
                 $data->id = $rs['id'];
                 $data->title = $rs['title'];
@@ -26,52 +71,13 @@ function getTextModule($id)
 }
 
 
-function createNewTextModule($page, $title, $content){
+function updateTextModule($id, $title, $content)
+{
     $connection = getConnection();
 
-    //create new text module
+    //update module
     try {
-        $result = $connection->query("INSERT INTO text_modules (title, content) VALUES  ('$title', '$content')");
-        if (!$result) {
-            throw new Exception($connection->error);
-        }
-    } catch (Exception $e) {
-        echo $e->getMessage();
-    }
-
-    //get id of created module
-    $module_id = -1;
-    try {
-        $result = $connection->query("SELECT id FROM text_modules GROUP BY id HAVING MAX(id)");
-        if (!$result) {
-            throw new Exception($connection->error);
-        } else {
-            while ($rs = $result->fetch_array(MYSQLI_ASSOC)) {
-                $module_id = $rs['id'];
-            }
-        }
-    } catch (Exception $e) {
-        echo $e->getMessage();
-    }
-
-    //get y_index of new module
-    $y_index = -1;
-    try {
-        $result = $connection->query("SELECT y_index FROM pages WHERE topic = '$page' GROUP BY y_index HAVING MAX(y_index)");
-        if (!$result) {
-            throw new Exception($connection->error);
-        } else {
-            while ($rs = $result->fetch_array(MYSQLI_ASSOC)) {
-                $y_index = $rs['y_index'] + 1;
-            }
-        }
-    } catch (Exception $e) {
-        echo $e->getMessage();
-    }
-
-    //register module for page
-    try {
-        $result = $connection->query("INSERT INTO pages (topic, module_type, module_id, y_index) VALUES  ('$page', 'text_module', '$module_id', '$y_index')"); //TODO topic should be renamed to page in db
+        $result = $connection->query("UPDATE text_modules SET content = '$content', title = '$title' WHERE id = '$id'");
         if (!$result) {
             throw new Exception($connection->error);
         }
@@ -83,26 +89,8 @@ function createNewTextModule($page, $title, $content){
 }
 
 
-
-function editTextModule($id, $title, $content){
-    $connection = getConnection();
-
-    //edit module
-    try {
-        $result = $connection->query("UPDATE text_modules SET content = '$content', title = '$title' WHERE id = '$id'"); //TODO topic should be renamed to page in db
-        if (!$result) {
-            throw new Exception($connection->error);
-        }
-    } catch (Exception $e) {
-        echo $e->getMessage();
-    }
-
-    $connection->close();
-}
-
-
-
-function deleteTextModule($id){
+function deleteTextModule($id)
+{
     $connection = getConnection();
 
     //get y_index of old module
@@ -116,34 +104,20 @@ function deleteTextModule($id){
                 $y_index = $rs['y_index'];
             }
         }
-    } catch (Exception $e) {
-        echo $e->getMessage();
-    }
 
-    //delete pages entry
-    try {
-        $result = $connection->query("DELETE FROM pages WHERE module_id = '$id' AND module_type = 'text_module'");
+        //delete pages entry
+        $result = $connection->query("DELETE FROM pages WHERE module_id = '$id' AND module_type_id = 'text'");
         if (!$result) {
             throw new Exception($connection->error);
         }
-    } catch (Exception $e) {
-        echo $e->getMessage();
-    }
 
-    //update y_indexes
-    try {
+        //update y_indexes
         $result = $connection->query("UPDATE pages SET y_index = y_index - 1 WHERE y_index > '$y_index'");
         if (!$result) {
             throw new Exception($connection->error);
         }
-    } catch (Exception $e) {
-        echo $e->getMessage();
-    }
 
-    //TODO delete from text_modules! doesn't work?
-
-    //delete module
-    try {
+        //delete module
         $result = $connection->query("DELETE FROM text_modules WHERE id = '$id'");
         if (!$result) {
             throw new Exception($connection->error);

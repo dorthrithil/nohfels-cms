@@ -1,47 +1,45 @@
 <?php
+
 /**
- * Created by PhpStorm.
- * User: fengelmann
- * Date: 10/04/15
- * Time: 15:26
+ * @description: returns an object containing data to render a page
+ * @params:
+ *  $topic: the pages topic (corr. to angular route)
  */
-
-
 function getPage($topic)
 {
     $connection = getConnection();
     $response = array();
     try {
-        $result = $connection->query("SELECT module_type, module_id, name
-                                      FROM (pages LEFT JOIN module_types ON (pages.module_type = module_types.type))
+        $result = $connection->query("SELECT module_type_id, module_id, name
+                                      FROM (pages LEFT JOIN module_types ON (pages.module_type_id = module_types.id))
                                       WHERE topic = '$topic' ORDER BY y_index ASC");
         if (!$result) {
             throw new Exception($connection->error);
         } else {
             while ($rs = $result->fetch_array(MYSQLI_ASSOC)) {
-                switch ($rs['module_type']) {
-                    case "text_module":
-                        $response[] = getTextModule($rs['module_id'], $connection);
+                switch ($rs['module_type_id']) {
+                    case "text":
+                        $response[] = getTextModule($rs['module_id']);
                         break;
-                    case "parallax_module":
-                        $response[] = getParallaxModule($rs['module_id'], $connection);
+                    case "parallax":
+                        $response[] = getParallaxModule($rs['module_id']);
                         break;
-                    case "image_module":
-                        $response[] = getImageModule($rs['module_id'], $connection);
+                    case "image":
+                        $response[] = getImageModule($rs['module_id']);
                         break;
-                    case "contact_module":
-                        $response[] = getContactModule($rs['module_id'], $connection);
+                    case "contact":
+                        $response[] = getContactModule($rs['module_id']);
                         break;
-                    case "instagram_module":
-                        $response[] = getInstagramModule($rs['module_id'], $connection);
+                    case "instagram":
+                        $response[] = getInstagramModule($rs['module_id']);
                         break;
-                    case "staff_module":
-                        $response[] = getStaffModule($rs['module_id'], $connection);
+                    case "staff":
+                        $response[] = getStaffModule($rs['module_id']);
                         break;
                 }
                 $type = new stdClass();
                 $type->name = $rs['name'];
-                $type->typeId = $rs['module_type']; //TODO change in db to typeId
+                $type->id = $rs['module_type_id'];
                 $response[sizeof($response) - 1]->type = $type;
             }
         }

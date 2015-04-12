@@ -11,14 +11,15 @@ function getModuleTypes()
     $connection = getConnection();
     $response = array();
     try {
-        $result = $connection->query("SELECT name, type FROM module_types ORDER BY name ASC");
+        $result = $connection->query("SELECT name, id FROM module_types ORDER BY name ASC");
         if (!$result) {
             throw new Exception($connection->error);
         } else {
+            if(mysqli_num_rows($result) == 0) return false;
             while ($rs = $result->fetch_array(MYSQLI_ASSOC)) {
                 $type = new stdClass();
                 $type->name = $rs['name'];
-                $type->typeId = $rs['type']; //TODO change in db to typeId
+                $type->id = $rs['id'];
                 $response[] = $type;
             }
         }

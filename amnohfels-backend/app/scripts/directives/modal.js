@@ -15,23 +15,23 @@ angular.module('amnohfelsBackendApp')
             templateUrl: 'views/modal.html',
             restrict: 'E',
             link: function postLink(scope, element) {
-                switch (scope.modalVars.type.typeId) {
-                    case 'image_module':
+                switch (scope.modalVars.type.id) {
+                    case 'image':
                         element.find('.modal-body').append($compile(angular.element('<modal-image-form></modal-image-form>'))(scope));
                         break;
-                    case 'parallax_module':
+                    case 'parallax':
                         element.find('.modal-body').append($compile(angular.element('<modal-parallax-form></modal-parallax-form>'))(scope));
                         break;
-                    case 'text_module':
+                    case 'text':
                         element.find('.modal-body').append($compile(angular.element('<modal-text-form></modal-text-form>'))(scope));
                         break;
-                    case 'contact_module':
+                    case 'contact':
                         element.find('.modal-body').append($compile(angular.element('<modal-contact-form></modal-contact-form>'))(scope));
                         break;
-                    case 'staff_module':
+                    case 'staff':
                         element.find('.modal-body').append($compile(angular.element('<modal-staff-form></modal-staff-form>'))(scope));
                         break;
-                    case 'instagram_module':
+                    case 'instagram':
                         element.find('.modal-body').append($compile(angular.element('<modal-instagram-form></modal-instagram-form>'))(scope));
                         break;
                 }
@@ -41,10 +41,10 @@ angular.module('amnohfelsBackendApp')
                 $scope.save = function(){
                     switch($scope.modalVars.action){
                         case 'new':
-                            syncQueue.push('post', '/module/text', $scope.modalVars.data);
+                            syncQueue.push('post', '/module' + $scope.modalVars.route, $scope.modalVars.data);
                             break;
                         case 'edit':
-                            syncQueue.push('post', '/module/text/' + $scope.modalVars.data.id, $scope.modalVars.data);
+                            syncQueue.push('post', '/module' + $scope.modalVars.route + '/' + $scope.modalVars.data.id, $scope.modalVars.data);
                             break;
                     }
                     $element.children().modal('hide');

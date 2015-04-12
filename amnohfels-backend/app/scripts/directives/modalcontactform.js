@@ -6,12 +6,23 @@
  * @description
  * # modalContactForm
  */
+
+//TODO validation (required, email)
+//TODO get real page
+
 angular.module('amnohfelsBackendApp')
   .directive('modalContactForm', function () {
     return {
-      template: '<div></div>',
-      restrict: 'E',
-      link: function postLink() {
-      }
+        templateUrl: 'views/modalcontactform.html',
+        restrict: 'E',
+        controller: function ($scope) {
+            if ($scope.modalVars.action === 'new') {
+                $scope.modalVars.data.title = '';
+                $scope.modalVars.data.topic = '';
+                $scope.modalVars.data.address = '';
+            }
+            $scope.modalVars.route = '/contact';
+            $scope.modalVars.data.page = 'cafe';
+        }
     };
   });

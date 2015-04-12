@@ -30,7 +30,6 @@ angular.module('amnohfelsBackendApp')
 
         var sync = function(){
             syncMutex = true;
-            console.log(phpServerRoot + '/api' + queue[0].query);
             switch(queue[0].method){
                 case 'get':
                     $http.get(phpServerRoot + '/index.php?' + queue[0].query)

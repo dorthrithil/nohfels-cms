@@ -1,5 +1,7 @@
 <?php
 
+//load all routing functions
+
 require_once __DIR__ . '/routes/module/text.php';
 require_once __DIR__ . '/routes/module/parallax.php';
 require_once __DIR__ . '/routes/module/image.php';

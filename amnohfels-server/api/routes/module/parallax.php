@@ -16,6 +16,7 @@ function getParallaxModule($id)
         if (!$result) {
             throw new Exception($connection->error);
         } else {
+            if(mysqli_num_rows($result) == 0) return false;
             while ($rs = $result->fetch_array(MYSQLI_ASSOC)) {
                 $data->id = $rs['id'];
                 $data->title = $rs['title'];

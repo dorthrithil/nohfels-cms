@@ -1430,7 +1430,7 @@ class Slim
      */
     protected function defaultNotFound()
     {
-        echo static::generateTemplateMarkup('404 Page Not Found', '<p>The page you are looking for could not be found. Check the address bar to ensure your URL is spelled correctly. If all else fails, you can visit our home page at the link below.</p><a href="' . $this->request->getRootUri() . '/">Visit the Home Page</a>');
+        echo static::generateTemplateMarkup('404 Seite nicht gefunden', '<p>Die Seite, die Sie suchen, konnte nicht gefunden werden. &Uuml;berpr&uuml;fen Sie in der Adresszeile, ob die URL korrekt geschrieben ist. Wenn alles nichts hilft, folgen Sie den untenstehenden Link.</p><a href="' . $this->request->getRootUri() . '/">Zur&uuml;ck zur Startseite</a>');
     }
 
     /**
