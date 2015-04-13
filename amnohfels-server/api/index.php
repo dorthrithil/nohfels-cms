@@ -146,11 +146,30 @@ $app->group('/module', function () use ($app) {
     //group for instagram modules
     $app->group('/instagram', function () use ($app) {
 
+        //create new instagram module
+        $app->post('', function () use ($app) {
+            $json = $app->request->getBody();
+            $data = json_decode($json, true);
+            createInstagramModule($data['page'], $data['maxPhotos'], $data['title'], $data['filterOutTags'], $data['filterForTags'], $data['tags']);
+        });
+
         //get instagram module
         $app->get('/:id', function ($id) use ($app) {
             $response = getInstagramModule($id);
             if ($response == false) $app->notFound();
             jsonResponse($response);
+        });
+
+        //update instagram module
+        $app->post('/:id', function ($id) use ($app) {
+            $json = $app->request->getBody();
+            $data = json_decode($json, true);
+            updateInstagramModule($id, $data['title'], $data['maxPhotos'], $data['filterOutTags'], $data['filterForTags'], $data['tags']);
+        });
+
+        //delete instagram module
+        $app->delete('/:id', function ($id) {
+            deleteInstagramModule($id);
         });
 
     });

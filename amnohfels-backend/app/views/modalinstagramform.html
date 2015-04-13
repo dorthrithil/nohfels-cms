@@ -31,9 +31,9 @@
         </div>
     </div>
 
-    <div class="form-group" ng-show="showTagsInput()">
-        <label for="tags">Nur Fotos mit diesen Tags anzeigen:</label>
-        <input type="text" class="form-control" id="tags" placeholder="Tags eingeben" ng-model="modalVars.data.tags">
+    <div class="form-group tag-option" ng-show="showTagsInput()">
+        <label>Nur Fotos mit diesen Tags anzeigen:</label>
+        <tags-input ng-model="tags" placeholder="Tag eingeben" on-tag-added="addTag($tag)" on-tag-removed="removeTag($tag)"></tags-input>
     </div>
 </form>
 

@@ -48,7 +48,7 @@ angular.module('amnohfelsClientApp')
                             var push;
                             for (var i = 0; i < response.data.length; i++) {
                                 push = false;
-                                if ($scope.data.filterForTags !== false && util.inArray(response.data[i].tags, $scope.data.filterForTags)) {
+                                if ($scope.data.filterForTags && util.inArray(response.data[i].tags, $scope.data.tags)) {
                                     push = true;
                                 } else if ($scope.data.filterForTags === false) {
                                     push = true;

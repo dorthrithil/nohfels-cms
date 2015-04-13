@@ -93,9 +93,9 @@ function deleteTextModule($id)
 {
     $connection = getConnection();
 
-    //get y_index of old module
-    $y_index = -1;
     try {
+        //get y_index of old module
+        $y_index = -1;
         $result = $connection->query("SELECT y_index FROM pages WHERE module_id = '$id'");
         if (!$result) {
             throw new Exception($connection->error);
