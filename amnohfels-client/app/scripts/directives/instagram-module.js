@@ -63,7 +63,7 @@ angular.module('amnohfelsClientApp')
                                             width: response.data[i].images.standard_resolution.width //jshint ignore:line
                                         }
                                     });
-                                    if ($scope.data.maxPhotos === $scope.images.length) {
+                                    if (parseInt($scope.data.maxPhotos) === $scope.images.length) {
                                         break;
                                     }
                                 }
