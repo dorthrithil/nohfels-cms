@@ -10,7 +10,6 @@
 
 //set headers
 header("Access-Control-Allow-Origin: *");
-//header("Content-Type: application/json; charset=UTF-8");
 if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
     if (isset($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_METHOD']) && (
             $_SERVER['HTTP_ACCESS_CONTROL_REQUEST_METHOD'] == 'POST' ||
@@ -27,9 +26,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
     exit;
 }
 
-//instantiate slim
+//load dependencies
 require_once __DIR__ . '/vendor/autoload.php';
+
+//instantiate slim
 $app = new \Slim\Slim();
+
+//instantiate imagine
+$imagine = new Imagine\Gd\Imagine();
 
 //load utility functions
 require_once __DIR__ . '/util.php';
@@ -41,6 +45,11 @@ require_once __DIR__ . '/db.php';
 require_once __DIR__ . '/routes.php';
 
 //set up routes
+
+//test upload
+$app->post('/upload', function () use ($app) {
+    upload();
+});
 
 //group for modules
 $app->group('/module', function () use ($app) {
@@ -60,7 +69,7 @@ $app->group('/module', function () use ($app) {
     //group for text modules
     $app->group('/text', function () use ($app) {
 
-        //create new text module
+        //create text module
         $app->post('', function () use ($app) {
             $json = $app->request->getBody();
             $data = json_decode($json, true);
@@ -115,7 +124,7 @@ $app->group('/module', function () use ($app) {
     //group for contact modules
     $app->group('/contact', function () use ($app) {
 
-        //create new contact module
+        //create contact module
         $app->post('', function () use ($app) {
             $json = $app->request->getBody();
             $data = json_decode($json, true);
@@ -146,7 +155,7 @@ $app->group('/module', function () use ($app) {
     //group for instagram modules
     $app->group('/instagram', function () use ($app) {
 
-        //create new instagram module
+        //create instagram module
         $app->post('', function () use ($app) {
             $json = $app->request->getBody();
             $data = json_decode($json, true);
@@ -176,6 +185,13 @@ $app->group('/module', function () use ($app) {
 
     //group for staff modules
     $app->group('/staff', function () use ($app) {
+
+        //create staff module
+        $app->post('', function () use ($app) {
+            $json = $app->request->getBody();
+            $data = json_decode($json, true);
+            createStaffModule($data['page'], $data['title'], $data['employees']);
+        });
 
         //get staff module
         $app->get('/:id', function ($id) use ($app) {

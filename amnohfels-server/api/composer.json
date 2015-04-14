@@ -1,6 +1,6 @@
 {
     "require": {
         "slim/slim": "~2.6",
-        "imagine/imagine": "~0.6.2"
+        "imagine/imagine": "~0.6"
     }
 }

@@ -11,72 +11,55 @@ angular.module('amnohfelsBackendApp')
         return {
             templateUrl: 'views/employee.html',
             restrict: 'E',
-            scope: {
-                index: '='
-            },
-            link: function postLink() {
+            scope: { //scope isolation to have different uploaders
+                index: '=', //for displaying the different buddy icons
+                data : '=' //passing the modalVars.data in
             },
             controller: function ($scope) {
-                $scope.name = '';
-                $scope.image = 'url(images/user_icon_dummies/' + $scope.index % 3 + '.png)';
+                if ($scope.$parent.modalVars.action === 'new') {
+                    $scope.imageSrc = '/images/user_icon_dummies/' + $scope.index % 3 + '.png'; //show dummy
+                }
+                if ($scope.$parent.modalVars.action === 'edit') { //TODO edit should be named update
+                    $scope.imageSrc = phpServerRoot + '/' + $scope.data.imageSrc;
+                }
 
-
-                //file uploader stuff
-
+                // FILE UPLOADER
                 var uploader = $scope.uploader = new FileUploader({
-                    url: phpServerRoot + '/upload.php',
+                    url: phpServerRoot + '/api/upload', //POST requests get send here
                     autoUpload: true
                 });
 
                 // FILTERS
-
-                uploader.filters.push({
+                //only image files
+                uploader.filters.push({ //TODO show an error message
                     name: 'imageFilter',
                     fn: function (item /*{File|FileLikeObject}*/, options) { //jshint ignore:line
                         var type = '|' + item.type.slice(item.type.lastIndexOf('/') + 1) + '|';
                         return '|jpg|png|jpeg|bmp|gif|'.indexOf(type) !== -1;
                     }
                 });
+                //restrict size
+                uploader.filters.push({ //TODO show an error message
+                    name: 'sizeFilter',
+                    fn: function(item) {
+                        return item.size < 4050218; //TODO (32) broken pipe when file is larger than 4.048.218 bytes (max value that worked in the tests)
+                    }
+                });
+
 
                 // CALLBACKS
-
-                uploader.onWhenAddingFileFailed = function (item /*{File|FileLikeObject}*/, filter, options) {
-                    //TODO error message (e.g. when trying to add a pdf)
-                    console.info('onWhenAddingFileFailed', item, filter, options);
+                uploader.onWhenAddingFileFailed = function (item /*{File|FileLikeObject}*/, filter, options) { //jshint ignore:line
+                    //TODO error messages from filters go here
                 };
-                uploader.onAfterAddingFile = function (fileItem) {
-                    console.info('onAfterAddingFile', fileItem);
+                uploader.onAfterAddingFile = function (fileItem) {//jshint ignore:line
+                    if (uploader.queue.length > 1){
+                        uploader.removeFromQueue(0); //only one file should be in the queue for the progress bar getting displayed properly
+                    }
                 };
-                uploader.onAfterAddingAll = function (addedFileItems) {
-                    console.info('onAfterAddingAll', addedFileItems);
+                uploader.onCompleteItem = function (fileItem, response, status, headers) {//jshint ignore:line
+                    $scope.imageSrc = phpServerRoot + '/' + response.path; //show uploaded image instead of dummy
+                    $scope.data.imageSrc = response.path;
                 };
-                uploader.onBeforeUploadItem = function (item) {
-                    console.info('onBeforeUploadItem', item);
-                };
-                uploader.onProgressItem = function (fileItem, progress) {
-                    console.info('onProgressItem', fileItem, progress);
-                };
-                uploader.onProgressAll = function (progress) {
-                    console.info('onProgressAll', progress);
-                };
-                uploader.onSuccessItem = function (fileItem, response, status, headers) {
-                    console.info('onSuccessItem', fileItem, response, status, headers);
-                };
-                uploader.onErrorItem = function (fileItem, response, status, headers) {
-                    console.info('onErrorItem', fileItem, response, status, headers);
-                };
-                uploader.onCancelItem = function (fileItem, response, status, headers) {
-                    console.info('onCancelItem', fileItem, response, status, headers);
-                };
-                uploader.onCompleteItem = function (fileItem, response, status, headers) {
-                    $scope.image = 'url(' + phpServerRoot + '/' + response.path +')';
-                    console.info('onCompleteItem', fileItem, response, status, headers);
-                };
-                uploader.onCompleteAll = function () {
-                    console.info('onCompleteAll');
-                };
-
-                console.info('uploader', uploader);
             }
         };
     });

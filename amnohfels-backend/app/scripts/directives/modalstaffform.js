@@ -6,6 +6,9 @@
  * @description
  * # modalStaffForm
  */
+
+//TODO bug: edit - modal is not scrollable until focusing an input field
+
 angular.module('amnohfelsBackendApp')
     .directive('modalStaffForm', function () {
         return {
@@ -14,15 +17,25 @@ angular.module('amnohfelsBackendApp')
             controller: function ($scope) {
                 if ($scope.modalVars.action === 'new') {
                     $scope.modalVars.data.title = '';
+                    $scope.modalVars.data.employees = [];
                 }
                 $scope.modalVars.route = '/staff';
-                $scope.modalVars.data.page = 'cafe';
+                $scope.modalVars.data.page = 'cafe'; //TODO get real page
 
-                $scope.employees = [];
                 $scope.addEmployee = function () {
-                    $scope.employees.push({
-                        name: ''
+                    $scope.modalVars.data.employees.push({
+                        name: '',
+                        imageSrc: ''
                     });
+                };
+                $scope.deleteEmployee = function(){
+                    //TODO implement + UI
+                };
+                $scope.employeeUp = function(){
+                    //TODO implement + UI
+                };
+                $scope.employeeDown = function(){
+                    //TODO implement + UI
                 };
 
             }

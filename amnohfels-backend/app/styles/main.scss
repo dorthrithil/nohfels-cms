@@ -42,9 +42,12 @@ employee {
     display: inline-block;
     width: 128px;
     padding: 20px;
-    min-height: 138px;
+    min-height: 128px;
+    margin-top: 10px;
     background-repeat: no-repeat;
-    background-position: center 10px;
+    background-position: center center;
+    background-size: cover;
+    border-radius: 66px;
     vertical-align: top;
   }
 

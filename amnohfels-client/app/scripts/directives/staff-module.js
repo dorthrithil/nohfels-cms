@@ -13,8 +13,6 @@ angular.module('amnohfelsClientApp')
         restrict: 'E',
         scope: {
             data: '='
-        },
-      link: function postLink() {
-      }
+        }
     };
   });
