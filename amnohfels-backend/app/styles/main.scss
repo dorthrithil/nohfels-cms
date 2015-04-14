@@ -10,26 +10,47 @@ $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/boots
   padding: 0.2em 0;
 }
 
-body{
+body {
   padding-top: $navbar-height * 2;
 }
 
-.actions{
+.actions {
   text-align: right;
   margin-bottom: 30px;
 }
 
-.save-button{
+.save-button {
   color: $gray-dark !important;
 }
 
-
-modal-instagram-form{
-  .badge{
-   margin-right: 10px;
+modal-instagram-form {
+  .badge {
+    margin-right: 10px;
   }
 
-  .tag-option{
+  .tag-option {
     margin-left: 20px;
+  }
+}
+
+employee {
+
+  padding-bottom: 15px;
+  display: block;
+
+  .employee-icon {
+    display: inline-block;
+    width: 128px;
+    padding: 20px;
+    min-height: 138px;
+    background-repeat: no-repeat;
+    background-position: center 10px;
+    vertical-align: top;
+  }
+
+  .employee-form {
+    display: inline-block;
+    vertical-align: top;
+    padding: 10px 0 0 10px;
   }
 }

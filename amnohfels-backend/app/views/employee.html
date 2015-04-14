@@ -1,0 +1,21 @@
+<div class="employee-icon"
+     ng-style="{'background-image' : image}"></div>
+
+<div class="employee-form">
+    <div class="form-group">
+        <label>Name</label>
+        <input type="text" class="form-control" placeholder="Name eingeben" ng-model="name">
+    </div>
+
+    <div class="form-group">
+        <label>Buddy Icon</label>
+        <input type="file" nv-file-select uploader="uploader"/><br/>
+
+        <div ng-show="uploader.isHTML5">
+            <div class="progress" style="margin-bottom: 0;">
+                <div class="progress-bar" role="progressbar"
+                     ng-style="{ 'width': uploader.queue[uploader.queue.length - 1].progress + '%' }"></div>
+            </div>
+        </div>
+    </div>
+</div>

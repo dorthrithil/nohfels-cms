@@ -12,7 +12,7 @@
 //TODO update rangy to get rid of error
 
 angular
-    .module('amnohfelsBackendApp', ['ngRoute', 'textAngular', 'ui.bootstrap-slider', 'ngTagsInput'])
+    .module('amnohfelsBackendApp', ['ngRoute', 'textAngular', 'ui.bootstrap-slider', 'ngTagsInput', 'angularFileUpload'])
     .config(function ($routeProvider, $provide) {
         //config textAngular
         $provide.decorator('taOptions', ['$delegate', function(taOptions){
