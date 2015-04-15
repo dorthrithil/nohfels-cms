@@ -19,3 +19,9 @@ function htmlResponse($input){
     header("Content-type: text/html; charset=UTF-8");
     echo $input;
 }
+
+function validate_mime_type_image($file) //TODO don't rely on mime types as they are set by clients
+{
+    if (in_array($file['file']['type'], array('image/jpeg', 'image/gif', 'image/png', 'image/bmp'))) return true;
+    return false;
+}

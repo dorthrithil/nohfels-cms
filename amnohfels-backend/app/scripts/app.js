@@ -11,6 +11,8 @@
 
 //TODO update rangy to get rid of error
 
+//TODO is there a need for each a directive & view for all the pages? they basically do nothing but pass in the page name. i could create a "page" directive & view instead
+
 angular
     .module('amnohfelsBackendApp', ['ngRoute', 'textAngular', 'ui.bootstrap-slider', 'ngTagsInput', 'angularFileUpload'])
     .config(function ($routeProvider, $provide) {

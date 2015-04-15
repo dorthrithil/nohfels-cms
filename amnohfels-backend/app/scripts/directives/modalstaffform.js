@@ -28,14 +28,13 @@ angular.module('amnohfelsBackendApp')
                         imageSrc: ''
                     });
                 };
-                $scope.deleteEmployee = function(){
-                    //TODO implement + UI
+                $scope.deleteEmployee = function(index){
+                    $scope.modalVars.data.employees.splice(index, 1);
                 };
-                $scope.employeeUp = function(){
-                    //TODO implement + UI
-                };
-                $scope.employeeDown = function(){
-                    //TODO implement + UI
+                $scope.swapDownEmployee = function(index){
+                    var tempEmployee = $scope.modalVars.data.employees[index];
+                    $scope.modalVars.data.employees[index] = $scope.modalVars.data.employees[index + 1];
+                    $scope.modalVars.data.employees[index + 1] = tempEmployee;
                 };
 
             }

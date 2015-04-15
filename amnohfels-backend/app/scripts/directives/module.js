@@ -11,6 +11,9 @@
 //TODO don't name it response in scope
 //TODO better compile whole modal (pass type as argument), not only the forms. this way we can get the modal logic in the modal file. soc!
 //TODO disable all buttons until syncqueue is finished
+//TODO synchronize button or deep copy of modalVars data object, because when i e.g. delete an employee in a staff module and close the modal without saving, the employee will still be deleted (at least in the clients view)
+//TODO "loading the content failed - retry" button after some time without success
+//TODO indicate loading of data
 
 angular.module('amnohfelsBackendApp')
     .directive('module', function (phpServerRoot, $http, syncQueue, $compile) {

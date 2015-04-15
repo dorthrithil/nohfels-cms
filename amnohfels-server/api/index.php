@@ -200,6 +200,23 @@ $app->group('/module', function () use ($app) {
             jsonResponse($response);
         });
 
+        //update staff module
+        $app->post('/:id', function ($id) use ($app) {
+            $json = $app->request->getBody();
+            $data = json_decode($json, true);
+            updateStaffModule($id, $data['title'], $data['employees']);
+        });
+
+        //delete staff module
+        $app->delete('/:id', function ($id) {
+            deleteStaffModule($id);
+        });
+
+        //upload employee image
+        $app->post('/employee/image', function () use ($app) {
+            uploadEmployeeImage();
+        });
+
     });
 
 });

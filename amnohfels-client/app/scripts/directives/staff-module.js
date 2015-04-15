@@ -7,12 +7,15 @@
  * # staffModule
  */
 angular.module('amnohfelsClientApp')
-  .directive('staffModule', function () {
+  .directive('staffModule', function (phpServerRoot) {
     return {
         templateUrl: 'views/staff-module.html',
         restrict: 'E',
         scope: {
             data: '='
+        },
+        controller: function($scope){
+            $scope.phpServerRoot = phpServerRoot;
         }
     };
   });

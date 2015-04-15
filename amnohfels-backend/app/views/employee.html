@@ -1,23 +1,46 @@
-<div class="employee-icon"
+<div class="employee-image"
      ng-style="{'background-image' : 'url(' + imageSrc + ')'}"></div>
 
-<div class="employee-form">
+<div class="employee-main">
     <div class="form-group">
         <label>Name</label>
         <input type="text" class="form-control" placeholder="Name eingeben" ng-model="data.name">
     </div>
 
     <div class="form-group">
-        <label>Buddy Icon</label>
+        <label>Bild</label>
         <input type="file" nv-file-select uploader="uploader"/><br/>
 
         <div ng-show="uploader.isHTML5">
-            <div class="progress" style="margin-bottom: 0;">
+            <div class="progress" style="margin-bottom: 0" ng-style="{'visibility': uploader.isUploading ? 'visible' : 'hidden'}">
                 <div class="progress-bar" role="progressbar"
                      ng-style="{ 'width': uploader.queue[uploader.queue.length - 1].progress + '%' }"
                      ng-class="{'progress-bar-striped active' : uploader.queue[uploader.queue.length - 1].progress == 100 && !uploader.queue[uploader.queue.length - 1].isSuccess,
                      'progress-bar-success' : uploader.queue[uploader.queue.length - 1].isSuccess}"></div>
             </div>
         </div>
+    </div>
+
+</div>
+
+<div class="employee-actions">
+    <div class="form-group">
+        <label class="block-label">Aktionen</label>
+
+        <div class="btn-group" role="group">
+            <button type="button" class="btn btn-default" ng-click="swapDown(index - 1)" ng-disabled="index == 0">
+                <span class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span>
+            </button>
+            <button type="button" class="btn btn-default" ng-click="swapDown(index)"
+                    ng-disabled="isLastEmployee">
+                <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
+            </button>
+        </div>
+
+        <button type="button" class="btn btn-default" ng-click="remove()" ng-class="{'btn-danger' : showConfirmDeletion}">
+            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+            <span ng-hide="showConfirmDeletion">Löschen</span>
+            <span ng-show="showConfirmDeletion">Löschen bestätigen</span>
+        </button>
     </div>
 </div>

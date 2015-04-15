@@ -33,12 +33,13 @@ modal-instagram-form {
   }
 }
 
+//TODO seperate scss
 employee {
 
   padding-bottom: 15px;
   display: block;
 
-  .employee-icon {
+  .employee-image {
     display: inline-block;
     width: 128px;
     padding: 20px;
@@ -51,9 +52,20 @@ employee {
     vertical-align: top;
   }
 
-  .employee-form {
+  .employee-main {
     display: inline-block;
     vertical-align: top;
     padding: 10px 0 0 10px;
   }
+
+  .employee-actions {
+    display: inline-block;
+    vertical-align: top;
+    padding: 10px 0 0 10px;
+
+    .block-label{
+      display: block;
+    }
+  }
+
 }
