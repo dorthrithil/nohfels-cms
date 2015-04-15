@@ -1,5 +1,5 @@
 # amnohfels
-This project exists mainly for creating the new web appearance of Am Nohfels @[http://amnohfels.de](amnohfels.de)
+This project exists mainly for creating the new web appearance of Am Nohfels @[http://amnohfels.de](amnohfels.de)<br>
 If it turns out good, the system may be maintained and documented. So if you like it and want to use the code, go for it. 
 
 ## Some resources
