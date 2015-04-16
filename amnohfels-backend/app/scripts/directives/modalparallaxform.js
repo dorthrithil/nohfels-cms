@@ -8,6 +8,7 @@
  */
 
 //TODO warning when image with width lower than 1000 and height lower than full hd converted height is being uploaded
+//TODO when uploading e new image: delete old image from server
 
 angular.module('amnohfelsBackendApp')
   .directive('modalParallaxForm', function (phpServerRoot, FileUploader) {
@@ -34,7 +35,7 @@ angular.module('amnohfelsBackendApp')
 
             //file uploader
             var uploader = $scope.uploader = new FileUploader({
-                url: phpServerRoot + '/api/module/parallax/image', //POST requests get send here
+                url: phpServerRoot + '/api/module/parallax/image/upload', //POST requests get send here
                 autoUpload: true
             });
 

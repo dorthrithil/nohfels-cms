@@ -8,7 +8,7 @@
  * Service in the amnohfelsClientApp.
  */
 angular.module('amnohfelsClientApp')
-    .service('parallax', function parallax($window, util, $timeout) {
+    .service('parallax', function parallax($window, util, $timeout, phpServerRoot) {
         //TODO (1.0.1) improvement: navbar height doesn't need to be included in height calculations => more visible image content
 
         //TODO throttle
@@ -50,10 +50,10 @@ angular.module('amnohfelsClientApp')
                     width: null,
                     ratio: null
                 },
-                src: bgImgSrc
+                src: phpServerRoot + '/' + bgImgSrc
             });
-            images[images.length - 1].image.attr('src', bgImgSrc); //TODO do that later for fadein
-            //setSectionHeights(images.length - 1);
+            images[images.length - 1].image.attr('src', phpServerRoot + '/' + bgImgSrc); //TODO do that later for fadein
+            //setSectionHeights(images.length - 1); //TODO what is that?
             initDimensions(images.length - 1);
         };
 

@@ -11,7 +11,14 @@
 //TODO enhancement (1.0.2): database health checks
 
 //set headers
-header("Access-Control-Allow-Origin: *");
+
+//header('Access-Control-Allow-Origin: *');
+//header('Access-Control-Allow-Credentials: true');
+//header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept");
+//header('Access-Control-Allow-Methods: POST, GET, OPTIONS, DELETE, PUT');
+//header('Access-Control-Max-Age: 86400');
+
+header('Access-Control-Allow-Origin: *');
 if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
     if (isset($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_METHOD']) && (
             $_SERVER['HTTP_ACCESS_CONTROL_REQUEST_METHOD'] == 'POST' ||
@@ -19,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
             $_SERVER['HTTP_ACCESS_CONTROL_REQUEST_METHOD'] == 'PUT')
     ) {
         header('Access-Control-Allow-Origin: *');
-        header("Access-Control-Allow-Credentials: true");
+        header('Access-Control-Allow-Credentials: true');
         header('Access-Control-Allow-Headers: X-Requested-With');
         header('Access-Control-Allow-Headers: Content-Type');
         header('Access-Control-Allow-Methods: POST, GET, OPTIONS, DELETE, PUT');
@@ -97,18 +104,37 @@ $app->group('/module', function () use ($app) {
     //group for parallax modules
     $app->group('/parallax', function () use ($app) {
 
-        //get text module
+        //create parallax module
+        $app->post('', function () use ($app) {
+            $json = $app->request->getBody();
+            $data = json_decode($json, true);
+            createParallaxModule($data['page'], $data['title'], $data['caption'], $data['heightNum'], $data['heightUnit'], $data['bgImgSrc'], $data['bgImgThumbSrc']);
+        });
+
+        //get parallax module
         $app->get('/:id', function ($id) use ($app) {
             $response = getParallaxModule($id);
             if ($response == false) $app->notFound();
             jsonResponse($response);
         });
 
-        //upload parallax image
-        $app->post('/image', function () use ($app) {
-            uploadParallaxImage();
+        //update parallax module
+        $app->post('/:id', function ($id) use ($app) {
+            $json = $app->request->getBody();
+            $data = json_decode($json, true);
+            updateParallaxModule($id, $data['title'], $data['caption'], $data['heightNum'], $data['heightUnit'], $data['bgImgSrc'], $data['bgImgThumbSrc']);
         });
 
+        //delete parallax module
+        $app->delete('/:id', function ($id) {
+            echo($id);
+            deleteParallaxModule($id);
+        });
+
+        //upload parallax image
+        $app->post('/image/upload', function () use ($app) { //TODO uniform employee route
+            uploadParallaxImage();
+        });
 
     });
 

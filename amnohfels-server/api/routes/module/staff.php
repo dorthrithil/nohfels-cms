@@ -224,7 +224,6 @@ function uploadEmployeeImage()
         );
         //jsonResponse($answer);
         $json = json_encode($answer);
-        header("Access-Control-Allow-Origin: *");
         echo $json;
     } else {
         echo 'No file or invalid type provided';
