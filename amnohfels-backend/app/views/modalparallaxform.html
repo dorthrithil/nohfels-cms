@@ -1,0 +1,45 @@
+<form>
+    <div class="form-group">
+        <label for="title">Titel</label>
+        <input type="text" class="form-control" id="title" placeholder="Titel eingeben" ng-model="modalVars.data.title">
+    </div>
+
+    <div class="form-group">
+        <label for="text">Text</label>
+        <text-angular id="text" ng-model="modalVars.data.caption"></text-angular>
+    </div>
+
+    <div class="form-group">
+        <label for="height">Höhe</label>
+
+        <div class="input-group height-num">
+            <input type="text" class="form-control" id="height" placeholder="Höhe eingeben"
+                   ng-model="modalVars.data.heightNum">
+
+            <div class="input-group-btn">
+                <button type="button" class="btn" ng-class="{'btn-primary' : modalVars.data.heightUnit == 'px', 'btn-default' : modalVars.data.heightUnit == 'vh'}" ng-click="setHeightUnit('px')">px</button>
+                <button type="button" class="btn" ng-class="{'btn-primary' : modalVars.data.heightUnit == 'vh', 'btn-default' : modalVars.data.heightUnit == 'px'}" ng-click="setHeightUnit('vh')">vh</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label>Hintergrundbild</label>
+        <input type="file" nv-file-select uploader="uploader"/><br/>
+
+        <div ng-show="uploader.isHTML5">
+            <div class="progress" style="margin-bottom: 0"
+                 ng-style="{'visibility': uploader.isUploading ? 'visible' : 'hidden'}">
+                <div class="progress-bar" role="progressbar"
+                     ng-style="{ 'width': uploader.queue[uploader.queue.length - 1].progress + '%' }"
+                     ng-class="{'progress-bar-striped active' : uploader.queue[uploader.queue.length - 1].progress == 100 && !uploader.queue[uploader.queue.length - 1].isSuccess,
+                     'progress-bar-success' : uploader.queue[uploader.queue.length - 1].isSuccess}"></div>
+            </div>
+        </div>
+
+        <div class="thumbnail" ng-if="modalVars.data.bgImgSrc != ''">
+            <img ng-src="{{phpServerRoot + '/' + modalVars.data.bgImgSrc}}" alt="">
+        </div>
+    </div>
+</form>
+

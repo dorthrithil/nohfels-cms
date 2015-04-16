@@ -222,7 +222,9 @@ function uploadEmployeeImage()
             'answer' => 'File transfer completed successfully',
             'path' => $access_path
         );
+        //jsonResponse($answer);
         $json = json_encode($answer);
+        header("Access-Control-Allow-Origin: *");
         echo $json;
     } else {
         echo 'No file or invalid type provided';

@@ -14,6 +14,7 @@ body {
   padding-top: $navbar-height * 2;
 }
 
+//TODO seperate scss
 .actions {
   text-align: right;
   margin-bottom: 30px;
@@ -23,6 +24,7 @@ body {
   color: $gray-dark !important;
 }
 
+//TODO seperate scss
 modal-instagram-form {
   .badge {
     margin-right: 10px;
@@ -68,4 +70,11 @@ employee {
     }
   }
 
+}
+
+//TODO seperate scss
+modal-parallax-form{
+  .height-num{
+    width: 140px !important;
+  }
 }

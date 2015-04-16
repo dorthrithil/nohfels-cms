@@ -20,7 +20,7 @@ angular.module('amnohfelsClientApp')
             },
             link: {
                 pre: function(scope, element){
-                    parallax.add(element, scope.data.bgImgSrc, scope.data.height);
+                    parallax.add(element, scope.data.bgImgSrc, scope.data.heightNum + scope.data.heightUnit);
                 }
             },
             controller: function($scope, $sce) {

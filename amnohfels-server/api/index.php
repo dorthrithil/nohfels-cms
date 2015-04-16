@@ -4,6 +4,8 @@
 //TODO enhancement: check for resource existence on update-post & delete routes (swap, text edit update delete)
 //TODO function descriptions
 
+//TODO refactoring (1.0.1) camelCaseize everything
+
 //TODO enhancement (1.0.1): correct error responses for client
 
 //TODO enhancement (1.0.2): database health checks
@@ -45,11 +47,6 @@ require_once __DIR__ . '/db.php';
 require_once __DIR__ . '/routes.php';
 
 //set up routes
-
-//test upload
-$app->post('/upload', function () use ($app) {
-    upload();
-});
 
 //group for modules
 $app->group('/module', function () use ($app) {
@@ -106,6 +103,12 @@ $app->group('/module', function () use ($app) {
             if ($response == false) $app->notFound();
             jsonResponse($response);
         });
+
+        //upload parallax image
+        $app->post('/image', function () use ($app) {
+            uploadParallaxImage();
+        });
+
 
     });
 
@@ -232,7 +235,6 @@ $app->group('/page', function () use ($app) {
     });
 
 });
-
 
 //run app
 $app->run();
