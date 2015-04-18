@@ -199,7 +199,7 @@ function uploadEmployeeImage()
 
     if (!empty($_FILES) && validate_mime_type_image($_FILES)) { //TODO distinguish error messages & include http status codes
         $tempPath = $_FILES['file']['tmp_name'];
-        $access_path = 'uploads' . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR . 'staff' . DIRECTORY_SEPARATOR . 'staff_' . time() . $image_typemap[$_FILES['file']['type']];
+        $access_path = 'uploads' . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR . 'staff' . DIRECTORY_SEPARATOR . 'staff_' . uniqid() . $image_typemap[$_FILES['file']['type']];
         $uploadPath = dirname(dirname(dirname(dirname(__FILE__)))) . DIRECTORY_SEPARATOR . $access_path; //TODO solve that dirname rubbish with a global image upload function
         move_uploaded_file($tempPath, $uploadPath);
 

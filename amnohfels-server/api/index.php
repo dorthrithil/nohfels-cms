@@ -141,11 +141,35 @@ $app->group('/module', function () use ($app) {
     //group for image modules
     $app->group('/image', function () use ($app) {
 
+        //create image module
+        $app->post('', function () use ($app) {
+            $json = $app->request->getBody();
+            $data = json_decode($json, true);
+            createImageModule($data['page'], $data['title'], $data['images']);
+        });
+
         //get image module
         $app->get('/:id', function ($id) use ($app) {
             $response = getImageModule($id);
             if ($response == false) $app->notFound();
             jsonResponse($response);
+        });
+
+        //update image module
+        $app->post('/:id', function ($id) use ($app) {
+            $json = $app->request->getBody();
+            $data = json_decode($json, true);
+            updateImageModule($id, $data['title'], $data['images']);
+        });
+
+        //delete image module
+        $app->delete('/:id', function ($id) {
+            deleteImageModule($id);
+        });
+
+        //upload gallery image
+        $app->post('/image/upload', function () use ($app) { //TODO uniform image route
+            uploadImageImage();
         });
 
     });

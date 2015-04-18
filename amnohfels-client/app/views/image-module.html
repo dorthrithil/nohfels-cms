@@ -5,7 +5,7 @@
              ng-class="{'col-md-3 col-sm-4' : image.imageSize == 'small'}"
              >
             <div class="image-container"
-                 ng-style="{'background-image' : 'url(' + image.imageThumbSrc + ')'}"
+                 ng-style="{'background-image' : getImageSrc($index)}"
                  ng-class="{'image-large' : image.imageSize == 'large'}"
                  ng-click="lbOpen($index)"
                  >

@@ -8,9 +8,12 @@
  */
 
 //TODO templates for spaghetti angular element definitions
+//TODO fix display on small devices
+
+//TODO enhancement (1.0.1) put lightbox code into a lightbox service
 
 angular.module('amnohfelsClientApp')
-    .directive('imageModule', function ($compile, animator, $document, $timeout){
+    .directive('imageModule', function ($compile, animator, $document, $timeout, phpServerRoot){
         return {
             templateUrl: 'views/image-module.html',
             restrict: 'E',
@@ -31,9 +34,20 @@ angular.module('amnohfelsClientApp')
                 var image = null;
                 var changeImageMutex = false; //makes sure only one image gets changed at a time
 
+                scope.getImageSrc = function(index){
+                   switch(scope.data.images[index].imageSize){
+                       case 'small':
+                           return 'url(' + phpServerRoot + '/' + scope.data.images[index].imageThumbSquareSrc + ')';
+                       case 'large':
+                           return 'url(' + phpServerRoot + '/' + scope.data.images[index].imageSrc + ')';
+                       default:
+                           return;
+                   }
+                };
+
                 //appends lightbox to dom with animation
                 scope.lbOpen = function(index){
-                    image = angular.element('<img alt="" index="' + index + '" src="' + scope.data.images[index].imageSrc + '" ng-click="lbChangeImage(\'right\')" no-propagation lb-calc-dimensions preloadable/>');
+                    image = angular.element('<img alt="" index="' + index + '" src="' + phpServerRoot + '/' + scope.data.images[index].imageSrc + '" ng-click="lbChangeImage(\'right\')" no-propagation lb-calc-dimensions preloadable/>');
                     backdrop.append(image);
                     body.append($compile(backdrop)(scope)); //compiling is necessary to wire up the used directives
                     $document.bind('keyup', lbMapKeyup);
@@ -77,7 +91,7 @@ angular.module('amnohfelsClientApp')
                             $icon = previousImageIcon.children().children().children();
                             newIndex = (index === 0) ? scope.data.images.length - 1 : index - 1;
                         }
-                        var newImage = angular.element('<img alt="" index="' + newIndex + '" src="' + scope.data.images[newIndex].imageSrc + '" ng-click="lbChangeImage(' + direction + ')" no-propagation preloadable lb-calc-dimensions/>');
+                        var newImage = angular.element('<img alt="" index="' + newIndex + '" src="' + phpServerRoot + '/' + scope.data.images[newIndex].imageSrc + '" ng-click="lbChangeImage(' + direction + ')" no-propagation preloadable lb-calc-dimensions/>');
                         backdrop.append($compile(newImage)(scope)); //append new image (outside of viewport)
                         var startLoadingAnimation = true;
                         var loadingAnimationStarted = false;
@@ -128,6 +142,9 @@ angular.module('amnohfelsClientApp')
                         scope.lbClose();
                     }
                 };
+            },
+            controller: function($scope){
+                $scope.phpServerRoot = phpServerRoot; //for wiring up image src links
             }
         };
     });
