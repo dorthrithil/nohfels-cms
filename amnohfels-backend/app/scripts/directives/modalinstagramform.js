@@ -31,7 +31,7 @@ angular.module('amnohfelsBackendApp')
                     });
                 }
                 $scope.modalVars.route = '/instagram';
-                $scope.modalVars.data.page = 'cafe';
+                $scope.modalVars.data.page = $scope.topic;
 
                 $scope.showTagsInput = function () {
                     return $scope.modalVars.data.filterForTags;

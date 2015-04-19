@@ -20,7 +20,7 @@ angular.module('amnohfelsBackendApp')
                     $scope.modalVars.data.employees = [];
                 }
                 $scope.modalVars.route = '/staff';
-                $scope.modalVars.data.page = 'cafe'; //TODO get real page
+                $scope.modalVars.data.page = $scope.topic;
 
                 $scope.addEmployee = function () {
                     $scope.modalVars.data.employees.push({

@@ -1,17 +1,17 @@
 'use strict';
 
-describe('Controller: Status404Ctrl', function () {
+describe('Controller: PageCtrl', function () {
 
   // load the controller's module
-  beforeEach(module('amnohfelsClientApp'));
+  beforeEach(module('amnohfelsBackendApp'));
 
-  var Status404Ctrl,
+  var PageCtrl,
     scope;
 
   // Initialize the controller and a mock scope
   beforeEach(inject(function ($controller, $rootScope) {
     scope = $rootScope.$new();
-    Status404Ctrl = $controller('Status404Ctrl', {
+    PageCtrl = $controller('PageCtrl', {
       $scope: scope
     });
   }));

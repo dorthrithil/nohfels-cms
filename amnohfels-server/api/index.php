@@ -286,5 +286,16 @@ $app->group('/page', function () use ($app) {
 
 });
 
+//group for topics
+$app->group('/topic', function () use ($app) {
+
+    //get all topics
+    $app->get('', function () {
+        $response = getTopics();
+        jsonResponse($response);
+    });
+
+});
+
 //run app
 $app->run();

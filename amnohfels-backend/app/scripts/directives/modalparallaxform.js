@@ -25,7 +25,7 @@ angular.module('amnohfelsBackendApp')
                 $scope.modalVars.data.caption = '';
             }
             $scope.modalVars.route = '/parallax';
-            $scope.modalVars.data.page = 'cafe'; //TODO get real page
+            $scope.modalVars.data.page = $scope.topic;
 
             $scope.setHeightUnit = function(unit){
                 $scope.modalVars.data.heightUnit = unit;

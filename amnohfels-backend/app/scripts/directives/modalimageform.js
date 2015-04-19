@@ -17,7 +17,7 @@ angular.module('amnohfelsBackendApp')
                     $scope.modalVars.data.images = [];
                 }
                 $scope.modalVars.route = '/image';
-                $scope.modalVars.data.page = 'cafe'; //TODO get real page
+                $scope.modalVars.data.page = $scope.topic;
 
                 $scope.shiftLeft = function (index) {
                     var buffer = $scope.modalVars.data.images[index];

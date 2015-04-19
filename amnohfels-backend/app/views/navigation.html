@@ -11,13 +11,7 @@
     <div class="container text-center">
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-                <li ng-class="{active: isOnPath('/cafe')}"><a href="#/cafe">Sommercafé</a></li>
-                <li ng-class="{active: isOnPath('/reisemobilstellplatz')}"><a href="#/reisemobilstellplatz">Reisemobilstellplatz</a></li>
-                <li ng-class="{active: isOnPath('/minigolf')}"><a href="#/minigolf">Minigolf</a></li>
-                <li ng-class="{active: isOnPath('/psgh')}"><a href="#/psgh">Paul-Schneider-Gästehaus</a></li>
-                <li ng-class="{active: isOnPath('/nachtigallental')}"><a href="#/nachtigallental">Grillplatz</a></li>
-                <li ng-class="{active: isOnPath('/contact')}"><a href="#/contact">Kontakt</a></li>
-                <li ng-class="{active: isOnPath('/imprint')}"><a href="#/imprint">Impressum</a></li>
+                <li ng-repeat="topic in topics" ng-class="{active: isOnPath('/' + topic.id)}"><a href="#/{{topic.id}}">{{topic.name}}</a></li>
             </ul>
         </div>
     </div>

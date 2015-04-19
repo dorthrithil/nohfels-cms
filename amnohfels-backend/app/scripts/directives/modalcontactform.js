@@ -22,7 +22,7 @@ angular.module('amnohfelsBackendApp')
                 $scope.modalVars.data.address = '';
             }
             $scope.modalVars.route = '/contact';
-            $scope.modalVars.data.page = 'cafe';
+            $scope.modalVars.data.page = $scope.topic; //TODO find a uniform logical topic/page naming
         }
     };
   });

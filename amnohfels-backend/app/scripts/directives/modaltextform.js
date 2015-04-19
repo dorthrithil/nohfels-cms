@@ -21,7 +21,7 @@ angular.module('amnohfelsBackendApp')
                     $scope.modalVars.data.content = '';
                 }
                 $scope.modalVars.route = '/text';
-                $scope.modalVars.data.page = 'cafe';
+                $scope.modalVars.data.page = $scope.topic;
             }
         };
     });

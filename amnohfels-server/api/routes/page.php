@@ -49,3 +49,27 @@ function getPage($topic)
     $connection->close();
     return $response;
 }
+
+function getTopics()
+{
+    $connection = getConnection();
+    $response = array();
+    try {
+        $result = $connection->query("SELECT id, name FROM topics ORDER BY position, name ASC");
+        if (!$result) {
+            throw new Exception($connection->error);
+        } else {
+            while ($rs = $result->fetch_array(MYSQLI_ASSOC)) {
+                $topic = new stdClass();
+                $topic->name = $rs['name'];
+                $topic->id = $rs['id'];
+                $response[] = $topic;
+                //TODO implement functionality for position and section table fields
+            }
+        }
+    } catch (Exception $e) {
+        echo $e->getMessage();
+    }
+    $connection->close();
+    return $response;
+}

@@ -59,6 +59,7 @@ angular.module('amnohfelsBackendApp')
                         .success(function (response) {
                             $scope.response = response;
                         });
+                    //TODO error: "this page has no modules yet or an internal server error occured" => differentiate via status code
                 };
                 $scope.refreshPageData();
                 $scope.$on('sq-http-request-successful', $scope.refreshPageData);
