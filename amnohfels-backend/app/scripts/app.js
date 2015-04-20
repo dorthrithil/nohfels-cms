@@ -11,7 +11,7 @@
 
 //TODO update rangy to get rid of error
 
-//TODO is there a need for each a directive & view for all the pages? they basically do nothing but pass in the page name. i could create a "page" directive & view instead
+//TODO (1.0.1) improvement: use ng resource vor rest communication
 
 angular
     .module('amnohfelsBackendApp', ['ngRoute', 'textAngular', 'ui.bootstrap-slider', 'ngTagsInput', 'angularFileUpload'])
@@ -37,4 +37,5 @@ angular
                 controller: 'WelcomeCtrl'
             });
     })
-    .value('phpServerRoot', 'http://schruemel.de/testnohfels');
+    .value('phpServerRoot', 'http://schruemel.de/testnohfels')
+    .value('adminMail', 'felix@feblog.de');

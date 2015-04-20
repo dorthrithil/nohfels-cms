@@ -8,7 +8,6 @@
  */
 
 //TODO validation (required)
-//TODO get real page
 
 angular.module('amnohfelsBackendApp')
     .directive('modalInstagramForm', function () {

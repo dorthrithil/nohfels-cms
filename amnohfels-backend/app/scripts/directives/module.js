@@ -8,15 +8,15 @@
  */
 
 //TODO this should be named "page"
-//TODO don't name it response in scope
+//TODO don't name it response in scope (standard angular variable name in http service is data)
 //TODO better compile whole modal (pass type as argument), not only the forms. this way we can get the modal logic in the modal file. soc!
-//TODO disable all buttons until syncqueue is finished
+//TODO disable all buttons until syncqueue is finished (this would make a queue unnecessary)
 //TODO synchronize button or deep copy of modalVars data object, because when i e.g. delete an employee in a staff module and close the modal without saving, the employee will still be deleted (at least in the clients view)
 //TODO "loading the content failed - retry" button after some time without success
 //TODO indicate loading of data
 
 angular.module('amnohfelsBackendApp')
-    .directive('module', function (phpServerRoot, $http, syncQueue, $compile) {
+    .directive('module', function (phpServerRoot, $http, syncQueue, $compile, adminMail) {
         return {
             templateUrl: '/views/module.html',
             restrict: 'E',
@@ -54,10 +54,15 @@ angular.module('amnohfelsBackendApp')
                 };
             },
             controller: function ($scope) {
+                $scope.adminMail = adminMail; //for 404 alert
                 $scope.refreshPageData = function () {
                     $http.get(phpServerRoot + '/api/page/' + $scope.topic)
-                        .success(function (response) {
+                        .success(function (response, status) {
                             $scope.response = response;
+                            $scope.status = status;
+                        })
+                        .error(function(response, status){
+                            $scope.status = status;
                         });
                     //TODO error: "this page has no modules yet or an internal server error occured" => differentiate via status code
                 };
@@ -67,7 +72,7 @@ angular.module('amnohfelsBackendApp')
                     .success(function (response) {
                         $scope.moduleTypes = response;
                     });
-                $scope.up = function (module) {
+                $scope.up = function (module) { //TODO swap methods can be combined to a single swapWithLowerModule
                     var moduleYIndex = $scope.response.indexOf(module);
                     var moduleBuffer = $scope.response[moduleYIndex - 1];
                     $scope.response[moduleYIndex - 1] = module;

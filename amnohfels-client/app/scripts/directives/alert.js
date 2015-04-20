@@ -54,7 +54,6 @@ angular.module('amnohfelsClientApp')
 
                     //toggles alert depending on actual error/valid-state
                     scope.toggleAlert = function () {
-                        console.log('t');
                         $timeout(function(){
                             if(alertCurrentlyVisible) {
                                 switch (scope.type) {

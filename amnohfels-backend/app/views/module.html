@@ -1,8 +1,11 @@
 <div class="actions">
     <div class="btn-group" role="group" aria-label="...">
 
-        <button type="button" class="btn btn-default save-button" ng-class="{'btn-success' : isSynced(), 'btn-danger' : !isSynced()}" ng-disabled="true">
-            <span class="glyphicon" ng-class="{'glyphicon-floppy-saved' : isSynced(), 'glyphicon-floppy-disk' : !isSynced()}" aria-hidden="true"></span>
+        <button type="button" class="btn btn-default save-button"
+                ng-class="{'btn-success' : isSynced(), 'btn-danger' : !isSynced()}" ng-disabled="true">
+            <span class="glyphicon"
+                  ng-class="{'glyphicon-floppy-saved' : isSynced(), 'glyphicon-floppy-disk' : !isSynced()}"
+                  aria-hidden="true"></span>
         </button>
 
         <div class="btn-group" role="group">
@@ -12,13 +15,14 @@
             </button>
             <!--TODO dropdown alignment on mobile devices (fix right)-->
             <ul class="dropdown-menu" role="menu">
-                <li ng-repeat="moduleType in moduleTypes"><a ng-click="createModule(moduleType)">{{moduleType.name}}</a></li>
+                <li ng-repeat="moduleType in moduleTypes"><a ng-click="createModule(moduleType)">{{moduleType.name}}</a>
+                </li>
             </ul>
         </div>
     </div>
 </div>
 
-<div class="table-responsive">
+<div class="table-responsive" ng-if="status == 200">
     <table class="table table-striped table-hover">
         <thead>
         <tr>
@@ -47,7 +51,8 @@
                     <button type="button" class="btn btn-default" ng-click="up(module)" ng-disabled="$index == 0">
                         <span class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span>
                     </button>
-                    <button type="button" class="btn btn-default" ng-click="down(module)" ng-disabled="$index == response.length - 1">
+                    <button type="button" class="btn btn-default" ng-click="down(module)"
+                            ng-disabled="$index == response.length - 1">
                         <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
                     </button>
                 </div>
@@ -55,4 +60,10 @@
         </tr>
         </tbody>
     </table>
+</div>
+
+<div class="alert alert-warning" ng-if="status == 404">
+    <p><strong>Huch! Was ist hier los?</strong> Diese Seite hat noch keine Module! Mit einem Klick auf "Neu", oben rechts,
+    kannst du neue Module erstellen. </p>
+    <p><small>Wenn du dir sicher bist, das du bereits ein Modul für diese Seite erstellt hast und hier trotzdem nichts angezeigt wird, kontaktiere bitte den <a href="mailto:{{adminMail}}">Systemadministrator</a>.</small></p>
 </div>

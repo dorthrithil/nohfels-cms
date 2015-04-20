@@ -8,7 +8,6 @@
  */
 
 //TODO validation (required, email)
-//TODO get real page
 
 angular.module('amnohfelsBackendApp')
   .directive('modalContactForm', function () {

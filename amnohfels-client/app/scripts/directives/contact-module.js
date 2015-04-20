@@ -114,14 +114,10 @@ angular.module('amnohfelsClientApp')
                     var modal = angular.element($event.target).next().children();
 
                     //send data
-                    $http({
-                        method: 'POST',
-                        url: phpServerRoot + '?site=contactModule',
-                        data: $.param($scope.formData),
-                        headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
-                    })
+                    $http.post(phpServerRoot + 'api/mail', $scope.formData)
                         .success(function (data, status) {
                             //switch success cases
+                            console.log(status);
                             switch (status) {
                                 case 205:
                                     $scope.modal = $scope.resetContent;
@@ -145,6 +141,7 @@ angular.module('amnohfelsClientApp')
                         })
                         .error(function (data, status) {
                             //switch error cases
+                            console.log(data);
                             switch (status) {
                                 case 0:
                                     $scope.modal = $scope.connectionRefused;

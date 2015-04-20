@@ -297,5 +297,13 @@ $app->group('/topic', function () use ($app) {
 
 });
 
+//send mail
+$app->post('/mail', function () use ($app) {
+    $json = $app->request->getBody();
+    $data = json_decode($json, true);
+    $response = sendContactMail($data['name'], $data['email'], $data['message']);
+    jsonResponse($response);
+});
+
 //run app
 $app->run();
