@@ -6,13 +6,13 @@
  * Time: 20:27
  */
 
-function createContactModule($page, $title, $topic, $address)
+function createContactModule($page, $title, $topic)
 {
     $connection = getConnection();
 
     //create new contact module
     try {
-        $result = $connection->query("INSERT INTO contact_modules (title, topic, address) VALUES  ('$title', '$topic', '$address')");
+        $result = $connection->query("INSERT INTO contact_modules (title, topic) VALUES  ('$title', '$topic')");
         if (!$result) {
             throw new Exception($connection->error);
         }
@@ -56,7 +56,7 @@ function getContactModule($id)
     $connection = getConnection();
     $data = new stdClass();
     try {
-        $result = $connection->query("SELECT id, topic, title, address FROM contact_modules WHERE id = '$id'");
+        $result = $connection->query("SELECT id, topic, title FROM contact_modules WHERE id = '$id'");
         if (!$result) {
             throw new Exception($connection->error);
         } else {
@@ -77,13 +77,13 @@ function getContactModule($id)
     return $response;
 }
 
-function updateContactModule($id, $title, $topic, $address)
+function updateContactModule($id, $title, $topic)
 {
     $connection = getConnection();
 
     //update module
     try {
-        $result = $connection->query("UPDATE contact_modules SET address = '$address', title = '$title', topic = '$topic' WHERE id = '$id'");
+        $result = $connection->query("UPDATE contact_modules SET title = '$title', topic = '$topic' WHERE id = '$id'");
         if (!$result) {
             throw new Exception($connection->error);
         }

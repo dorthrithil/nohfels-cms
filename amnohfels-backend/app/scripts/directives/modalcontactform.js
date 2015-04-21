@@ -18,7 +18,6 @@ angular.module('amnohfelsBackendApp')
             if ($scope.modalVars.action === 'new') {
                 $scope.modalVars.data.title = '';
                 $scope.modalVars.data.topic = '';
-                $scope.modalVars.data.address = '';
             }
             $scope.modalVars.route = '/contact';
             $scope.modalVars.data.page = $scope.topic; //TODO find a uniform logical topic/page naming

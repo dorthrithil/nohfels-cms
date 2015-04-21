@@ -18,7 +18,7 @@
 angular.module('amnohfelsBackendApp')
     .directive('module', function (phpServerRoot, $http, syncQueue, $compile, adminMail) {
         return {
-            templateUrl: '/views/module.html',
+            templateUrl: 'views/module.html',
             restrict: 'E',
             scope: {
                 topic: '='

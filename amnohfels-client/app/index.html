@@ -1,10 +1,12 @@
 <!doctype html>
 <html class="no-js">
-  <head>
+<head>
     <meta charset="utf-8">
     <title></title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
+    <link rel="shortcut icon" href="favicon.ico" type="image/ico" />
+    <link rel="icon" href="favicon.ico" type="image/ico" />
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
     <!-- build:css(.) styles/vendor.css -->
     <!-- bower:css -->
@@ -15,89 +17,80 @@
     <!-- endbuild -->
     <!--Typekit Fonts-->
     <script src="//use.typekit.net/nng8okn.js"></script>
-    <script>try{Typekit.load();}catch(e){}</script>
-  </head>
-  <body ng-app="amnohfelsClientApp" root>
-    <!--[if lt IE 7]>
-      <p class="browsehappy">Sie benutzen einen <strong>veralteten</strong> Browser. Bitte <a href="http://browsehappy.com/">installieren Sie eine aktuelle Version</a> um Ihr Online-Erlebnis zu verbessern.</p>
-    <![endif]-->
+    <script>try {
+        Typekit.load();
+    } catch (e) {
+    }</script>
+</head>
+<body ng-app="amnohfelsClientApp" root>
+<!--[if lt IE 7]>
+<p class="browsehappy">Sie benutzen einen <strong>veralteten</strong> Browser. Bitte <a href="http://browsehappy.com/">installieren
+    Sie eine aktuelle Version</a> um Ihr Online-Erlebnis zu verbessern.</p>
+<![endif]-->
 
-    <!-- Add your site or application content here -->
-    <div ng-include src="'views/navigation.html'"></div>
-    <div ng-view="" autoscroll="true"></div><!-- animate ng view? -->
-    <div ng-include src="'views/footer.html'"></div>
+<div ng-include src="'views/navigation.html'"></div>
+<div ng-view="" autoscroll="true"></div>
+<div ng-include src="'views/footer.html'"></div>
 
-    <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
-     <script>
-         //TODO Configure Google Analytics
-//       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-//       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-//       m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-//       })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-//
-//       ga('create', 'UA-XXXXX-X');
-//       ga('send', 'pageview');
-    </script>
+<!-- build:js(.) scripts/oldieshim.js -->
+<!--[if lt IE 9]>
+<script src="bower_components/es5-shim/es5-shim.js"></script>
+<script src="bower_components/json3/lib/json3.js"></script>
+<![endif]-->
+<!-- endbuild -->
 
-    <!-- build:js(.) scripts/oldieshim.js -->
-    <!--[if lt IE 9]>
-    <script src="bower_components/es5-shim/es5-shim.js"></script>
-    <script src="bower_components/json3/lib/json3.js"></script>
-    <![endif]-->
-    <!-- endbuild -->
+<!-- build:js(.) scripts/vendor.js -->
+<!-- bower:js -->
+<script src="bower_components/jquery/dist/jquery.js"></script>
+<script src="bower_components/angular/angular.js"></script>
+<script src="bower_components/angular-route/angular-route.js"></script>
+<script src="bower_components/velocity/velocity.js"></script>
+<script src="bower_components/velocity/velocity.ui.js"></script>
+<!-- endbower -->
+<!-- endbuild -->
 
-    <!-- build:js(.) scripts/vendor.js -->
-    <!-- bower:js -->
-    <script src="bower_components/jquery/dist/jquery.js"></script>
-    <script src="bower_components/angular/angular.js"></script>
-    <script src="bower_components/angular-route/angular-route.js"></script>
-    <script src="bower_components/velocity/velocity.js"></script>
-    <script src="bower_components/velocity/velocity.ui.js"></script>
-    <!-- endbower -->
-    <!-- endbuild -->
-
-    <!-- build:js({.tmp,app}) scripts/scripts.js -->
-    <script src="scripts/bootstrap/bootstrap/affix.js"></script>
-    <script src="scripts/bootstrap/bootstrap/alert.js"></script>
-    <script src="scripts/bootstrap/bootstrap/button.js"></script>
-    <script src="scripts/bootstrap/bootstrap/carousel.js"></script>
-    <script src="scripts/bootstrap/bootstrap/collapse.js"></script>
-    <script src="scripts/bootstrap/bootstrap/dropdown.js"></script>
-    <script src="scripts/bootstrap/bootstrap/tab.js"></script>
-    <script src="scripts/bootstrap/bootstrap/transition.js"></script>
-    <script src="scripts/bootstrap/bootstrap/scrollspy.js"></script>
-    <script src="scripts/bootstrap/bootstrap/modal.js"></script>
-    <script src="scripts/bootstrap/bootstrap/tooltip.js"></script>
-    <script src="scripts/bootstrap/bootstrap/popover.js"></script>
-    <script src="scripts/app.js"></script>
-    <script src="scripts/controllers/cafe.js"></script>
-    <script src="scripts/controllers/minigolf.js"></script>
-    <script src="scripts/controllers/nachtigallental.js"></script>
-    <script src="scripts/controllers/navigation.js"></script>
-    <script src="scripts/controllers/psgh.js"></script>
-    <script src="scripts/controllers/reisemobilstellplatz.js"></script>
-    <script src="scripts/controllers/footer.js"></script>
-    <script src="scripts/controllers/contact.js"></script>
-    <script src="scripts/controllers/imprint.js"></script>
-    <script src="scripts/directives/parallax-module.js"></script>
-    <script src="scripts/directives/text-module.js"></script>
-    <script src="scripts/directives/scaffold-modules.js"></script>
-    <script src="scripts/directives/error-module.js"></script>
-    <script src="scripts/controllers/notfound.js"></script>
-    <script src="scripts/directives/util/no-propagation.js"></script>
-    <script src="scripts/directives/image-module.js"></script>
-    <script src="scripts/directives/util/preloadable.js"></script>
-    <script src="scripts/directives/util/lb-calc-dimensions.js"></script>
-    <script src="scripts/services/parallax.js"></script>
-    <script src="scripts/services/util.js"></script>
-    <script src="scripts/directives/root.js"></script>
-    <script src="scripts/services/animator.js"></script>
-    <script src="scripts/directives/contact-module.js"></script>
-    <script src="scripts/directives/alert.js"></script>
-    <script src="scripts/directives/util/resizable-alert.js"></script>
-    <script src="scripts/directives/modal.js"></script>
-    <script src="scripts/directives/instagram-module.js"></script>
-    <script src="scripts/directives/staff-module.js"></script>
-    <!-- endbuild -->
+<!-- build:js({.tmp,app}) scripts/scripts.js -->
+<script src="scripts/bootstrap/bootstrap/affix.js"></script>
+<script src="scripts/bootstrap/bootstrap/alert.js"></script>
+<script src="scripts/bootstrap/bootstrap/button.js"></script>
+<script src="scripts/bootstrap/bootstrap/carousel.js"></script>
+<script src="scripts/bootstrap/bootstrap/collapse.js"></script>
+<script src="scripts/bootstrap/bootstrap/dropdown.js"></script>
+<script src="scripts/bootstrap/bootstrap/tab.js"></script>
+<script src="scripts/bootstrap/bootstrap/transition.js"></script>
+<script src="scripts/bootstrap/bootstrap/scrollspy.js"></script>
+<script src="scripts/bootstrap/bootstrap/modal.js"></script>
+<script src="scripts/bootstrap/bootstrap/tooltip.js"></script>
+<script src="scripts/bootstrap/bootstrap/popover.js"></script>
+<script src="scripts/app.js"></script>
+<script src="scripts/controllers/cafe.js"></script>
+<script src="scripts/controllers/minigolf.js"></script>
+<script src="scripts/controllers/nachtigallental.js"></script>
+<script src="scripts/controllers/navigation.js"></script>
+<script src="scripts/controllers/psgh.js"></script>
+<script src="scripts/controllers/reisemobilstellplatz.js"></script>
+<script src="scripts/controllers/footer.js"></script>
+<script src="scripts/controllers/contact.js"></script>
+<script src="scripts/controllers/imprint.js"></script>
+<script src="scripts/directives/parallax-module.js"></script>
+<script src="scripts/directives/text-module.js"></script>
+<script src="scripts/directives/scaffold-modules.js"></script>
+<script src="scripts/directives/error-module.js"></script>
+<script src="scripts/controllers/notfound.js"></script>
+<script src="scripts/directives/util/no-propagation.js"></script>
+<script src="scripts/directives/image-module.js"></script>
+<script src="scripts/directives/util/preloadable.js"></script>
+<script src="scripts/directives/util/lb-calc-dimensions.js"></script>
+<script src="scripts/services/parallax.js"></script>
+<script src="scripts/services/util.js"></script>
+<script src="scripts/directives/root.js"></script>
+<script src="scripts/services/animator.js"></script>
+<script src="scripts/directives/contact-module.js"></script>
+<script src="scripts/directives/alert.js"></script>
+<script src="scripts/directives/util/resizable-alert.js"></script>
+<script src="scripts/directives/modal.js"></script>
+<script src="scripts/directives/instagram-module.js"></script>
+<script src="scripts/directives/staff-module.js"></script>
+<!-- endbuild -->
 </body>
 </html>

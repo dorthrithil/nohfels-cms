@@ -44,6 +44,9 @@ $app = new \Slim\Slim();
 //instantiate imagine
 $imagine = new Imagine\Gd\Imagine();
 
+//load config
+require_once __DIR__ . '/config.php';
+
 //load utility functions
 require_once __DIR__ . '/util.php';
 
@@ -181,7 +184,7 @@ $app->group('/module', function () use ($app) {
         $app->post('', function () use ($app) {
             $json = $app->request->getBody();
             $data = json_decode($json, true);
-            createContactModule($data['page'], $data['title'], $data['topic'], $data['address']);
+            createContactModule($data['page'], $data['title'], $data['topic']);
         });
 
         //get contact module
@@ -195,7 +198,7 @@ $app->group('/module', function () use ($app) {
         $app->post('/:id', function ($id) use ($app) {
             $json = $app->request->getBody();
             $data = json_decode($json, true);
-            updateContactModule($id, $data['title'], $data['topic'], $data['address']);
+            updateContactModule($id, $data['title'], $data['topic']);
         });
 
         //delete contact module
@@ -301,7 +304,7 @@ $app->group('/topic', function () use ($app) {
 $app->post('/mail', function () use ($app) {
     $json = $app->request->getBody();
     $data = json_decode($json, true);
-    $response = sendContactMail($data['name'], $data['email'], $data['message']);
+    $response = sendContactMail($data['name'], $data['email'], $data['message'], $data['topic']);
     jsonResponse($response);
 });
 

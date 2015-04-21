@@ -9,9 +9,10 @@
  * Main module of the application.
  */
 
-//TODO protect dep injection against minification https://thinkster.io/egghead/scope-vs-scope at ~5:10
 //TODO 1px white margin at bottom?
 //TODO uniform module margins
+//TODO google analytics
+//TODO use animated gif/png indicators, css animations don't work in all modern(!) browsers..
 
 //TODO (1.0.1) improvement: use ng resource vor rest communication
 //TODO (1.0.1) improvement: don't stuff everything in the same module

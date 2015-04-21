@@ -7,6 +7,8 @@
  * # contactModule
  */
 
+//TODO (bug) safari generates connection refused errors on successfully sent mails
+
 angular.module('amnohfelsClientApp')
     .directive('contactModule', function ($http, phpServerRoot, $q, $timeout) {
         return {
@@ -66,7 +68,8 @@ angular.module('amnohfelsClientApp')
                 $scope.formData = {
                     name: '',
                     email: '',
-                    message: ''
+                    message: '',
+                    topic: $scope.data.topic
                 };
 
                 //alert texts
@@ -124,7 +127,8 @@ angular.module('amnohfelsClientApp')
                                     $scope.formData = {
                                         name: '',
                                         email: '',
-                                        message: ''
+                                        message: '',
+                                        topic: $scope.data.topic
                                     };
                                     break;
                                 default:
