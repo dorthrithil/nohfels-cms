@@ -20,6 +20,7 @@
                 <input ng-model="modalVars.data.filterOutTags" ng-checked="modalVars.data.filterOutTags"
                        type="checkbox">
                 Hashtags aus Bild-Caption entfernen
+                <popover data="popovers.removeHashtags"></popover>
             </label>
         </div>
         <div class="checkbox">
@@ -27,6 +28,7 @@
                 <input ng-model="modalVars.data.filterForTags" ng-checked="modalVars.data.filterForTags"
                        type="checkbox">
                 Nach Hashtags filtern
+                <popover data="popovers.filterForHashtags"></popover>
             </label>
         </div>
     </div>

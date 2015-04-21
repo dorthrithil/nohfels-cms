@@ -6,6 +6,9 @@
  * @description
  * # modalImageForm
  */
+
+//TODO (1.0.1) improvement: mechanism for automatically handling the bigger-option on pictures so no layout errors will occur
+
 angular.module('amnohfelsBackendApp')
     .directive('modalImageForm', function (phpServerRoot, FileUploader) {
         return {
@@ -59,6 +62,14 @@ angular.module('amnohfelsBackendApp')
                         case true:
                             $scope.showConfirmDeletionFor.splice($scope.showConfirmDeletionFor.indexOf(index), 1);
                             $scope.modalVars.data.images.splice(index, 1); //delete
+                    }
+                };
+
+                //data for popovers
+                $scope.popovers = {
+                    images : {
+                        title: 'Erklärung zur "Groß"-Option',
+                        content: 'Wenn du die "Groß"-Option bei einem Bild aktivierst, wird das Bild auf der Website in voller Breite angezeigt. Sei dir bewusst, dass du zur Zeit darauf achten musst, dass nach einem großen Bild mindestens eine Reihe von drei kleinen Bildern folgen muss, damit die Bilder schön angeordnet werden können. (In zukünftigen Versionen wird das behoben)'
                     }
                 };
 

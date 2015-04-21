@@ -44,6 +44,18 @@ angular.module('amnohfelsBackendApp')
                 $scope.removeTag = function ($tag) {
                     $scope.modalVars.data.tags.splice($scope.modalVars.data.tags.indexOf($tag.text), 1);
                 };
+
+                //data for popovers
+                $scope.popovers = {
+                    removeHashtags : {
+                        title: 'Was ist das?',
+                        content: 'Mit dieser Funktion kannst du aus dem Bildtext die Hashtags entfernen. Lautet der Text auf Instagram z.B. "Leckeren Eisbecher genießen #eis #foodporn", wird auf der Website nur "Leckeren Eisbecher genießen" angezeigt.'
+                    },
+                    filterForHashtags : {
+                        title: 'Was ist das?',
+                        content: 'Mit dieser Funktion kannst du nur Fotos mit einem oder mehreren bestimmten Hashtags anzeigen lassen. Lässt du die Option deaktiviert, werden alle Fotos aus deinem Account angezeigt.'
+                    }
+                };
             }
         };
     });

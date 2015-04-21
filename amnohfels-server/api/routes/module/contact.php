@@ -12,7 +12,7 @@ function createContactModule($page, $title, $topic)
 
     //create new contact module
     try {
-        $result = $connection->query("INSERT INTO contact_modules (title, topic) VALUES  ('$title', '$topic')");
+        $result = $connection->query("INSERT INTO contact_modules (title, topic^) VALUES  ('$title', '$topic')");
         if (!$result) {
             throw new Exception($connection->error);
         }

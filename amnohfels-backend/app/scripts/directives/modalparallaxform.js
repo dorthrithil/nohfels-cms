@@ -33,6 +33,14 @@ angular.module('amnohfelsBackendApp')
 
             $scope.phpServerRoot = phpServerRoot; //for wiring up the thumbnail src in view
 
+            //data for popovers
+            $scope.popovers = {
+                units : {
+                    title: 'Erklärung zu den Einheiten',
+                    content: '"px" gibt eine feste Größe von Pixeln auf dem Bildschirm an. "vh" ist eine Prozentangabe, wobei 100vh der Höhe des Bildschirms entspricht auf dem die Website gerade angesehen wird.'
+                }
+            };
+
             //file uploader
             var uploader = $scope.uploader = new FileUploader({
                 url: phpServerRoot + '/api/module/parallax/image/upload', //POST requests get send here
