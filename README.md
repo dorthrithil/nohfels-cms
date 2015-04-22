@@ -21,9 +21,9 @@ If it turns out good, the system may be maintained and documented. So if you lik
 
 Configuration goes into a simple yaml file which must be located in the server root directory. This is the config files markup:
 
- 	  #admin
+ 	 #admin
 
- 	  admin-mail: felix@feblog.de
+ 	 admin-mail: felix@feblog.de
   	admin-name: Felix Engelmann
 
   	#smtp server
