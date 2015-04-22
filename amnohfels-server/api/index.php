@@ -44,6 +44,10 @@ $app = new \Slim\Slim();
 //instantiate imagine
 $imagine = new Imagine\Gd\Imagine();
 
+//instatiate yaml parser
+use Symfony\Component\Yaml\Parser;
+$yaml = new Parser();
+
 //load config
 require_once __DIR__ . '/config.php';
 
@@ -302,6 +306,8 @@ $app->group('/topic', function () use ($app) {
 
 //send mail
 $app->post('/mail', function () use ($app) {
+//    global $conf_smtp_host;
+//    echo $conf_smtp_host;
     $json = $app->request->getBody();
     $data = json_decode($json, true);
     $response = sendContactMail($data['name'], $data['email'], $data['message'], $data['topic']);

@@ -120,7 +120,6 @@ angular.module('amnohfelsClientApp')
                     $http.post(phpServerRoot + 'api/mail', $scope.formData)
                         .success(function (data, status) {
                             //switch success cases
-                            console.log(status);
                             switch (status) {
                                 case 205:
                                     $scope.modal = $scope.resetContent;

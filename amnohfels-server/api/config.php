@@ -1,8 +1,9 @@
 <?php
+$config = $yaml->parse(file_get_contents('config.yaml'));
 
-$conf_admin_mail = 'felix@feblog.de';
-$conf_admin_name = 'Felix Engelmann';
+$conf_admin_mail = $config['admin-mail'];
+$conf_admin_name = $config['admin-name'];
 
-$conf_smtp_host = 'smtp.strato.de';
-$conf_smtp_username = 'test@amnohfels.de';
-$conf_smtp_password = 'konrad123!';
+$conf_smtp_host = $config['smtp-host'];
+$conf_smtp_username = $config['smtp-username'];
+$conf_smtp_password = $config['smtp-password'];
