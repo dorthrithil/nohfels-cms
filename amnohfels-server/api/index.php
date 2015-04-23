@@ -1,22 +1,15 @@
 <?php
 
 //TODO security: authentification for post & delete routes
-//TODO enhancement: check for resource existence on update-post & delete routes (swap, text edit update delete)
-//TODO function descriptions
 
+//TODO enhancement: (1.0.1) check for resource existence on update-post & delete routes (swap, text edit update delete)
+//TODO documentation (1.0.1) function descriptions
 //TODO refactoring (1.0.1) camelCaseize everything
-
 //TODO enhancement (1.0.1): correct error responses for client
 
 //TODO enhancement (1.0.2): database health checks
 
 //set headers
-
-//header('Access-Control-Allow-Origin: *');
-//header('Access-Control-Allow-Credentials: true');
-//header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept");
-//header('Access-Control-Allow-Methods: POST, GET, OPTIONS, DELETE, PUT');
-//header('Access-Control-Max-Age: 86400');
 
 header('Access-Control-Allow-Origin: *');
 if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {

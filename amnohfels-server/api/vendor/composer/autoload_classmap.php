@@ -6,8 +6,12 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'BeforeValidException' => $vendorDir . '/firebase/php-jwt/Firebase/PHP-JWT/Exceptions/BeforeValidException.php',
+    'ExpiredException' => $vendorDir . '/firebase/php-jwt/Firebase/PHP-JWT/Exceptions/ExpiredException.php',
+    'JWT' => $vendorDir . '/firebase/php-jwt/Firebase/PHP-JWT/Authentication/JWT.php',
     'PHPMailer' => $vendorDir . '/phpmailer/phpmailer/class.phpmailer.php',
     'POP3' => $vendorDir . '/phpmailer/phpmailer/class.pop3.php',
     'SMTP' => $vendorDir . '/phpmailer/phpmailer/class.smtp.php',
+    'SignatureInvalidException' => $vendorDir . '/firebase/php-jwt/Firebase/PHP-JWT/Exceptions/SignatureInvalidException.php',
     'phpmailerException' => $vendorDir . '/phpmailer/phpmailer/class.phpmailer.php',
 );

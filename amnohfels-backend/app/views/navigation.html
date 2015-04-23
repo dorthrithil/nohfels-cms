@@ -11,7 +11,7 @@
     <div class="container text-center">
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-                <li ng-repeat="topic in topics" ng-class="{active: isOnPath('/' + topic.id)}"><a href="#/{{topic.id}}">{{topic.name}}</a></li>
+                <li ng-repeat="topic in topics" ng-class="{active: isOnPath('/page/' + topic.id)}"><a href="#/page/{{topic.id}}">{{topic.name}}</a></li>
             </ul>
         </div>
     </div>

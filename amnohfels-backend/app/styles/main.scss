@@ -65,7 +65,7 @@ employee {
     vertical-align: top;
     padding: 10px 0 0 10px;
 
-    .block-label{
+    .block-label {
       display: block;
     }
   }
@@ -73,22 +73,44 @@ employee {
 }
 
 //TODO seperate scss
-modal-parallax-form{
-  .height-num{
+modal-parallax-form {
+  .height-num {
     width: 140px !important;
   }
 
-  .thumbnail{
+  .thumbnail {
     display: inline-block;
   }
 
-  .inline-block{
+  .inline-block {
     display: inline-block;
     vertical-align: top;
   }
 
 }
 
-.popover-title{
+//TODO seperate scss
+.form-signin {
+  max-width: 300px;
+
+  img{
+    height: 200px;
+    width: 200px;
+    border-radius: 100px;
+  }
+
+  input[type="email"] {
+    margin-bottom: -1px;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+  input[type="password"] {
+    margin-bottom: 10px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+  }
+}
+
+.popover-title {
   font-weight: bold;
 }

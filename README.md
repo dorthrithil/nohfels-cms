@@ -21,13 +21,13 @@ If it turns out good, the system may be maintained and documented. So if you lik
 
 Configuration goes into a simple yaml file which must be located in the server root directory. This is the config files markup:
 
- 	 #admin
+ 	#admin
 
- 	 admin-mail: felix@feblog.de
-  	admin-name: Felix Engelmann
+ 	admin-mail: YOUR_MAIL
+  	admin-name: YOUR_NAME
 
   	#smtp server
 
-  	smtp-host : smtp.strato.de
-  	smtp-username : test@amnohfels.de
-  	smtp-password : konrad123!
+  	smtp-host : YOUR_SMTP_HOST
+  	smtp-username : YOUR_SMTP_USERNAME
+  	smtp-password : YOUR_SMTP_PASSWORD

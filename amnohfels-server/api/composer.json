@@ -3,6 +3,7 @@
         "slim/slim": "~2.6",
         "imagine/imagine": "~0.6",
         "phpmailer/phpmailer": "~5.2",
-        "symfony/yaml": "~2.6"
+        "symfony/yaml": "~2.6",
+        "firebase/php-jwt": "~2.0"
     }
 }

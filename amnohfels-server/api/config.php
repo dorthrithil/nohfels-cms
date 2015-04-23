@@ -1,4 +1,7 @@
 <?php
+
+//TODO refactoring (1.0.1) make $config global, drop all these other lines
+
 $config = $yaml->parse(file_get_contents('config.yaml'));
 
 $conf_admin_mail = $config['admin-mail'];
