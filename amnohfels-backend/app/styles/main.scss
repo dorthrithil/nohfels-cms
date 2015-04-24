@@ -90,24 +90,31 @@ modal-parallax-form {
 }
 
 //TODO seperate scss
-.form-signin {
-  max-width: 300px;
+.container-signin {
+  //text-align: center;
 
-  img{
-    height: 200px;
-    width: 200px;
-    border-radius: 100px;
-  }
+  .form-signin {
+    max-width: 300px;
+    text-align: center;
+    margin: 0 auto 0 auto;
 
-  input[type="email"] {
-    margin-bottom: -1px;
-    border-bottom-right-radius: 0;
-    border-bottom-left-radius: 0;
-  }
-  input[type="password"] {
-    margin-bottom: 10px;
-    border-top-left-radius: 0;
-    border-top-right-radius: 0;
+    img {
+      height: 200px;
+      width: 200px;
+      border-radius: 100px;
+      margin-bottom: 15px;
+    }
+
+    input[type="email"] {
+      margin-bottom: -1px;
+      border-bottom-right-radius: 0;
+      border-bottom-left-radius: 0;
+    }
+    input[type="password"] {
+      margin-bottom: 10px;
+      border-top-left-radius: 0;
+      border-top-right-radius: 0;
+    }
   }
 }
 

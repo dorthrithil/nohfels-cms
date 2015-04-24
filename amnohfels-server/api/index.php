@@ -299,12 +299,23 @@ $app->group('/topic', function () use ($app) {
 
 //send mail
 $app->post('/mail', function () use ($app) {
-//    global $conf_smtp_host;
-//    echo $conf_smtp_host;
     $json = $app->request->getBody();
     $data = json_decode($json, true);
     $response = sendContactMail($data['name'], $data['email'], $data['message'], $data['topic']);
     jsonResponse($response);
+});
+
+//group for authentication
+$app->group('/auth', function () use ($app) {
+
+    //get jwt
+    $app->post('/request', function () use ($app) {
+        $json = $app->request->getBody();
+        $data = json_decode($json, true);
+        $response = getJWT($data['email'], $data['password']);
+        jsonResponse($response);
+    });
+
 });
 
 //run app

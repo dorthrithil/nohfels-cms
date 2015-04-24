@@ -8,17 +8,42 @@
  * Service in the amnohfelsBackendApp.
  */
 angular.module('amnohfelsBackendApp')
-  .service('doorman', function doorman() {
+    .service('doorman', function doorman($http, phpServerRoot, $q) {
         var loggedIn = false;
+        var jwt = '';
 
-        this.isLoggedIn = function(){
+        this.isLoggedIn = function () {
             return loggedIn;
         };
 
-        this.login = function(email, password){
-            //TODO request JWT here
-            if(email === 'test@amnohfels.de' && password === 'password'){
-                loggedIn = true;
+        this.login = function (email, password) {
+            var data = {
+                email: email,
+                password: password
+            };
+            return $q(function(resolve, reject) {
+                $http.post(phpServerRoot + '/api/auth/request', data) //TODO api has to go to phpServerRoot
+                    .success(function (response) {
+                        jwt = response;
+                        loggedIn = true;
+                        resolve();
+                    })
+                    .error(function (response) {
+                        reject(response);
+                    });
+            });
+        };
+
+        this.getJWT = function () {
+            if (jwt !== '' && loggedIn) {
+                return jwt;
+            } else {
+                return false;
             }
         };
-  });
+
+        this.logout = function(){
+            loggedIn = false;
+            jwt = '';
+        };
+    });
