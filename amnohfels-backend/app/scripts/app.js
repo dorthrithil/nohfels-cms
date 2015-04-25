@@ -11,6 +11,8 @@
 
 //TODO update rangy to get rid of error
 
+//TODO http://localhost:9001/#/page/cafs should throw a 404
+
 //TODO (1.0.1) improvement: use ng resource for rest communication
 
 angular

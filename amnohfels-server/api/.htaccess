@@ -2,9 +2,3 @@ RewriteEngine On
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule ^ index.php [QSA,L]
-
-#Header set Access-Control-Allow-Origin "http://localhost:9001"
-#Header set Access-Control-Allow-Credentials "true"
-#Header set Access-Control-Allow-Headers "x-requested-with, content-type"
-#Header set Access-Control-Allow-Methods "PUT, GET, POST, DELETE, OPTIONS"
-#Header set Access-Control-Max-Age "84600"

@@ -6,6 +6,7 @@
 //TODO documentation (1.0.1) function descriptions
 //TODO refactoring (1.0.1) camelCaseize everything
 //TODO enhancement (1.0.1): correct error responses for client
+//TODO enhancement (1.0.1): use slims response object for returning content and setting the status
 
 //TODO enhancement (1.0.2): database health checks
 
@@ -20,8 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
     ) {
         header('Access-Control-Allow-Origin: *');
         header('Access-Control-Allow-Credentials: true');
-        header('Access-Control-Allow-Headers: X-Requested-With');
-        header('Access-Control-Allow-Headers: Content-Type');
+        header('Access-Control-Allow-Headers: X-Requested-With, Content-Type, JWT');
         header('Access-Control-Allow-Methods: POST, GET, OPTIONS, DELETE, PUT');
         header('Access-Control-Max-Age: 86400');
     }
@@ -59,7 +59,7 @@ require_once __DIR__ . '/routes.php';
 $app->group('/module', function () use ($app) {
 
     //swap module position
-    $app->post('/swapwithlower/:upper', function ($upper) use ($app) {
+    $app->post('/swapwithlower/:upper', 'authenticateUser', function ($upper) use ($app) {
         swapWithLowerModule($upper);
     });
 
@@ -74,7 +74,7 @@ $app->group('/module', function () use ($app) {
     $app->group('/text', function () use ($app) {
 
         //create text module
-        $app->post('', function () use ($app) {
+        $app->post('', 'authenticateUser', function () use ($app) {
             $json = $app->request->getBody();
             $data = json_decode($json, true);
             createTextModule($data['page'], $data['title'], $data['content']);
@@ -88,14 +88,14 @@ $app->group('/module', function () use ($app) {
         });
 
         //update text module
-        $app->post('/:id', function ($id) use ($app) {
+        $app->post('/:id', 'authenticateUser', function ($id) use ($app) {
             $json = $app->request->getBody();
             $data = json_decode($json, true);
             updateTextModule($id, $data['title'], $data['content']);
         });
 
         //delete text module
-        $app->delete('/:id', function ($id) {
+        $app->delete('/:id', 'authenticateUser', 'authenticateUser', function ($id) {
             deleteTextModule($id);
         });
 
@@ -105,7 +105,7 @@ $app->group('/module', function () use ($app) {
     $app->group('/parallax', function () use ($app) {
 
         //create parallax module
-        $app->post('', function () use ($app) {
+        $app->post('', 'authenticateUser', function () use ($app) {
             $json = $app->request->getBody();
             $data = json_decode($json, true);
             createParallaxModule($data['page'], $data['title'], $data['caption'], $data['heightNum'], $data['heightUnit'], $data['bgImgSrc'], $data['bgImgThumbSrc']);
@@ -119,20 +119,20 @@ $app->group('/module', function () use ($app) {
         });
 
         //update parallax module
-        $app->post('/:id', function ($id) use ($app) {
+        $app->post('/:id', 'authenticateUser', function ($id) use ($app) {
             $json = $app->request->getBody();
             $data = json_decode($json, true);
             updateParallaxModule($id, $data['title'], $data['caption'], $data['heightNum'], $data['heightUnit'], $data['bgImgSrc'], $data['bgImgThumbSrc']);
         });
 
         //delete parallax module
-        $app->delete('/:id', function ($id) {
+        $app->delete('/:id', 'authenticateUser', function ($id) {
             echo($id);
             deleteParallaxModule($id);
         });
 
         //upload parallax image
-        $app->post('/image/upload', function () use ($app) { //TODO uniform employee route
+        $app->post('/image/upload', 'authenticateUser', function () use ($app) { //TODO uniform employee route
             uploadParallaxImage();
         });
 
@@ -142,7 +142,7 @@ $app->group('/module', function () use ($app) {
     $app->group('/image', function () use ($app) {
 
         //create image module
-        $app->post('', function () use ($app) {
+        $app->post('', 'authenticateUser', function () use ($app) {
             $json = $app->request->getBody();
             $data = json_decode($json, true);
             createImageModule($data['page'], $data['title'], $data['images']);
@@ -156,19 +156,19 @@ $app->group('/module', function () use ($app) {
         });
 
         //update image module
-        $app->post('/:id', function ($id) use ($app) {
+        $app->post('/:id', 'authenticateUser', function ($id) use ($app) {
             $json = $app->request->getBody();
             $data = json_decode($json, true);
             updateImageModule($id, $data['title'], $data['images']);
         });
 
         //delete image module
-        $app->delete('/:id', function ($id) {
+        $app->delete('/:id', 'authenticateUser', function ($id) {
             deleteImageModule($id);
         });
 
         //upload gallery image
-        $app->post('/image/upload', function () use ($app) { //TODO uniform image route
+        $app->post('/image/upload', 'authenticateUser', function () use ($app) { //TODO uniform image route
             uploadImageImage();
         });
 
@@ -178,7 +178,7 @@ $app->group('/module', function () use ($app) {
     $app->group('/contact', function () use ($app) {
 
         //create contact module
-        $app->post('', function () use ($app) {
+        $app->post('', 'authenticateUser', function () use ($app) {
             $json = $app->request->getBody();
             $data = json_decode($json, true);
             createContactModule($data['page'], $data['title'], $data['topic']);
@@ -192,14 +192,14 @@ $app->group('/module', function () use ($app) {
         });
 
         //update contact module
-        $app->post('/:id', function ($id) use ($app) {
+        $app->post('/:id', 'authenticateUser', function ($id) use ($app) {
             $json = $app->request->getBody();
             $data = json_decode($json, true);
             updateContactModule($id, $data['title'], $data['topic']);
         });
 
         //delete contact module
-        $app->delete('/:id', function ($id) {
+        $app->delete('/:id', 'authenticateUser', function ($id) {
             deleteContactModule($id);
         });
 
@@ -209,7 +209,7 @@ $app->group('/module', function () use ($app) {
     $app->group('/instagram', function () use ($app) {
 
         //create instagram module
-        $app->post('', function () use ($app) {
+        $app->post('', 'authenticateUser', function () use ($app) {
             $json = $app->request->getBody();
             $data = json_decode($json, true);
             createInstagramModule($data['page'], $data['maxPhotos'], $data['title'], $data['filterOutTags'], $data['filterForTags'], $data['tags']);
@@ -223,14 +223,14 @@ $app->group('/module', function () use ($app) {
         });
 
         //update instagram module
-        $app->post('/:id', function ($id) use ($app) {
+        $app->post('/:id', 'authenticateUser', function ($id) use ($app) {
             $json = $app->request->getBody();
             $data = json_decode($json, true);
             updateInstagramModule($id, $data['title'], $data['maxPhotos'], $data['filterOutTags'], $data['filterForTags'], $data['tags']);
         });
 
         //delete instagram module
-        $app->delete('/:id', function ($id) {
+        $app->delete('/:id', 'authenticateUser', function ($id) {
             deleteInstagramModule($id);
         });
 
@@ -240,7 +240,7 @@ $app->group('/module', function () use ($app) {
     $app->group('/staff', function () use ($app) {
 
         //create staff module
-        $app->post('', function () use ($app) {
+        $app->post('', 'authenticateUser', function () use ($app) {
             $json = $app->request->getBody();
             $data = json_decode($json, true);
             createStaffModule($data['page'], $data['title'], $data['employees']);
@@ -254,19 +254,19 @@ $app->group('/module', function () use ($app) {
         });
 
         //update staff module
-        $app->post('/:id', function ($id) use ($app) {
+        $app->post('/:id', 'authenticateUser', function ($id) use ($app) {
             $json = $app->request->getBody();
             $data = json_decode($json, true);
             updateStaffModule($id, $data['title'], $data['employees']);
         });
 
         //delete staff module
-        $app->delete('/:id', function ($id) {
+        $app->delete('/:id', 'authenticateUser', function ($id) {
             deleteStaffModule($id);
         });
 
         //upload employee image
-        $app->post('/employee/image', function () use ($app) {
+        $app->post('/employee/image', 'authenticateUser', function () use ($app) {
             uploadEmployeeImage();
         });
 
@@ -297,6 +297,7 @@ $app->group('/topic', function () use ($app) {
 
 });
 
+//TODO (1.0.1) find a way to secure this (jwt's are no option, i think?)
 //send mail
 $app->post('/mail', function () use ($app) {
     $json = $app->request->getBody();
@@ -313,6 +314,14 @@ $app->group('/auth', function () use ($app) {
         $json = $app->request->getBody();
         $data = json_decode($json, true);
         $response = getJWT($data['email'], $data['password']);
+        jsonResponse($response);
+    });
+
+    //refresh jwt
+    $app->post('/refresh', function () use ($app) {
+        $json = $app->request->getBody();
+        $data = json_decode($json, true);
+        $response = refreshJWT($data['jwt']);
         jsonResponse($response);
     });
 

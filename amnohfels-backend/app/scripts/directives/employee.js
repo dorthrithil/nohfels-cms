@@ -10,7 +10,7 @@
 //TODO set right breakpoints on small devices for view
 
 angular.module('amnohfelsBackendApp')
-    .directive('employee', function (phpServerRoot, FileUploader) {
+    .directive('employee', function (phpServerRoot, FileUploader, doorman) {
         return {
             templateUrl: 'views/employee.html',
             restrict: 'E',
@@ -47,7 +47,10 @@ angular.module('amnohfelsBackendApp')
                 //file uploader
                 var uploader = $scope.uploader = new FileUploader({
                     url: phpServerRoot + '/api/module/staff/employee/image', //POST requests get send here
-                    autoUpload: true
+                    autoUpload: true,
+                    headers :{
+                        'JWT': doorman.getJWT()
+                    }
                 });
 
                 //filters

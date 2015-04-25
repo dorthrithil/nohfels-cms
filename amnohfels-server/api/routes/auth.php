@@ -14,7 +14,7 @@ function getJWT($email, $passwordRequest)
             throw new Exception($connection->error);
         } else {
             //if the user isn't found: quit
-            if (mysqli_num_rows($result) == 0){
+            if (mysqli_num_rows($result) == 0) {
                 header('HTTP/1.0 401 Unauthorized');
                 return $unauthorizedMessage;
             }
@@ -28,20 +28,73 @@ function getJWT($email, $passwordRequest)
     $connection->close();
 
     //if the user was found, but the password is incorrect: quit
-    if(md5($passwordRequest) != $passwordCheck){
+    if (md5($passwordRequest) != $passwordCheck) {
         header('HTTP/1.0 401 Unauthorized');
         return $unauthorizedMessage;
     }
 
-    //otherwise: send jwt
-    $key = "encodeme";
+    return generateAuthInfo();
+}
+
+
+function authenticateUser()
+{
+    //check if a token was provided
+    if (!isset($_SERVER['HTTP_JWT'])) {
+        header('HTTP/1.0 401 Unauthorized');
+        echo "No authentication token provided";
+        exit();
+    }
+
+    //validate JWT
+    validateJWT($_SERVER['HTTP_JWT']);
+}
+
+function refreshJWT($oldJWT){
+    //first validate old JWT
+    validateJWT($oldJWT);
+
+    //then send a new one
+    return generateAuthInfo();
+}
+
+function validateJWT($jwt){
+    global $conf_jwt_key;
+
+    //check if token was encoded with the right private key
+    try {
+        $decoded_token = JWT::decode($jwt, $conf_jwt_key, array('HS256'));
+    } catch (UnexpectedValueException $ex) {
+        header('HTTP/1.0 401 Unauthorized');
+        echo "Invalid token (1)";
+        exit();
+    }
+
+    //validate claims
+    if ($decoded_token->sub != "amnohfels authentification"
+        || $decoded_token->exp <= time()
+        || $decoded_token->nbf > time()
+    ) {
+        header('HTTP/1.0 401 Unauthorized');
+        echo "Invalid token (2)";
+        exit();
+    }
+}
+
+function generateAuthInfo(){
+    global $conf_jwt_key;
+
+//otherwise: send jwt
     $token = array(
-        "iss" => $email,
         "sub" => "amnohfels authentification",
-        "exp" => time() + 10,
-        "iat" => time(),
+        "exp" => time() + 60 * 10,
         "nbf" => time()
     );
-    $jwt = JWT::encode($token, $key);
-    return $jwt;
+    $jwt = JWT::encode($token, $conf_jwt_key);
+
+    $authInfo = new stdClass();
+    $authInfo->jwt = $jwt;
+    $authInfo->exp = $token["exp"];
+
+    return $authInfo;
 }

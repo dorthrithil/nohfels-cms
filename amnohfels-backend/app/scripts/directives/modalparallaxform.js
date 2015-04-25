@@ -11,7 +11,7 @@
 //TODO when uploading e new image: delete old image from server
 
 angular.module('amnohfelsBackendApp')
-  .directive('modalParallaxForm', function (phpServerRoot, FileUploader) {
+  .directive('modalParallaxForm', function (phpServerRoot, FileUploader, doorman) {
     return {
         templateUrl: 'views/modalparallaxform.html',
         restrict: 'E',
@@ -44,7 +44,10 @@ angular.module('amnohfelsBackendApp')
             //file uploader
             var uploader = $scope.uploader = new FileUploader({
                 url: phpServerRoot + '/api/module/parallax/image/upload', //POST requests get send here
-                autoUpload: true
+                autoUpload: true,
+                headers :{
+                    'JWT': doorman.getJWT()
+                }
             });
 
             //filters
