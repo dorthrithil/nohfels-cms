@@ -8,10 +8,10 @@
  * Service in the amnohfelsBackendApp.
  */
 
-//TODO auto request new token a few seconds before old one expires
+//TODO comment
 
 angular.module('amnohfelsBackendApp')
-    .service('doorman', function doorman($http, phpServerRoot, $q, $timeout) {
+    .service('doorman', function doorman($http, phpServerRoot, $q, $timeout, $location) {
         var loggedIn = false;
         var jwt = false;
         var exp = false;
@@ -50,7 +50,7 @@ angular.module('amnohfelsBackendApp')
                         resolve();
                     })
                     .error(function (response) {
-                        logout();
+                        logoutUser();
                         reject(response);
                     });
             });
@@ -64,10 +64,18 @@ angular.module('amnohfelsBackendApp')
             }
         };
 
-        var logout = function () {
+        //TODO is it really not possible to call this.logout inside this service? ()then i wouldn't need to lougt functions
+        //for internal calls
+        var logoutUser = function () {
             storeAuthInfo(false);
             loggedIn = false;
             jwt = false;
+        };
+
+        //for external calls
+        this.logout = function () {
+            logoutUser();
+            $location.path('/login');
         };
 
         var storeAuthInfo = function (info) {
@@ -90,10 +98,10 @@ angular.module('amnohfelsBackendApp')
                     setAuthInfoRefreshTimeout();
                     storeAuthInfo(response);
                     loggedIn = true;
-                    console.log('refreshed');
                 })
                 .error(function () {
-                    logout();
+                    logoutUser();
+                    //TODO error message
                 });
         };
 

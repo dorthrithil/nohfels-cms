@@ -50,7 +50,8 @@ function authenticateUser()
     validateJWT($_SERVER['HTTP_JWT']);
 }
 
-function refreshJWT($oldJWT){
+function refreshJWT($oldJWT)
+{
     //first validate old JWT
     validateJWT($oldJWT);
 
@@ -58,7 +59,8 @@ function refreshJWT($oldJWT){
     return generateAuthInfo();
 }
 
-function validateJWT($jwt){
+function validateJWT($jwt)
+{
     global $conf_jwt_key;
 
     //check if token was encoded with the right private key
@@ -81,10 +83,10 @@ function validateJWT($jwt){
     }
 }
 
-function generateAuthInfo(){
+function generateAuthInfo()
+{
     global $conf_jwt_key;
 
-//otherwise: send jwt
     $token = array(
         "sub" => "amnohfels authentification",
         "exp" => time() + 60 * 10,

@@ -10,10 +10,11 @@
  */
 
 //TODO update rangy to get rid of error
-
 //TODO http://localhost:9001/#/page/cafs should throw a 404
 
 //TODO (1.0.1) improvement: use ng resource for rest communication
+//TODO (1.0.1) improvement: allow user to create new pages
+//TODO (1.0.1) improvement: sort pages by header/footer position
 
 angular
     .module('amnohfelsBackendApp', ['ngRoute', 'textAngular', 'ui.bootstrap-slider', 'ngTagsInput', 'angularFileUpload'])
