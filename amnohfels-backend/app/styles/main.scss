@@ -12,6 +12,14 @@ $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/boots
 
 body {
   padding-top: $navbar-height * 2;
+  background: url("../images/login/door.jpg") no-repeat center center fixed; //TODO credit: https://www.flickr.com/photos/hieronymusahrens/10301971255/
+  background-size: cover;
+}
+
+.solid-pane{
+  background-color: #ffffff;
+  border-radius: 7px;
+  padding: 15px;
 }
 
 //TODO seperate scss
@@ -91,12 +99,14 @@ modal-parallax-form {
 
 //TODO seperate scss
 .container-signin {
-  //text-align: center;
 
   .form-signin {
     max-width: 300px;
     text-align: center;
     margin: 0 auto 0 auto;
+    border-radius: 5px;
+    background-color: rgba(255,255,255,0.9);
+    padding: 15px;
 
     img {
       height: 200px;

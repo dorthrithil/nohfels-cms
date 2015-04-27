@@ -12,11 +12,12 @@ angular.module('amnohfelsBackendApp')
         $scope.isOnPath = function (path) {
             return path === $location.path();
         };
-        $scope.showSecuredNavElements = function () {
+        //only show navigation to logged in users
+        $scope.showNavigation = function () {
             return doorman.isLoggedIn();
         };
         $scope.logout = function(){
-          doorman.logout();
+          doorman.logout(); //TODO unsaved changes warning
         };
         $scope.topics = [];
         $http.get(phpServerRoot + '/api/topic')

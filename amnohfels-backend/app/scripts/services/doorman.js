@@ -9,6 +9,7 @@
  */
 
 //TODO comment
+//TODO cancel refresh timeout on logout
 
 angular.module('amnohfelsBackendApp')
     .service('doorman', function doorman($http, phpServerRoot, $q, $timeout, $location) {
