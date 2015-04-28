@@ -12,7 +12,7 @@ $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/boots
 
 body {
   padding-top: $navbar-height * 2;
-  background: url("../images/login/door.jpg") no-repeat center center fixed; //TODO credit: https://www.flickr.com/photos/hieronymusahrens/10301971255/
+  background: url('') no-repeat center center fixed; //url will be set by backgroundProvider
   background-size: cover;
 }
 

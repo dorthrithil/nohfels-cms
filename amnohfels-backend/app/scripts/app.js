@@ -47,8 +47,8 @@ angular
             });
     })
 
-    //check for login
-    .run(function ($rootScope, $location, doorman) {
+    //check for login & instantiate the backgroundProvider
+    .run(function ($rootScope, $location, doorman, backgroundProvider) { //jshint ignore:line
         //register listener to watch route changes
         $rootScope.$on('$routeChangeStart', function (event, next) {
             if(!doorman.isLoggedIn()){
