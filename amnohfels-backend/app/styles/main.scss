@@ -16,6 +16,16 @@ body {
   background-size: cover;
 }
 
+.flickr-credit{
+  position: fixed;
+  bottom: 5px;
+  right: 5px;
+
+  a{
+    color:#999;
+  }
+}
+
 .solid-pane{
   background-color: #ffffff;
   border-radius: 7px;
