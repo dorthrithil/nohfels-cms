@@ -1,9 +1,20 @@
 <?php
 
-function getJWT($email, $passwordRequest)
+function getJWT()
 {
     //response message for unauthorized requests
     $unauthorizedMessage = "Diese Kombination aus Passwort und E-Mail Adresse existiert nicht!";
+
+    //check if credentials were provided
+    if (!isset($_SERVER['HTTP_CREDENTIALS'])) {
+        header('HTTP/1.0 401 Unauthorized');
+        echo "No credentials provided";
+        exit();
+    }
+
+    $credentialPieces = explode(':', $_SERVER['HTTP_CREDENTIALS']);
+    $email = $credentialPieces[0];
+    $passwordRequest = $credentialPieces[1];
 
     //get password for requested user from database
     $passwordCheck = '';

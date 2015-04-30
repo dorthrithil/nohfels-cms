@@ -13,6 +13,7 @@
 //set headers
 
 header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Headers: X-Requested-With, Content-Type, JWT, CREDENTIALS');
 if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
     if (isset($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_METHOD']) && (
             $_SERVER['HTTP_ACCESS_CONTROL_REQUEST_METHOD'] == 'POST' ||
@@ -21,7 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
     ) {
         header('Access-Control-Allow-Origin: *');
         header('Access-Control-Allow-Credentials: true');
-        header('Access-Control-Allow-Headers: X-Requested-With, Content-Type, JWT');
+        header('Access-Control-Allow-Headers: X-Requested-With, Content-Type, JWT, CREDENTIALS');
         header('Access-Control-Allow-Methods: POST, GET, OPTIONS, DELETE, PUT');
         header('Access-Control-Max-Age: 86400');
     }
@@ -310,10 +311,8 @@ $app->post('/mail', function () use ($app) {
 $app->group('/auth', function () use ($app) {
 
     //get jwt
-    $app->post('/request', function () use ($app) {
-        $json = $app->request->getBody();
-        $data = json_decode($json, true);
-        $response = getJWT($data['email'], $data['password']);
+    $app->get('/request', function () use ($app) {
+        $response = getJWT();
         jsonResponse($response);
     });
 

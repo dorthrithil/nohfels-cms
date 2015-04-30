@@ -36,13 +36,10 @@ angular.module('amnohfelsBackendApp')
 
         //logs in user, returns a promise
         this.login = function (email, password) {
-            var data = { //create object to send with token request
-                email: email,
-                password: password
-            };
             return $q(function (resolve, reject) {
-                //TODO use get with credential header
-                $http.post(phpServerRoot + '/api/auth/request', data) //post auth request //TODO api has to go to phpServerRoot
+                $http.get(phpServerRoot + '/api/auth/request', {headers: {
+                        'CREDENTIALS': email + ':' + password //deliver credentials as http header
+                    }}) //get auth request
                     .success(function (response) { //store authInfo and resolve
                         jwt = response.jwt;
                         exp = response.exp;
