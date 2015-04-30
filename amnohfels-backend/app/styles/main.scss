@@ -26,7 +26,38 @@ body {
   }
 }
 
-.solid-pane{
+.flickr-switcher{
+  position: fixed;
+  bottom: 5px;
+  left: 5px;
+  color:#999;
+}
+
+.caret-right {
+  display: inline-block;
+  width: 0;
+  height: 0;
+  margin-top: 2px;
+  vertical-align: middle;
+  border-left: 6px dashed;
+  border-top: 6px solid transparent;
+  border-bottom: 6px solid transparent;
+  cursor: pointer;
+}
+
+.caret-left {
+  display: inline-block;
+  width: 0;
+  height: 0;
+  margin-top: 2px;
+  vertical-align: middle;
+  border-right: 6px dashed;
+  border-top: 6px solid transparent;
+  border-bottom: 6px solid transparent;
+  cursor: pointer;
+}
+
+.solid-pane{ //TODO weird naming
   background-color: #ffffff;
   border-radius: 7px;
   padding: 15px;

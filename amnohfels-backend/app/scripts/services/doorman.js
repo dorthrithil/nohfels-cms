@@ -8,15 +8,14 @@
  * Service in the amnohfelsBackendApp.
  */
 
-//TODO comment
-//TODO cancel refresh timeout on logout
-
 angular.module('amnohfelsBackendApp')
     .service('doorman', function doorman($http, phpServerRoot, $q, $timeout, $location) {
         var loggedIn = false;
         var jwt = false;
         var exp = false;
+        var self = this;
 
+        //returns true if user is logged in
         this.isLoggedIn = function () {
             if (loggedIn) {
                 return true;
@@ -35,14 +34,16 @@ angular.module('amnohfelsBackendApp')
             return false;
         };
 
+        //logs in user, returns a promise
         this.login = function (email, password) {
-            var data = {
+            var data = { //create object to send with token request
                 email: email,
                 password: password
             };
             return $q(function (resolve, reject) {
-                $http.post(phpServerRoot + '/api/auth/request', data) //TODO api has to go to phpServerRoot
-                    .success(function (response) {
+                //TODO use get with credential header
+                $http.post(phpServerRoot + '/api/auth/request', data) //post auth request //TODO api has to go to phpServerRoot
+                    .success(function (response) { //store authInfo and resolve
                         jwt = response.jwt;
                         exp = response.exp;
                         setAuthInfoRefreshTimeout();
@@ -50,13 +51,14 @@ angular.module('amnohfelsBackendApp')
                         loggedIn = true;
                         resolve();
                     })
-                    .error(function (response) {
-                        logoutUser();
+                    .error(function (response) { //cautions logout & reject
+                        self.logout();
                         reject(response);
                     });
             });
         };
 
+        //returns jwt to send with an http request for authentication
         this.getJWT = function () {
             if (jwt !== '' && loggedIn) {
                 return jwt;
@@ -65,35 +67,33 @@ angular.module('amnohfelsBackendApp')
             }
         };
 
-        //TODO is it really not possible to call this.logout inside this service? ()then i wouldn't need to lougt functions
-        //for internal calls
-        var logoutUser = function () {
-            storeAuthInfo(false);
+        //logs out the user
+        this.logout = function () {
+            localStorage.removeItem('authInfo');
             loggedIn = false;
             jwt = false;
+            $timeout.cancel(refreshTimeoutPromise); //cancel refresh timeout, so we don't get a 401 after the delay
+            $location.path('/login'); //route to login page
         };
 
-        //for external calls
-        this.logout = function () {
-            logoutUser();
-            $location.path('/login');
-        };
-
+        //stores authInfo object as json in localStorage
         var storeAuthInfo = function (info) {
             localStorage.authInfo = JSON.stringify(info);
         };
 
+        //parses stringified authInfo object from localStorage
         var retrieveAuthInfo = function () {
             return localStorage.authInfo ? JSON.parse(localStorage.authInfo) : false;
         };
 
+        //returns true if expiry date of jwt is over
         var jwtIsExpired = function () {
             return Math.floor(Date.now() / 1000) > exp;
         };
 
         var refreshJWT = function () {
             $http.post(phpServerRoot + '/api/auth/refresh', {jwt: jwt}) //TODO api has to go to phpServerRoot
-                .success(function (response) {
+                .success(function (response) { //replace all authInfo with new token
                     jwt = response.jwt;
                     exp = response.exp;
                     setAuthInfoRefreshTimeout();
@@ -101,7 +101,7 @@ angular.module('amnohfelsBackendApp')
                     loggedIn = true;
                 })
                 .error(function () {
-                    logoutUser();
+                    self.logout();
                     //TODO error message
                 });
         };
