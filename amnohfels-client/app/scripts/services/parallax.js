@@ -7,17 +7,16 @@
  * # parallax
  * Service in the amnohfelsClientApp.
  */
+
+//TODO (1.0.1) performance: throttle
+//TODO (1.0.1) UI: image onload fadeIn
+//TODO (1.0.1) improvement: navbar height doesn't need to be included in height calculations => more visible image content
+
 angular.module('amnohfelsClientApp')
     .service('parallax', function parallax($window, util, $timeout, phpServerRoot) {
-        //TODO (1.0.1) improvement: navbar height doesn't need to be included in height calculations => more visible image content
-
-        //TODO throttle
-
-        //TODO image onload fadeIn
 
         var images = [],
             parallaxRatio = 0.25;
-
 
         /**
          * @name refresh()
@@ -53,7 +52,6 @@ angular.module('amnohfelsClientApp')
                 src: phpServerRoot + '/' + bgImgSrc
             });
             images[images.length - 1].image.attr('src', phpServerRoot + '/' + bgImgSrc); //TODO do that later for fadein
-            //setSectionHeights(images.length - 1); //TODO what is that?
             initDimensions(images.length - 1);
         };
 
@@ -93,7 +91,7 @@ angular.module('amnohfelsClientApp')
             bgImg.src = images[index].src; //set the src of the temporary image for starting the above process
         }
 
-        function setSectionHeights(index){
+        function setSectionHeights(index) {
             images[index].section.children().css('height', util.convertVh(images[index].height)); //set the height of the section excluding navbar from vh measurement
             images[index].sectionOffset = images[index].section.offset().top; //cache the sections offset
         }

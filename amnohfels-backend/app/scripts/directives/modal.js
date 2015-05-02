@@ -7,7 +7,7 @@
  * # modal
  */
 
-//TODO replace data dismiss actions with own hide function and delete modal from dom
+//TODO replace data dismiss actions with own hide function and delete modal from dom & destroy scope
 
 angular.module('amnohfelsBackendApp')
     .directive('modal', function ($compile, syncQueue) {
@@ -49,6 +49,21 @@ angular.module('amnohfelsBackendApp')
                     }
                     $element.children().modal('hide');
                 };
+
+                //TODO
+                $element.children().on('hidden.bs.modal', function () {
+                    console.log($element.find('popover').scope());
+                    $element.find('popover').scope().$destroy();
+                    $element.remove();
+                    console.log($element.find('popover').scope());
+
+                    //console.log($element.children().scope());
+
+                    //$element.children().scope().$destroy();
+                });
+
+
+
             }
         };
     });

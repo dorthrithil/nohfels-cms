@@ -1,4 +1,4 @@
-//TODO highlight navbar active
+//TODO (1.0.0) get all bootstrap css changes out of bootstrap scss files and make bootstrap sass official a dependency again
 
 //bootstrap
 @import "bootstrap/_bootstrap.scss";
@@ -19,8 +19,6 @@
 //fonts
 @import url(http://fonts.googleapis.com/css?family=Playfair+Display:400,400italic);
 
-//TODO all bootstrap changes in bootstrap scss's
-
 .browsehappy {
   margin: 0.2em 0;
   background: #ccc;
@@ -28,7 +26,7 @@
   padding: 0.2em 0;
 }
 
-/* Space out content a bit */
+// Space out content a bit
 body {
   padding-top: $navbar-height;
   padding-bottom: 0px;
@@ -36,7 +34,7 @@ body {
   font-family: "adelle",serif;
 }
 
-/* Responsive: Portrait tablets and up */
+// Responsive: Portrait tablets and up
 @media screen and (min-width: 768px) {
   .container {
     max-width: 1000px;

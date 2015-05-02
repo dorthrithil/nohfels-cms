@@ -7,7 +7,10 @@
  * # parallaxModule
  */
 
-//TODO fadeIn image onload
+//TODO handle text overflow
+//TODO disable on small mobile devices
+
+//TODO (1.0.1) enhancement (UI): fadeIn image onload
 
 angular.module('amnohfelsClientApp')
     .directive('parallaxModule', function (parallax, $window, $timeout) {

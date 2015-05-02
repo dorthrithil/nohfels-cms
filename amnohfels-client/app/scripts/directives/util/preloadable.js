@@ -5,7 +5,9 @@
  * @name amnohfelsClientApp.directive:preloadable
  * @description
  * # preloadable
+ * broadcasts 'lbImageLoaded' to rootScope, to notify listeners, that image has finished loading.
  */
+
 angular.module('amnohfelsClientApp')
   .directive('preloadable', function ($rootScope) {
     return {

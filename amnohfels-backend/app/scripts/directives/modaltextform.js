@@ -8,6 +8,7 @@
  */
 
 //TODO validation (required)
+//TODO file upload (pdf) to link in text
 
 angular.module('amnohfelsBackendApp')
     .directive('modalTextForm', function () {

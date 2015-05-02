@@ -23,16 +23,16 @@
 
 
 angular.module('amnohfelsBackendApp')
-  .directive('confirmationModal', function () {
-    return {
-      templateUrl: 'views/confirmationmodal.html',
-      restrict: 'E',
-      link: function postLink(scope, element) {
-          element.children().modal();
-          scope.confirmationModalSubmitted = function(){
-              scope.confirmationModalData.performAction();
-              element.children().modal('hide');
-          };
-      }
-    };
-  });
+    .directive('confirmationModal', function () {
+        return {
+            templateUrl: 'views/confirmationmodal.html',
+            restrict: 'E',
+            link: function postLink(scope, element) {
+                element.children().modal();
+                scope.confirmationModalSubmitted = function () {
+                    scope.confirmationModalData.performAction();
+                    element.children().modal('hide');
+                };
+            }
+        };
+    });

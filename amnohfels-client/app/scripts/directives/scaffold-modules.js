@@ -36,7 +36,7 @@ angular.module('amnohfelsClientApp')
                                     compileStream += '<staff-module data="response[' + key + '].data"></staff-module>';
                                     break;
                                 default:
-                                    badRequest = true; //TODO error messages entsprechend
+                                    badRequest = true; //TODO (1.0.1) proper error messages
                             }
                         } else {
                             badRequest = true;

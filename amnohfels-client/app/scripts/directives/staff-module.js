@@ -15,7 +15,7 @@ angular.module('amnohfelsClientApp')
             data: '='
         },
         controller: function($scope){
-            $scope.phpServerRoot = phpServerRoot;
+            $scope.phpServerRoot = phpServerRoot; //for wiring up image src
         }
     };
   });

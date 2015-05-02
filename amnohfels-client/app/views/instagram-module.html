@@ -12,7 +12,7 @@
             <div class="carousel-inner" role="listbox">
                 <div class="item" ng-repeat="image in images" ng-class="{'active' : $index == 0}">
                     <a href="{{image.link}}" target="_blank">
-                        <img ng-src="{{image.url}}" width="{{image.dimensions.width}}"  height="{{image.dimensions.height}}" alt="{{image.caption}}"><!--TODO directive for image preloading indication with spinner-->
+                        <img ng-src="{{image.url}}" width="{{image.dimensions.width}}"  height="{{image.dimensions.height}}" alt="{{image.caption}}">
                     </a>
                     <div class="carousel-caption">
                         {{image.caption}}

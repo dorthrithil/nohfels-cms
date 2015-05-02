@@ -8,12 +8,12 @@
  * Service in the amnohfelsClientApp.
  */
 
-//TODO what happens with unstaggered animations called between staggered animations? (not important for the current usecase)
+//TODO bug: slide effects dont work like expected when original image width is broader than viewport!
+
+//TODO (1.0.2) what happens with unstaggered animations called between staggered animations? (not important for the current usecase)
 //i can use a real queue for that. use array.push() to build up the queue in image-module
 //and use something like queue.start to start the animation which iterates with array.shift()
 //the problem would be solved then because i could bring the delay in exclusively this way. also it's way cleaner.
-
-//TODO bug: slide effects dont work like expected when original image width is broader than viewport!
 
 angular.module('amnohfelsClientApp')
     .service('animator', function animator($q, $window) {

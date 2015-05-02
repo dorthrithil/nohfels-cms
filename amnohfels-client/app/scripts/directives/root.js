@@ -6,12 +6,14 @@
  * @description
  * # root
  */
+
+//TODO this can be added to parallax service listening to rootscope
+
 angular.module('amnohfelsClientApp')
   .directive('root', function (parallax) {
     return {
       restrict: 'A',
       link: function postLink(scope) {
-          //TODO timing evtl kritisch. wird auch vor initialem root 'setup' ausgeführt
           scope.$on('$locationChangeStart', function() {
               parallax.clear();
           });

@@ -7,10 +7,11 @@
  * # imageModule
  */
 
-//TODO templates for spaghetti angular element definitions
-//TODO fix display on small devices
+//TODO bug: fix display on small devices
 
-//TODO enhancement (1.0.1) put lightbox code into a lightbox service
+//TODO (1.0.1) enhancement: add caption functionality to gallery
+//TODO (1.0.1) enhancement: put lightbox code into a lightbox service
+//TODO (1.0.1) refactoring: templates for spaghetti angular element definitions
 
 angular.module('amnohfelsClientApp')
     .directive('imageModule', function ($compile, animator, $document, $timeout, phpServerRoot){

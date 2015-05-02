@@ -8,6 +8,7 @@
  */
 
 //TODO validation (required)
+//TODO there some css missing when i build (ng-tag-input) - could be also a browser issue. test that!
 
 angular.module('amnohfelsBackendApp')
     .directive('modalInstagramForm', function () {

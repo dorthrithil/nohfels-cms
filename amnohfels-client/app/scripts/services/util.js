@@ -7,54 +7,9 @@
  * # util
  * Service in the amnohfelsClientApp.
  */
+
 angular.module('amnohfelsClientApp')
     .service('util', function util($timeout, phpServerRoot, $http) {
-        var lockedUntil;
-        this.throttle = function (fn, threshhold) {
-            if (!threshhold) {
-                threshhold = 250;
-            }
-            var now = +new Date();
-            if (lockedUntil && now > lockedUntil) {
-                fn.apply(this);
-                lockedUntil = now + threshhold;
-            } else if (!lockedUntil) {
-                fn.apply(this);
-                lockedUntil = now + threshhold;
-            }
-
-//            if (last && now < last + threshhold) {
-//                $timeout.cancel(deferTimer);
-//                deferTimer = $timeout(function () {
-//                    last = now;
-//                    fn.apply(this);
-//                    e++;
-//                }, threshhold);
-//            } else {
-//                last = now;
-//                fn.apply(this);
-//                e++;
-//            }
-            //console.log(c);
-            //console.log(e);
-            //TODO throttle function doesn't work correct
-        };
-
-        //TODO comment + what happens when the scope of the function changes? will the old function be executed? (e.g. when i tab into another input and start tying there)
-        //works in my case as i have the blur function. but using promises would be better here
-        var debouncedFunctionNotExecutedYet = false,
-            debouncedFunction = null;
-
-        this.debounce = function (fn, delay) {
-            if (debouncedFunctionNotExecutedYet) {
-                $timeout.cancel(debouncedFunction);
-            }
-            debouncedFunction = $timeout(function () {
-                fn.apply(this);
-                debouncedFunctionNotExecutedYet = false;
-            }, delay);
-            debouncedFunctionNotExecutedYet = true;
-        };
 
         /**
          * @arguments:

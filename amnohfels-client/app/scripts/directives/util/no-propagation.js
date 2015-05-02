@@ -1,5 +1,13 @@
 'use strict';
 
+/**
+ * @ngdoc directive
+ * @name amnohfelsClientApp.directive:noPropagation
+ * @description
+ * # noPropagation
+ * Stops click event propagation on element
+ */
+
 angular.module('amnohfelsClientApp')
     .directive('noPropagation', function () {
         return {

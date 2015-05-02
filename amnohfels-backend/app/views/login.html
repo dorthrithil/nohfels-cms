@@ -4,16 +4,10 @@
         <h4>Mike verlangt, dass du dich einloggst!</h4>
         <input type="email" id="inputEmail" class="form-control" placeholder="Email-Adresse" autofocus ng-model="email">
         <input type="password" id="inputPassword" class="form-control" placeholder="Passwort" ng-model="password">
-        <!--TODO-->
-        <!--<div id="remember" class="checkbox">-->
-        <!--<label>-->
-        <!--<input type="checkbox" value="remember-me"> Login merken-->
-        <!--</label>-->
-        <!--</div>-->
         <div class="alert alert-danger" ng-show="errorMessage != ''">{{errorMessage}}</div>
         <button class="btn btn-lg btn-primary btn-block btn-signin" ng-click="requestLogin()">Einloggen</button>
     </form>
-    <!--TODO-->
+    <!--TODO (1.0.1) enhancement-->
     <!--<a href="#" class="forgot-password">-->
     <!--Forgot the password?-->
     <!--</a>-->

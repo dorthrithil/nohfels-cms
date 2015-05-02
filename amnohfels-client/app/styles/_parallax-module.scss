@@ -28,7 +28,7 @@
 }
 
 .parallax-module{
-  height: 100vh;  //TODO fallback
+  height: 100vh;  //TODO doesn't this get computed by service individually?
   display: block;
   position: relative;
   overflow: hidden;

@@ -8,10 +8,9 @@
  */
 
 //TODO comment switching functions
-//TODO some photos dont have a real name author, get nickname then
-//TODO is it possible to sort out landscape/portrait format photos? (depending on screen orientation)
-//TODO delete service
-//TODO position arrows a bit more off border because browser resize gets triggered
+
+//TODO (1.0.1) UI: transition on switch background
+
 
 angular.module('amnohfelsBackendApp')
     .directive('backgroundSwitcher', function ($http, $q, $document, $compile) {
@@ -48,7 +47,6 @@ angular.module('amnohfelsBackendApp')
                 };
 
                 function switchBackground(){
-                    //TODO transition
                     owner = publicPhotos[index].owner;
                     photoURL = mapUrlLink(publicPhotos[index]);
                     setBackground();
@@ -105,7 +103,8 @@ angular.module('amnohfelsBackendApp')
                     $http.get(userInfoResource + owner)
                         .success(function (response) {
                             if (response.stat !== 'fail') {
-                                credit.html('<a target="_blank" href="http://www.flickr.com/photos/' + owner + '">by ' + response.person.realname._content + '</a>');
+                                var creditName = (response.person.realname._content !== '') ? response.person.realname._content : response.person.username._content;
+                                credit.html('<a target="_blank" href="http://www.flickr.com/photos/' + owner + '">by ' + creditName + '</a>');
                             } else {
                                 credit.html('<a target="_blank"  href="http://www.flickr.com/photos/' + owner + '">credit</a>'); //flickr api error
                             }

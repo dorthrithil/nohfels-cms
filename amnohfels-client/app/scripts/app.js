@@ -13,9 +13,12 @@
 //TODO uniform module margins
 //TODO google analytics
 //TODO use animated gif/png indicators, css animations don't work in all modern(!) browsers..
+//TODO dynamic page routing like in backend
 
 //TODO (1.0.1) improvement: use ng resource vor rest communication
-//TODO (1.0.1) improvement: don't stuff everything in the same module
+//TODO (1.0.1) improvement: use different angular modules for different concerns
+//TODO (1.0.1) tests: add tests
+//TODO (1.0.1) documentation: add descriptions and comments to all functions and files
 
 //TODO (1.1.0) feature: let user add, delete and disable pages
 //TODO (1.1.0) improvement: factor out page style elements in extra files to provide theme functionality

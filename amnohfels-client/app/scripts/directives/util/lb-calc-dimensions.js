@@ -7,6 +7,9 @@
  * # lbCalcDimensions
  * Calculates and sets the dimensions of the lightbox overlay image responsively
  */
+
+//TODO (1.0.1) refactoring: wouldn't this better be a service?
+
 angular.module('amnohfelsClientApp')
   .directive('lbCalcDimensions', function ($window) {
     return {

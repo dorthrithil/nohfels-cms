@@ -7,6 +7,9 @@
  * # modalImageForm
  */
 
+//TODO add caption functionality to gallery
+
+//TODO (1.0.1) bug (firefox, most probably also ie): after picture upload is finished the "server is processing" indication isn't shown
 //TODO (1.0.1) improvement: mechanism for automatically handling the bigger-option on pictures so no layout errors will occur
 
 angular.module('amnohfelsBackendApp')
@@ -49,7 +52,7 @@ angular.module('amnohfelsBackendApp')
 
                 $scope.phpServerRoot = phpServerRoot; //for wiring up the thumbnail src in view
 
-                //actions TODO finish and test with inet
+                //actions
                 $scope.showConfirmDeletionFor = [];
                 $scope.showConfirmDeletion = function (index) {
                     return $scope.showConfirmDeletionFor.indexOf(index) !== -1;
@@ -95,7 +98,7 @@ angular.module('amnohfelsBackendApp')
                 uploader.filters.push({ //TODO show an error message
                     name: 'sizeFilter',
                     fn: function (item) {
-                        return item.size < 4050218; //TODO (32) broken pipe when file is larger than 4.048.218 bytes (max value that worked in the tests)
+                        return item.size < 4050218; //TODO "(32) broken pipe" when file is larger than 4.048.218 bytes (max value that worked in the tests)
                     }
                 });
 

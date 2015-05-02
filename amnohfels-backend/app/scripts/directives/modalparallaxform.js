@@ -8,7 +8,7 @@
  */
 
 //TODO warning when image with width lower than 1000 and height lower than full hd converted height is being uploaded
-//TODO when uploading e new image: delete old image from server
+//TODO when uploading a new image: delete old image from server
 
 angular.module('amnohfelsBackendApp')
   .directive('modalParallaxForm', function (phpServerRoot, FileUploader, doorman) {
@@ -63,7 +63,7 @@ angular.module('amnohfelsBackendApp')
             uploader.filters.push({ //TODO show an error message
                 name: 'sizeFilter',
                 fn: function (item) {
-                    return item.size < 4050218; //TODO (32) broken pipe when file is larger than 4.048.218 bytes (max value that worked in the tests)
+                    return item.size < 4050218; //TODO "(32) broken pipe" when file is larger than 4.048.218 bytes (max value that worked in the tests)
                 }
             });
 

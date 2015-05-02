@@ -9,10 +9,14 @@
  * Main module of the application.
  */
 
-//TODO update rangy to get rid of error
 //TODO http://localhost:9001/#/page/cafs should throw a 404
 
-//TODO (1.0.1) improvement: use ng resource for rest communication
+//TODO (1.0.0) update rangy to get rid of error
+
+//TODO (1.0.1) improvement: use ng resource vor rest communication
+//TODO (1.0.1) improvement: use different angular modules for different concerns
+//TODO (1.0.1) tests: add tests
+//TODO (1.0.1) documentation: add descriptions and comments to all functions and files
 //TODO (1.0.1) improvement: allow user to create new pages
 //TODO (1.0.1) improvement: sort pages by header/footer position
 
@@ -42,8 +46,7 @@ angular
                 templateUrl: 'views/page.html'
             })
             .otherwise({
-                templateUrl: 'views/welcome.html',
-                controller: 'WelcomeCtrl'
+                templateUrl: 'views/welcome.html'
             });
     })
 

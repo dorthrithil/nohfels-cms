@@ -7,6 +7,9 @@
  * # syncQueue
  * Service in the amnohfelsBackendApp.
  */
+
+
+
 angular.module('amnohfelsBackendApp')
     .service('syncQueue', function syncQueue(phpServerRoot, $http, $rootScope, doorman) {
         var queue = [];
@@ -59,6 +62,7 @@ angular.module('amnohfelsBackendApp')
                         });
                     break;
                 case 'post':
+                    console.log(phpServerRoot + '/api' + queue[0].query);
                     $http.post(phpServerRoot + '/api' + queue[0].query, queue[0].data,  {
                         headers :{
                             'JWT': doorman.getJWT()
@@ -72,6 +76,9 @@ angular.module('amnohfelsBackendApp')
                                 syncMutex = false;
                             }
                             $rootScope.$broadcast('sq-http-request-successful');
+                        })
+                        .error(function(response){
+                            console.log(response);
                         });
                     break;
             }

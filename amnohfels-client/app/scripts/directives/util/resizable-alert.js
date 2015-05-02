@@ -2,14 +2,13 @@
 
 /**
  * @ngdoc directive
- * @name amnohfelsClientApp.directive:measureOffscreen
+ * @name amnohfelsClientApp.directive:resizableAlert
  * @description
- * # measureOffscreen
- *
- * measures an alert of unknown height using an invisible clone and sets the original elements height properly allowing css height animations
+ * # resizableAlert
+ * measures an alert of unknown height using an invisible clone and sets the original elements height properly, allowing css height animations
  */
 
-//TODO i dont like using attr. hacky!
+//TODO (1.0.1) refactoring: i dont like using attr. hacky!
 
 angular.module('amnohfelsClientApp')
     .directive('resizableAlert', function ($compile, $timeout, util, $window) {
@@ -30,7 +29,7 @@ angular.module('amnohfelsClientApp')
                 });
                 //bind measuring procedure to window resize
                 angular.element($window).bind('resize', function () {
-                    //util.debounce(function () { //TODO better promise based debounce function. this way, if we have three elements calling debounce at the same time, only the last call get's resolved after the debounce delay
+                    //util.debounce(function () { //TODO (1.0.1) performance: better promise based debounce function. this way, if we have three elements calling debounce at the same time, only the last call get's resolved after the debounce delay
                     parentWidth = element.parent().css('width');
                     $cloneParent.css('width', parentWidth);
                     element.attr('actual-height', $cloneAlert.css('height'));

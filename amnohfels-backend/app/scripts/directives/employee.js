@@ -66,10 +66,9 @@ angular.module('amnohfelsBackendApp')
                 uploader.filters.push({ //TODO show an error message
                     name: 'sizeFilter',
                     fn: function (item) {
-                        return item.size < 4050218; //TODO (32) broken pipe when file is larger than 4.048.218 bytes (max value that worked in the tests)
+                        return item.size < 4050218; //TODO "(32) broken pipe" when file is larger than 4.048.218 bytes (max value that worked in the tests)
                     }
                 });
-
 
                 //callbacks
                 uploader.onWhenAddingFileFailed = function (item /*{File|FileLikeObject}*/, filter, options) { //jshint ignore:line
