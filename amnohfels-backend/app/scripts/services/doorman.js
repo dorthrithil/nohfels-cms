@@ -9,7 +9,7 @@
  */
 
 angular.module('amnohfelsBackendApp')
-    .service('doorman', function doorman($http, phpServerRoot, $q, $timeout, $location) {
+    .service('doorman', function doorman($http, config, $q, $timeout, $location) {
         var loggedIn = false;
         var jwt = false;
         var exp = false;
@@ -37,7 +37,7 @@ angular.module('amnohfelsBackendApp')
         //logs in user, returns a promise
         this.login = function (email, password) {
             return $q(function (resolve, reject) {
-                $http.get(phpServerRoot + '/api/auth/request', {headers: {
+                $http.get(config.server.api + 'auth/request', {headers: {
                         'CREDENTIALS': email + ':' + password //deliver credentials as http header
                     }}) //get auth request
                     .success(function (response) { //store authInfo and resolve
@@ -89,7 +89,7 @@ angular.module('amnohfelsBackendApp')
         };
 
         var refreshJWT = function () {
-            $http.post(phpServerRoot + '/api/auth/refresh', {jwt: jwt}) //TODO api has to go to phpServerRoot
+            $http.post(config.server.api + 'auth/refresh', {jwt: jwt})
                 .success(function (response) { //replace all authInfo with new token
                     jwt = response.jwt;
                     exp = response.exp;

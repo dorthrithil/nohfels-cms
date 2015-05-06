@@ -23,7 +23,7 @@
         <div class="row">
             <div class="col-sm-6 col-md-4" ng-repeat="image in modalVars.data.images">
                 <div class="thumbnail">
-                    <img ng-src="{{phpServerRoot + '/' + image.imageThumbSrc}}">
+                    <img ng-src="{{serverRoot + image.imageThumbSrc}}">
 
                     <div class="caption">
                         <div class="btn-group" role="group">

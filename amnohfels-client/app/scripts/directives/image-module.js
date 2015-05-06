@@ -14,7 +14,7 @@
 //TODO (1.0.1) refactoring: templates for spaghetti angular element definitions
 
 angular.module('amnohfelsClientApp')
-    .directive('imageModule', function ($compile, animator, $document, $timeout, phpServerRoot){
+    .directive('imageModule', function ($compile, animator, $document, $timeout, config){
         return {
             templateUrl: 'views/image-module.html',
             restrict: 'E',
@@ -38,9 +38,9 @@ angular.module('amnohfelsClientApp')
                 scope.getImageSrc = function(index){
                    switch(scope.data.images[index].imageSize){
                        case 'small':
-                           return 'url(' + phpServerRoot + '/' + scope.data.images[index].imageThumbSquareSrc + ')';
+                           return 'url(' + config.server.root + scope.data.images[index].imageThumbSquareSrc + ')';
                        case 'large':
-                           return 'url(' + phpServerRoot + '/' + scope.data.images[index].imageSrc + ')';
+                           return 'url(' + config.server.root + scope.data.images[index].imageSrc + ')';
                        default:
                            return;
                    }
@@ -48,7 +48,7 @@ angular.module('amnohfelsClientApp')
 
                 //appends lightbox to dom with animation
                 scope.lbOpen = function(index){
-                    image = angular.element('<img alt="" index="' + index + '" src="' + phpServerRoot + '/' + scope.data.images[index].imageSrc + '" ng-click="lbChangeImage(\'right\')" no-propagation lb-calc-dimensions preloadable/>');
+                    image = angular.element('<img alt="" index="' + index + '" src="' + config.server.root + scope.data.images[index].imageSrc + '" ng-click="lbChangeImage(\'right\')" no-propagation lb-calc-dimensions preloadable/>');
                     backdrop.append(image);
                     body.append($compile(backdrop)(scope)); //compiling is necessary to wire up the used directives
                     $document.bind('keyup', lbMapKeyup);
@@ -92,7 +92,7 @@ angular.module('amnohfelsClientApp')
                             $icon = previousImageIcon.children().children().children();
                             newIndex = (index === 0) ? scope.data.images.length - 1 : index - 1;
                         }
-                        var newImage = angular.element('<img alt="" index="' + newIndex + '" src="' + phpServerRoot + '/' + scope.data.images[newIndex].imageSrc + '" ng-click="lbChangeImage(' + direction + ')" no-propagation preloadable lb-calc-dimensions/>');
+                        var newImage = angular.element('<img alt="" index="' + newIndex + '" src="' + config.server.root + scope.data.images[newIndex].imageSrc + '" ng-click="lbChangeImage(' + direction + ')" no-propagation preloadable lb-calc-dimensions/>');
                         backdrop.append($compile(newImage)(scope)); //append new image (outside of viewport)
                         var startLoadingAnimation = true;
                         var loadingAnimationStarted = false;
@@ -143,9 +143,6 @@ angular.module('amnohfelsClientApp')
                         scope.lbClose();
                     }
                 };
-            },
-            controller: function($scope){
-                $scope.phpServerRoot = phpServerRoot; //for wiring up image src links
             }
         };
     });

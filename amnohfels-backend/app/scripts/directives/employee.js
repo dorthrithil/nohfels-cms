@@ -10,7 +10,7 @@
 //TODO set right breakpoints on small devices for view
 
 angular.module('amnohfelsBackendApp')
-    .directive('employee', function (phpServerRoot, FileUploader, doorman) {
+    .directive('employee', function (config, FileUploader, doorman) {
         return {
             templateUrl: 'views/employee.html',
             restrict: 'E',
@@ -22,7 +22,7 @@ angular.module('amnohfelsBackendApp')
             controller: function ($scope) {
                 //modalVars
                 if ($scope.$parent.modalVars.action === 'edit') { //TODO edit should be named update
-                    $scope.imageSrc = phpServerRoot + '/' + $scope.data.imageSrc;
+                    $scope.imageSrc = config.server.root + $scope.data.imageSrc;
                 }
                 //show dummy if the module is new (action === 'new') or if we added a new employee to an existing one (imageSrc === '')
                 if ($scope.$parent.modalVars.action === 'new' || $scope.data.imageSrc === '') { //TODO new should be named create
@@ -46,7 +46,7 @@ angular.module('amnohfelsBackendApp')
 
                 //file uploader
                 var uploader = $scope.uploader = new FileUploader({
-                    url: phpServerRoot + '/api/module/staff/employee/image', //POST requests get send here
+                    url: config.server.api + 'module/staff/employee/image', //POST requests get send here
                     autoUpload: true,
                     headers :{
                         'JWT': doorman.getJWT()
@@ -80,7 +80,7 @@ angular.module('amnohfelsBackendApp')
                     }
                 };
                 uploader.onCompleteItem = function (fileItem, response, status, headers) {//jshint ignore:line
-                    $scope.imageSrc = phpServerRoot + '/' + response.path; //show uploaded image instead of dummy
+                    $scope.imageSrc = config.server.root + response.path; //show uploaded image instead of dummy
                     $scope.data.imageSrc = response.path;
                 };
             }

@@ -8,8 +8,8 @@
  * Controller of the amnohfelsClientApp
  */
 angular.module('amnohfelsClientApp')
-    .controller('NotfoundCtrl', function ($scope, adminMail) {
+    .controller('NotfoundCtrl', function ($scope, config) {
         $scope.data = {};
         $scope.data.errorMessage = '';
-        $scope.adminMail = adminMail;
+        $scope.adminMail = config.admin.mail;
     });

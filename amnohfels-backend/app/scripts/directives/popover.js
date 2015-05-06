@@ -19,12 +19,6 @@ angular.module('amnohfelsBackendApp')
                     title: scope.data.title,
                     content: scope.data.content
                 });
-
-
-                //TODO
-                scope.$on('$destroy', function() {
-                    console.log('test');
-                });
             }
         };
     });

@@ -10,7 +10,7 @@
 //TODO (bug) safari generates connection refused errors on successfully sent mails
 
 angular.module('amnohfelsClientApp')
-    .directive('contactModule', function ($http, phpServerRoot, $q, $timeout) {
+    .directive('contactModule', function ($http, config, $q, $timeout) {
         return {
             templateUrl: 'views/contact-module.html',
             restrict: 'E',
@@ -117,7 +117,7 @@ angular.module('amnohfelsClientApp')
                     var modal = angular.element($event.target).next().children();
 
                     //send data
-                    $http.post(phpServerRoot + 'api/mail', $scope.formData)
+                    $http.post(config.server.api + 'mail', $scope.formData)
                         .success(function (data, status) {
                             //switch success cases
                             switch (status) {

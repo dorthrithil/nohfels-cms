@@ -11,7 +11,7 @@
 
 
 angular.module('amnohfelsBackendApp')
-    .service('syncQueue', function syncQueue(phpServerRoot, $http, $rootScope, doorman) {
+    .service('syncQueue', function syncQueue(config, $http, $rootScope, doorman) {
         var queue = [];
         var syncMutex = false;
 
@@ -34,8 +34,8 @@ angular.module('amnohfelsBackendApp')
         var sync = function () {
             syncMutex = true;
             switch (queue[0].method) {
-                case 'get':
-                    $http.get(phpServerRoot + '/index.php?' + queue[0].query)
+                case 'get': //TODO i'm ot using this, am i?
+                    $http.get(config + '/index.php?' + queue[0].query)
                         .success(function () {
                             queue.shift();
                             if (queue.length !== 0) {
@@ -46,11 +46,11 @@ angular.module('amnohfelsBackendApp')
                         });
                     break;
                 case 'delete':
-                    $http.delete(phpServerRoot + '/api' + queue[0].query, {
+                    $http.delete(config.server.api + queue[0].query, {
                         headers :{
                             'JWT': doorman.getJWT()
                         }
-                    }) //TODO api has to go to phpServerRoot
+                    })
                         .success(function () {
                             queue.shift();
                             if (queue.length !== 0) {
@@ -62,12 +62,11 @@ angular.module('amnohfelsBackendApp')
                         });
                     break;
                 case 'post':
-                    console.log(phpServerRoot + '/api' + queue[0].query);
-                    $http.post(phpServerRoot + '/api' + queue[0].query, queue[0].data,  {
+                    $http.post(config.server.api + queue[0].query, queue[0].data,  {
                         headers :{
                             'JWT': doorman.getJWT()
                         }
-                    }) //TODO api has to go to phpServerRoot
+                    })
                         .success(function () {
                             queue.shift();
                             if (queue.length !== 0) {

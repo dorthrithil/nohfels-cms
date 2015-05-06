@@ -11,7 +11,7 @@
 //TODO when uploading a new image: delete old image from server
 
 angular.module('amnohfelsBackendApp')
-  .directive('modalParallaxForm', function (phpServerRoot, FileUploader, doorman) {
+  .directive('modalParallaxForm', function (config, FileUploader, doorman) {
     return {
         templateUrl: 'views/modalparallaxform.html',
         restrict: 'E',
@@ -31,7 +31,7 @@ angular.module('amnohfelsBackendApp')
                 $scope.modalVars.data.heightUnit = unit;
             };
 
-            $scope.phpServerRoot = phpServerRoot; //for wiring up the thumbnail src in view
+            $scope.serverRoot = config.server.root; //for wiring up the thumbnail src in view
 
             //data for popovers
             $scope.popovers = {
@@ -43,7 +43,7 @@ angular.module('amnohfelsBackendApp')
 
             //file uploader
             var uploader = $scope.uploader = new FileUploader({
-                url: phpServerRoot + '/api/module/parallax/image/upload', //POST requests get send here
+                url: config.server.api + 'module/parallax/image/upload', //POST requests get send here
                 autoUpload: true,
                 headers :{
                     'JWT': doorman.getJWT()

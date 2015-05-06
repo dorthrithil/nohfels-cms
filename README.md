@@ -32,6 +32,13 @@ Configuration goes into a simple yaml file which must be located in the server r
   	smtp-username : YOUR_SMTP_USERNAME
   	smtp-password : YOUR_SMTP_PASSWORD
   	
+	#mysql server
+
+	mysql-host : YOUR_MYSQL_HOST
+	mysql-username : YOUR_MYSQL_USERNAME
+	mysql-password : YOUR_MYSQL_PASSWORD
+	mysql-database : YOUR_MYSQL_DATABASE
+  	
   	#ywt
   	
   	ywt-key : YOUR_PRIVATE_YWT_KEY  #used for encryption & decryption of JSON Web Tokens

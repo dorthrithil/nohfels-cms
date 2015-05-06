@@ -13,7 +13,7 @@
 //TODO (1.0.1) improvement: navbar height doesn't need to be included in height calculations => more visible image content
 
 angular.module('amnohfelsClientApp')
-    .service('parallax', function parallax($window, util, $timeout, phpServerRoot) {
+    .service('parallax', function parallax($window, util, $timeout, config) {
 
         var images = [],
             parallaxRatio = 0.25;
@@ -49,9 +49,9 @@ angular.module('amnohfelsClientApp')
                     width: null,
                     ratio: null
                 },
-                src: phpServerRoot + '/' + bgImgSrc
+                src: config.server.root + bgImgSrc
             });
-            images[images.length - 1].image.attr('src', phpServerRoot + '/' + bgImgSrc); //TODO do that later for fadein
+            images[images.length - 1].image.attr('src', config.server.root + bgImgSrc); //TODO do that later for fadein
             initDimensions(images.length - 1);
         };
 

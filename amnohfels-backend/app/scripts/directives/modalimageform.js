@@ -13,7 +13,7 @@
 //TODO (1.0.1) improvement: mechanism for automatically handling the bigger-option on pictures so no layout errors will occur
 
 angular.module('amnohfelsBackendApp')
-    .directive('modalImageForm', function (phpServerRoot, FileUploader, doorman) {
+    .directive('modalImageForm', function (config, FileUploader, doorman) {
         return {
             templateUrl: 'views/modalimageform.html',
             restrict: 'E',
@@ -50,7 +50,7 @@ angular.module('amnohfelsBackendApp')
                     }
                 };
 
-                $scope.phpServerRoot = phpServerRoot; //for wiring up the thumbnail src in view
+                $scope.serverRoot = config.server.root; //for wiring up the thumbnail src in view
 
                 //actions
                 $scope.showConfirmDeletionFor = [];
@@ -78,7 +78,7 @@ angular.module('amnohfelsBackendApp')
 
                 //file uploader
                 var uploader = $scope.uploader = new FileUploader({
-                    url: phpServerRoot + '/api/module/image/image/upload', //POST requests get send here
+                    url: config.server.api + 'module/image/image/upload', //POST requests get send here
                     autoUpload: true,
                     headers: {
                         'JWT': doorman.getJWT()

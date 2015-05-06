@@ -13,4 +13,9 @@ $conf_smtp_host = $config['smtp-host'];
 $conf_smtp_username = $config['smtp-username'];
 $conf_smtp_password = $config['smtp-password'];
 
+$conf_mysql_host = $config['mysql-host'];
+$conf_mysql_username = $config['mysql-username'];
+$conf_mysql_password = $config['mysql-password'];
+$conf_mysql_database = $config['mysql-database'];
+
 $conf_jwt_key = $config['jwt-key'];

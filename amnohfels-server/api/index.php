@@ -60,8 +60,10 @@ require_once __DIR__ . '/routes.php';
 $app->group('/module', function () use ($app) {
 
     //swap module position
-    $app->post('/swapwithlower/:upper', 'authenticateUser', function ($upper) use ($app) {
-        swapWithLowerModule($upper);
+    $app->post('/swapwithlower', 'authenticateUser', function () use ($app) {
+        $json = $app->request->getBody();
+        $data = json_decode($json, true);
+        swapWithLowerModule($data['upper'], $data['topic']);
     });
 
     //get module types

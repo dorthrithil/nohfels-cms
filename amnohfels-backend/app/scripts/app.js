@@ -54,7 +54,7 @@ angular
     .run(function ($rootScope, $location, doorman) {
         //register listener to watch route changes
         $rootScope.$on('$routeChangeStart', function (event, next) {
-            if(!doorman.isLoggedIn()){
+            if (!doorman.isLoggedIn()) {
                 //no logged user, we should be going to #login
                 if (next.templateUrl === 'views/login.html') {
                     //already going to #login, no redirect needed
@@ -64,8 +64,4 @@ angular
                 }
             }
         });
-    })
-
-    //set "globals"
-    .value('phpServerRoot', 'http://schruemel.de/testnohfels')
-    .value('adminMail', 'felix@feblog.de');
+    });

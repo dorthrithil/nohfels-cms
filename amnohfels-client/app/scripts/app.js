@@ -63,6 +63,4 @@ angular
                 templateUrl: 'views/notfound.html',
                 controller: 'NotfoundCtrl'
             });
-    })
-    .value('phpServerRoot', 'http://schruemel.de/testnohfels/')
-    .value('adminMail', 'felix@feblog.de');
+    });

@@ -7,7 +7,7 @@
  * # staffModule
  */
 angular.module('amnohfelsClientApp')
-  .directive('staffModule', function (phpServerRoot) {
+  .directive('staffModule', function (config) {
     return {
         templateUrl: 'views/staff-module.html',
         restrict: 'E',
@@ -15,7 +15,7 @@ angular.module('amnohfelsClientApp')
             data: '='
         },
         controller: function($scope){
-            $scope.phpServerRoot = phpServerRoot; //for wiring up image src
+            $scope.serverRoot = config.server.root; //for wiring up image src
         }
     };
   });

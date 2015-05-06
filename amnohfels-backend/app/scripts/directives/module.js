@@ -7,8 +7,6 @@
  * # module
  */
 
-//TODO swapwithlower doesn't work anymore
-
 //TODO this should be named "page"
 //TODO don't name it response in scope (standard angular variable name in http service is data)
 //TODO synchronize button or deep copy of modalVars data object, because when i e.g. delete an employee in a staff module and close the modal without saving, the employee will still be deleted (at least in the clients view)
@@ -19,7 +17,7 @@
 
 
 angular.module('amnohfelsBackendApp')
-    .directive('module', function (phpServerRoot, $http, syncQueue, $compile, adminMail) {
+    .directive('module', function (config, $http, syncQueue, $compile) {
         return {
             templateUrl: 'views/module.html',
             restrict: 'E',
@@ -31,7 +29,7 @@ angular.module('amnohfelsBackendApp')
                     scope.modalVars = {
                         type: moduleType,
                         action: 'new',
-                        data : {}
+                        data: {}
                     };
                     element.append($compile(angular.element('<modal></modal>'))(scope));
                 };
@@ -57,40 +55,43 @@ angular.module('amnohfelsBackendApp')
                 };
             },
             controller: function ($scope) {
-                $scope.adminMail = adminMail; //for 404 alert
+                $scope.adminMail = config.admin.mail; //for 404 alert
                 $scope.refreshPageData = function () {
-                    $http.get(phpServerRoot + '/api/page/' + $scope.topic)
+                    $http.get(config.server.api + 'page/' + $scope.topic)
                         .success(function (response, status) {
                             $scope.response = response;
                             $scope.status = status;
                         })
-                        .error(function(response, status){
+                        .error(function (response, status) {
                             $scope.status = status;
                         });
                     //TODO error: "this page has no modules yet or an internal server error occured" => differentiate via status code
                 };
                 $scope.refreshPageData();
                 $scope.$on('sq-http-request-successful', $scope.refreshPageData);
-                $http.get(phpServerRoot + '/api/module/types')
+                $http.get(config.server.api + 'module/types')
                     .success(function (response) {
                         $scope.moduleTypes = response;
                     });
-                $scope.up = function (module) { //TODO swap methods can be combined to a single swapWithLowerModule
-                    var moduleYIndex = $scope.response.indexOf(module);
-                    var moduleBuffer = $scope.response[moduleYIndex - 1];
-                    $scope.response[moduleYIndex - 1] = module;
-                    $scope.response[moduleYIndex] = moduleBuffer;
-                    syncQueue.push('post', '/module/swapwithlower/' + (moduleYIndex - 1));
+                $scope.up = function (module) {
+                    swapWithLower($scope.response.indexOf(module) - 1);
                 };
                 $scope.down = function (module) {
-                    var moduleYIndex = $scope.response.indexOf(module);
-                    var moduleBuffer = $scope.response[moduleYIndex + 1];
-                    $scope.response[moduleYIndex + 1] = module;
-                    $scope.response[moduleYIndex] = moduleBuffer;
-                    syncQueue.push('post', '/module/swapwithlower/' + moduleYIndex);
+                    swapWithLower($scope.response.indexOf(module));
                 };
+                function swapWithLower(yIndex) {
+                    var moduleBuffer = $scope.response[yIndex + 1];
+                    $scope.response[yIndex + 1] = $scope.response[yIndex];
+                    $scope.response[yIndex] = moduleBuffer;
+                    var data = {
+                        upper: yIndex,
+                        topic: $scope.topic
+                    };
+                    syncQueue.push('post', 'module/swapwithlower', data);
+                }
+
                 $scope.deleteModule = function (index) {
-                    syncQueue.push('delete', '/module/' + $scope.response[index].type.id + '/' + $scope.response[index].data.id); //TODO get real route (change module ids to ids without redundant _module suffix?)
+                    syncQueue.push('delete', 'module/' + $scope.response[index].type.id + '/' + $scope.response[index].data.id); //TODO get real route (change module ids to ids without redundant _module suffix?)
                     $scope.response.splice(index, 1);
                 };
                 $scope.isSynced = function () {

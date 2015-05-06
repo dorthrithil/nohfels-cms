@@ -7,7 +7,7 @@
  * # modal
  */
 
-//TODO replace data dismiss actions with own hide function and delete modal from dom & destroy scope
+//TODO destroy modal scopes on dismiss (need to be isolated)
 
 angular.module('amnohfelsBackendApp')
     .directive('modal', function ($compile, syncQueue) {
@@ -41,29 +41,14 @@ angular.module('amnohfelsBackendApp')
                 $scope.save = function(){
                     switch($scope.modalVars.action){
                         case 'new':
-                            syncQueue.push('post', '/module' + $scope.modalVars.route, $scope.modalVars.data);
+                            syncQueue.push('post', 'module' + $scope.modalVars.route, $scope.modalVars.data);
                             break;
                         case 'edit':
-                            syncQueue.push('post', '/module' + $scope.modalVars.route + '/' + $scope.modalVars.data.id, $scope.modalVars.data);
+                            syncQueue.push('post', 'module' + $scope.modalVars.route + '/' + $scope.modalVars.data.id, $scope.modalVars.data);
                             break;
                     }
                     $element.children().modal('hide');
                 };
-
-                //TODO
-                $element.children().on('hidden.bs.modal', function () {
-                    console.log($element.find('popover').scope());
-                    $element.find('popover').scope().$destroy();
-                    $element.remove();
-                    console.log($element.find('popover').scope());
-
-                    //console.log($element.children().scope());
-
-                    //$element.children().scope().$destroy();
-                });
-
-
-
             }
         };
     });
