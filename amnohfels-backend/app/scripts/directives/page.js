@@ -2,14 +2,10 @@
 
 /**
  * @ngdoc directive
- * @name amnohfelsBackendApp.directive:module
+ * @name amnohfelsBackendApp.directive:page
  * @description
- * # module
+ * # page
  */
-
-//TODO this should be named "page"
-//TODO don't name it response in scope (standard angular variable name in http service is data)
-//TODO synchronize button or deep copy of modalVars data object, because when i e.g. delete an employee in a staff module and close the modal without saving, the employee will still be deleted (at least in the clients view)
 
 //TODO (1.0.1) enhancement: better compile whole modal (pass type as argument), not only the forms. this way we can get the modal logic in the modal file. soc!
 //TODO (1.0.1) enhancement: indicate loading of data
@@ -17,9 +13,9 @@
 
 
 angular.module('amnohfelsBackendApp')
-    .directive('module', function (config, $http, syncQueue, $compile) {
+    .directive('page', function (config, $http, syncQueue, $compile) {
         return {
-            templateUrl: 'views/module.html',
+            templateUrl: '../../views/page.html',
             restrict: 'E',
             scope: {
                 topic: '='
@@ -35,9 +31,9 @@ angular.module('amnohfelsBackendApp')
                 };
                 scope.editModule = function (index) {
                     scope.modalVars = {
-                        type: scope.response[index].type,
+                        type: scope.modules[index].type,
                         action: 'edit',
-                        data: scope.response[index].data
+                        data: jQuery.extend(true, {}, scope.modules[index].data) //deep copy
                     };
                     element.append($compile(angular.element('<modal></modal>'))(scope));
                 };
@@ -47,7 +43,7 @@ angular.module('amnohfelsBackendApp')
                             scope.deleteModule(index);
                         },
                         title: 'Sind Sie sich sicher?',
-                        text: 'Wollen Sie das ' + scope.response[index].type.name + '-Modul "' + scope.response[index].data.title + '" wirklich löschen? Dieser Schritt kann nicht rückgängig gemacht werden!',
+                        text: 'Wollen Sie das ' + scope.modules[index].type.name + '-Modul "' + scope.modules[index].data.title + '" wirklich löschen? Dieser Schritt kann nicht rückgängig gemacht werden!',
                         okButtonText: 'Löschen',
                         dismissButtonText: 'Abbrechen'
                     };
@@ -58,11 +54,11 @@ angular.module('amnohfelsBackendApp')
                 $scope.adminMail = config.admin.mail; //for 404 alert
                 $scope.refreshPageData = function () {
                     $http.get(config.server.api + 'page/' + $scope.topic)
-                        .success(function (response, status) {
-                            $scope.response = response;
+                        .success(function (data, status) {
+                            $scope.modules = data;
                             $scope.status = status;
                         })
-                        .error(function (response, status) {
+                        .error(function (data, status) {
                             $scope.status = status;
                         });
                     //TODO error: "this page has no modules yet or an internal server error occured" => differentiate via status code
@@ -70,19 +66,19 @@ angular.module('amnohfelsBackendApp')
                 $scope.refreshPageData();
                 $scope.$on('sq-http-request-successful', $scope.refreshPageData);
                 $http.get(config.server.api + 'module/types')
-                    .success(function (response) {
-                        $scope.moduleTypes = response;
+                    .success(function (data) {
+                        $scope.moduleTypes = data;
                     });
                 $scope.up = function (module) {
-                    swapWithLower($scope.response.indexOf(module) - 1);
+                    swapWithLower($scope.modules.indexOf(module) - 1);
                 };
                 $scope.down = function (module) {
-                    swapWithLower($scope.response.indexOf(module));
+                    swapWithLower($scope.modules.indexOf(module));
                 };
                 function swapWithLower(yIndex) {
-                    var moduleBuffer = $scope.response[yIndex + 1];
-                    $scope.response[yIndex + 1] = $scope.response[yIndex];
-                    $scope.response[yIndex] = moduleBuffer;
+                    var moduleBuffer = $scope.modules[yIndex + 1];
+                    $scope.modules[yIndex + 1] = $scope.modules[yIndex];
+                    $scope.modules[yIndex] = moduleBuffer;
                     var data = {
                         upper: yIndex,
                         topic: $scope.topic
@@ -91,8 +87,8 @@ angular.module('amnohfelsBackendApp')
                 }
 
                 $scope.deleteModule = function (index) {
-                    syncQueue.push('delete', 'module/' + $scope.response[index].type.id + '/' + $scope.response[index].data.id); //TODO get real route (change module ids to ids without redundant _module suffix?)
-                    $scope.response.splice(index, 1);
+                    syncQueue.push('delete', 'module/' + $scope.modules[index].type.id + '/' + $scope.modules[index].data.id); //TODO get real route (change module ids to ids without redundant _module suffix?)
+                    $scope.modules.splice(index, 1);
                 };
                 $scope.isSynced = function () {
                     return syncQueue.isSynced();

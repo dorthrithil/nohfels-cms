@@ -64,8 +64,21 @@ angular.module('amnohfelsBackendApp')
             }
         };
 
-        //logs out the user
+        //logs out user with unsaved changes check
         this.logout = function () {
+            return $q(function (resolve, reject) {
+                if (unsavedChanges > 0) {
+                    reject();
+                } else {
+                    resolve();
+                    self.hardLogout();
+                }
+            });
+        };
+
+        //logs out user without unsaved changes check
+        this.hardLogout = function(){
+            unsavedChanges = 0; //reset unsaved changes
             localStorage.removeItem('authInfo');
             loggedIn = false;
             jwt = false;
@@ -110,5 +123,16 @@ angular.module('amnohfelsBackendApp')
                 $timeout.cancel(refreshTimeoutPromise);
             }
             refreshTimeoutPromise = $timeout(refreshJWT, (exp - Math.floor(Date.now() / 1000) - 5) * 1000);
+        };
+
+        //track unsaved changes to warn user when he tries to log out with unsaved changes
+        var unsavedChanges = 0;
+        this.addUnsavedChange = function(){
+            unsavedChanges++;
+        };
+        this.removeUnsavedChange = function(){
+            if (unsavedChanges > 0){
+                unsavedChanges--;
+            }
         };
     });

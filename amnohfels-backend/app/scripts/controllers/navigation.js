@@ -8,8 +8,6 @@
  * Controller of the amnohfelsBackendApp
  */
 
-//TODO unsaved changes warning on logout
-
 angular.module('amnohfelsBackendApp')
     .controller('NavigationCtrl', function ($scope, $location, config, $http, doorman) {
         //for highlighting active page
@@ -21,8 +19,18 @@ angular.module('amnohfelsBackendApp')
             return doorman.isLoggedIn();
         };
         //function for logout button
+        $scope.showConfirmLogoutButton = false;
         $scope.logout = function(){
-          doorman.logout();
+          doorman.logout().then(function(){},function(){
+              $scope.showConfirmLogoutButton = true;
+          });
+        };
+        $scope.logoutDismiss = function(){
+            $scope.showConfirmLogoutButton = false;
+        };
+        $scope.logoutConfirm = function(){
+            $scope.showConfirmLogoutButton = false;
+            doorman.hardLogout();
         };
         //request topics for building "edit page" dropdown
         $scope.topics = [];

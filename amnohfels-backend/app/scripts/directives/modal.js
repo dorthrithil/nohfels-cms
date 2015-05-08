@@ -10,7 +10,7 @@
 //TODO destroy modal scopes on dismiss (need to be isolated)
 
 angular.module('amnohfelsBackendApp')
-    .directive('modal', function ($compile, syncQueue) {
+    .directive('modal', function ($compile, syncQueue, doorman) {
         return {
             templateUrl: 'views/modal.html',
             restrict: 'E',
@@ -38,6 +38,7 @@ angular.module('amnohfelsBackendApp')
                 element.children().modal({backdrop: 'static'});
             },
             controller: function($scope, $element){
+                doorman.addUnsavedChange();
                 $scope.save = function(){
                     switch($scope.modalVars.action){
                         case 'new':
@@ -47,6 +48,7 @@ angular.module('amnohfelsBackendApp')
                             syncQueue.push('post', 'module' + $scope.modalVars.route + '/' + $scope.modalVars.data.id, $scope.modalVars.data);
                             break;
                     }
+                    doorman.removeUnsavedChange();
                     $element.children().modal('hide');
                 };
             }

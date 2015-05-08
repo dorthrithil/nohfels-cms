@@ -29,9 +29,18 @@
             <!--logout-->
             <ul class="nav navbar-nav navbar-right logout-button">
                 <li>
-                    <button ng-click="logout()" type="button" class="btn btn-default navbar-btn"><span
-                            class="glyphicon glyphicon-off" aria-hidden="true"></span> Logout
+                    <button ng-click="logout()" type="button" class="btn btn-default navbar-btn" ng-hide="showConfirmLogoutButton">
+                        <span class="glyphicon glyphicon-off" aria-hidden="true"></span> Logout
                     </button>
+                    <div class="btn-group" role="group" ng-show="showConfirmLogoutButton">
+                        <button type="button" class="btn btn-default disabled navbar-btn">Es gibt nicht gespeicherte Inhalte. Trotzdem ausloggen?</button>
+                        <button type="button" class="btn btn-default btn-success navbar-btn" ng-click="logoutConfirm()">
+                            <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                        </button>
+                        <button type="button" class="btn btn-default btn-danger navbar-btn" ng-click="logoutDismiss()">
+                            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                        </button>
+                    </div>
                 </li>
             </ul>
         </div>

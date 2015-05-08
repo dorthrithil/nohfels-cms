@@ -87,15 +87,15 @@ angular.module('amnohfelsBackendApp')
 
                 //filters
                 //only image files
-                uploader.filters.push({ //TODO show an error message
+                uploader.filters.push({
                     name: 'imageFilter',
-                    fn: function (item /*{File|FileLikeObject}*/, options) { //jshint ignore:line
+                    fn: function (item, options) { //jshint ignore:line
                         var type = '|' + item.type.slice(item.type.lastIndexOf('/') + 1) + '|';
                         return '|jpg|png|jpeg|bmp|gif|'.indexOf(type) !== -1;
                     }
                 });
                 //restrict size
-                uploader.filters.push({ //TODO show an error message
+                uploader.filters.push({
                     name: 'sizeFilter',
                     fn: function (item) {
                         return item.size < 4050218; //TODO "(32) broken pipe" when file is larger than 4.048.218 bytes (max value that worked in the tests)
@@ -103,8 +103,21 @@ angular.module('amnohfelsBackendApp')
                 });
 
                 //callbacks
-                uploader.onWhenAddingFileFailed = function (item /*{File|FileLikeObject}*/, filter, options) { //jshint ignore:line
-                    //TODO error messages from filters go here
+                $scope.fileUploadError = false;
+                $scope.fileUploadErrorMessages = [];
+                uploader.onWhenAddingFileFailed = function (item, filter, options) { //jshint ignore:line
+                    //TODO catch ng repeat dupes (when theres the same error twice)
+                    $scope.fileUploadError = true;
+                    switch(filter.name){
+                        case 'imageFilter':
+                            $scope.fileUploadErrorMessages.push('Es sind nur Bilder im jpg, png, bmp und gif Format erlaubt!');
+                            break;
+                        case 'sizeFilter':
+                            $scope.fileUploadErrorMessages.push('Die Maximale Dateigröße beim Upload beträgt 4050218 Bytes (ca. 4MB)!');
+                            break;
+                        default:
+                            $scope.fileUploadErrorMessages.push('Es ist ein unbekannter Fehler beim Upload aufgetreten.');
+                    }
                 };
                 uploader.onCompleteItem = function (fileItem, response, status, headers) {//jshint ignore:line
                     $scope.modalVars.data.images.push({ //insert uploaded image

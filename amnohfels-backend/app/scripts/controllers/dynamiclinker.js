@@ -2,12 +2,12 @@
 
 /**
  * @ngdoc function
- * @name amnohfelsBackendApp.controller:PageCtrl
+ * @name amnohfelsBackendApp.controller:DynamicLinkerCtrl
  * @description
- * # PageCtrl
+ * # DynamicLinkerCtrl
  * Controller of the amnohfelsBackendApp
  */
 angular.module('amnohfelsBackendApp')
-  .controller('PageCtrl', function ($scope, $routeParams) {
+  .controller('DynamicLinkerCtrl', function ($scope, $routeParams) {
         $scope.topic = $routeParams.topic;
   });

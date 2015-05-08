@@ -8,8 +8,6 @@
  * Service in the amnohfelsBackendApp.
  */
 
-
-
 angular.module('amnohfelsBackendApp')
     .service('syncQueue', function syncQueue(config, $http, $rootScope, doorman) {
         var queue = [];
@@ -26,6 +24,7 @@ angular.module('amnohfelsBackendApp')
                 query: query, //TODO rename to route
                 data: data
             });
+            doorman.addUnsavedChange();
             if (!syncMutex) {
                 sync();
             }
@@ -38,6 +37,7 @@ angular.module('amnohfelsBackendApp')
                     $http.get(config + '/index.php?' + queue[0].query)
                         .success(function () {
                             queue.shift();
+                            doorman.removeUnsavedChange();
                             if (queue.length !== 0) {
                                 sync();
                             } else {
@@ -53,6 +53,7 @@ angular.module('amnohfelsBackendApp')
                     })
                         .success(function () {
                             queue.shift();
+                            doorman.removeUnsavedChange();
                             if (queue.length !== 0) {
                                 sync();
                             } else {
@@ -69,6 +70,7 @@ angular.module('amnohfelsBackendApp')
                     })
                         .success(function () {
                             queue.shift();
+                            doorman.removeUnsavedChange();
                             if (queue.length !== 0) {
                                 sync();
                             } else {
