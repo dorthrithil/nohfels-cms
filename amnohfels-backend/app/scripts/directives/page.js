@@ -15,7 +15,7 @@
 angular.module('amnohfelsBackendApp')
     .directive('page', function (config, $http, syncQueue, $compile) {
         return {
-            templateUrl: '../../views/page.html',
+            templateUrl: 'views/page.html',
             restrict: 'E',
             scope: {
                 topic: '='

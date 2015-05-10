@@ -43,7 +43,7 @@ angular
             })
             .when('/page/:topic', {
                 controller: 'DynamicLinkerCtrl',
-                templateUrl: '../views/dynamiclinker.html'
+                templateUrl: 'views/dynamiclinker.html'
             })
             .otherwise({
                 templateUrl: 'views/welcome.html'

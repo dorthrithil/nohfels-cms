@@ -55,31 +55,27 @@ angular.module('amnohfelsBackendApp')
 
                 //filters
                 //only image files
-                uploader.filters.push({ //TODO show an error message
+                uploader.filters.push({
                     name: 'imageFilter',
-                    fn: function (item /*{File|FileLikeObject}*/, options) { //jshint ignore:line
+                    fn: function (item) {
                         var type = '|' + item.type.slice(item.type.lastIndexOf('/') + 1) + '|';
                         return '|jpg|png|jpeg|bmp|gif|'.indexOf(type) !== -1;
                     }
                 });
                 //restrict size
-                uploader.filters.push({ //TODO show an error message
+                uploader.filters.push({
                     name: 'sizeFilter',
                     fn: function (item) {
                         return item.size < 4050218; //TODO "(32) broken pipe" when file is larger than 4.048.218 bytes (max value that worked in the tests)
                     }
                 });
 
-                //callbacks
-                uploader.onWhenAddingFileFailed = function (item /*{File|FileLikeObject}*/, filter, options) { //jshint ignore:line
-                    //TODO error messages from filters go here
-                };
-                uploader.onAfterAddingFile = function (fileItem) {//jshint ignore:line
+                uploader.onAfterAddingFile = function () {
                     if (uploader.queue.length > 1) {
                         uploader.removeFromQueue(0); //only one file should be in the queue for the progress bar getting displayed properly
                     }
                 };
-                uploader.onCompleteItem = function (fileItem, response, status, headers) {//jshint ignore:line
+                uploader.onCompleteItem = function (fileItem, response) {
                     $scope.imageSrc = config.server.root + response.path; //show uploaded image instead of dummy
                     $scope.data.imageSrc = response.path;
                 };

@@ -70,7 +70,7 @@ angular.module('amnohfelsBackendApp')
 
                 //data for popovers
                 $scope.popovers = {
-                    images : {
+                    images: {
                         title: 'Erklärung zur "Groß"-Option',
                         content: 'Wenn du die "Groß"-Option bei einem Bild aktivierst, wird das Bild auf der Website in voller Breite angezeigt. Sei dir bewusst, dass du zur Zeit darauf achten musst, dass nach einem großen Bild mindestens eine Reihe von drei kleinen Bildern folgen muss, damit die Bilder schön angeordnet werden können. (In zukünftigen Versionen wird das behoben)'
                     }
@@ -89,7 +89,7 @@ angular.module('amnohfelsBackendApp')
                 //only image files
                 uploader.filters.push({
                     name: 'imageFilter',
-                    fn: function (item, options) { //jshint ignore:line
+                    fn: function (item) {
                         var type = '|' + item.type.slice(item.type.lastIndexOf('/') + 1) + '|';
                         return '|jpg|png|jpeg|bmp|gif|'.indexOf(type) !== -1;
                     }
@@ -102,24 +102,8 @@ angular.module('amnohfelsBackendApp')
                     }
                 });
 
-                //callbacks
-                $scope.fileUploadError = false;
-                $scope.fileUploadErrorMessages = [];
-                uploader.onWhenAddingFileFailed = function (item, filter, options) { //jshint ignore:line
-                    //TODO catch ng repeat dupes (when theres the same error twice)
-                    $scope.fileUploadError = true;
-                    switch(filter.name){
-                        case 'imageFilter':
-                            $scope.fileUploadErrorMessages.push('Es sind nur Bilder im jpg, png, bmp und gif Format erlaubt!');
-                            break;
-                        case 'sizeFilter':
-                            $scope.fileUploadErrorMessages.push('Die Maximale Dateigröße beim Upload beträgt 4050218 Bytes (ca. 4MB)!');
-                            break;
-                        default:
-                            $scope.fileUploadErrorMessages.push('Es ist ein unbekannter Fehler beim Upload aufgetreten.');
-                    }
-                };
-                uploader.onCompleteItem = function (fileItem, response, status, headers) {//jshint ignore:line
+                //when file uploading succeeds..
+                uploader.onCompleteItem = function (fileItem, response) {
                     $scope.modalVars.data.images.push({ //insert uploaded image
                         imageSize: 'small',
                         imageSrc: response.path,

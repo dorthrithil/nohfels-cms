@@ -20,9 +20,8 @@
             </div>
         </div>
 
-        <div ng-show="fileUploadError" class="alert alert-danger">
-            <div ng-repeat="fileUploadErrorMessage in fileUploadErrorMessages">{{fileUploadErrorMessage}}</div>
-        </div>
+        <ng-fu-error-reporter></ng-fu-error-reporter>
+
 
         <div class="row">
             <div class="col-sm-6 col-md-4" ng-repeat="image in modalVars.data.images">
