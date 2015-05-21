@@ -370,16 +370,10 @@ module.exports = function (grunt) {
                     },
                     {
                         expand: true,
-                        cwd: '.',
-                        src: 'bower_components/bootstrap-sass-official/assets/fonts/bootstrap',
-                        dest: '<%= yeoman.dist %>' //TODO copy fonts in the same fashion as fontawesome and wire them up correctly
-                    },
-                    /*{
-                        expand: true,
                         cwd: 'bower_components/bootstrap-sass-official/assets/fonts/bootstrap/',
                         src: '*',
-                        dest: '<%= yeoman.dist %>/fonts' //TODO copy fonts in the same fashion as fontawesome and wire them up correctly
-                    },*/
+                        dest: '<%= yeoman.dist %>/fonts'
+                    },
                     {
                         expand: true,
                         cwd: '.',
@@ -394,6 +388,29 @@ module.exports = function (grunt) {
                 cwd: '<%= yeoman.app %>/styles',
                 dest: '.tmp/styles/',
                 src: '{,*/}*.css'
+            }
+        },
+
+        //workaround for correctly rereferencing asset fonts manually copied from bower directory to fonts directory
+        //replaces paths
+        replace: {
+            dist: {
+                options: {
+                    patterns: [
+                        {
+                            match: /bower_components\/bootstrap-sass-official\/assets\/fonts\/bootstrap/g,
+                            replacement: 'fonts'
+                        }
+                    ]
+                },
+                files: [
+                    {
+                        expand: true,
+                        flatten: true,
+                        src: ['<%= yeoman.dist %>/styles/*.css'],
+                        dest: '<%= yeoman.dist %>/styles'
+                    }
+                ]
             }
         },
 
@@ -464,7 +481,8 @@ module.exports = function (grunt) {
         'uglify',
         'filerev',
         'usemin',
-        'htmlmin'
+        'htmlmin',
+        'replace'
     ]);
 
     grunt.registerTask('default', [

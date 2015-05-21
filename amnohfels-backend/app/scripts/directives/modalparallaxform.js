@@ -7,8 +7,8 @@
  * # modalParallaxForm
  */
 
-//TODO warning when image with width lower than 1000 and height lower than full hd converted height is being uploaded
-//TODO when uploading a new image: delete old image from server
+//TODO (1.0.1) resource management: when uploading a new image: delete old image from server
+//TODO (1.0.1) UI: properly align error messages with preview image
 
 angular.module('amnohfelsBackendApp')
     .directive('modalParallaxForm', function (config, FileUploader, doorman) {
@@ -67,7 +67,25 @@ angular.module('amnohfelsBackendApp')
                     }
                 });
 
-                uploader.onAfterAddingFile = function () {
+                //warn when image dimensions are under 1000px*560px
+                function testImageDimensions(file){
+                    var reader = new FileReader(); //create file reader
+                    function onLoadFile(event) { //function to be executed when file reader reads file
+                        var img = new Image(); //create image object
+                        img.onload = onLoadImage(img); //link dimension test function
+                        img.src = event.target.result; //load image
+                    }
+                    function onLoadImage(img) { //checks dimensions and warns user
+                        if(img.height < 560 || img.width < 1000){
+                            $scope.$broadcast('show-image-dimension-warning'); //broadcast to ngfuerrorreporter
+                        }
+                    }
+                    reader.onload = onLoadFile;
+                    reader.readAsDataURL(file); //read file
+                }
+
+                uploader.onAfterAddingFile = function (fileItem) {
+                    testImageDimensions(fileItem._file);
                     if (uploader.queue.length > 1) {
                         uploader.removeFromQueue(0); //only one file should be in the queue for the progress bar getting displayed properly
                     }
@@ -76,6 +94,18 @@ angular.module('amnohfelsBackendApp')
                     $scope.modalVars.data.bgImgSrc = response.path;
                     $scope.modalVars.data.bgImgThumbSrc = response.thumbPath;
                 };
+
+
+
+
+
+
+
+
+
+
+
+
             }
         };
     });

@@ -7,8 +7,6 @@
  * # modalStaffForm
  */
 
-//TODO bug: edit - modal is not scrollable until focusing an input field
-
 angular.module('amnohfelsBackendApp')
     .directive('modalStaffForm', function () {
         return {

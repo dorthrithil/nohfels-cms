@@ -29,6 +29,10 @@ angular.module('amnohfelsBackendApp')
                         text: 'Es sind nur Bilder im jpg, png, bmp und gif Format erlaubt!',
                         active: false
                     },
+                    dimension: {
+                        text: 'Das hochgeladene Bild ist kleiner als 1000px*560px. Es wird empfohlen, ein größeres Bild auszuwählen, da sonst die Darstellung auf großen Bildschirmen leiden kann.',
+                        active: false
+                    },
                     unknown: {
                         text: 'Es ist ein unbekannter Fehler beim Upload aufgetreten.',
                         active: false
@@ -49,9 +53,17 @@ angular.module('amnohfelsBackendApp')
                     }
                 };
 
+                //broadcasts
+                $scope.$on('show-image-dimension-warning', function(){
+                    $scope.fileUploadErrorMessages.dimension.active = true;
+                });
+
                 //for ngIf in template
                 $scope.fileUploadError = function () {
-                    return $scope.fileUploadErrorMessages.size.active || $scope.fileUploadErrorMessages.type.active || $scope.fileUploadErrorMessages.unknown.active;
+                    return $scope.fileUploadErrorMessages.size.active ||
+                        $scope.fileUploadErrorMessages.type.active ||
+                        $scope.fileUploadErrorMessages.dimension.active ||
+                        $scope.fileUploadErrorMessages.unknown.active;
                 };
 
                 //reset active flags when alert is dismissed
@@ -59,6 +71,7 @@ angular.module('amnohfelsBackendApp')
                     $scope.fileUploadErrorMessages.size.active = false;
                     $scope.fileUploadErrorMessages.type.active = false;
                     $scope.fileUploadErrorMessages.unknown.active = false;
+                    $scope.fileUploadErrorMessages.dimension.active = false;
                 });
             }
         };

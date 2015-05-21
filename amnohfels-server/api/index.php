@@ -40,6 +40,7 @@ $imagine = new Imagine\Gd\Imagine();
 
 //instatiate yaml parser
 use Symfony\Component\Yaml\Parser;
+
 $yaml = new Parser();
 
 //load config
@@ -324,6 +325,17 @@ $app->group('/auth', function () use ($app) {
         $data = json_decode($json, true);
         $response = refreshJWT($data['jwt']);
         jsonResponse($response);
+    });
+
+});
+
+
+//group for utility functions
+$app->group('/util', function () use ($app) {
+
+    //upload file
+    $app->post('/fileupload', 'authenticateUser', function () use ($app) {
+        fileupload();
     });
 
 });

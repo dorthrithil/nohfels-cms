@@ -181,3 +181,12 @@ modal-parallax-form {
 .logout-button{
   margin-right: 7px !important;
 }
+
+//TODO seperate scss
+
+ta-fileupload-popover{
+  button.dismiss{
+    margin-bottom: 15px;
+    margin-top: 15px;
+  }
+}

@@ -13,7 +13,7 @@
 //TODO (1.0.1) enhancement (UI): fadeIn image onload
 
 angular.module('amnohfelsClientApp')
-    .directive('parallaxModule', function (parallax, $window, $timeout) {
+    .directive('parallaxModule', function (parallax, $window, $timeout, config) {
         return {
             templateUrl: 'views/parallax-module.html',
             restrict: 'E',
@@ -28,6 +28,8 @@ angular.module('amnohfelsClientApp')
             },
             controller: function($scope, $sce) {
                 $scope.data.title = $sce.trustAsHtml($scope.data.title);
+                //link uploaded files to server toot
+                $scope.data.caption = $scope.data.caption.replace(new RegExp('uploads/files/', 'g'), config.server.root + 'uploads/files/');
                 $scope.data.caption = $sce.trustAsHtml($scope.data.caption);
 
                 //let the scroll hint vanish on first scroll event

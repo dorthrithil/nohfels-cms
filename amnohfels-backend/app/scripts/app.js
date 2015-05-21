@@ -19,6 +19,9 @@
 //TODO (1.0.1) documentation: add descriptions and comments to all functions and files
 //TODO (1.0.1) improvement: allow user to create new pages
 //TODO (1.0.1) improvement: sort pages by header/footer position
+//TODO (1.0.1) refactoring: put fileUploader filters in one place and inject them (parallax, employee, image)
+
+//TODO (1.0.2) enhancement: use HTML5 image preview instead of loading image from server after upload finished (parallax, employee, image)
 
 angular
     .module('amnohfelsBackendApp', ['ngRoute', 'textAngular', 'ui.bootstrap-slider', 'ngTagsInput', 'angularFileUpload'])
@@ -26,11 +29,48 @@ angular
     //configuration
     .config(function ($routeProvider, $provide) {
         //configure textAngular
-        $provide.decorator('taOptions', ['$delegate', function (taOptions) {
+        $provide.decorator('taOptions', ['$compile', '$timeout', 'taRegisterTool', '$delegate', function ($compile, $timeout, taRegisterTool, taOptions) {
+            //file upload tool
+            taRegisterTool('fileupload', {
+                tooltiptext: 'Upload a file to link to',
+                iconclass: 'fa fa-upload',
+                action: function () {
+                    var button = jQuery('[name="fileupload"]'); //get button
+                    var popoverContent = angular.element('<ta-fileupload-popover></ta-fileupload-popover>'); //create popover
+                    var $buttonScope = button.scope();
+                    $compile(popoverContent)($buttonScope); //compile it to the buttons scope
+                    $timeout(function () {
+                    }); //kick off $apply
+                    button.popover({
+                        content: popoverContent, //TODO optimise popover placement
+                        placement: 'bottom',
+                        container: 'body',
+                        viewport: button,
+                        html: true
+                    });
+                    button.popover('show');
+                    var self = this; //for reference inside next function
+                    $buttonScope.performAction = function () { //taFileuploadPopover calls this after finishing the upload
+                        var urlLink = $buttonScope.taFileUploadAccessPath; //relative path - will be made absolute on client, this way links will still work when we change the environment
+                        console.log(urlLink);
+                        if (urlLink && urlLink !== '' && urlLink !== 'http://') { //wrap selection like in insertLink tool
+                            button.popover('destroy'); //destroy popover
+                            return self.$editor().wrapSelection('createLink', urlLink, true); //TODO only works every second time!!!!!!
+                        }
+                    };
+                    //$buttonScope.performAction();
+                },
+                activeState: function (commonElement) {
+                    if (commonElement) {
+                        return commonElement[0].href.indexOf('uploads/files/') !== -1; //TODO edit insertLink to not show activeState on uploaded links (=== -1 && a) + add tag test here
+                    }
+                    return false;
+                }
+            });
             taOptions.toolbar = [
                 ['bold', 'italics', 'underline', 'strikeThrough', 'ul', 'ol', 'redo', 'undo'],
                 ['justifyLeft', 'justifyCenter', 'justifyRight', 'indent', 'outdent'],
-                ['insertLink']
+                ['insertLink', 'fileupload']
             ];
             return taOptions;
         }]);

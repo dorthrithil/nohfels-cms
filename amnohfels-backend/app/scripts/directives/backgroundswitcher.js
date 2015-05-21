@@ -103,7 +103,7 @@ angular.module('amnohfelsBackendApp')
                     $http.get(userInfoResource + owner)
                         .success(function (response) {
                             if (response.stat !== 'fail') {
-                                var creditName = (response.person.realname._content !== '') ? response.person.realname._content : response.person.username._content;
+                                var creditName = (typeof response.person.realname !== 'undefined') ? response.person.realname._content : response.person.username._content;
                                 credit.html('<a target="_blank" href="http://www.flickr.com/photos/' + owner + '">by ' + creditName + '</a>');
                             } else {
                                 credit.html('<a target="_blank"  href="http://www.flickr.com/photos/' + owner + '">credit</a>'); //flickr api error
