@@ -40,7 +40,7 @@ angular
                     var $buttonScope = button.scope();
                     $compile(popoverContent)($buttonScope); //compile it to the buttons scope
                     $timeout(function () {
-                    }); //kick off $apply
+                    }); //kick off $apply //TODO i think i don't need this anymore
                     button.popover({
                         content: popoverContent, //TODO optimise popover placement
                         placement: 'bottom',
@@ -52,13 +52,11 @@ angular
                     var self = this; //for reference inside next function
                     $buttonScope.performAction = function () { //taFileuploadPopover calls this after finishing the upload
                         var urlLink = $buttonScope.taFileUploadAccessPath; //relative path - will be made absolute on client, this way links will still work when we change the environment
-                        console.log(urlLink);
                         if (urlLink && urlLink !== '' && urlLink !== 'http://') { //wrap selection like in insertLink tool
                             button.popover('destroy'); //destroy popover
                             return self.$editor().wrapSelection('createLink', urlLink, true); //TODO only works every second time!!!!!!
                         }
                     };
-                    //$buttonScope.performAction();
                 },
                 activeState: function (commonElement) {
                     if (commonElement) {

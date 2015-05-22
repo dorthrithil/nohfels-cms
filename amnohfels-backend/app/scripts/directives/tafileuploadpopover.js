@@ -7,12 +7,12 @@
  * # taFileuploadPopover
  */
 angular.module('amnohfelsBackendApp')
-    .directive('taFileuploadPopover', function (config, FileUploader, doorman) {
+    .directive('taFileuploadPopover', function (config, FileUploader, doorman) {               //jshint ignore:line
         return {
             templateUrl: 'views/tafileuploadpopover.html',
             restrict: 'E',
             scope: {},
-            controller: function ($scope, $element) {
+            controller: function ($scope, $element) {                                          //jshint ignore:line
 //                $scope.dismiss = function(){
 //                    $element.parent().parent().popover('destroy');
                 //$scope.$destroy();
