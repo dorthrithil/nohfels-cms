@@ -1,18 +1,15 @@
 <label>Datei hochladen:</label>
-<!--<input type="file" nv-file-select uploader="uploader"/><br/>-->
+<input type="file" nv-file-select uploader="uploader" ng-mousedown="$event.stopPropagation()" /><br/>
 
-<!--<div ng-show="uploader.isHTML5">-->
-<!--<div class="progress" style="margin-bottom: 0"-->
-<!--ng-style="{'visibility': uploader.isUploading ? 'visible' : 'hidden'}">-->
-<!--<div class="progress-bar" role="progressbar"-->
-<!--ng-style="{ 'width': uploader.queue[uploader.queue.length - 1].progress + '%' }"-->
-<!--ng-class="{'progress-bar-striped active' : uploader.queue[uploader.queue.length - 1].progress == 100 && !uploader.queue[uploader.queue.length - 1].isSuccess,-->
-<!--'progress-bar-success' : uploader.queue[uploader.queue.length - 1].isSuccess}"></div>-->
-<!--</div>-->
-<!--</div>-->
+<div ng-show="uploader.isHTML5">
+    <div class="progress" style="margin-bottom: 0"
+         ng-style="{'visibility': uploader.isUploading ? 'visible' : 'hidden'}">
+        <div class="progress-bar" role="progressbar"
+             ng-style="{ 'width': uploader.queue[uploader.queue.length - 1].progress + '%' }"
+             ng-class="{'progress-bar-striped active' : uploader.queue[uploader.queue.length - 1].progress == 100 && !uploader.queue[uploader.queue.length - 1].isSuccess,
+'progress-bar-success' : uploader.queue[uploader.queue.length - 1].isSuccess}"></div>
+    </div>
+</div>
 
-<!--<button type="button" class="pull-right btn btn-sm btn-default dismiss" ng-click="dismiss()">Abbrechen</button>-->
-
-
-<button type="button" class="pull-right btn btn-sm btn-default dismiss" ng-click="test()">Test</button>
+<button type="button" class="pull-right btn btn-sm btn-default dismiss" ng-click="dismiss()">Abbrechen</button>
 

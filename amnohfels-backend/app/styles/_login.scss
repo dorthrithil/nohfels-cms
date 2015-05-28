@@ -1,0 +1,31 @@
+.container-login {
+
+  .form-login {
+    max-width: 300px;
+    text-align: center;
+    margin: 0 auto 0 auto;
+    border-radius: 5px;
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 15px;
+
+    img {
+      height: 200px;
+      width: 200px;
+      border-radius: 100px;
+      margin-bottom: 15px;
+    }
+
+    input[type="email"] {
+      margin-bottom: -1px;
+      border-bottom-right-radius: 0;
+      border-bottom-left-radius: 0;
+    }
+    input[type="password"] {
+      margin-bottom: 10px;
+      border-top-left-radius: 0;
+      border-top-right-radius: 0;
+    }
+
+  }
+
+}

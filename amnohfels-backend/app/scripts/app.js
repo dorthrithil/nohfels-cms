@@ -11,8 +11,6 @@
 
 //TODO http://localhost:9001/#/page/cafs should throw a 404
 
-//TODO (1.0.0) update rangy to get rid of error
-
 //TODO (1.0.1) improvement: use ng resource vor rest communication
 //TODO (1.0.1) improvement: use different angular modules for different concerns
 //TODO (1.0.1) tests: add tests
@@ -39,8 +37,6 @@ angular
                     var popoverContent = angular.element('<ta-fileupload-popover></ta-fileupload-popover>'); //create popover
                     var $buttonScope = button.scope();
                     $compile(popoverContent)($buttonScope); //compile it to the buttons scope
-                    $timeout(function () {
-                    }); //kick off $apply //TODO i think i don't need this anymore
                     button.popover({
                         content: popoverContent, //TODO optimise popover placement
                         placement: 'bottom',

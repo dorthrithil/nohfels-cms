@@ -101,6 +101,7 @@ angular.module('amnohfelsBackendApp')
             return Math.floor(Date.now() / 1000) > exp;
         };
 
+        //refreshes jwt (requests new jwt from server by posting the actual active one)
         var refreshJWT = function () {
             $http.post(config.server.api + 'auth/refresh', {jwt: jwt})
                 .success(function (response) { //replace all authInfo with new token

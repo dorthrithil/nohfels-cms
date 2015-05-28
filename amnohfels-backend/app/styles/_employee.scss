@@ -1,0 +1,36 @@
+employee {
+
+  padding-bottom: 15px;
+  display: block;
+
+  .employee-image {
+    display: inline-block;
+    width: 128px;
+    padding: 20px;
+    min-height: 128px;
+    margin-top: 10px;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    border-radius: 66px;
+    vertical-align: top;
+  }
+
+  .employee-main {
+    display: inline-block;
+    vertical-align: top;
+    padding: 10px 0 0 10px;
+  }
+
+  .employee-actions {
+    display: inline-block;
+    vertical-align: top;
+    padding: 10px 0 0 10px;
+
+    .block-label {
+      display: block;
+    }
+
+  }
+
+}

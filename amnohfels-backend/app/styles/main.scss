@@ -1,8 +1,26 @@
-$icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/bootstrap/";
+//replace some default bootstrap variables..
+@import "_bootstrap-theme-variables.scss";
+
+//..include default bootstrap..
 // bower:scss
 @import "bootstrap-sass-official/assets/stylesheets/_bootstrap.scss";
 // endbower
 
+//..and finally replace some bootstrap styles
+@import "_bootstrap-theme.scss";
+
+//import styles for views
+@import "_employee.scss";
+@import "_login.scss";
+@import "_modal-instagram-form.scss";
+@import "_modal-parallax-form.scss";
+@import "_navigation.scss";
+@import "_contentpane.scss";
+@import "_page.scss";
+@import "_backgroundswitcher.scss";
+@import "_ta-fileupload-popover.scss";
+
+//for legacy browsers
 .browsehappy {
   margin: 0.2em 0;
   background: #ccc;
@@ -10,183 +28,3 @@ $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/boots
   padding: 0.2em 0;
 }
 
-body {
-  padding-top: $navbar-height * 2;
-  background: url('') no-repeat center center fixed; //url will be set by backgroundProvider
-  background-size: cover;
-}
-
-//TODO own scss
-
-.flickr-credit{
-  position: fixed;
-  bottom: 5px;
-  right: 5px;
-
-  a{
-    color:#999;
-  }
-}
-
-.flickr-switcher{
-  position: fixed;
-  bottom: 7px;
-  left: 9px;
-  color:#999;
-}
-
-.caret-right {
-  display: inline-block;
-  width: 0;
-  height: 0;
-  margin-top: 2px;
-  vertical-align: middle;
-  border-left: 6px dashed;
-  border-top: 6px solid transparent;
-  border-bottom: 6px solid transparent;
-  cursor: pointer;
-}
-
-.caret-left {
-  display: inline-block;
-  width: 0;
-  height: 0;
-  margin-top: 2px;
-  vertical-align: middle;
-  border-right: 6px dashed;
-  border-top: 6px solid transparent;
-  border-bottom: 6px solid transparent;
-  cursor: pointer;
-}
-
-.solid-pane{ //TODO weird naming
-  background-color: #ffffff;
-  border-radius: 7px;
-  padding: 15px;
-}
-
-//TODO seperate scss
-.actions {
-  text-align: right;
-  margin-bottom: 30px;
-}
-
-.save-button {
-  color: $gray-dark !important;
-}
-
-//TODO seperate scss
-modal-instagram-form {
-  .badge {
-    margin-right: 10px;
-  }
-
-  .tag-option {
-    margin-left: 20px;
-  }
-}
-
-//TODO seperate scss
-employee {
-
-  padding-bottom: 15px;
-  display: block;
-
-  .employee-image {
-    display: inline-block;
-    width: 128px;
-    padding: 20px;
-    min-height: 128px;
-    margin-top: 10px;
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-size: cover;
-    border-radius: 66px;
-    vertical-align: top;
-  }
-
-  .employee-main {
-    display: inline-block;
-    vertical-align: top;
-    padding: 10px 0 0 10px;
-  }
-
-  .employee-actions {
-    display: inline-block;
-    vertical-align: top;
-    padding: 10px 0 0 10px;
-
-    .block-label {
-      display: block;
-    }
-  }
-
-}
-
-//TODO seperate scss
-modal-parallax-form {
-  .height-num {
-    width: 140px !important;
-  }
-
-  .thumbnail {
-    display: inline-block;
-  }
-
-  .inline-block {
-    display: inline-block;
-    vertical-align: top;
-  }
-
-}
-
-//TODO seperate scss
-.container-signin {
-
-  .form-signin {
-    max-width: 300px;
-    text-align: center;
-    margin: 0 auto 0 auto;
-    border-radius: 5px;
-    background-color: rgba(255,255,255,0.9);
-    padding: 15px;
-
-    img {
-      height: 200px;
-      width: 200px;
-      border-radius: 100px;
-      margin-bottom: 15px;
-    }
-
-    input[type="email"] {
-      margin-bottom: -1px;
-      border-bottom-right-radius: 0;
-      border-bottom-left-radius: 0;
-    }
-    input[type="password"] {
-      margin-bottom: 10px;
-      border-top-left-radius: 0;
-      border-top-right-radius: 0;
-    }
-  }
-}
-
-.popover-title {
-  font-weight: bold;
-}
-
-
-//TODO seperate scss
-
-.logout-button{
-  margin-right: 7px !important;
-}
-
-//TODO seperate scss
-
-ta-fileupload-popover{
-  button.dismiss{
-    margin-bottom: 15px;
-    margin-top: 15px;
-  }
-}

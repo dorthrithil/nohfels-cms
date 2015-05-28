@@ -172,7 +172,8 @@ module.exports = function (grunt) {
                 exclude: [
                     'bootstrap/dist/js/bootstrap.js',
                     'bootstrap-css-only',
-                    'bootstrap/dist/css/bootstrap.css'
+                    'bootstrap/dist/css/bootstrap.css',
+                    'rangy/'
                 ]
             },
             sass: {

@@ -1,49 +1,54 @@
-<div ng-controller="NavigationCtrl">
-<nav class="navbar navbar-default navbar-fixed-top" role="navigation" ng-if="showNavigation()">
-    <div class="navbar-header">
-        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
-                data-target="#bs-example-navbar-collapse-1">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-        </button>
-        <a class="navbar-brand" href="#">Am Nohfels Backend</a>
-    </div>
-    <div class="text-center">
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav">
-                <!--pages-->
-                <li class="dropdown">
-                    <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Seiten
-                        editieren <span class="caret"></span></a>
-                    <ul class="dropdown-menu" role="menu">
-                        <li ng-repeat="topic in topics" ng-class="{active: isOnPath('/page/' + topic.id)}"><a
-                                href="#/page/{{topic.id}}">{{topic.name}}</a></li>
-                        <!--TODO footer pages seperated-->
-                        <!--<li class="divider"></li>-->
-                        <!--<li><a href="#">One more separated link</a></li>-->
-                    </ul>
-                </li>
-            </ul>
-            <!--logout-->
-            <ul class="nav navbar-nav navbar-right logout-button">
-                <li>
-                    <button ng-click="logout()" type="button" class="btn btn-default navbar-btn" ng-hide="showConfirmLogoutButton">
-                        <span class="glyphicon glyphicon-off" aria-hidden="true"></span> Logout
-                    </button>
-                    <div class="btn-group" role="group" ng-show="showConfirmLogoutButton">
-                        <button type="button" class="btn btn-default disabled navbar-btn">Es gibt nicht gespeicherte Inhalte. Trotzdem ausloggen?</button>
-                        <button type="button" class="btn btn-default btn-success navbar-btn" ng-click="logoutConfirm()">
-                            <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
-                        </button>
-                        <button type="button" class="btn btn-default btn-danger navbar-btn" ng-click="logoutDismiss()">
-                            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                        </button>
-                    </div>
-                </li>
-            </ul>
+<div ng-controller="NavigationCtrl" class="navigation">
+    <nav class="navbar navbar-default navbar-fixed-top" role="navigation" ng-if="showNavigation()">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                    data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">Am Nohfels Backend</a>
         </div>
-    </div>
-</nav>
+        <div class="text-center">
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <!--pages-->
+                    <li class="dropdown">
+                        <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Seiten
+                            editieren <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li ng-repeat="topic in topics" ng-class="{active: isOnPath('/page/' + topic.id)}"><a
+                                    href="#/page/{{topic.id}}">{{topic.name}}</a></li>
+                            <!--TODO footer pages seperated-->
+                            <!--<li class="divider"></li>-->
+                            <!--<li><a href="#">One more separated link</a></li>-->
+                        </ul>
+                    </li>
+                </ul>
+                <!--logout-->
+                <ul class="nav navbar-nav navbar-right logout-button">
+                    <li>
+                        <button ng-click="logout()" type="button" class="btn btn-default navbar-btn"
+                                ng-hide="showConfirmLogoutButton">
+                            <span class="glyphicon glyphicon-off" aria-hidden="true"></span> Logout
+                        </button>
+                        <div class="btn-group" role="group" ng-show="showConfirmLogoutButton">
+                            <button type="button" class="btn btn-default disabled navbar-btn">Es gibt nicht gespeicherte
+                                Inhalte. Trotzdem ausloggen?
+                            </button>
+                            <button type="button" class="btn btn-default btn-success navbar-btn"
+                                    ng-click="logoutConfirm()">
+                                <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                            </button>
+                            <button type="button" class="btn btn-default btn-danger navbar-btn"
+                                    ng-click="logoutDismiss()">
+                                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                            </button>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
 </div>
