@@ -1,6 +1,6 @@
 <!--TODO title-->
 
-<div class="actions">
+<div class="actions" ng-if="status < 400">
     <div class="btn-group" role="group" aria-label="...">
 
         <button type="button" class="btn btn-default save-button"
@@ -64,8 +64,18 @@
     </table>
 </div>
 
-<div class="alert alert-warning" ng-if="status == 404">
+<div class="alert alert-warning" ng-if="status == 204">
     <p><strong>Huch! Was ist hier los?</strong> Diese Seite hat noch keine Module! Mit einem Klick auf "Neu", oben rechts,
     kannst du neue Module erstellen. </p>
     <p><small>Wenn du dir sicher bist, das du bereits ein Modul für diese Seite erstellt hast und hier trotzdem nichts angezeigt wird, kontaktiere bitte den <a href="mailto:{{adminMail}}">Systemadministrator</a>.</small></p>
+</div>
+
+<div class="alert alert-danger" ng-if="status >= 500">
+    <p><strong>Hoppla!</strong> Ein interner Server Error ist aufgetreten. </p>
+    <p><small>Bitte kontaktiere den <a href="mailto:{{adminMail}}">Systemadministrator</a>.</small></p>
+</div>
+
+<div class="alert alert-danger" ng-if="status == 404">
+    <p><strong>Oh nein! (Error 404)</strong> Die gesuchte Seite existiert nicht! Bitte überprüfe die Rechtschreibung in der Adresszeile!</p>
+    <p><small>Wenn du dir sicher bist, dass die Seite existieren müsste aber hier trotzdem nichts angezeigt wird, kontaktiere bitte den <a href="mailto:{{adminMail}}">Systemadministrator</a>.</small></p>
 </div>

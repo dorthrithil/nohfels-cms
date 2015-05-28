@@ -283,8 +283,23 @@ $app->group('/page', function () use ($app) {
 
     //get page
     $app->get('/:topic', function ($topic) use ($app) {
+
+        //first check if topic exists
+        $topics = getTopics();
+        print($topics);
+        print($topic);
+        $inArray = false;
+        foreach($topics as $topicObj){
+            if($topicObj->id == $topic) $inArray = true;
+        }
+        if(!$inArray) $app->notFound(); //TODO deep search in object structure
+
+        //then process actual request
         $response = getPage($topic);
-        if (sizeOf($response) == 0) $app->notFound();
+
+        //204 if there is an empty but valid result
+        if (sizeOf($response) == 0) header('HTTP/1.1 204 No Content', true, 204);
+
         jsonResponse($response);
     });
 

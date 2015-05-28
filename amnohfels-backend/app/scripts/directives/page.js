@@ -51,7 +51,7 @@ angular.module('amnohfelsBackendApp')
                 };
             },
             controller: function ($scope) {
-                $scope.adminMail = config.admin.mail; //for 404 alert
+                $scope.adminMail = config.admin.mail; //for 204 & >500 alerts
                 $scope.refreshPageData = function () {
                     $http.get(config.server.api + 'page/' + $scope.topic)
                         .success(function (data, status) {
@@ -61,7 +61,6 @@ angular.module('amnohfelsBackendApp')
                         .error(function (data, status) {
                             $scope.status = status;
                         });
-                    //TODO error: "this page has no modules yet or an internal server error occured" => differentiate via status code
                 };
                 $scope.refreshPageData();
                 $scope.$on('sq-http-request-successful', $scope.refreshPageData);

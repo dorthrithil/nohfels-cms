@@ -9,9 +9,8 @@
  * Main module of the application.
  */
 
-//TODO http://localhost:9001/#/page/cafs should throw a 404
-
-//TODO (1.0.1) improvement: use ng resource vor rest communication
+//TODO (1.0.1) UI: check padding in content pane (e.g. when there is a 500 in page directive)
+//TODO (1.0.1) improvement: use ng resource for rest communication
 //TODO (1.0.1) improvement: use different angular modules for different concerns
 //TODO (1.0.1) tests: add tests
 //TODO (1.0.1) documentation: add descriptions and comments to all functions and files
