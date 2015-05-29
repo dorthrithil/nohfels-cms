@@ -8,7 +8,7 @@
  * Service in the amnohfelsBackendApp.
  */
 
-angular.module('amnohfelsBackendApp')
+angular.module('coreModule')
     .service('doorman', function doorman($http, config, $q, $timeout, $location) {
         var loggedIn = false;
         var jwt = false;

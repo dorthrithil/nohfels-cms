@@ -6,10 +6,10 @@
  * @description
  * # taFileuploadPopover
  */
-angular.module('amnohfelsBackendApp')
+angular.module('textAngularModule')
     .directive('taFileuploadPopover', function (config, FileUploader, doorman) {
         return {
-            templateUrl: 'views/tafileuploadpopover.html',
+            templateUrl: 'modules/textAngular/views/tafileuploadpopover.html',
             restrict: 'E',
             scope: {},
             controller: function ($scope, $element) {

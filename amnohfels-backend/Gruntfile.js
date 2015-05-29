@@ -34,7 +34,7 @@ module.exports = function (grunt) {
                 tasks: ['wiredep']
             },
             js: {
-                files: ['<%= yeoman.app %>/scripts/{,*/}*.js'],
+                files: ['<%= yeoman.app %>/scripts/{,*/}*.js', '<%= yeoman.app %>/modules/{,*/}{,*/}*.js'],
                 tasks: ['newer:jshint:all'],
                 options: {
                     livereload: '<%= connect.options.livereload %>'
@@ -57,6 +57,7 @@ module.exports = function (grunt) {
                 },
                 files: [
                     '<%= yeoman.app %>/{,*/}*.html',
+                    '<%= yeoman.app %>/{,*/}{,*/}{,*/}*.html',
                     '.tmp/styles/{,*/}*.css',
                     '<%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}'
                 ]
@@ -119,7 +120,8 @@ module.exports = function (grunt) {
             all: {
                 src: [
                     'Gruntfile.js',
-                    '<%= yeoman.app %>/scripts/{,*/}*.js'
+                    '<%= yeoman.app %>/scripts/{,*/}*.js',
+                    '<%= yeoman.app %>/modules/{,*/}{,*/}*.js'
                 ]
             },
             test: {
@@ -365,6 +367,16 @@ module.exports = function (grunt) {
                     },
                     {
                         expand: true,
+                        dot: true,
+                        cwd: '<%= yeoman.app %>',
+                        dest: '<%= yeoman.dist %>/views/',
+                        src: [
+                            'modules/{,*/}views/{,*/}*.html'
+                        ],
+                        flatten: true
+                    },
+                    {
+                        expand: true,
                         cwd: '.tmp/images',
                         dest: '<%= yeoman.dist %>/images',
                         src: ['generated/*']
@@ -392,15 +404,21 @@ module.exports = function (grunt) {
             }
         },
 
-        //workaround for correctly rereferencing asset fonts manually copied from bower directory to fonts directory
-        //replaces paths
+        // workaround for correctly rereferencing asset fonts copied from bower_components directory to fonts directory
+        // the same applies for html view files
         replace: {
             dist: {
                 options: {
                     patterns: [
                         {
+                            // replace fonts paths
                             match: /bower_components\/bootstrap-sass-official\/assets\/fonts\/bootstrap/g,
                             replacement: 'fonts'
+                        },
+                        {
+                            // rewrite links of referenced views from the deep module folder structure to the flat views folder
+                            match: /modules\/([A-Za-z0-9-_]+)\/views\/([A-Za-z0-9-_]+).html/g,
+                            replacement: 'views/$2.html'
                         }
                     ]
                 },
@@ -410,6 +428,12 @@ module.exports = function (grunt) {
                         flatten: true,
                         src: ['<%= yeoman.dist %>/styles/*.css'],
                         dest: '<%= yeoman.dist %>/styles'
+                    },
+                    {
+                        expand: true,
+                        flatten: true,
+                        src: ['<%= yeoman.dist %>/scripts/*.js'],
+                        dest: '<%= yeoman.dist %>/scripts'
                     }
                 ]
             }

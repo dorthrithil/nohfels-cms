@@ -7,7 +7,7 @@
  * # config
  * Constant in the amnohfelsBackendApp.
  */
-angular.module('amnohfelsBackendApp')
+angular.module('coreModule')
     .constant('config', {
         server: {
             root: 'http://schruemel.de/dev/',
