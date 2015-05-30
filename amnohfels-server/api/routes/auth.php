@@ -2,8 +2,6 @@
 
 function getJWT()
 {
-    //response message for unauthorized requests
-    $unauthorizedMessage = "Diese Kombination aus Passwort und E-Mail Adresse existiert nicht!";
 
     //check if credentials were provided
     if (!isset($_SERVER['HTTP_CREDENTIALS'])) {
@@ -27,7 +25,7 @@ function getJWT()
             //if the user isn't found: quit
             if (mysqli_num_rows($result) == 0) {
                 header('HTTP/1.0 401 Unauthorized');
-                return $unauthorizedMessage;
+                return 'badLoginCredentials';
             }
             while ($rs = $result->fetch_array(MYSQLI_ASSOC)) {
                 $passwordCheck = $rs["password"];
@@ -41,7 +39,7 @@ function getJWT()
     //if the user was found, but the password is incorrect: quit
     if (md5($passwordRequest) != $passwordCheck) {
         header('HTTP/1.0 401 Unauthorized');
-        return $unauthorizedMessage;
+        return 'badLoginCredentials';
     }
 
     return generateAuthInfo();

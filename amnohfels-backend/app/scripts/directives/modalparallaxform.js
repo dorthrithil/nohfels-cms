@@ -16,7 +16,7 @@ angular.module('amnohfelsBackendApp')
             templateUrl: 'views/modalparallaxform.html',
             restrict: 'E',
             controller: function ($scope) {
-                if ($scope.modalVars.action === 'new') {
+                if ($scope.modalVars.action === 'create') {
                     $scope.modalVars.data.title = '';
                     $scope.modalVars.data.heightNum = 500;
                     $scope.modalVars.data.heightUnit = 'px';
@@ -25,7 +25,7 @@ angular.module('amnohfelsBackendApp')
                     $scope.modalVars.data.caption = '';
                 }
                 $scope.modalVars.route = '/parallax';
-                $scope.modalVars.data.page = $scope.topic;
+                $scope.modalVars.data.pageTopic = $scope.pageTopic;
 
                 $scope.setHeightUnit = function (unit) {
                     $scope.modalVars.data.heightUnit = unit;

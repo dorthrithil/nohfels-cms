@@ -15,12 +15,12 @@ angular.module('amnohfelsBackendApp')
             templateUrl: 'views/modalcontactform.html',
             restrict: 'E',
             controller: function ($scope) {
-                if ($scope.modalVars.action === 'new') {
+                if ($scope.modalVars.action === 'create') {
                     $scope.modalVars.data.title = '';
                     $scope.modalVars.data.topic = '';
                 }
                 $scope.modalVars.route = '/contact';
-                $scope.modalVars.data.page = $scope.topic; //TODO find a uniform logical topic/page naming
+                $scope.modalVars.data.pageTopic = $scope.pageTopic;
 
                 //data for popovers
                 $scope.popovers = {

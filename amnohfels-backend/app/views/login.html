@@ -1,11 +1,31 @@
 <div class="container container-login">
-    <form class="form-login">
+    <form class="form-login" name="form" novalidate>
         <img src="images/login/doorman.jpg">
         <h4>Mike verlangt, dass du dich einloggst!</h4>
-        <input type="email" id="inputEmail" class="form-control" placeholder="Email-Adresse" autofocus ng-model="email">
-        <input type="password" id="inputPassword" class="form-control" placeholder="Passwort" ng-model="password">
-        <div class="alert alert-danger" ng-show="errorMessage != ''">{{errorMessage}}</div>
-        <button class="btn btn-lg btn-primary btn-block btn-signin" ng-click="requestLogin()">Einloggen</button>
+
+        <input type="email" id="inputEmail" class="form-control" placeholder="Email-Adresse" autofocus
+               ng-model="email" name="email" pattern=".{1,}@[_a-z0-9A-Z.-]+(\.[a-z0-9A-Z]+)+" required
+               ng-model-options="{updateOn: 'default blur', debounce: {default: 500, blur: 0}}"
+               ng-class="{'input-danger' : !form.email.$valid}">
+
+        <input type="password" id="inputPassword" class="form-control" placeholder="Passwort" ng-model="password"
+               name="password" required>
+
+        <div ng-show="logoutReason == 'badLoginCredentials'" class="alert alert-danger">
+            {{errorMessages.badLoginCredentials}}
+        </div>
+        <div ng-show="logoutReason == 'refreshJWTError'" class="alert alert-warning">
+            {{errorMessages.refreshJWTError}}
+        </div>
+        <div ng-show="loginRequestRejected == true && !form.$valid" class="alert alert-warning">
+            <ul>
+                <li ng-show="!form.email.$valid">{{errorMessages.invalidEmail}}</li>
+                <li ng-show="form.email.$error.required || form.password.$error.required">{{errorMessages.emptyField}}</li>
+            </ul>
+        </div>
+        <button class="btn btn-lg btn-primary btn-block btn-signin" ng-click="console.log('test'); requestLogin()"
+                ng-class="{'disabled-submit' : !form.$valid}">Einloggen
+        </button>
     </form>
     <!--TODO (1.0.1) enhancement (see somments below)-->
     <!--<a href="#" class="forgot-password">-->

@@ -1,5 +1,9 @@
 ta-fileupload-popover {
 
+  input[type="file"] {
+    width: 90%;
+  }
+
   button.dismiss {
     margin-bottom: 15px;
     margin-top: 15px;

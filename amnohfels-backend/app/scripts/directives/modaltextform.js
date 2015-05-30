@@ -8,7 +8,6 @@
  */
 
 //TODO validation (required)
-//TODO file upload (pdf) to link in text
 
 angular.module('amnohfelsBackendApp')
     .directive('modalTextForm', function () {
@@ -16,12 +15,12 @@ angular.module('amnohfelsBackendApp')
             templateUrl: 'views/modaltextform.html',
             restrict: 'E',
             controller: function ($scope) {
-                if ($scope.modalVars.action === 'new') {
+                if ($scope.modalVars.action === 'create') {
                     $scope.modalVars.data.title = '';
                     $scope.modalVars.data.content = '';
                 }
                 $scope.modalVars.route = '/text';
-                $scope.modalVars.data.page = $scope.topic;
+                $scope.modalVars.data.pageTopic = $scope.pageTopic;
             }
         };
     });

@@ -81,7 +81,7 @@ $app->group('/module', function () use ($app) {
         $app->post('', 'authenticateUser', function () use ($app) {
             $json = $app->request->getBody();
             $data = json_decode($json, true);
-            createTextModule($data['page'], $data['title'], $data['content']);
+            createTextModule($data['pageTopic'], $data['title'], $data['content']);
         });
 
         //get text module
@@ -112,7 +112,7 @@ $app->group('/module', function () use ($app) {
         $app->post('', 'authenticateUser', function () use ($app) {
             $json = $app->request->getBody();
             $data = json_decode($json, true);
-            createParallaxModule($data['page'], $data['title'], $data['caption'], $data['heightNum'], $data['heightUnit'], $data['bgImgSrc'], $data['bgImgThumbSrc']);
+            createParallaxModule($data['pageTopic'], $data['title'], $data['caption'], $data['heightNum'], $data['heightUnit'], $data['bgImgSrc'], $data['bgImgThumbSrc']);
         });
 
         //get parallax module
@@ -149,7 +149,7 @@ $app->group('/module', function () use ($app) {
         $app->post('', 'authenticateUser', function () use ($app) {
             $json = $app->request->getBody();
             $data = json_decode($json, true);
-            createImageModule($data['page'], $data['title'], $data['images']);
+            createImageModule($data['pageTopic'], $data['title'], $data['images']);
         });
 
         //get image module
@@ -185,7 +185,7 @@ $app->group('/module', function () use ($app) {
         $app->post('', 'authenticateUser', function () use ($app) {
             $json = $app->request->getBody();
             $data = json_decode($json, true);
-            createContactModule($data['page'], $data['title'], $data['topic']);
+            createContactModule($data['pageTopic'], $data['title'], $data['topic']);
         });
 
         //get contact module
@@ -216,7 +216,7 @@ $app->group('/module', function () use ($app) {
         $app->post('', 'authenticateUser', function () use ($app) {
             $json = $app->request->getBody();
             $data = json_decode($json, true);
-            createInstagramModule($data['page'], $data['maxPhotos'], $data['title'], $data['filterOutTags'], $data['filterForTags'], $data['tags']);
+            createInstagramModule($data['pageTopic'], $data['maxPhotos'], $data['title'], $data['filterOutTags'], $data['filterForTags'], $data['tags']);
         });
 
         //get instagram module
@@ -247,7 +247,7 @@ $app->group('/module', function () use ($app) {
         $app->post('', 'authenticateUser', function () use ($app) {
             $json = $app->request->getBody();
             $data = json_decode($json, true);
-            createStaffModule($data['page'], $data['title'], $data['employees']);
+            createStaffModule($data['pageTopic'], $data['title'], $data['employees']);
         });
 
         //get staff module
@@ -286,8 +286,6 @@ $app->group('/page', function () use ($app) {
 
         //first check if topic exists
         $topics = getTopics();
-        print($topics);
-        print($topic);
         $inArray = false;
         foreach($topics as $topicObj){
             if($topicObj->id == $topic) $inArray = true;

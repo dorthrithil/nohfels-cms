@@ -7,10 +7,7 @@
  * # backgroundSwitcher
  */
 
-//TODO comment switching functions
-
 //TODO (1.0.1) UI: transition on switch background
-
 
 angular.module('amnohfelsBackendApp')
     .directive('backgroundSwitcher', function ($http, $q, $document, $compile) {
@@ -18,7 +15,7 @@ angular.module('amnohfelsBackendApp')
             template: '',
             restrict: 'E',
             link: function postLink(scope, element) {
-                    var publicListResource = 'https://api.flickr.com/services/rest/?method=flickr.favorites.getPublicList&api_key=84b58eae00efe43e7047d04170c781c6&user_id=66027905@N04&format=json&nojsoncallback=1';
+                var publicListResource = 'https://api.flickr.com/services/rest/?method=flickr.favorites.getPublicList&api_key=84b58eae00efe43e7047d04170c781c6&user_id=66027905@N04&format=json&nojsoncallback=1';
                 var userInfoResource = 'https://api.flickr.com/services/rest/?method=flickr.people.getInfo&api_key=84b58eae00efe43e7047d04170c781c6&format=json&nojsoncallback=1&user_id=';
                 var photoURL = '';
                 var owner = '';
@@ -30,23 +27,26 @@ angular.module('amnohfelsBackendApp')
                 var switcher = angular.element('<div class="flickr-switcher"><span ng-click="previous()" class="caret-left"></span>&nbsp<span ng-click="next()" class="caret-right"></span></div>');
                 $compile(switcher)(scope);
 
+                // increments index and changes background to the corresponding image
                 scope.next = function () {
                     index++;
-                    if(index > publicPhotos.length - 1){
+                    if (index > publicPhotos.length - 1) {
                         index = 0;
                     }
                     switchBackground();
                 };
 
+                // decrements index and changes background to the corresponding image
                 scope.previous = function () {
                     index--;
-                    if(index < 0){
+                    if (index < 0) {
                         index = publicPhotos.length - 1;
                     }
                     switchBackground();
                 };
 
-                function switchBackground(){
+                // prepares background switch & calls setBackground
+                function switchBackground() {
                     owner = publicPhotos[index].owner;
                     photoURL = mapUrlLink(publicPhotos[index]);
                     setBackground();

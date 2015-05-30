@@ -7,7 +7,7 @@
  * # employee
  */
 
-//TODO set right breakpoints on small devices for view
+//TODO (1.0.1) UI: set right breakpoints on small devices for view
 
 angular.module('amnohfelsBackendApp')
     .directive('employee', function (config, FileUploader, doorman) {
@@ -21,11 +21,11 @@ angular.module('amnohfelsBackendApp')
             },
             controller: function ($scope) {
                 //modalVars
-                if ($scope.$parent.modalVars.action === 'edit') { //TODO edit should be named update
+                if ($scope.$parent.modalVars.action === 'update') {
                     $scope.imageSrc = config.server.root + $scope.data.imageSrc;
                 }
                 //show dummy if the module is new (action === 'new') or if we added a new employee to an existing one (imageSrc === '')
-                if ($scope.$parent.modalVars.action === 'new' || $scope.data.imageSrc === '') { //TODO new should be named create
+                if ($scope.$parent.modalVars.action === 'create' || $scope.data.imageSrc === '') {
                     $scope.imageSrc = '/images/user_icon_dummies/' + $scope.index % 3 + '.png';
                 }
 

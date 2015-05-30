@@ -26,7 +26,7 @@ angular
                     var $buttonScope = button.scope();
                     $compile(popoverContent)($buttonScope); //compile it to the buttons scope
                     button.popover({
-                        content: popoverContent, //TODO optimise popover placement & wrap words in selected file
+                        content: popoverContent, //TODO (1.0.1) UI: optimise popover placement
                         placement: 'bottom',
                         container: 'body',
                         viewport: button,

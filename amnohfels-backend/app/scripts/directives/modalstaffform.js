@@ -13,12 +13,12 @@ angular.module('amnohfelsBackendApp')
             templateUrl: 'views/modalstaffform.html',
             restrict: 'E',
             controller: function ($scope) {
-                if ($scope.modalVars.action === 'new') {
+                if ($scope.modalVars.action === 'create') {
                     $scope.modalVars.data.title = '';
                     $scope.modalVars.data.employees = [];
                 }
                 $scope.modalVars.route = '/staff';
-                $scope.modalVars.data.page = $scope.topic;
+                $scope.modalVars.data.pageTopic = $scope.pageTopic;
 
                 $scope.addEmployee = function () {
                     $scope.modalVars.data.employees.push({

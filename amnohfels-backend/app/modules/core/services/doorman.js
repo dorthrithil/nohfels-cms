@@ -38,8 +38,8 @@ angular.module('coreModule')
         this.login = function (email, password) {
             return $q(function (resolve, reject) {
                 $http.get(config.server.api + 'auth/request', {headers: {
-                        'CREDENTIALS': email + ':' + password //deliver credentials as http header
-                    }}) //get auth request
+                    'CREDENTIALS': email + ':' + password //deliver credentials as http header
+                }}) //get auth request
                     .success(function (response) { //store authInfo and resolve
                         jwt = response.jwt;
                         exp = response.exp;
@@ -49,8 +49,14 @@ angular.module('coreModule')
                         resolve();
                     })
                     .error(function (response) { //cautions logout & reject
-                        self.logout();
-                        reject(response);
+                        if (response === 'badLoginCredentials') {
+                            // logout with reason
+                            self.hardLogout('badLoginCredentials');
+                        } else {
+                            //logout without reason
+                            self.hardLogout();
+                        }
+                        reject();
                     });
             });
         };
@@ -77,13 +83,15 @@ angular.module('coreModule')
         };
 
         //logs out user without unsaved changes check
-        this.hardLogout = function(){
+        this.hardLogout = function (reason) {
+            reason = reason || 'standardLogout';
             unsavedChanges = 0; //reset unsaved changes
             localStorage.removeItem('authInfo');
             loggedIn = false;
             jwt = false;
             $timeout.cancel(refreshTimeoutPromise); //cancel refresh timeout, so we don't get a 401 after the delay
-            $location.path('/login'); //route to login page
+            var reasonParameter = (reason === 'standardLogout') ? '' : '/' + reason; //used for displaying the logout reason to the user
+            $location.path('/login' + reasonParameter); //route to login page
         };
 
         //stores authInfo object as json in localStorage
@@ -112,8 +120,7 @@ angular.module('coreModule')
                     loggedIn = true;
                 })
                 .error(function () {
-                    self.logout();
-                    //TODO error message
+                    self.hardLogout('refreshJWTError');
                 });
         };
 
@@ -128,11 +135,11 @@ angular.module('coreModule')
 
         //track unsaved changes to warn user when he tries to log out with unsaved changes
         var unsavedChanges = 0;
-        this.addUnsavedChange = function(){
+        this.addUnsavedChange = function () {
             unsavedChanges++;
         };
-        this.removeUnsavedChange = function(){
-            if (unsavedChanges > 0){
+        this.removeUnsavedChange = function () {
+            if (unsavedChanges > 0) {
                 unsavedChanges--;
             }
         };

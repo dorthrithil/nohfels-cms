@@ -7,7 +7,7 @@
  * # modal
  */
 
-//TODO destroy modal scopes on dismiss (need to be isolated)
+//TODO (1.0.1) performance: destroy modal scopes on dismiss (need to be isolated)
 
 angular.module('amnohfelsBackendApp')
     .directive('modal', function ($compile, syncQueue, doorman) {
@@ -41,10 +41,10 @@ angular.module('amnohfelsBackendApp')
                 doorman.addUnsavedChange();
                 $scope.save = function(){
                     switch($scope.modalVars.action){
-                        case 'new':
+                        case 'create':
                             syncQueue.push('post', 'module' + $scope.modalVars.route, $scope.modalVars.data);
                             break;
-                        case 'edit':
+                        case 'update':
                             syncQueue.push('post', 'module' + $scope.modalVars.route + '/' + $scope.modalVars.data.id, $scope.modalVars.data);
                             break;
                     }

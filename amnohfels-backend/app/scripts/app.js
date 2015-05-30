@@ -18,6 +18,7 @@
 //TODO (1.0.1) improvement: sort pages by header/footer position
 //TODO (1.0.1) create submodules where it makes sense
 //TODO (1.0.1) refactoring: put fileUploader filters in one place and inject them (parallax, employee, image)
+//TODO (1.0.1) refactoring:  uniform comments (no inline comments)
 
 //TODO (1.0.2) enhancement: use HTML5 image preview instead of loading image from server after upload finished (parallax, employee, image)
 
@@ -28,11 +29,11 @@ angular
     .config(function ($routeProvider) {
         //configure ngRoute
         $routeProvider
-            .when('/login', {
+            .when('/login/:logoutReason?', {
                 controller: 'LoginCtrl',
                 templateUrl: 'views/login.html'
             })
-            .when('/page/:topic', {
+            .when('/page/:pageTopic', {
                 controller: 'DynamicLinkerCtrl',
                 templateUrl: 'views/dynamiclinker.html'
             })

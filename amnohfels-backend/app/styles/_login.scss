@@ -26,6 +26,23 @@
       border-top-right-radius: 0;
     }
 
+    .input-danger{
+      color: $alert-danger-text;
+    }
+
+    .disabled-submit{
+      opacity: 0.5
+    }
+
+    ul{
+      padding-left: 15px;
+
+      li{
+        text-align: left;
+      }
+
+    }
+
   }
 
 }

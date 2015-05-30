@@ -9,5 +9,5 @@
  */
 angular.module('amnohfelsBackendApp')
   .controller('DynamicLinkerCtrl', function ($scope, $routeParams) {
-        $scope.topic = $routeParams.topic;
+        $scope.pageTopic = $routeParams.pageTopic;
   });

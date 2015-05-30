@@ -18,12 +18,12 @@ angular.module('amnohfelsBackendApp')
             templateUrl: 'views/modalimageform.html',
             restrict: 'E',
             controller: function ($scope) {
-                if ($scope.modalVars.action === 'new') {
+                if ($scope.modalVars.action === 'create') {
                     $scope.modalVars.data.title = '';
                     $scope.modalVars.data.images = [];
                 }
                 $scope.modalVars.route = '/image';
-                $scope.modalVars.data.page = $scope.topic;
+                $scope.modalVars.data.pageTopic = $scope.pageTopic;
 
                 $scope.shiftLeft = function (index) {
                     var buffer = $scope.modalVars.data.images[index];

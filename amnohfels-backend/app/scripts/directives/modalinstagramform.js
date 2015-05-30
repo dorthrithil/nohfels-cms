@@ -16,21 +16,21 @@ angular.module('amnohfelsBackendApp')
             restrict: 'E',
             controller: function ($scope) {
                 $scope.tags = []; //for storing the text in ngTagsInput Object representation
-                if ($scope.modalVars.action === 'new') {
+                if ($scope.modalVars.action === 'create') {
                     $scope.modalVars.data.title = '';
                     $scope.modalVars.data.maxPhotos = 10;
                     $scope.modalVars.data.filterOutTags = true;
                     $scope.modalVars.data.filterForTags = true;
                     $scope.modalVars.data.tags = [];
                 }
-                if ($scope.modalVars.action === 'edit') {
+                if ($scope.modalVars.action === 'update') {
                     $scope.modalVars.data.maxPhotos = parseInt($scope.modalVars.data.maxPhotos);
                     angular.forEach($scope.modalVars.data.tags, function (value) {
                         $scope.tags.push({text: value});
                     });
                 }
                 $scope.modalVars.route = '/instagram';
-                $scope.modalVars.data.page = $scope.topic;
+                $scope.modalVars.data.pageTopic = $scope.pageTopic;
 
                 $scope.showTagsInput = function () {
                     return $scope.modalVars.data.filterForTags;
