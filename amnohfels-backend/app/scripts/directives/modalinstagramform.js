@@ -7,7 +7,7 @@
  * # modalInstagramForm
  */
 
-//TODO validation (required)
+//TODO (1.0.0) validation (required)
 
 angular.module('amnohfelsBackendApp')
     .directive('modalInstagramForm', function () {

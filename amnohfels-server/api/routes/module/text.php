@@ -91,6 +91,10 @@ function updateTextModule($id, $title, $content)
 
 function deleteTextModule($id)
 {
+
+    //provoke server error
+    wrfhwrthwrhwrh();
+
     $connection = getConnection();
 
     try {

@@ -12,7 +12,7 @@
 //TODO (1.0.1) enhancement: "loading the content failed - retry" button after some time without success
 
 angular.module('amnohfelsBackendApp')
-    .directive('page', function (config, $http, syncQueue, $compile) {
+    .directive('page', function (config, $http, syncQueue, $compile, $window) {
         return {
             templateUrl: 'views/page.html',
             restrict: 'E',
@@ -79,8 +79,17 @@ angular.module('amnohfelsBackendApp')
                         });
                 };
 
-                // refresh page data when syncQueue finished the request
-                $scope.$on('sq-http-request-successful', $scope.refreshPageData);
+                //TODO (1.0.1) UI: use a modal instead of an alert. maybe use confirmationmodal
+                // refresh page data when syncQueue encounters an error
+                $scope.$on('sq-error', function(){
+                    $scope.refreshPageData();
+                    $window.alert('Es gab Probleme bei der Synchronisation mit dem Server. Die Daten wurden auf den letzten bekannten Stand zurückgesetzt. ');
+                });
+
+                //TODO (1.0.1) enhancement: deprecated - see TODOs in syncQueue & modal
+                $scope.$on('sq-update-model', function() {
+                    $scope.refreshPageData();
+                });
 
                 //functions for swapping module positions up & down
                 $scope.up = function (module) {
@@ -105,8 +114,12 @@ angular.module('amnohfelsBackendApp')
 
                 // deletes a module
                 $scope.deleteModule = function (index) {
-                    syncQueue.push('delete', 'module/' + $scope.modules[index].type.id + '/' + $scope.modules[index].data.id); //TODO get real route (change module ids to ids without redundant _module suffix?)
-                    $scope.modules.splice(index, 1); //TODO get new data from server instead of splicing around
+
+                    // delete from server
+                    syncQueue.push('delete', 'module/' + $scope.modules[index].type.id + '/' + $scope.modules[index].data.id);
+
+                    // delete from model
+                    $scope.modules.splice(index, 1);
                 };
 
                 // get sync status for coloring the save button
@@ -114,12 +127,13 @@ angular.module('amnohfelsBackendApp')
                     return syncQueue.isSynced();
                 };
 
+
                 // INIT
 
                 // get page data..
                 $scope.refreshPageData();
 
-                // ..and module available types
+                // ..and available module types
                 $http.get(config.server.api + 'module/types')
                     .success(function (data) {
                         $scope.moduleTypes = data;

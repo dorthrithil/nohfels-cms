@@ -7,7 +7,7 @@
  * # modalContactForm
  */
 
-//TODO validation (required, email)
+//TODO (1.0.0) validation (required, email)
 
 angular.module('amnohfelsBackendApp')
     .directive('modalContactForm', function () {

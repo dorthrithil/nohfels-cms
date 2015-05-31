@@ -143,4 +143,7 @@ angular.module('coreModule')
                 unsavedChanges--;
             }
         };
+        this.resetUnsavedChanges = function () {
+            unsavedChanges = 0;
+        };
     });

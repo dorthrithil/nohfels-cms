@@ -40,12 +40,13 @@ angular.module('amnohfelsBackendApp')
             controller: function($scope, $element){
                 doorman.addUnsavedChange();
                 $scope.save = function(){
+                    //TODO (1.0.1) improvement: when syncQueue is containing promises, we can let the server respond with a single element which just was generated on create or update. we can add this to the model and skip updating the whole model like we do now
                     switch($scope.modalVars.action){
                         case 'create':
-                            syncQueue.push('post', 'module' + $scope.modalVars.route, $scope.modalVars.data);
+                            syncQueue.push('post', 'module' + $scope.modalVars.route, $scope.modalVars.data, true);
                             break;
                         case 'update':
-                            syncQueue.push('post', 'module' + $scope.modalVars.route + '/' + $scope.modalVars.data.id, $scope.modalVars.data);
+                            syncQueue.push('post', 'module' + $scope.modalVars.route + '/' + $scope.modalVars.data.id, $scope.modalVars.data, true);
                             break;
                     }
                     doorman.removeUnsavedChange();
