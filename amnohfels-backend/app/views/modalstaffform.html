@@ -1,20 +1,30 @@
-<form>
-    <div class="form-group">
-        <label for="title">Titel</label>
-        <input type="text" class="form-control" id="title" placeholder="Titel eingeben" ng-model="modalVars.data.title">
+<form name="form" novalidate>
+  <div class="form-group">
+    <label for="title">Titel</label>
+    <input type="text" class="form-control" id="title" placeholder="Titel eingeben" ng-model="modalVars.data.title"
+           name="title" required>
+  </div>
+
+  <div class="form-group">
+    <label for="title">Angestellte</label>
+
+    <div>
+      <button type="button" class="btn btn-default" ng-click="addEmployee()">
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Angestellten hinzufügen
+      </button>
     </div>
+  </div>
 
-    <div class="form-group">
-        <label for="title">Angestellte</label>
+  <employee ng-repeat="employee in modalVars.data.employees" index="$index"
+            is-last-employee="$index == modalVars.data.employees.length - 1" data="employee"></employee>
 
-        <div>
-            <button type="button" class="btn btn-default" ng-click="addEmployee()">
-                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Angestellten hinzufügen
-            </button>
-        </div>
-    </div>
-
-    <employee ng-repeat="employee in modalVars.data.employees" index="$index" is-last-employee="$index == modalVars.data.employees.length - 1" data="employee"></employee>
-
+  <div ng-show="form.$submitted && (!form.$valid || !employeesValid())"
+       class="alert alert-warning">
+    <ul>
+      <li ng-show="form.title.$error.required || !employeesValid()">
+        {{errorMessages.emptyField}}
+      </li>
+    </ul>
+  </div>
 </form>
 

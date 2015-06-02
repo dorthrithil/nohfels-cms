@@ -1,13 +1,22 @@
-<form>
-    <div class="form-group">
-        <label for="title">Titel</label>
-        <input type="text" class="form-control" id="title" placeholder="Titel eingeben" ng-model="modalVars.data.title">
-    </div>
-    <div class="form-group">
-        <label for="topic">Thema</label>
-        <popover data="popovers.topic"></popover>
+<form name="form" novalidate>
+  <div class="form-group">
+    <label for="title">Titel</label>
+    <input type="text" class="form-control" id="title" placeholder="Titel eingeben" ng-model="modalVars.data.title"
+           required name="title">
+  </div>
+  <div class="form-group">
+    <label for="topic">Thema</label>
+    <popover data="popovers.topic"></popover>
 
-        <input type="text" class="form-control" id="topic" placeholder="Thema eingeben" ng-model="modalVars.data.topic">
-    </div>
+    <input type="text" class="form-control" id="topic" placeholder="Thema eingeben" ng-model="modalVars.data.topic"
+           required name="topic">
+  </div>
+
+  <div ng-show="form.$submitted && !form.$valid" class="alert alert-warning">
+    <span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span>
+    <span ng-show="form.topic.$error.required || form.title.$error.required">
+      {{errorMessages.emptyField}}
+    </span>
+  </div>
 </form>
 

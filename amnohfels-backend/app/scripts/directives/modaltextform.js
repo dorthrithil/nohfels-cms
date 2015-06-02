@@ -7,8 +7,6 @@
  * # modalTextForm
  */
 
-//TODO (1.0.0) validation (required)
-
 angular.module('amnohfelsBackendApp')
     .directive('modalTextForm', function () {
         return {

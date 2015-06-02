@@ -1,41 +1,55 @@
-<form>
-    <div class="form-group">
-        <label for="title">Titel</label>
-        <input type="text" class="form-control" id="title" placeholder="Titel eingeben" ng-model="modalVars.data.title">
-    </div>
-    <div class="form-group">
-        <label>Maximale Anzahl an Fotos</label>
+<form novalidate name="form">
+  <div class="form-group">
+    <label for="title">Titel</label>
+    <input type="text" class="form-control" id="title" placeholder="Titel eingeben" ng-model="modalVars.data.title"
+           name="title" required>
+  </div>
+  <div class="form-group">
+    <label>Maximale Anzahl an Fotos</label>
 
-        <div>
-            <span class="badge">{{modalVars.data.maxPhotos}}</span>
-            <slider ng-model="modalVars.data.maxPhotos" min="1" step="1" max="30" value="modalVars.data.maxPhotos"
-                    style="display: inline-block" tooltip="hide"></slider>
-        </div>
+    <div>
+      <span class="badge">{{modalVars.data.maxPhotos}}</span>
+      <slider ng-model="modalVars.data.maxPhotos" min="1" step="1" max="30" value="modalVars.data.maxPhotos"
+              style="display: inline-block" tooltip="hide"></slider>
     </div>
-    <div class="form-group">
-        <label>Optionen</label>
+  </div>
+  <div class="form-group">
+    <label>Optionen</label>
 
-        <div class="checkbox">
-            <label>
-                <input ng-model="modalVars.data.filterOutTags" ng-checked="modalVars.data.filterOutTags"
-                       type="checkbox">
-                Hashtags aus Bild-Caption entfernen
-                <popover data="popovers.removeHashtags"></popover>
-            </label>
-        </div>
-        <div class="checkbox">
-            <label>
-                <input ng-model="modalVars.data.filterForTags" ng-checked="modalVars.data.filterForTags"
-                       type="checkbox">
-                Nach Hashtags filtern
-                <popover data="popovers.filterForHashtags"></popover>
-            </label>
-        </div>
+    <div class="checkbox">
+      <label>
+        <input ng-model="modalVars.data.filterOutTags" ng-checked="modalVars.data.filterOutTags"
+               type="checkbox">
+        Hashtags aus Bild-Caption entfernen
+        <popover data="popovers.removeHashtags"></popover>
+      </label>
     </div>
+    <div class="checkbox">
+      <label>
+        <input ng-model="modalVars.data.filterForTags" ng-checked="modalVars.data.filterForTags"
+               type="checkbox">
+        Nach Hashtags filtern
+        <popover data="popovers.filterForHashtags"></popover>
+      </label>
+    </div>
+  </div>
 
-    <div class="form-group tag-option" ng-show="showTagsInput()">
-        <label>Nur Fotos mit diesen Tags anzeigen:</label>
-        <tags-input ng-model="tags" placeholder="Tag eingeben" on-tag-added="addTag($tag)" on-tag-removed="removeTag($tag)"></tags-input>
-    </div>
+  <div class="form-group tag-option" ng-show="showTagsInput()">
+    <label>Nur Fotos mit diesen Tags anzeigen:</label>
+    <tags-input ng-model="tags" placeholder="Tag eingeben" on-tag-added="addTag($tag)"
+                on-tag-removed="removeTag($tag)"></tags-input>
+  </div>
+
+  <div ng-show="form.$submitted && (!form.$valid || !tagsValid())"
+       class="alert alert-warning">
+    <ul>
+      <li ng-show="form.title.$error.required">
+        {{errorMessages.emptyField}}
+      </li>
+      <li ng-show="!tagsValid()">
+        {{errorMessages.noTagsProvided}}
+      </li>
+    </ul>
+  </div>
 </form>
 
