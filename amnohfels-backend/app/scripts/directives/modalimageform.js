@@ -7,10 +7,10 @@
  * # modalImageForm
  */
 
-//TODO (1.0.0) add caption functionality to gallery
-
 //TODO (1.0.1) bug (firefox, most probably also ie): after picture upload is finished the "server is processing" indication isn't shown
 //TODO (1.0.1) improvement: mechanism for automatically handling the bigger-option on pictures so no layout errors will occur
+//TODO (1.0.1) bug: firstUploadFinished logic doesn't make real sense. what about second uploads?
+//TODO (1.0.1) UI: optimise thumbnail caption toolbar
 
 angular.module('amnohfelsBackendApp')
   .directive('modalImageForm', function (config, FileUploader, doorman) {
@@ -18,9 +18,22 @@ angular.module('amnohfelsBackendApp')
       templateUrl: 'views/modalimageform.html',
       restrict: 'E',
       controller: function ($scope) {
+        // for form validation
+        $scope.firstUploadFinished = false;
+
         if ($scope.modalVars.action === 'create') {
           $scope.modalVars.data.title = '';
           $scope.modalVars.data.images = [];
+        }
+        if ($scope.modalVars.action === 'update') {
+          $scope.firstUploadFinished = true;
+          for (var i = 0; i < $scope.modalVars.data.images.length; i++) {
+            if ($scope.modalVars.data.images[i].imageCaption === '') {
+              $scope.modalVars.data.images[i].hasImageCaption = false;
+            } else {
+              $scope.modalVars.data.images[i].hasImageCaption = true;
+            }
+          }
         }
         $scope.modalVars.route = '/image';
         $scope.modalVars.data.pageTopic = $scope.pageTopic;
@@ -50,6 +63,15 @@ angular.module('amnohfelsBackendApp')
           }
         };
 
+        /**
+         * Toggles image caption for an image. If toggled off, the caption will first not be deleted, only hidden. On
+         * the server it will be decided to save or discard the caption via the hasImageCaption boolean
+         * @param index - The index of the selected image
+         */
+        $scope.toggleCaption = function (index) {
+          $scope.modalVars.data.images[index].hasImageCaption = !$scope.modalVars.data.images[index].hasImageCaption;
+        };
+
         $scope.serverRoot = config.server.root; //for wiring up the thumbnail src in view
 
         //actions
@@ -72,7 +94,10 @@ angular.module('amnohfelsBackendApp')
         $scope.popovers = {
           images: {
             title: 'Erklärung zur "Groß"-Option',
-            content: 'Wenn du die "Groß"-Option bei einem Bild aktivierst, wird das Bild auf der Website in voller Breite angezeigt. Sei dir bewusst, dass du zur Zeit darauf achten musst, dass nach einem großen Bild mindestens eine Reihe von drei kleinen Bildern folgen muss, damit die Bilder schön angeordnet werden können. (In zukünftigen Versionen wird das behoben)'
+            content: 'Wenn du die "Groß"-Option bei einem Bild aktivierst, wird das Bild auf der Website in voller' +
+            ' Breite angezeigt. Sei dir bewusst, dass du zur Zeit darauf achten musst, dass nach einem großen Bild' +
+            ' mindestens eine Reihe von drei kleinen Bildern folgen muss, damit die Bilder schön angeordnet werden' +
+            ' können. (In zukünftigen Versionen wird das behoben)'
           }
         };
 
@@ -84,9 +109,6 @@ angular.module('amnohfelsBackendApp')
             'JWT': doorman.getJWT()
           }
         });
-
-        // for form validation
-        $scope.firstUploadFinished = false;
 
         //filters
         //only image files
@@ -112,7 +134,9 @@ angular.module('amnohfelsBackendApp')
             imageSize: 'small',
             imageSrc: response.path,
             imageThumbSrc: response.thumbPath,
-            imageThumbSquareSrc: response.thumbSquarePath
+            imageThumbSquareSrc: response.thumbSquarePath,
+            imageCaption: '',
+            hasImageCaption: false
           });
         };
       }

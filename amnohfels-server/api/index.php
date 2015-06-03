@@ -287,8 +287,10 @@ $app->group('/page', function () use ($app) {
         //first check if topic exists
         $topics = getTopics();
         $inArray = false;
-        foreach($topics as $topicObj){
-            if($topicObj->id == $topic) $inArray = true;
+        foreach($topics as $topicsSection){
+            foreach($topicsSection as $topicObj){
+                if($topicObj->id == $topic) $inArray = true;
+            }
         }
         if(!$inArray) $app->notFound(); //TODO deep search in object structure
 
@@ -296,7 +298,7 @@ $app->group('/page', function () use ($app) {
         $response = getPage($topic);
 
         //204 if there is an empty but valid result
-        if (sizeOf($response) == 0) header('HTTP/1.1 204 No Content', true, 204);
+        if (sizeOf($response->modules) == 0) header('HTTP/1.1 204 No Content', true, 204);
 
         jsonResponse($response);
     });

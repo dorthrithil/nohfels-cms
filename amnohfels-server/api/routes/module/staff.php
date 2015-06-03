@@ -27,7 +27,8 @@ function createStaffModule($page, $title, $employees)
         foreach($employees as $employee){
             $image_src = $employee['imageSrc'];
             $name = $employee['name'];
-            $result = $connection->query("INSERT INTO staff_module_employees (image_src, name, staff_module, position) VALUES  ('$image_src', '$name', '$module_id', '$i')");
+            $caption = $employee['caption'];
+            $result = $connection->query("INSERT INTO staff_module_employees (image_src, name, staff_module, position, caption) VALUES  ('$image_src', '$name', '$module_id', '$i', '$caption')");
             if (!$result) {
                 throw new Exception($connection->error);
             }
@@ -78,7 +79,7 @@ function getStaffModule($id)
 
     $employees = array();
     try {
-        $result = $connection->query("SELECT image_src, name FROM staff_module_employees WHERE staff_module = '$id'");
+        $result = $connection->query("SELECT image_src, name, caption FROM staff_module_employees WHERE staff_module = '$id'");
         if (!$result) {
             throw new Exception($connection->error);
         } else {
@@ -86,6 +87,7 @@ function getStaffModule($id)
                 $employee = new stdClass();
                 $employee->name = $rs['name'];
                 $employee->imageSrc = $rs['image_src'];
+                $employee->caption = $rs['caption'];
                 $employees[] = $employee;
             }
         }
@@ -122,7 +124,8 @@ function updateStaffModule($id, $title, $employees)
         foreach($employees as $employee){
             $image_src = $employee['imageSrc'];
             $name = $employee['name'];
-            $result = $connection->query("INSERT INTO staff_module_employees (image_src, name, staff_module, position) VALUES  ('$image_src', '$name', '$id', '$i')");
+            $caption = $employee['caption'];
+            $result = $connection->query("INSERT INTO staff_module_employees (image_src, name, staff_module, position, caption) VALUES  ('$image_src', '$name', '$id', '$i', '$caption')");
             if (!$result) {
                 throw new Exception($connection->error);
             }

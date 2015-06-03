@@ -23,7 +23,8 @@ angular.module('amnohfelsBackendApp')
         $scope.addEmployee = function () {
           $scope.modalVars.data.employees.push({
             name: '',
-            imageSrc: ''
+            imageSrc: '',
+            caption: ''
           });
         };
         $scope.deleteEmployee = function (index) {

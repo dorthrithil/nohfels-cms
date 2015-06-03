@@ -1,7 +1,8 @@
 <form novalidate name="form">
   <div class="form-group">
     <label for="title">Titel</label>
-    <input type="text" class="form-control" id="title" placeholder="Titel eingeben" ng-model="modalVars.data.title" name="title" required>
+    <input type="text" class="form-control" id="title" placeholder="Titel eingeben" ng-model="modalVars.data.title"
+           name="title" required>
   </div>
 
   <div class="form-group">
@@ -26,10 +27,18 @@
     <div class="row">
       <div class="col-sm-6 col-md-4" ng-repeat="image in modalVars.data.images">
         <div class="thumbnail">
-          <img ng-src="{{serverRoot + image.imageThumbSrc}}">
+          <div>
+            <img ng-src="{{serverRoot + image.imageThumbSrc}}">
+
+            <div class="form-group image-caption" ng-show="modalVars.data.images[$index].hasImageCaption">
+              <label>Bildtext:</label>
+              <textarea class="form-control" ng-model="modalVars.data.images[$index].imageCaption" rows="3"></textarea>
+            </div>
+          </div>
+
 
           <div class="caption">
-            <div class="btn-group" role="group">
+            <div class="btn-group btn-group-sm" role="group">
               <button type="button" class="btn btn-default" ng-click="shiftLeft($index)"
                       ng-disabled="$index == 0">
                 <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
@@ -41,14 +50,19 @@
 
               <button type="button" class="btn btn-default" ng-click="remove($index)"
                       ng-class="{'btn-danger' : showConfirmDeletion($index)}">
-                                <span class="glyphicon glyphicon-trash" aria-hidden="true"
-                                      ng-class="{'red' : showConfirmDeletion($index)}"></span>
+                <span class="glyphicon glyphicon-trash" aria-hidden="true"
+                      ng-class="{'red' : showConfirmDeletion($index)}"></span>
               </button>
+            </div>
+            <div class="btn-group btn-group-sm" role="group">
               <button type="button" class="btn btn-default" ng-click="toggleSize($index)">
-                                <span class="glyphicon" aria-hidden="true"
-                                      ng-class="{'glyphicon-plus-sign' : modalVars.data.images[$index].imageSize == 'small', 'glyphicon-minus-sign' : modalVars.data.images[$index].imageSize == 'large'}"></span>
+                <span class="glyphicon" aria-hidden="true"
+                      ng-class="{'glyphicon-plus-sign' : modalVars.data.images[$index].imageSize == 'small', 'glyphicon-minus-sign' : modalVars.data.images[$index].imageSize == 'large'}"></span>
                 <span ng-show="modalVars.data.images[$index].imageSize == 'small'"> Groß</span>
                 <span ng-show="modalVars.data.images[$index].imageSize == 'large'"> Normal</span>
+              </button>
+              <button type="button" class="btn btn-default" ng-click="toggleCaption($index)">
+                <span class="glyphicon glyphicon-font" aria-hidden="true"></span>
               </button>
             </div>
           </div>

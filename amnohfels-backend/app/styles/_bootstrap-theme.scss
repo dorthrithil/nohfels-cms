@@ -1,5 +1,20 @@
-//popovers
+/** popovers **/
 
+// highlight titles
 .popover-title {
   font-weight: bold;
+}
+
+/** thumbnails **/
+
+// style thumbnail images properly even if they're inside a div
+.thumbnail {
+  div {
+    > img,
+    a > img {
+      @include img-responsive();
+      margin-left: auto;
+      margin-right: auto;
+    }
+  }
 }

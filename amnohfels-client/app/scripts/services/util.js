@@ -78,7 +78,7 @@ angular.module('amnohfelsClientApp')
         this.compilePage = function (topic, $scope) {
             $http.get(config.server.api + 'page/' + topic)
                 .success(function (response) {
-                    $scope.response = response;
+                    $scope.response = response.modules;
                     $scope.$broadcast('compile-modules'); //TODO (1.0.1) improvement: as this is the same page, i could use a function instead of events?
                 });
         };

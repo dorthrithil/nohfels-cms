@@ -11,6 +11,7 @@ angular.module('amnohfelsClientApp')
         return {
             restrict: 'A',
             link: function (scope, element) {
+              //TODO (1.0.0) don't fetch data from util service
                 scope.$on('compile-modules', function () {
                     angular.forEach(scope.response, function (value, key) {
                         var compileStream = '';

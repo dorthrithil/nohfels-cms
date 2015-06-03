@@ -37,7 +37,9 @@ function createImageModule($page, $title, $images)
             $image_thumb_src = $image['imageThumbSrc'];
             $image_thumb_square_src = $image['imageThumbSquareSrc'];
             $image_size = $image['imageSize'];
-            $result = $connection->query("INSERT INTO image_module_images (image_src, image_thumb_src, image_thumb_square_src, image_size, image_module, image_position) VALUES  ('$image_src', '$image_thumb_src', '$image_thumb_square_src', '$image_size', '$module_id', '$i')");
+            // based on flag, decide to save or discard caption
+            $image_caption = ($image['hasImageCaption']) ? $image['imageCaption'] : '';
+            $result = $connection->query("INSERT INTO image_module_images (image_src, image_thumb_src, image_thumb_square_src, image_size, image_module, image_position, image_caption) VALUES  ('$image_src', '$image_thumb_src', '$image_thumb_square_src', '$image_size', '$module_id', '$i', '$image_caption')");
             if (!$result) {
                 throw new Exception($connection->error);
             }
@@ -88,7 +90,7 @@ function getImageModule($id)
 
     $images = array();
     try {
-        $result = $connection->query("SELECT image_size, image_src, image_thumb_src, image_thumb_square_src FROM image_module_images WHERE image_module = '$data->id' ORDER BY image_position");
+        $result = $connection->query("SELECT image_size, image_src, image_thumb_src, image_thumb_square_src, image_caption FROM image_module_images WHERE image_module = '$data->id' ORDER BY image_position");
         if (!$result) {
             throw new Exception($connection->error);
         } else {
@@ -98,6 +100,7 @@ function getImageModule($id)
                 $image->imageSrc = $rs['image_src'];
                 $image->imageThumbSrc = $rs['image_thumb_src'];
                 $image->imageThumbSquareSrc = $rs['image_thumb_square_src'];
+                $image->imageCaption = $rs['image_caption'];
                 $images[] = $image;
             }
         }
@@ -137,7 +140,9 @@ function updateImageModule($id, $title, $images)
             $image_thumb_src = $image['imageThumbSrc'];
             $image_thumb_square_src = $image['imageThumbSquareSrc'];
             $image_size = $image['imageSize'];
-            $result = $connection->query("INSERT INTO image_module_images (image_src, image_thumb_src, image_thumb_square_src, image_size, image_module, image_position) VALUES  ('$image_src', '$image_thumb_src', '$image_thumb_square_src', '$image_size', '$id', '$i')");
+            // based on flag, decide to save or discard caption
+            $image_caption = ($image['hasImageCaption']) ? $image['imageCaption'] : '';
+            $result = $connection->query("INSERT INTO image_module_images (image_src, image_thumb_src, image_thumb_square_src, image_size, image_module, image_position, image_caption) VALUES  ('$image_src', '$image_thumb_src', '$image_thumb_square_src', '$image_size', '$id', '$i', '$image_caption')");
             if (!$result) {
                 throw new Exception($connection->error);
             }
@@ -202,6 +207,7 @@ function deleteImageModule($id)
 
 //TODO (32) broken pipe when file is larger than 4.048.218 bytes (max value that worked in the tests)
 
+//TODO weird name
 function uploadImageImage()
 {
     $image_typemap = array(

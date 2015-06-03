@@ -1,4 +1,4 @@
-<!--TODO (1.0.0) title-->
+<h1>{{title}}</h1>
 
 <div class="actions" ng-if="status < 400">
     <div class="btn-group" role="group" aria-label="...">
@@ -15,7 +15,7 @@
                 <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Neu
                 <span class="caret"></span>
             </button>
-            <!--TODO (1.0.0) dropdown alignment on mobile devices (fix right)-->
+            <!--TODO (1.0.1) UI: dropdown alignment on mobile devices (fix right)-->
             <ul class="dropdown-menu" role="menu">
                 <li ng-repeat="moduleType in moduleTypes"><a ng-click="createModule(moduleType)">{{moduleType.name}}</a>
                 </li>

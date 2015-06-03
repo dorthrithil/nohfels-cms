@@ -20,6 +20,8 @@
 //TODO (1.0.1) refactoring: put fileUploader filters in one place and inject them (parallax, employee, image)
 //TODO (1.0.1) refactoring:  uniform comments (no inline comments)
 //TODO (1.0.1) UI: directive for showing all error messages uniformly, eg. parallax (error + 1 different warnings)
+//TODO (1.0.1) improvement: add page sorting & section functionality
+//TODO (1.0.1) improvement: handly auto logout (JWTrefresh) with unsaved changes
 
 //TODO (1.0.2) enhancement: use HTML5 image preview instead of loading image from server after upload finished (parallax, employee, image)
 

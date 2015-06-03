@@ -8,7 +8,8 @@
 function getPage($topic)
 {
     $connection = getConnection();
-    $response = array();
+    $response = new stdClass();
+    $modules = array();
     try {
         $result = $connection->query("SELECT module_type_id, module_id, name
                                       FROM (pages LEFT JOIN module_types ON (pages.module_type_id = module_types.id))
@@ -19,43 +20,54 @@ function getPage($topic)
             while ($rs = $result->fetch_array(MYSQLI_ASSOC)) {
                 switch ($rs['module_type_id']) {
                     case "text":
-                        $response[] = getTextModule($rs['module_id']);
+                        $modules[] = getTextModule($rs['module_id']);
                         break;
                     case "parallax":
-                        $response[] = getParallaxModule($rs['module_id']);
+                        $modules[] = getParallaxModule($rs['module_id']);
                         break;
                     case "image":
-                        $response[] = getImageModule($rs['module_id']);
+                        $modules[] = getImageModule($rs['module_id']);
                         break;
                     case "contact":
-                        $response[] = getContactModule($rs['module_id']);
+                        $modules[] = getContactModule($rs['module_id']);
                         break;
                     case "instagram":
-                        $response[] = getInstagramModule($rs['module_id']);
+                        $modules[] = getInstagramModule($rs['module_id']);
                         break;
                     case "staff":
-                        $response[] = getStaffModule($rs['module_id']);
+                        $modules[] = getStaffModule($rs['module_id']);
                         break;
                 }
                 $type = new stdClass();
                 $type->name = $rs['name'];
                 $type->id = $rs['module_type_id'];
-                $response[sizeof($response) - 1]->type = $type;
+                $modules[sizeof($modules) - 1]->type = $type;
+            }
+        }
+        $result = $connection->query("SELECT name FROM topics WHERE id = '$topic'");
+        if (!$result) {
+            throw new Exception($connection->error);
+        } else {
+            while ($rs = $result->fetch_array(MYSQLI_ASSOC)) {
+                $response->title = $rs['name'];
             }
         }
     } catch (Exception $e) {
         echo $e->getMessage();
     }
     $connection->close();
+    $response->modules = $modules;
     return $response;
 }
 
 function getTopics()
 {
     $connection = getConnection();
-    $response = array();
+    $response = new stdClass();
+    $head = array();
+    $foot = array();
     try {
-        $result = $connection->query("SELECT id, name FROM topics ORDER BY position, name ASC");
+        $result = $connection->query("SELECT id, name, position FROM topics WHERE section = 'head' ORDER BY position ASC");
         if (!$result) {
             throw new Exception($connection->error);
         } else {
@@ -63,13 +75,27 @@ function getTopics()
                 $topic = new stdClass();
                 $topic->name = $rs['name'];
                 $topic->id = $rs['id'];
-                $response[] = $topic;
-                //TODO implement functionality for position and section table fields
+                $topic->position = $rs['position'];
+                $head[] = $topic;
+            }
+        }
+        $result = $connection->query("SELECT id, name, position FROM topics WHERE section = 'foot' ORDER BY position ASC");
+        if (!$result) {
+            throw new Exception($connection->error);
+        } else {
+            while ($rs = $result->fetch_array(MYSQLI_ASSOC)) {
+                $topic = new stdClass();
+                $topic->name = $rs['name'];
+                $topic->id = $rs['id'];
+                $topic->position = $rs['position'];
+                $foot[] = $topic;
             }
         }
     } catch (Exception $e) {
         echo $e->getMessage();
     }
+    $response->head = $head;
+    $response->foot = $foot;
     $connection->close();
     return $response;
 }

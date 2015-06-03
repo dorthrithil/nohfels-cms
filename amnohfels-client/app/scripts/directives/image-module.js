@@ -7,7 +7,8 @@
  * # imageModule
  */
 
-//TODO bug: fix display on small devices
+//TODO (1.0.0) bug: fix display on small devices
+//TODO (1.0.0) display image captions
 
 //TODO (1.0.1) enhancement: add caption functionality to gallery
 //TODO (1.0.1) enhancement: put lightbox code into a lightbox service

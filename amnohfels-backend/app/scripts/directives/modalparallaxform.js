@@ -9,6 +9,7 @@
 
 //TODO (1.0.1) resource management: when uploading a new image: delete old image from server
 //TODO (1.0.1) UI: properly align error messages with preview image
+//TODO (1.0.1) bug: firstUploadFinished logic doesn't make real sense. what about second uploads?
 
 angular.module('amnohfelsBackendApp')
   .directive('modalParallaxForm', function (config, FileUploader, doorman) {
@@ -16,6 +17,10 @@ angular.module('amnohfelsBackendApp')
       templateUrl: 'views/modalparallaxform.html',
       restrict: 'E',
       controller: function ($scope) {
+
+        // for form validation
+        $scope.firstUploadFinished = false;
+
         if ($scope.modalVars.action === 'create') {
           $scope.modalVars.data.title = '';
           $scope.modalVars.data.heightNum = 500;
@@ -24,6 +29,10 @@ angular.module('amnohfelsBackendApp')
           $scope.modalVars.data.bgImgThumbSrc = '';
           $scope.modalVars.data.caption = '';
         }
+        if ($scope.modalVars.action === 'update'){
+          $scope.firstUploadFinished = true;
+        }
+
         $scope.modalVars.route = '/parallax';
         $scope.modalVars.data.pageTopic = $scope.pageTopic;
 
@@ -49,9 +58,6 @@ angular.module('amnohfelsBackendApp')
             'JWT': doorman.getJWT()
           }
         });
-
-        // for form validation
-        $scope.firstUploadFinished = false;
 
         //filters
         //only image files
