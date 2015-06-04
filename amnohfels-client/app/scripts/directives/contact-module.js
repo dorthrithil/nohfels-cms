@@ -7,7 +7,7 @@
  * # contactModule
  */
 
-//TODO (bug) safari generates connection refused errors on successfully sent mails
+//TODO (1.0.0) (bug) safari generates connection refused errors on successfully sent mails
 
 angular.module('amnohfelsClientApp')
     .directive('contactModule', function ($http, config, $q, $timeout) {
@@ -105,7 +105,7 @@ angular.module('amnohfelsClientApp')
                 $scope.transferForm = function ($event) {
 
                     $scope.event = $event; //form element
-                    var submitButton = angular.element($event.target).find('button'); //TODO targets all buttons! also the dismiss indication buttons
+                    var submitButton = angular.element($event.target).find('button'); //TODO (1.0.0) targets all buttons! also the dismiss indication buttons
 
                     //if response takes too long, indicate that we are waiting for response..
                     $scope.indicateSendingFlag = true;

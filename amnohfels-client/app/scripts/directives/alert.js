@@ -7,7 +7,7 @@
  * # alert
  */
 
-//TODO bug: indication doesn't change from email invalid to email required on deleting the whole input value
+//TODO (1.0.0) bug: indication doesn't change from email invalid to email required on deleting the whole input value
 
 angular.module('amnohfelsClientApp')
     .directive('alert', function ($sce, animator, $timeout) {

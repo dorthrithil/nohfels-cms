@@ -35,7 +35,7 @@
                    ng-change="modelChanged(contactForm.emailInput)"
                    placeholder="Ihre E-Mail Adresse"
                    required
-                   pattern=".{1,}@[_a-z0-9A-Z.-]+(\.[a-z0-9A-Z]+)+"><!--TODO test this regex; better: build a email validation state machine http://stackoverflow.com/questions/201323/using-a-regular-expression-to-validate-an-email-address -->
+                   pattern=".{1,}@[_a-z0-9A-Z.-]+(\.[a-z0-9A-Z]+)+"><!--TODO (1.0.0) test this regex; better: build a email validation state machine http://stackoverflow.com/questions/201323/using-a-regular-expression-to-validate-an-email-address -->
             <span class="glyphicon form-control-feedback" aria-hidden="true"
                   ng-class="{'glyphicon-warning-sign' : contactForm.emailInput.$error.required && contactForm.emailInput.initiated,
                              'glyphicon-ok' : contactForm.emailInput.$valid && contactForm.emailInput.initiated,

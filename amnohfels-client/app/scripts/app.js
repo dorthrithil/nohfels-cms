@@ -9,11 +9,11 @@
  * Main module of the application.
  */
 
-//TODO 1px white margin at bottom?
-//TODO uniform module margins
-//TODO google analytics
-//TODO use animated gif/png indicators, css animations don't work in all modern(!) browsers..
-//TODO dynamic page routing like in backend
+//TODO (1.0.0) UI: 1px white margin at bottom?
+//TODO (1.0.0) UI: uniform module margins
+//TODO (1.0.0) google analytics
+//TODO (1.0.0) UI: use animated gif/png indicators, css animations don't work in all modern(!) browsers..
+//TODO (1.0.0) improvement: dynamic page routing like in backend
 
 //TODO (1.0.1) improvement: use ng resource vor rest communication
 //TODO (1.0.1) improvement: use different angular modules for different concerns

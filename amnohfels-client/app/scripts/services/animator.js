@@ -8,7 +8,7 @@
  * Service in the amnohfelsClientApp.
  */
 
-//TODO bug: slide effects dont work like expected when original image width is broader than viewport!
+//TODO (1.0.0) bug: slide effects dont work like expected when original image width is broader than viewport!
 
 //TODO (1.0.2) what happens with unstaggered animations called between staggered animations? (not important for the current usecase)
 //i can use a real queue for that. use array.push() to build up the queue in image-module

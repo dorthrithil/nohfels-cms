@@ -51,7 +51,7 @@ angular.module('amnohfelsClientApp')
                 },
                 src: config.server.root + bgImgSrc
             });
-            images[images.length - 1].image.attr('src', config.server.root + bgImgSrc); //TODO do that later for fadein
+            images[images.length - 1].image.attr('src', config.server.root + bgImgSrc); //TODO (1.0.0) do that later for fadein
             initDimensions(images.length - 1);
         };
 

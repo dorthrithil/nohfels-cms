@@ -7,11 +7,11 @@
  * # instagramModule
  */
 
-//TODO check for token free photo fetching
-//TODO comment & document data object (filterForTag)
-//TODO is tag filtering case sensitive?
-//TODO make image smaller & arrows outside image borders
-//TODO turn of carousel navigation if there's only one image & hide module if there's none
+//TODO (1.0.0) check for token free photo fetching
+//TODO (1.0.0) comment & document data object (filterForTag)
+//TODO (1.0.0) is tag filtering case sensitive?
+//TODO (1.0.0) make image smaller & arrows outside image borders
+//TODO (1.0.0) turn of carousel navigation if there's only one image & hide module if there's none
 
 //TODO (1.0.1) improvement: image preload indication to get rid of changing carousel height during loading process
 //TODO (1.0.1) security: get CORS working instead of JSONP
@@ -74,7 +74,7 @@ angular.module('amnohfelsClientApp')
                         if($scope.images.length > 0){ //content height changed: refresh parallax
                             $timeout(function(){
                                 parallax.refresh();
-                            }, 50); //TODO this has to be bound to image.load - guessing loading times is evil
+                            }, 50); //TODO (1.0.0) this has to be bound to image.load - guessing loading times is evil
                         }
                     })
                     .error(function (response) {
@@ -84,11 +84,11 @@ angular.module('amnohfelsClientApp')
                 //for crappy jsonp error handling
                 var handleHttpError = function (response) {
                     if (response === undefined) {
-                        //TODO error logging
+                        //TODO (1.0.0) error logging
                     } else if (response.meta.code === 400) {
-                        //TODO error logging
+                        //TODO (1.0.0) error logging
                     } else {
-                        //TODO error logging
+                        //TODO (1.0.0) error logging
                     }
                     console.log('Instagram module encountered an error and was shut down for your convenience.');
                     animator.shrinkHeightTo($element.children(), '0px').then(function () {

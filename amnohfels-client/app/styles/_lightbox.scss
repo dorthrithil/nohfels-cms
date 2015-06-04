@@ -111,7 +111,7 @@ $lb-navigation-bg-hover: #191919;
 }
 
 //spinning loading glyphicon
-//TODO doesn't work in all bowsers, go for the standard gif's
+//TODO (1.0.0) doesn't work in all bowsers, go for the standard gif's
 .glyphicon-refresh-animate {
   -animation: spin .7s infinite linear;
   -webkit-animation: spin2 .7s infinite linear;

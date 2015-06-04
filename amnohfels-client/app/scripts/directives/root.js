@@ -7,7 +7,7 @@
  * # root
  */
 
-//TODO this can be added to parallax service listening to rootscope
+//TODO (1.0.0) this can be added to parallax service listening to rootscope
 
 angular.module('amnohfelsClientApp')
   .directive('root', function (parallax) {

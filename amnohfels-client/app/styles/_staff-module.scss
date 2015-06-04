@@ -9,6 +9,8 @@ staff-module {
 
   .image-wrapper {
     text-align: center;
+    background-color: rgba(0,0,0,0.1);
+
     .image-container {
       height: 200px;
       width: 200px;
@@ -21,4 +23,5 @@ staff-module {
       margin: 0 0 $grid-gutter-width 0;
     }
   }
+
 }

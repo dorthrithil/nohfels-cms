@@ -1,6 +1,6 @@
 .parallax-image{
   overflow: hidden;
-  height: 100vh; //TODO fallback
+  height: 100vh; //TODO (1.0.0) fallback
   width: 100%;
   position: fixed;
   top: 0px;
@@ -19,7 +19,7 @@
   transform: translate3d(0px, 0px, 0px);
 }
 
-.the-parallax-image{ //TODO am i using this
+.the-parallax-image{ //TODO (1.0.0) am i using this
   transform: translate3d(0px, 0px, 0px);
   position: absolute;
   top: 0px;
@@ -28,7 +28,7 @@
 }
 
 .parallax-module{
-  height: 100vh;  //TODO doesn't this get computed by service individually?
+  height: 100vh;  //TODO (1.0.0) doesn't this get computed by service individually?
   display: block;
   position: relative;
   overflow: hidden;
