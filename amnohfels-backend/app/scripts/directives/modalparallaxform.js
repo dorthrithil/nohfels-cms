@@ -46,7 +46,9 @@ angular.module('amnohfelsBackendApp')
         $scope.popovers = {
           units: {
             title: 'Erklärung zu den Einheiten',
-            content: '"px" gibt eine feste Größe von Pixeln auf dem Bildschirm an. "vh" ist eine Prozentangabe, wobei 100vh der Höhe des Bildschirms entspricht auf dem die Website gerade angesehen wird.'
+            content: '"px" gibt eine feste Größe von Pixeln auf dem Bildschirm an. "vh" ist eine Prozentangabe, wobei' +
+              ' 100vh der Höhe des Bildschirms entspricht auf dem die Website gerade angesehen wird. Wenn der Inhalt' +
+              ' bei der angegebenen Höhe nicht passt, wird die Höhe automatisch angepasst.'
           }
         };
 

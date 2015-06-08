@@ -9,7 +9,6 @@
 
 //TODO (1.0.0) UI: handle text overflow
 //TODO (1.0.0) UI: disable on small mobile devices
-//TODO (1.0.0) include caption text
 
 //TODO (1.0.1) enhancement (UI): fadeIn image onload
 

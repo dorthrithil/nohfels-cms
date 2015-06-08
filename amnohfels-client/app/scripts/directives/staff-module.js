@@ -7,9 +7,6 @@
  * # staffModule
  */
 
-//TODO (1.0.0) UI: layout gets messed up by different height cells. => resize service where you can register functions
-// which will be executed on window resize. directive for rows which sets proper heights and registers there
-
 angular.module('amnohfelsClientApp')
   .directive('staffModule', function (config) {
     return {
@@ -19,7 +16,10 @@ angular.module('amnohfelsClientApp')
             data: '='
         },
         controller: function($scope){
-            $scope.serverRoot = config.server.root; //for wiring up image src
+          // prepend imageSrc - we can't inject serverRoot in deckgrid
+          for(var i = 0; i < $scope.data.employees.length; i++){
+            $scope.data.employees[i].imageSrc = config.server.root + $scope.data.employees[i].imageSrc;
+          }
         }
     };
   });
