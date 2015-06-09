@@ -1,5 +1,23 @@
 //TODO (1.0.0) get all bootstrap css changes out of bootstrap scss files and make bootstrap sass official a dependency again
 
+
+
+//replace some default bootstrap variables..
+@import "_bootstrap-theme-variables.scss";
+
+//..include default bootstrap..
+// bower:scss
+//@import "bootstrap-sass-official/assets/stylesheets/_bootstrap.scss";
+// endbower
+
+//..and finally replace some bootstrap styles
+@import "_bootstrap-theme.scss";
+
+//import styles for views
+
+
+
+
 //bootstrap
 @import "bootstrap/_bootstrap.scss";
 

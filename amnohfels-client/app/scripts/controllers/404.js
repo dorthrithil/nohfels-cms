@@ -2,13 +2,13 @@
 
 /**
  * @ngdoc function
- * @name amnohfelsClientApp.controller:NotfoundCtrl
+ * @name amnohfelsClientApp.controller:404Ctrl
  * @description
- * # NotfoundCtrl
+ * # 404Ctrl
  * Controller of the amnohfelsClientApp
  */
 angular.module('amnohfelsClientApp')
-    .controller('NotfoundCtrl', function ($scope, config) {
+    .controller('404Ctrl', function ($scope, config) {
         $scope.data = {};
         $scope.data.errorMessage = '';
         $scope.adminMail = config.admin.mail;

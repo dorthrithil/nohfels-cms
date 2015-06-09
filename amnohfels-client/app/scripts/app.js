@@ -60,7 +60,7 @@ angular
                 controller: 'ImprintCtrl'
             })
             .otherwise({
-                templateUrl: 'views/notfound.html',
-                controller: 'NotfoundCtrl'
+                templateUrl: 'views/404.html',
+                controller: '404Ctrl'
             });
     });

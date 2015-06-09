@@ -1,12 +1,10 @@
-<!--TODO (1.0.0) scrollHint only on 100vh elements-->
-
 <div class="parallax-module parallax-section">
     <img src="" class="the-parallax-image">
     <div class="wrapper">
         <div class="title" ng-bind-html="data.title"></div>
         <div class="caption" ng-bind-html="data.caption"></div>
     </div>
-    <div class="scroll-hint" ng-show="firstModule" ng-style="getScrollHintOpacity()">
+    <div class="scroll-hint" ng-show="firstModule && data.heightNum == 100 && data.heightUnit == 'vh'" ng-style="getScrollHintOpacity()">
         <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
     </div>
 </div>

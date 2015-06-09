@@ -11,6 +11,7 @@
 //TODO (1.0.0) UI: disable on small mobile devices
 
 //TODO (1.0.1) enhancement (UI): fadeIn image onload
+//TODO (1.0.1) better pass module id in each module than firstModule in only this one
 
 angular.module('amnohfelsClientApp')
     .directive('parallaxModule', function (parallax, $window, $timeout, config) {
