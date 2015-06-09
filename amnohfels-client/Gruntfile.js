@@ -119,8 +119,8 @@ module.exports = function (grunt) {
       all: {
         src: [
           'Gruntfile.js',
-          '<%= yeoman.app %>/scripts/{,*/}*.js',
-          '!<%= yeoman.app %>/scripts/bootstrap/{,*/}*.js' //exclude bootstrap js
+          '<%= yeoman.app %>/scripts/{,*/}*.js'//,
+          //'!<%= yeoman.app %>/scripts/bootstrap/{,*/}*.js' //exclude bootstrap js
         ]
       },
       test: {
@@ -165,7 +165,7 @@ module.exports = function (grunt) {
     wiredep: {
       app: {
         src: ['<%= yeoman.app %>/index.html'],
-        ignorePath:  /\.\.\//
+        ignorePath: /\.\.\//
       },
       sass: {
         src: ['<%= yeoman.app %>/styles/{,*/}*.{scss,sass}'],
@@ -238,7 +238,7 @@ module.exports = function (grunt) {
       html: ['<%= yeoman.dist %>/{,*/}*.html'],
       css: ['<%= yeoman.dist %>/styles/{,*/}*.css'],
       options: {
-        assetsDirs: ['<%= yeoman.dist %>','<%= yeoman.dist %>/images']
+        assetsDirs: ['<%= yeoman.dist %>', '<%= yeoman.dist %>/images']
       }
     },
 
@@ -331,36 +331,69 @@ module.exports = function (grunt) {
     // Copies remaining files to places other tasks can use
     copy: {
       dist: {
-        files: [{
-          expand: true,
-          dot: true,
-          cwd: '<%= yeoman.app %>',
-          dest: '<%= yeoman.dist %>',
-          src: [
-            '*.{ico,png,txt}',
-            '.htaccess',
-            '*.html',
-            'views/{,*/}*.html',
-            'images/{,*/}*.{webp}',
-            'fonts/{,*/}*'
-          ]
-        }, {
-          expand: true,
-          cwd: '.tmp/images',
-          dest: '<%= yeoman.dist %>/images',
-          src: ['generated/*']
-        }, {
-          expand: true,
-          cwd: '.',
-          src: 'bower_components/bootstrap-sass-official/assets/fonts/bootstrap/*',
-          dest: '<%= yeoman.dist %>'
-        }]
+        files: [
+          {
+            expand: true,
+            dot: true,
+            cwd: '<%= yeoman.app %>',
+            dest: '<%= yeoman.dist %>',
+            src: [
+              '*.{ico,png,txt}',
+              '.htaccess',
+              '*.html',
+              'views/{,*/}*.html',
+              'images/{,*/}*.{webp}',
+              'fonts/{,*/}*'
+            ]
+          },
+          {
+            expand: true,
+            cwd: '.tmp/images',
+            dest: '<%= yeoman.dist %>/images',
+            src: ['generated/*']
+          },
+          {
+            expand: true,
+            cwd: 'bower_components/bootstrap-sass-official/assets/fonts/bootstrap/',
+            src: '*',
+            dest: '<%= yeoman.dist %>/fonts'
+          }
+          //{
+          //  expand: true,
+          //  cwd: '.',
+          //  src: 'bower_components/bootstrap-sass-official/assets/fonts/bootstrap/*',
+          //  dest: '<%= yeoman.dist %>'
+          //}
+        ]
       },
       styles: {
         expand: true,
         cwd: '<%= yeoman.app %>/styles',
         dest: '.tmp/styles/',
         src: '{,*/}*.css'
+      }
+    },
+
+    // workaround for correctly rereferencing asset fonts copied from bower_components directory to fonts directory
+    replace: {
+      dist: {
+        options: {
+          patterns: [
+            {
+              // replace fonts paths
+              match: /bower_components\/bootstrap-sass-official\/assets\/fonts\/bootstrap/g,
+              replacement: 'fonts'
+            }
+          ]
+        },
+        files: [
+          {
+            expand: true,
+            flatten: true,
+            src: ['<%= yeoman.dist %>/styles/*.css'],
+            dest: '<%= yeoman.dist %>/styles'
+          }
+        ]
       }
     },
 
@@ -431,7 +464,8 @@ module.exports = function (grunt) {
     'uglify',
     'filerev',
     'usemin',
-    'htmlmin'
+    'htmlmin',
+    'replace'
   ]);
 
   grunt.registerTask('default', [

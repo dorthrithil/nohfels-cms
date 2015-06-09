@@ -1,30 +1,15 @@
-//TODO (1.0.0) get all bootstrap css changes out of bootstrap scss files and make bootstrap sass official a dependency again
-
-
-
 //replace some default bootstrap variables..
 @import "_bootstrap-theme-variables.scss";
 
 //..include default bootstrap..
 // bower:scss
-//@import "bootstrap-sass-official/assets/stylesheets/_bootstrap.scss";
+@import "bootstrap-sass-official/assets/stylesheets/_bootstrap.scss";
 // endbower
 
 //..and finally replace some bootstrap styles
 @import "_bootstrap-theme.scss";
 
 //import styles for views
-
-
-
-
-//bootstrap
-@import "bootstrap/_bootstrap.scss";
-
-//variables
-@import "_variables.scss";
-
-//modules
 @import "_parallax-module.scss";
 @import "_image-module.scss";
 @import "_contact-module.scss";
@@ -38,24 +23,10 @@
 //fonts
 @import url(http://fonts.googleapis.com/css?family=Playfair+Display:400,400italic);
 
+//for legacy browsers
 .browsehappy {
   margin: 0.2em 0;
   background: #ccc;
   color: #000;
   padding: 0.2em 0;
-}
-
-// Space out content a bit
-body {
-  padding-top: $navbar-height;
-  padding-bottom: 0px;
-  background-color: $bright;
-  font-family: "adelle",serif;
-}
-
-// Responsive: Portrait tablets and up
-@media screen and (min-width: 768px) {
-  .container {
-    max-width: 1000px;
-  }
 }
