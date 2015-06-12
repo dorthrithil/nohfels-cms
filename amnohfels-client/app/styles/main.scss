@@ -8,6 +8,7 @@
 
 //..and finally replace some bootstrap styles
 @import "_bootstrap-theme.scss";
+@import "_bootstrap-col-ms.scss";
 
 //import styles for views
 @import "_parallax-module.scss";
@@ -29,4 +30,8 @@
   background: #ccc;
   color: #000;
   padding: 0.2em 0;
+}
+
+body{ //TODO (1.0.0)
+  word-wrap: break-word;
 }

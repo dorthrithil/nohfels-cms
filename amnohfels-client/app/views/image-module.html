@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col-xs-12 image-wrapper"
              ng-repeat="image in data.images"
-             ng-class="{'col-md-3 col-sm-4' : image.imageSize == 'small'}"
+             ng-class="{'col-md-4 col-sm-6 col-ms-6' : image.imageSize == 'small'}"
              >
             <div class="image-container"
                  ng-style="{'background-image' : getImageSrc($index)}"

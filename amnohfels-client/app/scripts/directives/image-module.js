@@ -7,14 +7,11 @@
  * # imageModule
  */
 
-//TODO (1.0.0) bug: fix display on small devices
-
-//TODO (1.0.1) enhancement: add caption functionality to gallery
 //TODO (1.0.1) enhancement: put lightbox code into a lightbox service
 //TODO (1.0.1) refactoring: templates for spaghetti angular element definitions
 
 angular.module('amnohfelsClientApp')
-  .directive('imageModule', function ($compile, animator, $document, $timeout, config) {
+  .directive('imageModule', function ($compile, animator, $document, $timeout, config, usSpinnerService) {
     return {
       templateUrl: 'views/image-module.html',
       restrict: 'E',
@@ -28,7 +25,8 @@ angular.module('amnohfelsClientApp')
         var closeIcon = angular.element('<div class="lb-close" ng-click="lbClose()" no-propagation><div class="lb-navigation-wrapper"><div class="lb-navigation-center"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></div></div></div>');
         var nextImageIcon = angular.element('<div class="lb-next-image" ng-click="lbChangeImage(\'right\')" no-propagation><div class="lb-navigation-wrapper"><div class="lb-navigation-center"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></div></div></div>');
         var previousImageIcon = angular.element('<div class="lb-previous-image" ng-click="lbChangeImage(\'left\')" no-propagation><div class="lb-navigation-wrapper"><div class="lb-navigation-center"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span></div></div></div>');
-        var loadingIcon = angular.element('<div class="loading"><span class="glyphicon glyphicon-refresh glyphicon-refresh-animate" aria-hidden="true"></span></div>');
+        var loadingIcon = $compile(angular.element('<div class="loading"><span us-spinner="{color:\'#fff\',radius:8, width:5, length: 8, lines: 9, corners: 1}"  spinner-key="middle"></span></div>'))(scope);
+        var loadingIconSide = $compile(angular.element('<div class="spinner"><span us-spinner="{color:\'#fff\',radius:4, width:3, length: 6, lines: 9, corners: 1}"  spinner-key="side"></span></div>'))(scope);
         backdrop.append(closeIcon);
         backdrop.append(nextImageIcon);
         backdrop.append(previousImageIcon);
@@ -39,7 +37,7 @@ angular.module('amnohfelsClientApp')
         scope.getImageSrc = function (index) {
           switch (scope.data.images[index].imageSize) {
             case 'small':
-              return 'url(' + config.server.root + scope.data.images[index].imageThumbSquareSrc + ')';
+              return 'url(' + config.server.root + scope.data.images[index].imageThumbSrc + ')';
             case 'large':
               return 'url(' + config.server.root + scope.data.images[index].imageSrc + ')';
             default:
@@ -61,6 +59,7 @@ angular.module('amnohfelsClientApp')
           $timeout(function () { //if loading the image takes long, indicate with spinning glyphicon
             if (startLoadingAnimation) {
               backdrop.append(loadingIcon);
+              usSpinnerService.spin('middle');
               loadingAnimationStarted = true;
               animator.stagger().fadeIn(loadingIcon);
             }
@@ -70,6 +69,7 @@ angular.module('amnohfelsClientApp')
             startLoadingAnimation = false;
             if (loadingAnimationStarted) { //remove spinning icon
               animator.stagger().fadeOut(loadingIcon).then(function () {
+                usSpinnerService.stop('middle');
                 loadingIcon.remove();
               });
             }
@@ -81,6 +81,8 @@ angular.module('amnohfelsClientApp')
 
         //removes all lightbox from dom with animation
         scope.lbClose = function () {
+          usSpinnerService.stop('side');
+          usSpinnerService.stop('middle');
           animator.stagger().fadeOut(caption);
           animator.stagger().fadeOut(image);
           animator.stagger().fadeOut(backdrop).then(function () {
@@ -95,10 +97,10 @@ angular.module('amnohfelsClientApp')
             var index = parseInt(image.attr('index')); //get the actual index
             var newIndex, $icon;
             if (direction === 'right') { //initialize icon and new index
-              $icon = nextImageIcon.children().children().children();
+              $icon = nextImageIcon.children().children();
               newIndex = (scope.data.images.length - 1 === index) ? 0 : index + 1;
             } else {
-              $icon = previousImageIcon.children().children().children();
+              $icon = previousImageIcon.children().children();
               newIndex = (index === 0) ? scope.data.images.length - 1 : index - 1;
             }
             var newImage = angular.element('<img alt="" index="' + newIndex + '" src="' + config.server.root + scope.data.images[newIndex].imageSrc + '" ng-click="lbChangeImage(' + direction + ')" no-propagation preloadable lb-calc-dimensions/>');
@@ -109,20 +111,24 @@ angular.module('amnohfelsClientApp')
 
             var startLoadingAnimation = true;
             var loadingAnimationStarted = false;
-            $timeout(function () { //if loading the new image takes long, indicate with spinning glyphicon
+            $timeout(function () { //if loading the new image takes long, indicate with spinner
               if (startLoadingAnimation) {
                 loadingAnimationStarted = true;
-                $icon.removeClass('glyphicon-chevron-' + direction).addClass('glyphicon-refresh glyphicon-refresh-animate');
+                $icon.children().hide(); //hide next/previous glyphicon
+                $icon.append(loadingIconSide);
+                usSpinnerService.spin('side');
               }
             }, 500);
 
             var performAnimation = function () {
               unbindLbImageLoaded();
               startLoadingAnimation = false;
-              if (loadingAnimationStarted) { //remove spinning icon
-                $icon.removeClass('glyphicon-refresh glyphicon-refresh-animate').addClass('glyphicon-chevron-' + direction);
+              if (loadingAnimationStarted) { //remove spinner
+                usSpinnerService.stop('side');
+                loadingIconSide.remove();
+                $icon.children().show(); //show next/previous glyphicon
               }
-              animator.stagger().fadeOut(caption).then(function(){
+              animator.stagger().fadeOut(caption).then(function () {
                 caption.remove();
               });
               if (direction === 'right') { //...animate
@@ -131,7 +137,7 @@ angular.module('amnohfelsClientApp')
                 });
                 animator.stagger().slideInRight(newImage).then(function () {
                   image.remove();
-                  image = newImage; //make it reentrantable
+                  image = newImage; //make it reenterable
                   changeImageMutex = false;
                 });
               } else {
@@ -143,7 +149,7 @@ angular.module('amnohfelsClientApp')
                   changeImageMutex = false;
                 });
               }
-              animator.stagger().fadeIn(newCaption).then(function(){
+              animator.stagger().fadeIn(newCaption).then(function () {
                 caption = newCaption;
               });
             };

@@ -67,15 +67,27 @@ angular.module('amnohfelsClientApp')
       images = [];
     };
 
-    //initializes the watchers for scrolling and window resize
+    //initializes the watchers for scrolling and window resize, handles flaws with mobile devices
     function init() {
-      angular.element($window).bind('resize', function () {
-        setImageSizes();
-        parallaxScroll();
-      });
-      angular.element($window).bind('scroll', function () {
-        parallaxScroll();
-      });
+      if (!util.isOnMobileBrowser()) {
+        angular.element($window).bind('resize', function () {
+          setImageSizes();
+          parallaxScroll();
+        });
+        angular.element($window).bind('scroll', function () {
+          parallaxScroll();
+        });
+      }
+      if (util.isOnMobileBrowser()) {
+        angular.element($window).bind('orientationchange', function () {
+          // we need that additional resize handler because orientationchange triggers before window is resized
+          var orientationChangeHandler = function () {
+            angular.element($window).unbind('resize', orientationChangeHandler);
+            setImageSizes();
+          };
+          angular.element($window).bind('resize', orientationChangeHandler);
+        });
+      }
     }
 
     //initializes the dimensions of the parallaxing image and the section
@@ -107,7 +119,7 @@ angular.module('amnohfelsClientApp')
       // (76px are navbarHeight + caption margin bottom, for equal spacing on top & bottom)
       var captionOffsetBottom = caption.offset().top + caption.height();
       var sectionInnerOffsetBottom = sectionInner.offset().top + sectionInner.height();
-      if (captionOffsetBottom + 76 > sectionInnerOffsetBottom){
+      if (captionOffsetBottom + 76 > sectionInnerOffsetBottom) {
         sectionInner.css('height', captionOffsetBottom - sectionInnerOffsetBottom + 1 *
           sectionInnerHeight.substring(0, sectionInnerHeight.length - 2) + 76);
       }

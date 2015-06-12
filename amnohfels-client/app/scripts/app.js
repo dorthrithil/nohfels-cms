@@ -24,7 +24,7 @@
 //TODO (1.1.0) improvement: factor out page style elements in extra files to provide theme functionality
 
 angular
-    .module('amnohfelsClientApp', ['ngRoute', 'akoenig.deckgrid'])
+    .module('amnohfelsClientApp', ['ngRoute', 'akoenig.deckgrid', 'angularSpinner'])
     .config(function ($routeProvider) {
         $routeProvider
             .when('/', {
