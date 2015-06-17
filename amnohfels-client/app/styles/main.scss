@@ -1,16 +1,13 @@
-//replace some default bootstrap variables..
+// replace some default bootstrap variables..
 @import "_bootstrap-theme-variables.scss";
-
-//..include default bootstrap..
+// ..include default bootstrap..
 // bower:scss
 @import "bootstrap-sass-official/assets/stylesheets/_bootstrap.scss";
 // endbower
-
-//..and finally replace some bootstrap styles
+// ..and finally replace some bootstrap styles
 @import "_bootstrap-theme.scss";
 @import "_bootstrap-col-ms.scss";
-
-//import styles for views
+// import styles for views
 @import "_parallax-module.scss";
 @import "_image-module.scss";
 @import "_contact-module.scss";
@@ -20,11 +17,10 @@
 @import "_lightbox.scss";
 @import "_modal.scss";
 @import "_navigation.scss";
-
-//fonts
+// fonts
 @import url(http://fonts.googleapis.com/css?family=Playfair+Display:400,400italic);
 
-//for legacy browsers
+// for legacy browsers
 .browsehappy {
   margin: 0.2em 0;
   background: #ccc;
@@ -32,6 +28,15 @@
   padding: 0.2em 0;
 }
 
-body{ //TODO (1.0.0)
+// try to break only long words..
+body {
+  -ms-word-break: break-all;
+  -ms-word-wrap: break-all;
+  -webkit-word-break: break-word;
+  -webkit-word-wrap: break-word;
+  word-break: break-word;
   word-wrap: break-word;
+  -webkit-hyphens: auto;
+  -moz-hyphens: auto;
+  hyphens: auto;
 }

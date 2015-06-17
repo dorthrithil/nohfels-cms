@@ -33,7 +33,8 @@ function sendContactMail($name, $email, $message, $topic)
         //TODO logging ($mail->ErrorInfo)
         return 'Message could not be sent.';
     } else {
-        header('HTTP/ 205 mail successfully sent');
+        header("Access-Control-Allow-Origin: *");
+        header($_SERVER['SERVER_PROTOCOL'] . ' 205 Reset Content');
         return 'Cheer up! The job is done!';
     }
 }
