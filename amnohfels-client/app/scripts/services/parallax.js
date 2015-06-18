@@ -8,6 +8,8 @@
  * Service in the amnohfelsClientApp.
  */
 
+//TODO (1.0.0) bug: bg size wrong if developer tools are opened and size of caption has to be corrected because of overflow
+
 //TODO (1.0.1) performance: throttle
 //TODO (1.0.1) UI: image onload fadeIn
 //TODO (1.0.1) improvement: navbar height doesn't need to be included in height calculations => more visible image content

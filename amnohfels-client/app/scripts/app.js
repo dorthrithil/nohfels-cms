@@ -9,7 +9,6 @@
  * Main module of the application.
  */
 
-//TODO (1.0.0) UI: 1px white margin at bottom?
 //TODO (1.0.0) UI: uniform module margins
 //TODO (1.0.0) google analytics
 //TODO (1.0.0) improvement: dynamic page routing like in backend

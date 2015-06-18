@@ -9,9 +9,6 @@
 
 //TODO (1.0.0) check for token free photo fetching
 //TODO (1.0.0) comment & document data object (filterForTag)
-//TODO (1.0.0) is tag filtering case sensitive?
-//TODO (1.0.0) make image smaller & arrows outside image borders
-//TODO (1.0.0) turn of carousel navigation if there's only one image & hide module if there's none
 
 //TODO (1.0.1) improvement: image preload indication to get rid of changing carousel height during loading process
 //TODO (1.0.1) security: get CORS working instead of JSONP
@@ -50,7 +47,7 @@ angular.module('amnohfelsClientApp')
                             var push;
                             for (var i = 0; i < response.data.length; i++) {
                                 push = false;
-                                if ($scope.data.filterForTags && util.inArray(response.data[i].tags, $scope.data.tags)) {
+                                if ($scope.data.filterForTags && util.inStringArray(response.data[i].tags, $scope.data.tags)) {
                                     push = true;
                                 } else if ($scope.data.filterForTags === false) {
                                     push = true;

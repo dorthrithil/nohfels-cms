@@ -7,7 +7,20 @@ instagram-module{
     margin-top: $grid-gutter-width;
   }
   .instagram-carousel{
-    max-width: 640px;
-    margin: 0px auto 0px auto;
+    max-width: 750px;
+    margin: 0 auto 0 auto;
+  }
+
+  .carousel-inner{
+    width: 80%;
+    margin-left: 10%;
+  }
+
+  .carousel-control.left, .carousel-control.right{
+    background: none;
+  }
+
+  .carousel-control{
+    width: 10%;
   }
 }

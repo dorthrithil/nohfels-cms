@@ -25,7 +25,7 @@ angular.module('amnohfelsClientApp')
     };
 
     /**
-     * @arguments:
+     * @arguments: //TODO (1.0.1) refactor to fit the not so general name
      *  a: array
      *  b: object or an array of objects
      *
@@ -33,11 +33,11 @@ angular.module('amnohfelsClientApp')
      *  true: if b or an element in b is in array a
      *  false: if not
      */
-    this.inArray = function (a, b) {
+    this.inStringArray = function (a, b) {
       b = [].concat(b); //not efficient
       for (var i = 0; i < a.length; i++) {
         for (var j = 0; j < b.length; j++) {
-          if (a[i] === b[j]) {
+          if (a[i].toUpperCase() === b[j].toUpperCase()) {
             return true;
           }
         }
