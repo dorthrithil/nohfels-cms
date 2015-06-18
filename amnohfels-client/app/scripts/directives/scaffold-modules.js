@@ -48,6 +48,10 @@ angular.module('amnohfelsClientApp')
                         element.append($compile(compileStream)(scope));
                     });
                 });
+              scope.$on('status404', function () {
+                var status404 = angular.element('<status404></status404>');
+                element.append($compile(status404)(scope));
+              });
             }
         };
     });
