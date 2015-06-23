@@ -1,4 +1,4 @@
-.parallax-image{
+.parallax-image {
   transform: translate3d(0px, 0px, 0px);
   position: absolute;
   top: 0;
@@ -6,36 +6,37 @@
   width: 100%;
 }
 
-.parallax-module{
+.parallax-module {
+  margin-top: $grid-gutter-width;
   display: block;
   position: relative;
   overflow: hidden;
 
-  .wrapper{
+  .wrapper {
     position: absolute;
-    top: $navbar-height;
+    top: $grid-gutter-width * 2;
     left: 0;
     max-width: 90%;
 
-    > *{
+    > * {
       background-color: $gray-dark;
       display: table;
       font-family: 'Playfair Display', serif;
       font-weight: 400;
       font-style: normal;
-      margin: 0 0 0 $navbar-height;
+      margin: 0 0 0 $grid-gutter-width * 2;
       color: $gray-super-light;
     }
 
-    .title{
-      margin-bottom: 10px;
+    .title {
+      margin-bottom: $grid-gutter-width ;
       font-family: 'Playfair Display', serif;
       font-weight: 400;
       font-style: italic;
     }
   }
 
-  .scroll-hint{
+  .scroll-hint {
     position: absolute;
     bottom: 15px;
     left: 50%;
@@ -48,7 +49,7 @@
     text-align: center;
     transition: opacity 0.7s ease;
 
-    .glyphicon{
+    .glyphicon {
       color: $bright;
       font-size: 23px;
     }
@@ -56,33 +57,39 @@
 
 }
 
-$bp: 14px; //base padding (because font isn't spaced symmetrically)
-$sp: $bp * 1.4; //spaced padding
-$bfs: 55px; //base font-size
+$bp: 14px;
+//base padding (because font isn't spaced symmetrically)
+$sp: $bp * 1.4;
+//spaced padding
+$bfs: 55px;
+//base font-size
 
-@mixin parallax-module($factor){
-  .parallax-module{
-    .title{
+@mixin parallax-module($factor) {
+  .parallax-module {
+    .title {
       padding: round($factor * $bp) round($factor * $sp) round($factor * $sp) round($factor * $sp);
       font-size: round($factor * $bfs);
       line-height: round($factor * $bfs);
     }
-    .caption{
+    .caption {
       padding: round($factor * 0.5 * $bp) round($factor * 0.5 * $sp) round($factor * 0.5 * $sp) round($factor * 0.5 * $sp);
       font-size: round($factor * 0.5 * $bfs);
     }
   }
 }
 
-@media(max-width:767px){
+@media(max-width: 767px) {
   @include parallax-module(0.56);
 }
-@media(min-width:768px){
+
+@media(min-width: 768px) {
   @include parallax-module(0.64);
 }
-@media(min-width:992px){
+
+@media(min-width: 992px) {
   @include parallax-module(0.826666);
 }
-@media(min-width:1200px){
+
+@media(min-width: 1200px) {
   @include parallax-module(1);
 }

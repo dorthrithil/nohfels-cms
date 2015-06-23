@@ -8,8 +8,6 @@
  * Service in the amnohfelsClientApp.
  */
 
-//TODO (1.0.0) bug: bg size wrong if developer tools are opened and size of caption has to be corrected because of overflow
-
 //TODO (1.0.1) performance: throttle
 //TODO (1.0.1) UI: image onload fadeIn
 //TODO (1.0.1) improvement: navbar height doesn't need to be included in height calculations => more visible image content
@@ -142,12 +140,14 @@ angular.module('amnohfelsClientApp')
     //resizes all images to a size where maximum information is shown while being able to parallax scroll it
     function setImageSizes() {
       for (var i = 0; i < images.length; i++) {
-        setSectionHeights(i); //section heights need to be resetted on window resize and refresh()
+        setSectionHeights(i); //section heights need to be reset on window resize and refresh()
 
         //init
         var stretchedImgHeight,
           stretchedImgWidth,
-          minHeight = window.innerHeight * parallaxRatio * 2 + window.innerHeight, //image needs to be as high as the viewport + width for scrolling in and out in parallax speed
+          sectionHeight = images[i].section.find('.parallax-section').height(), //height of the section
+          scrollHeight = (sectionHeight > window.innerHeight) ? sectionHeight : window.innerHeight, // user larger value for size calculation
+          minHeight =  scrollHeight * parallaxRatio * 2 + scrollHeight, //image needs to be as high as the viewport + height for scrolling in and out in parallax speed
           minWidth = window.innerWidth; //image needs to be as broad as the viewport
 
         //calculate dimensions depending on original image size
@@ -176,14 +176,14 @@ angular.module('amnohfelsClientApp')
           images[i].image.css({
             'width': stretchedImgWidth + 'px',
             'height': stretchedImgHeight + 'px',
-            'top': -Math.floor(stretchedImgHeight - window.innerHeight) / 2 + 'px', //when the parallax section is in the center of the viewpost, we also want to see the center of the image
+            'top': -Math.floor(stretchedImgHeight - sectionHeight) / 2 + 'px', //when the parallax section is in the center of the viewport, we also want to see the center of the image
             'left': -Math.floor(stretchedImgWidth - window.innerWidth) / 2 + 'px' //if image is broader than viewport, we want to see the middle part
           });
         } else {
           images[i].image.css({
             'width': stretchedImgWidth + 'px',
             'height': stretchedImgHeight + 'px',
-            'top': -Math.floor(stretchedImgHeight - window.innerHeight) / 2 + 'px', //when the parallax section is in the center of the viewpost, we also want to see the center of the image
+            'top': -Math.floor(stretchedImgHeight - sectionHeight) / 2 + 'px', //when the parallax section is in the center of the viewport, we also want to see the center of the image
             'left': -Math.floor(stretchedImgWidth - window.innerWidth) / 2 + 'px' //if image is broader than viewport, we want to see the middle part
           });
         }

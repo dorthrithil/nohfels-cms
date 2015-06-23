@@ -2,17 +2,16 @@
 
 /**
  * @ngdoc overview
- * @name webappApp
+ * @name amnohfelsClientApp
  * @description
  * # webappApp
  *
  * Main module of the application.
  */
 
-//TODO (1.0.0) UI: uniform module margins
 //TODO (1.0.0) google analytics
 
-//TODO (1.0.1) improvement: use ng resource vor rest communication
+//TODO (1.0.1) improvement: use ng resource for rest communication
 //TODO (1.0.1) improvement: use different angular modules for different concerns
 //TODO (1.0.1) tests: add tests
 //TODO (1.0.1) documentation: add descriptions and comments to all functions and files

@@ -3,13 +3,12 @@
   border-width: 0 !important;
 }
 
-
 // space out content a bit, set bg color & font
 body {
   padding-top: $navbar-height;
   padding-bottom: 0;
   background-color: $bright;
-  font-family: "adelle",serif;
+  font-family: "adelle", serif;
 }
 
 // responsive: portrait tablets and up
@@ -17,4 +16,8 @@ body {
   .container {
     max-width: 1000px;
   }
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin-top: 0;
 }

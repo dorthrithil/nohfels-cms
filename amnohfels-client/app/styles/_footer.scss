@@ -5,7 +5,7 @@ body {
 }
 
 html {
-  padding-bottom: 50px;
+  padding-bottom: $grid-gutter-width + 50px;
   min-height: 100%;
   position: relative;
 }
@@ -19,7 +19,7 @@ footer {
   box-sizing: content-box;
   line-height: 50px;
   vertical-align: middle;
-  margin: 0;
+  margin: $grid-gutter-width 0 0 0;
   text-align: right;
   color: #777777;
   border-top: 1px solid #121212;

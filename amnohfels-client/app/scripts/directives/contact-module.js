@@ -15,10 +15,15 @@ angular.module('amnohfelsClientApp')
       templateUrl: 'views/contact-module.html',
       restrict: 'E',
       scope: {
-        data: '='
+        data: '=',
+        firstModule: '='
       },
       link: {
-        pre: function (scope) {
+        pre: function (scope, element) {
+          //handle margin-top
+          if(scope.firstModule){
+            element.children().addClass('first-module');
+          }
           //ng-change triggers this when the input value changes
           scope.contexts = [];
           scope.modelChanged = function (context) {

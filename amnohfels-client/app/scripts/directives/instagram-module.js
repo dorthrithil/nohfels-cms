@@ -14,95 +14,100 @@
 //TODO (1.0.1) security: get CORS working instead of JSONP
 
 angular.module('amnohfelsClientApp')
-    .directive('instagramModule', function ($http, util, parallax, animator, $timeout) {
-        return {
-            templateUrl: 'views/instagram-module.html',
-            restrict: 'E',
-            scope: {
-                data: '='
-            },
-            link: function postLink() {
-            },
-            controller: function ($scope, $element) {
-                //conditionally set defaults
-                if (typeof $scope.data.maxPhotos === 'undefined') {
-                    $scope.data.maxPhotos = 10;
-                }
-                if (typeof $scope.data.filterForTags === 'undefined') {
-                    $scope.data.filterForTags = false;
-                }
-                if (typeof $scope.data.filterOutTags === 'undefined') {
-                    $scope.data.filterOutTags = true;
-                }
+  .directive('instagramModule', function ($http, util, parallax, animator, $timeout) {
+    return {
+      templateUrl: 'views/instagram-module.html',
+      restrict: 'E',
+      scope: {
+        data: '=',
+        firstModule: '='
+      },
+      link: function postLink(scope, element) {
+        //handle margin-top
+        if (scope.firstModule) {
+          element.children().addClass('first-module');
+        }
+      },
+      controller: function ($scope, $element) {
+        //conditionally set defaults
+        if (typeof $scope.data.maxPhotos === 'undefined') {
+          $scope.data.maxPhotos = 10;
+        }
+        if (typeof $scope.data.filterForTags === 'undefined') {
+          $scope.data.filterForTags = false;
+        }
+        if (typeof $scope.data.filterOutTags === 'undefined') {
+          $scope.data.filterOutTags = true;
+        }
 
-                var accessToken = '1693418525.1fb234f.fc30d26a0f214e83a5378cb56be78617&callback=JSON_CALLBACK';
-                var requestUrl = 'https://api.instagram.com/v1/users/self/feed?access_token=' + accessToken;
-                $scope.images = false; //for ng-show
-                $http.jsonp(requestUrl)
-                    .success(function (response) {
-                        if (response.meta.code !== 200) {
-                            handleHttpError(response); //crappy jsonp error handling
-                        } else {
-                            $scope.images = [];
-                            var push;
-                            for (var i = 0; i < response.data.length; i++) {
-                                push = false;
-                                if ($scope.data.filterForTags && util.inStringArray(response.data[i].tags, $scope.data.tags)) {
-                                    push = true;
-                                } else if ($scope.data.filterForTags === false) {
-                                    push = true;
-                                }
-                                if (push) {
-                                    $scope.images.push({
-                                        url: response.data[i].images.standard_resolution.url, //jshint ignore:line
-                                        caption: ($scope.data.filterOutTags) ? util.filterOutHashTags(response.data[i].caption.text) : response.data[i].caption.text,
-                                        link: response.data[i].link,
-                                        dimensions: {
-                                            height: response.data[i].images.standard_resolution.height, //jshint ignore:line
-                                            width: response.data[i].images.standard_resolution.width //jshint ignore:line
-                                        }
-                                    });
-                                    if (parseInt($scope.data.maxPhotos) === $scope.images.length) {
-                                        break;
-                                    }
-                                }
-                            }
-                        }
-                        if($scope.images.length > 0){ //content height changed: refresh parallax
-                            $timeout(function(){
-                                parallax.refresh();
-                            }, 50); //TODO (1.0.0) this has to be bound to image.load - guessing loading times is evil
-                        }
-                    })
-                    .error(function (response) {
-                        handleHttpError(response); //crappy jsonp error handling
-                    });
-
-                //for crappy jsonp error handling
-                var handleHttpError = function (response) {
-                    if (response === undefined) {
-                        //TODO (1.0.0) error logging
-                    } else if (response.meta.code === 400) {
-                        //TODO (1.0.0) error logging
-                    } else {
-                        //TODO (1.0.0) error logging
+        var accessToken = '1693418525.1fb234f.fc30d26a0f214e83a5378cb56be78617&callback=JSON_CALLBACK';
+        var requestUrl = 'https://api.instagram.com/v1/users/self/feed?access_token=' + accessToken;
+        $scope.images = false; //for ng-show
+        $http.jsonp(requestUrl)
+          .success(function (response) {
+            if (response.meta.code !== 200) {
+              handleHttpError(response); //crappy jsonp error handling
+            } else {
+              $scope.images = [];
+              var push;
+              for (var i = 0; i < response.data.length; i++) {
+                push = false;
+                if ($scope.data.filterForTags && util.inStringArray(response.data[i].tags, $scope.data.tags)) {
+                  push = true;
+                } else if ($scope.data.filterForTags === false) {
+                  push = true;
+                }
+                if (push) {
+                  $scope.images.push({
+                    url: response.data[i].images.standard_resolution.url, //jshint ignore:line
+                    caption: ($scope.data.filterOutTags) ? util.filterOutHashTags(response.data[i].caption.text) : response.data[i].caption.text,
+                    link: response.data[i].link,
+                    dimensions: {
+                      height: response.data[i].images.standard_resolution.height, //jshint ignore:line
+                      width: response.data[i].images.standard_resolution.width //jshint ignore:line
                     }
-                    console.log('Instagram module encountered an error and was shut down for your convenience.');
-                    animator.shrinkHeightTo($element.children(), '0px').then(function () {
-                        $element.remove();
-                        $timeout(function(){ //content height changed: refresh parallax
-                            parallax.refresh();
-                        });
-                    });
-                };
-
-                //carousel triggers
-                $scope.next = function () {
-                    $element.children().children().children().carousel('next');
-                };
-                $scope.previous = function () {
-                    $element.children().children().children().carousel('prev');
-                };
+                  });
+                  if (parseInt($scope.data.maxPhotos) === $scope.images.length) {
+                    break;
+                  }
+                }
+              }
             }
+            if ($scope.images.length > 0) { //content height changed: refresh parallax
+              $timeout(function () {
+                parallax.refresh();
+              }, 50); //TODO (1.0.0) this has to be bound to image.load - guessing loading times is evil
+            }
+          })
+          .error(function (response) {
+            handleHttpError(response); //crappy jsonp error handling
+          });
+
+        //for crappy jsonp error handling
+        var handleHttpError = function (response) {
+          if (response === undefined) {
+            //TODO (1.0.0) error logging
+          } else if (response.meta.code === 400) {
+            //TODO (1.0.0) error logging
+          } else {
+            //TODO (1.0.0) error logging
+          }
+          console.log('Instagram module encountered an error and was shut down for your convenience.');
+          animator.shrinkHeightTo($element.children(), '0px').then(function () {
+            $element.remove();
+            $timeout(function () { //content height changed: refresh parallax
+              parallax.refresh();
+            });
+          });
         };
-    });
+
+        //carousel triggers
+        $scope.next = function () {
+          $element.children().children().children().carousel('next');
+        };
+        $scope.previous = function () {
+          $element.children().children().children().carousel('prev');
+        };
+      }
+    };
+  });

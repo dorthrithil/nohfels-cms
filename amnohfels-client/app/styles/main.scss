@@ -12,6 +12,7 @@
 @import "_image-module.scss";
 @import "_contact-module.scss";
 @import "_instagram-module.scss";
+@import "_text-module.scss";
 @import "_staff-module.scss";
 @import "_footer.scss";
 @import "_lightbox.scss";
@@ -39,4 +40,8 @@ body {
   -webkit-hyphens: auto;
   -moz-hyphens: auto;
   hyphens: auto;
+}
+
+.first-module {
+  margin-top: 0 !important;
 }

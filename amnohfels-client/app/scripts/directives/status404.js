@@ -14,5 +14,5 @@ angular.module('amnohfelsClientApp')
       controller: function ($scope) {
         $scope.adminMail = config.admin.mail;
       }
-    }
+    };
   });

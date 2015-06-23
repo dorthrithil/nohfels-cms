@@ -16,9 +16,15 @@ angular.module('amnohfelsClientApp')
       templateUrl: 'views/image-module.html',
       restrict: 'E',
       scope: {
-        data: '='
+        data: '=',
+        firstModule: '='
       },
-      link: function (scope) {
+      link: function (scope, element) {
+        //handle margin-top
+        if (scope.firstModule) {
+          element.children().addClass('first-module');
+        }
+
         //init
         var body = angular.element(document).find('body');
         var backdrop = angular.element('<div class="lb-backdrop" ng-click="lbClose()"></div>');

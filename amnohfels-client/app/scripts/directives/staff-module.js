@@ -10,16 +10,23 @@
 angular.module('amnohfelsClientApp')
   .directive('staffModule', function (config) {
     return {
-        templateUrl: 'views/staff-module.html',
-        restrict: 'E',
-        scope: {
-            data: '='
-        },
-        controller: function($scope){
-          // prepend imageSrc - we can't inject serverRoot in deckgrid
-          for(var i = 0; i < $scope.data.employees.length; i++){
-            $scope.data.employees[i].imageSrc = config.server.root + $scope.data.employees[i].imageSrc;
-          }
+      templateUrl: 'views/staff-module.html',
+      restrict: 'E',
+      scope: {
+        data: '=',
+        firstModule: '='
+      },
+      link: function (scope, element) {
+        //handle margin-top
+        if (scope.firstModule) {
+          element.children().addClass('first-module');
         }
+      },
+      controller: function ($scope) {
+        // prepend imageSrc - we can't inject serverRoot in deckgrid
+        for (var i = 0; i < $scope.data.employees.length; i++) {
+          $scope.data.employees[i].imageSrc = config.server.root + $scope.data.employees[i].imageSrc;
+        }
+      }
     };
   });

@@ -9,7 +9,7 @@
  */
 
 angular.module('amnohfelsClientApp')
-  .service('util', function util($timeout, config, $http) {
+  .service('util', function util() {
 
     /**
      * @arguments:
@@ -65,22 +65,6 @@ angular.module('amnohfelsClientApp')
         }
       }
       return res;
-    };
-
-    /**
-     * @arguments:
-     *  topic: the pages topic
-     *  $scope: the $scope from where the function is called (the page will be compiled on this scope)
-     *
-     * @description:
-     *  gets page data from server and invokes scaffold-modules page compilation
-     */
-    this.compilePage = function (topic, $scope) {
-      $http.get(config.server.api + 'page/' + topic)
-        .success(function (response) {
-          $scope.response = response.modules;
-          $scope.$broadcast('compile-modules'); //TODO (1.0.1) improvement: as this is the same page, i could use a function instead of events?
-        });
     };
 
     /**
