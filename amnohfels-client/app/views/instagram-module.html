@@ -12,7 +12,8 @@
             <div class="carousel-inner" role="listbox">
                 <div class="item" ng-repeat="image in images" ng-class="{'active' : $index == 0}">
                     <a href="{{image.link}}" target="_blank">
-                        <img ng-src="{{image.url}}" width="{{image.dimensions.width}}"  height="{{image.dimensions.height}}" alt="{{image.caption}}">
+                        <img ng-src="{{image.url}}" width="{{image.dimensions.width}}"
+                             height="{{image.dimensions.height}}" alt="{{image.caption}}">
                     </a>
                     <div class="carousel-caption">
                         {{image.caption}}
@@ -21,11 +22,13 @@
             </div>
 
             <!-- Controls -->
-            <a class="left carousel-control" ng-click="previous()" role="button" data-slide="prev" ng-show="images.length > 1">
+            <a class="left carousel-control" ng-click="previous()" role="button" data-slide="prev"
+               ng-show="images.length > 1">
                 <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
                 <span class="sr-only">Previous</span>
             </a>
-            <a class="right carousel-control" ng-click="next()" role="button" data-slide="next" ng-show="images.length > 1">
+            <a class="right carousel-control" ng-click="next()" role="button" data-slide="next"
+               ng-show="images.length > 1">
                 <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
                 <span class="sr-only">Next</span>
             </a>

@@ -7,8 +7,6 @@
  * # contactModule
  */
 
-//TODO (1.0.0) (bug) safari generates connection refused errors on successfully sent mails
-
 angular.module('amnohfelsClientApp')
   .directive('contactModule', function ($http, config, $q, $timeout) {
     return {
@@ -21,7 +19,7 @@ angular.module('amnohfelsClientApp')
       link: {
         pre: function (scope, element) {
           //handle margin-top
-          if(scope.firstModule){
+          if (scope.firstModule) {
             element.children().addClass('first-module');
           }
           //ng-change triggers this when the input value changes
@@ -124,20 +122,18 @@ angular.module('amnohfelsClientApp')
           //send data
           $http.post(config.server.api + 'mail', $scope.formData)
             .success(function (data, status) {
-              console.log(data);
-              //switch success cases
-              switch (status) {
-                case 205:
-                  $scope.modal = $scope.resetContent;
-                  $scope.formData = {
-                    name: '',
-                    email: '',
-                    message: '',
-                    topic: $scope.data.topic
-                  };
-                  break;
-                default:
-                  $scope.modal = $scope.unknownSuccess;
+              // switch success cases
+              // (ugly workaround for safaris unability to handle status 205??)
+              if (status === 200 && data === '205 Reset Content') {
+                $scope.modal = $scope.resetContent;
+                $scope.formData = {
+                  name: '',
+                  email: '',
+                  message: '',
+                  topic: $scope.data.topic
+                };
+              } else {
+                $scope.modal = $scope.unknownSuccess;
               }
               $scope.modal.status = 'success'; //for modal color
               for (var i = 0; i < $scope.contexts.length; i++) { //reset indications

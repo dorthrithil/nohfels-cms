@@ -33,8 +33,6 @@ function sendContactMail($name, $email, $message, $topic)
         //TODO logging ($mail->ErrorInfo)
         return 'Message could not be sent.';
     } else {
-        header("Access-Control-Allow-Origin: *");
-        header($_SERVER['SERVER_PROTOCOL'] . ' 205 Reset Content');
-        return 'Cheer up! The job is done!';
+        return '205 Reset Content'; //ugly workaround for safaris unability to handle status 205??
     }
 }

@@ -15,6 +15,7 @@
 //TODO (1.0.1) improvement: use different angular modules for different concerns
 //TODO (1.0.1) tests: add tests
 //TODO (1.0.1) documentation: add descriptions and comments to all functions and files
+//TODO (1.0.1) introduce translations service
 
 //TODO (1.1.0) feature: let user add, delete and disable pages
 //TODO (1.1.0) improvement: factor out page style elements in extra files to provide theme functionality
