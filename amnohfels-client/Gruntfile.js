@@ -397,6 +397,24 @@ module.exports = function (grunt) {
       }
     },
 
+    preprocess : {
+      options: {
+        inline: true,
+        context : {
+          DEBUG: false
+        }
+      },
+      html : {
+        src : [
+          '<%= yeoman.dist %>/index.html',
+          '<%= yeoman.dist %>/views/*.html'
+        ]
+      },
+      js : {
+        src: '.tmp/concat/scripts/*.js'
+      }
+    },
+
     // Run some tasks in parallel to speed up the build process
     concurrent: {
       server: [
@@ -457,6 +475,8 @@ module.exports = function (grunt) {
     'concurrent:dist',
     'autoprefixer',
     'concat',
+    'preprocess:js', // Remove DEBUG code from production builds
+    'preprocess:html', // Remove DEBUG code from production builds
     'ngAnnotate',
     'copy:dist',
     'cdnify',

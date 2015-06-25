@@ -18,5 +18,8 @@ angular.module('amnohfelsClientApp')
     },
     instagram: {
       accessToken: '1693418525.1fb234f.fc30d26a0f214e83a5378cb56be78617'
+    },
+    analytics: {
+      id: 'UA-64482637-1'
     }
   });
