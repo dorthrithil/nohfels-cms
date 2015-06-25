@@ -16,12 +16,6 @@ angular.module('amnohfelsClientApp')
         data: '=',
         firstModule: '='
       },
-      link: function (scope, element) {
-        //handle margin-top
-        if (scope.firstModule) {
-          element.children().addClass('first-module');
-        }
-      },
       controller: function ($scope) {
         // prepend imageSrc - we can't inject serverRoot in deckgrid
         for (var i = 0; i < $scope.data.employees.length; i++) {

@@ -19,11 +19,7 @@ angular.module('amnohfelsClientApp')
         data: '=',
         firstModule: '='
       },
-      link: function (scope, element) {
-        //handle margin-top
-        if (scope.firstModule) {
-          element.children().addClass('first-module');
-        }
+      link: function (scope) {
 
         //init
         var body = angular.element(document).find('body');

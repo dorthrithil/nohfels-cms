@@ -17,11 +17,7 @@ angular.module('amnohfelsClientApp')
         firstModule: '='
       },
       link: {
-        pre: function (scope, element) {
-          //handle margin-top
-          if (scope.firstModule) {
-            element.children().addClass('first-module');
-          }
+        pre: function (scope) {
           //ng-change triggers this when the input value changes
           scope.contexts = [];
           scope.modelChanged = function (context) {

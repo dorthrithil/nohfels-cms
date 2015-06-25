@@ -15,12 +15,6 @@ angular.module('amnohfelsClientApp')
         data: '=',
         firstModule: '='
       },
-      link: function (scope, element) {
-        //handle margin-top
-        if (scope.firstModule) {
-          element.children().addClass('first-module');
-        }
-      },
       controller: function ($scope) {
         $scope.data.title = $sce.trustAsHtml($scope.data.title);
         //link uploaded files to server toot
