@@ -1,5 +1,4 @@
 <?php
-//TODO (1.0.1) bug: (32) broken pipe when file is larger than 4.048.218 bytes (max value that worked in the tests)
 
 function fileupload()
 {
