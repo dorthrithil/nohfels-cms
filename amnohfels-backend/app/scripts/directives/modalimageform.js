@@ -7,6 +7,7 @@
  * # modalImageForm
  */
 
+//TODO (1.0.1) refactoring: rename to gallery
 //TODO (1.0.1) bug (firefox, most probably also ie): after picture upload is finished the "server is processing" indication isn't shown
 //TODO (1.0.1) improvement: mechanism for automatically handling the bigger-option on pictures so no layout errors will occur
 //TODO (1.0.1) bug: firstUploadFinished logic doesn't make real sense. what about second uploads?
@@ -28,14 +29,10 @@ angular.module('amnohfelsBackendApp')
         if ($scope.modalVars.action === 'update') {
           $scope.firstUploadFinished = true;
           for (var i = 0; i < $scope.modalVars.data.images.length; i++) {
-            if ($scope.modalVars.data.images[i].imageCaption === '') {
-              $scope.modalVars.data.images[i].hasImageCaption = false;
-            } else {
-              $scope.modalVars.data.images[i].hasImageCaption = true;
-            }
+            $scope.modalVars.data.images[i].hasImageCaption = $scope.modalVars.data.images[i].imageCaption !== '';
           }
         }
-        $scope.modalVars.route = '/image';
+        $scope.modalVars.route = '/gallery';
         $scope.modalVars.data.pageTopic = $scope.pageTopic;
 
         $scope.shiftLeft = function (index) {
@@ -103,7 +100,7 @@ angular.module('amnohfelsBackendApp')
 
         //file uploader
         var uploader = $scope.uploader = new FileUploader({
-          url: config.server.api + 'module/image/image/upload', //POST requests get send here
+          url: config.server.api + 'module/gallery/image/upload', //POST requests get send here
           autoUpload: true,
           headers: {
             'JWT': doorman.getJWT()

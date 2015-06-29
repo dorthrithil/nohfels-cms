@@ -6,9 +6,9 @@
  * Time: 20:25
  */
 
-//TODO refactor image to gallery...
+//TODO (1.0.1) refactoring: refactor image to gallery in database...
 
-function createImageModule($page, $title, $images)
+function createGalleryModule($page, $title, $images)
 {
     $connection = getConnection();
 
@@ -31,19 +31,17 @@ function createImageModule($page, $title, $images)
         }
 
         //write images
-        $i = 0; //TODO will be part of image object later
-        foreach($images as $image){
+        foreach ($images as $key=>$image) {
             $image_src = $image['imageSrc'];
             $image_thumb_src = $image['imageThumbSrc'];
             $image_thumb_square_src = $image['imageThumbSquareSrc'];
             $image_size = $image['imageSize'];
             // based on flag, decide to save or discard caption
             $image_caption = ($image['hasImageCaption']) ? $image['imageCaption'] : '';
-            $result = $connection->query("INSERT INTO image_module_images (image_src, image_thumb_src, image_thumb_square_src, image_size, image_module, image_position, image_caption) VALUES  ('$image_src', '$image_thumb_src', '$image_thumb_square_src', '$image_size', '$module_id', '$i', '$image_caption')");
+            $result = $connection->query("INSERT INTO image_module_images (image_src, image_thumb_src, image_thumb_square_src, image_size, image_module, image_position, image_caption) VALUES  ('$image_src', '$image_thumb_src', '$image_thumb_square_src', '$image_size', '$module_id', '$key', '$image_caption')");
             if (!$result) {
                 throw new Exception($connection->error);
             }
-            $i++; //TODO will be part of image object later
         }
 
         //get y_index of new module
@@ -69,7 +67,7 @@ function createImageModule($page, $title, $images)
     $connection->close();
 }
 
-function getImageModule($id)
+function getGalleryModule($id)
 {
     $connection = getConnection();
     $data = new stdClass();
@@ -78,7 +76,7 @@ function getImageModule($id)
         if (!$result) {
             throw new Exception($connection->error);
         } else {
-            if(mysqli_num_rows($result) == 0) return false;
+            if (mysqli_num_rows($result) == 0) return false;
             while ($rs = $result->fetch_array(MYSQLI_ASSOC)) {
                 $data->id = $rs['id'];
                 $data->title = $rs['title'];
@@ -116,7 +114,7 @@ function getImageModule($id)
     return $response;
 }
 
-function updateImageModule($id, $title, $images)
+function updateGalleryModule($id, $title, $images)
 {
     $connection = getConnection();
 
@@ -134,19 +132,17 @@ function updateImageModule($id, $title, $images)
         }
 
         //write images
-        $i = 0; //TODO will be part of image object later
-        foreach($images as $image){
+        foreach ($images as $key=>$image) {
             $image_src = $image['imageSrc'];
             $image_thumb_src = $image['imageThumbSrc'];
             $image_thumb_square_src = $image['imageThumbSquareSrc'];
             $image_size = $image['imageSize'];
             // based on flag, decide to save or discard caption
             $image_caption = ($image['hasImageCaption']) ? $image['imageCaption'] : '';
-            $result = $connection->query("INSERT INTO image_module_images (image_src, image_thumb_src, image_thumb_square_src, image_size, image_module, image_position, image_caption) VALUES  ('$image_src', '$image_thumb_src', '$image_thumb_square_src', '$image_size', '$id', '$i', '$image_caption')");
+            $result = $connection->query("INSERT INTO image_module_images (image_src, image_thumb_src, image_thumb_square_src, image_size, image_module, image_position, image_caption) VALUES  ('$image_src', '$image_thumb_src', '$image_thumb_square_src', '$image_size', '$id', '$key', '$image_caption')");
             if (!$result) {
                 throw new Exception($connection->error);
             }
-            $i++; //TODO will be part of image object later
         }
 
 
@@ -157,7 +153,7 @@ function updateImageModule($id, $title, $images)
     $connection->close();
 }
 
-function deleteImageModule($id)
+function deleteGalleryModule($id)
 {
     $connection = getConnection();
 
@@ -205,10 +201,9 @@ function deleteImageModule($id)
     $connection->close();
 }
 
-//TODO (32) broken pipe when file is larger than 4.048.218 bytes (max value that worked in the tests)
+//TODO (1.0.1) bug: (32) broken pipe when file is larger than 4.048.218 bytes (max value that worked in the tests)
 
-//TODO weird name
-function uploadImageImage()
+function uploadGalleryImage()
 {
     $image_typemap = array(
         'image/jpeg' => '.jpg',
@@ -217,10 +212,16 @@ function uploadImageImage()
         'image/bmp' => '.bmp'
     );
 
-    if (!empty($_FILES) && validate_mime_type_image($_FILES)) { //TODO distinguish error messages & include http status codes
+    if (empty($_FILES)) {
+        header('HTTP/ 400 No file provided');
+        echo 'No file provided!';
+    } else if (!validate_mime_type_image($_FILES)) {
+        header('HTTP/ 400 Invalid filetype');
+        echo 'Invalid filetype!';
+    } else {
         $tempPath = $_FILES['file']['tmp_name'];
         $accessPath = 'uploads' . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR . 'gallery' . DIRECTORY_SEPARATOR . 'gallery_' . uniqid() . $image_typemap[$_FILES['file']['type']];
-        $uploadPath = dirname(dirname(dirname(dirname(__FILE__)))) . DIRECTORY_SEPARATOR . $accessPath; //TODO solve that dirname rubbish with a global image upload function
+        $uploadPath = dirname(dirname(dirname(dirname(__FILE__)))) . DIRECTORY_SEPARATOR . $accessPath; //TODO (1.0.1) refactoring: solve that dirname rubbish with a global image upload function
         move_uploaded_file($tempPath, $uploadPath);
 
 
@@ -261,7 +262,5 @@ function uploadImageImage()
             'thumbSquarePath' => $thumbSquareAccessPath
         );
         jsonResponse($answer);
-    } else {
-        echo 'No file or invalid type provided';
     }
 }

@@ -1,14 +1,14 @@
 <?php
 
-//TODO security: authentification for post & delete routes
+//TODO (1.0.1) enhancement: check for resource existence on update-post & delete routes (swap, text edit update delete)
+//TODO (1.0.1) documentation: function descriptions
+//TODO (1.0.1) refactoring: camelCaseize everything
+//TODO (1.0.1) enhancement: correct error responses for client
+//TODO (1.0.1) enhancement: use slims response object for returning content and setting the status
 
-//TODO enhancement: (1.0.1) check for resource existence on update-post & delete routes (swap, text edit update delete)
-//TODO documentation (1.0.1) function descriptions
-//TODO refactoring (1.0.1) camelCaseize everything
-//TODO enhancement (1.0.1): correct error responses for client
-//TODO enhancement (1.0.1): use slims response object for returning content and setting the status
+//TODO (1.0.2) enhancement: database health checks
 
-//TODO enhancement (1.0.2): database health checks
+//TODO (1.0.1) one single upload script with better security type checking. e.g. don't use the typemap for extension but pathinfo
 
 //set headers
 
@@ -136,44 +136,44 @@ $app->group('/module', function () use ($app) {
         });
 
         //upload parallax image
-        $app->post('/image/upload', 'authenticateUser', function () use ($app) { //TODO uniform employee route
+        $app->post('/image/upload', 'authenticateUser', function () use ($app) {
             uploadParallaxImage();
         });
 
     });
 
-    //group for image modules
-    $app->group('/image', function () use ($app) {
+    //group for gallery modules
+    $app->group('/gallery', function () use ($app) {
 
-        //create image module
+        //create gallery module
         $app->post('', 'authenticateUser', function () use ($app) {
             $json = $app->request->getBody();
             $data = json_decode($json, true);
-            createImageModule($data['pageTopic'], $data['title'], $data['images']);
+            createGalleryModule($data['pageTopic'], $data['title'], $data['images']);
         });
 
-        //get image module
+        //get gallery module
         $app->get('/:id', function ($id) use ($app) {
-            $response = getImageModule($id);
+            $response = getGalleryModule($id);
             if ($response == false) $app->notFound();
             jsonResponse($response);
         });
 
-        //update image module
+        //update gallery module
         $app->post('/:id', 'authenticateUser', function ($id) use ($app) {
             $json = $app->request->getBody();
             $data = json_decode($json, true);
-            updateImageModule($id, $data['title'], $data['images']);
+            updateGalleryModule($id, $data['title'], $data['images']);
         });
 
-        //delete image module
+        //delete gallery module
         $app->delete('/:id', 'authenticateUser', function ($id) {
-            deleteImageModule($id);
+            deleteGalleryModule($id);
         });
 
         //upload gallery image
-        $app->post('/image/upload', 'authenticateUser', function () use ($app) { //TODO uniform image route
-            uploadImageImage();
+        $app->post('/image/upload', 'authenticateUser', function () use ($app) {
+            uploadGalleryImage();
         });
 
     });
@@ -287,12 +287,15 @@ $app->group('/page', function () use ($app) {
         //first check if topic exists
         $topics = getTopics();
         $inArray = false;
-        foreach($topics as $topicsSection){
-            foreach($topicsSection as $topicObj){
-                if($topicObj->id == $topic) $inArray = true;
+        foreach ($topics as $topicsSection) {
+            foreach ($topicsSection as $topicObj) {
+                if ($topicObj->id == $topic) {
+                    $inArray = true;
+                    break;
+                }
             }
         }
-        if(!$inArray) $app->notFound(); //TODO deep search in object structure
+        if (!$inArray) $app->notFound();
 
         //then process actual request
         $response = getPage($topic);
@@ -316,12 +319,11 @@ $app->group('/topic', function () use ($app) {
 
 });
 
-//TODO (1.0.1) find a way to secure this (jwt's are no option, i think?)
 //send mail
 $app->post('/mail', function () use ($app) {
     $json = $app->request->getBody();
     $data = json_decode($json, true);
-    $response = sendContactMail($data['name'], $data['email'], $data['message'], $data['topic']);
+    $response = sendContactMail($data['name'], $data['email'], $data['message'], $data['topic'], $data['termsOfService'], $data['homepage']);
     jsonResponse($response);
 });
 

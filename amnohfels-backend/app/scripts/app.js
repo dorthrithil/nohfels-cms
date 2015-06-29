@@ -9,6 +9,8 @@
  * Main module of the application.
  */
 
+//TODO (1.0.0) bug: on modal dismiss destroy textangular (throws an error "already exists" and new instance doesn't work)
+
 //TODO (1.0.1) UI: check padding in content pane (e.g. when there is a 500 in page directive)
 //TODO (1.0.1) improvement: use ng resource for rest communication
 //TODO (1.0.1) improvement: use different angular modules for different concerns
@@ -22,6 +24,8 @@
 //TODO (1.0.1) UI: directive for showing all error messages uniformly, eg. parallax (error + 1 different warnings)
 //TODO (1.0.1) improvement: add page sorting & section functionality
 //TODO (1.0.1) improvement: handly auto logout (JWTrefresh) with unsaved changes
+//TODO (1.0.1) UI: warning if instagram module follows after parallax (looks generally ugly)
+//TODO (1.0.1) bug: scenario: user opens image upload modal. does nothing until jwt is expired. jwt refreshes. modal does still have old jwt. user sends form while he is still logged in but gets a invalid token message
 
 //TODO (1.0.2) enhancement: use HTML5 image preview instead of loading image from server after upload finished (parallax, employee, image)
 

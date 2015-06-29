@@ -1,7 +1,13 @@
 <?php
 
-function sendContactMail($name, $email, $message, $topic)
+function sendContactMail($name, $email, $message, $topic, $termsOfService, $homepage)
 {
+    // check for filled out bot trap fields
+    if($termsOfService != false || $homepage != ''){
+        // spoof successful try
+        return '205 Reset Content';
+    }
+
     global $conf_admin_name,
            $conf_admin_mail,
            $conf_smtp_host,
@@ -30,7 +36,7 @@ function sendContactMail($name, $email, $message, $topic)
     $mail->AltBody = $message;
 
     if (!$mail->send()) {
-        //TODO logging ($mail->ErrorInfo)
+        //TODO (1.0.1) logs: logging ($mail->ErrorInfo)
         return 'Message could not be sent.';
     } else {
         return '205 Reset Content'; //ugly workaround for safaris unability to handle status 205??

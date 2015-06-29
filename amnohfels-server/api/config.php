@@ -1,8 +1,5 @@
 <?php
-
-//TODO make sure cnfig.yaml is blocked by router for direct access
-
-//TODO refactoring (1.0.1) make $config global, drop all these other lines
+//TODO (1.0.1) refactoring: make $config global, drop all these other lines
 
 $config = $yaml->parse(file_get_contents('config.yaml'));
 

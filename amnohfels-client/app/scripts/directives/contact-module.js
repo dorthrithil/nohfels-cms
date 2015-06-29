@@ -17,7 +17,10 @@ angular.module('amnohfelsClientApp')
         firstModule: '='
       },
       link: {
-        pre: function (scope) {
+        pre: function (scope, element) {
+          // hide bot trap form elements
+          element.find('.tos, .homepage').hide();
+
           //ng-change triggers this when the input value changes
           scope.contexts = [];
           scope.modelChanged = function (context) {
@@ -68,6 +71,8 @@ angular.module('amnohfelsClientApp')
           name: '',
           email: '',
           message: '',
+          termsOfService: false,
+          homepage: '',
           topic: $scope.data.topic
         };
 
@@ -126,6 +131,8 @@ angular.module('amnohfelsClientApp')
                   name: '',
                   email: '',
                   message: '',
+                  termsOfService: false,
+                  homepage: '',
                   topic: $scope.data.topic
                 };
               } else {

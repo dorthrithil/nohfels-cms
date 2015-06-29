@@ -23,16 +23,14 @@ function createStaffModule($page, $title, $employees)
         }
 
         //write employees
-        $i = 0; //TODO will be part of employee object later
-        foreach($employees as $employee){
+        foreach ($employees as $key => $employee) {
             $image_src = $employee['imageSrc'];
             $name = $employee['name'];
             $caption = $employee['caption'];
-            $result = $connection->query("INSERT INTO staff_module_employees (image_src, name, staff_module, position, caption) VALUES  ('$image_src', '$name', '$module_id', '$i', '$caption')");
+            $result = $connection->query("INSERT INTO staff_module_employees (image_src, name, staff_module, position, caption) VALUES  ('$image_src', '$name', '$module_id', '$key', '$caption')");
             if (!$result) {
                 throw new Exception($connection->error);
             }
-            $i++; //TODO will be part of employee object later
         }
 
         //get y_index of new module
@@ -67,7 +65,7 @@ function getStaffModule($id)
         if (!$result) {
             throw new Exception($connection->error);
         } else {
-            if(mysqli_num_rows($result) == 0) return false;
+            if (mysqli_num_rows($result) == 0) return false;
             while ($rs = $result->fetch_array(MYSQLI_ASSOC)) {
                 $data->id = $rs['id'];
                 $data->title = $rs['title'];
@@ -120,16 +118,14 @@ function updateStaffModule($id, $title, $employees)
             throw new Exception($connection->error);
         }
         //write employees
-        $i = 0; //TODO will be part of employee object later
-        foreach($employees as $employee){
+        foreach ($employees as $key => $employee) {
             $image_src = $employee['imageSrc'];
             $name = $employee['name'];
             $caption = $employee['caption'];
-            $result = $connection->query("INSERT INTO staff_module_employees (image_src, name, staff_module, position, caption) VALUES  ('$image_src', '$name', '$id', '$i', '$caption')");
+            $result = $connection->query("INSERT INTO staff_module_employees (image_src, name, staff_module, position, caption) VALUES  ('$image_src', '$name', '$id', '$key', '$caption')");
             if (!$result) {
                 throw new Exception($connection->error);
             }
-            $i++; //TODO will be part of employee object later
         }
 
 
@@ -180,7 +176,7 @@ function deleteStaffModule($id)
             throw new Exception($connection->error);
         }
 
-        //TODO delete now unused images from server
+        //TODO (1.0.1) housekeeping: delete now unused images from server
     } catch (Exception $e) {
         echo $e->getMessage();
     }
@@ -189,7 +185,7 @@ function deleteStaffModule($id)
 }
 
 
-//TODO (32) broken pipe when file is larger than 4.048.218 bytes (max value that worked in the tests)
+//TODO (1.0.1) bug: (32) broken pipe when file is larger than 4.048.218 bytes (max value that worked in the tests)
 
 function uploadEmployeeImage()
 {
@@ -200,10 +196,16 @@ function uploadEmployeeImage()
         'image/bmp' => '.bmp'
     );
 
-    if (!empty($_FILES) && validate_mime_type_image($_FILES)) { //TODO distinguish error messages & include http status codes
+    if (empty($_FILES)) {
+        header('HTTP/ 400 No file provided');
+        echo 'No file provided!';
+    } else if (!validate_mime_type_image($_FILES)) {
+        header('HTTP/ 400 Invalid filetype');
+        echo 'Invalid filetype!';
+    } else {
         $tempPath = $_FILES['file']['tmp_name'];
         $access_path = 'uploads' . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR . 'staff' . DIRECTORY_SEPARATOR . 'staff_' . uniqid() . $image_typemap[$_FILES['file']['type']];
-        $uploadPath = dirname(dirname(dirname(dirname(__FILE__)))) . DIRECTORY_SEPARATOR . $access_path; //TODO solve that dirname rubbish with a global image upload function
+        $uploadPath = dirname(dirname(dirname(dirname(__FILE__)))) . DIRECTORY_SEPARATOR . $access_path; //TODO (1.0.1) refactoring: solve that dirname rubbish with a global image upload function
         move_uploaded_file($tempPath, $uploadPath);
 
 
@@ -228,7 +230,5 @@ function uploadEmployeeImage()
         //jsonResponse($answer);
         $json = json_encode($answer);
         echo $json;
-    } else {
-        echo 'No file or invalid type provided';
     }
 }

@@ -10,6 +10,7 @@
 //TODO (1.0.1) enhancement: better compile whole modal (pass type as argument), not only the forms. this way we can get the modal logic in the modal file. soc!
 //TODO (1.0.1) enhancement: indicate loading of data
 //TODO (1.0.1) enhancement: "loading the content failed - retry" button after some time without success
+//TODO (1.0.1) bug: when all page modules are deleted there should be a warning message
 
 angular.module('amnohfelsBackendApp')
   .directive('page', function (config, $http, syncQueue, $compile, $window) {

@@ -20,8 +20,10 @@ function htmlResponse($input){
     echo $input;
 }
 
-function validate_mime_type_image($file) //TODO don't rely on mime types as they are set by clients
+function validate_mime_type_image($file)
 {
-    if (in_array($file['file']['type'], array('image/jpeg', 'image/gif', 'image/png', 'image/bmp'))) return true;
+    $allowedTypes = array(IMAGETYPE_PNG, IMAGETYPE_JPEG, IMAGETYPE_GIF, IMAGETYPE_BMP);
+    $detectedType = exif_imagetype($file['file']['tmp_name']);
+    if (in_array($detectedType, $allowedTypes)) return true;
     return false;
 }
