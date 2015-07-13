@@ -71,9 +71,27 @@ angular.module('amnohfelsBackendApp')
                 break;
             }
             doorman.removeUnsavedChange();
+            dismissModal();
             $element.children().modal('hide');
           }
         };
+
+        $scope.cancel = function(){
+          dismissModal();
+        };
+
+        /**
+         * reset validation functions to undefined and invoke the dismiss hook function (used to unregister
+         * textAngular editors)
+         */
+        function dismissModal(){
+          $scope.employeesValid = undefined;
+          $scope.tagsValid = undefined;
+          if(typeof($scope.dismissHook) !== 'undefined'){
+            $scope.dismissHook();
+          }
+          $scope.dismissHook = undefined;
+        }
       }
     };
   });

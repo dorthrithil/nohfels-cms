@@ -8,6 +8,7 @@
  */
 
 //TODO (1.0.1) UI: transition on switch background
+//TODO (1.0.1) bug: photos from several seconds don't hav a name displayed
 
 angular.module('amnohfelsBackendApp')
     .directive('backgroundSwitcher', function ($http, $q, $document, $compile) {

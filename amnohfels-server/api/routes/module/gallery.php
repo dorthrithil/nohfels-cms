@@ -6,7 +6,7 @@
  * Time: 20:25
  */
 
-//TODO (1.0.1) refactoring: refactor image to gallery in database...
+//TODO (1.0.0) refactoring: refactor image to gallery in database...
 
 function createGalleryModule($page, $title, $images)
 {

@@ -12,11 +12,16 @@
 //TODO (1.0.1) bug: firstUploadFinished logic doesn't make real sense. what about second uploads?
 
 angular.module('amnohfelsBackendApp')
-  .directive('modalParallaxForm', function (config, FileUploader, doorman) {
+  .directive('modalParallaxForm', function (config, FileUploader, doorman, textAngularManager) {
     return {
       templateUrl: 'views/modalparallaxform.html',
       restrict: 'E',
       controller: function ($scope) {
+
+        //unregister textAngular editor
+        $scope.dismissHook = function(){
+          textAngularManager.unregisterEditor('caption');
+        };
 
         // for form validation
         $scope.firstUploadFinished = false;

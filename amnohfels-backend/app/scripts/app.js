@@ -9,8 +9,6 @@
  * Main module of the application.
  */
 
-//TODO (1.0.0) bug: on modal dismiss destroy textangular (throws an error "already exists" and new instance doesn't work)
-
 //TODO (1.0.1) UI: check padding in content pane (e.g. when there is a 500 in page directive)
 //TODO (1.0.1) improvement: use ng resource for rest communication
 //TODO (1.0.1) improvement: use different angular modules for different concerns

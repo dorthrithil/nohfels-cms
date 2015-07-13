@@ -8,17 +8,22 @@
  */
 
 angular.module('amnohfelsBackendApp')
-    .directive('modalTextForm', function () {
-        return {
-            templateUrl: 'views/modaltextform.html',
-            restrict: 'E',
-            controller: function ($scope) {
-                if ($scope.modalVars.action === 'create') {
-                    $scope.modalVars.data.title = '';
-                    $scope.modalVars.data.content = '';
-                }
-                $scope.modalVars.route = '/text';
-                $scope.modalVars.data.pageTopic = $scope.pageTopic;
-            }
-        };
-    });
+  .directive('modalTextForm', function (textAngularManager) {
+    return {
+      templateUrl: 'views/modaltextform.html',
+      restrict: 'E',
+      controller: function ($scope) {
+        if ($scope.modalVars.action === 'create') {
+          $scope.modalVars.data.title = '';
+          $scope.modalVars.data.content = '';
+        }
+        $scope.modalVars.route = '/text';
+        $scope.modalVars.data.pageTopic = $scope.pageTopic;
+
+        $scope.dismissHook = function(){
+          textAngularManager.unregisterEditor('content');
+        }
+      }
+    };
+  })
+;
