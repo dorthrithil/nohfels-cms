@@ -3,8 +3,8 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: rdbms
--- Erstellungszeit: 06. Apr 2015 um 20:46
--- Server Version: 5.5.42-log
+-- Erstellungszeit: 14. Jul 2015 um 13:42
+-- Server Version: 5.5.44-log
 -- PHP-Version: 5.3.27
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -17,7 +17,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8 */;
 
 --
--- Datenbank: `DB2089315`
+-- Datenbank: `DB2131029`
 --
 
 -- --------------------------------------------------------
@@ -30,76 +30,45 @@ CREATE TABLE IF NOT EXISTS `contact_modules` (
 `id` int(11) NOT NULL,
   `topic` varchar(255) NOT NULL,
   `title` varchar(255) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
-
---
--- Daten für Tabelle `contact_modules`
---
-
-INSERT INTO `contact_modules` (`id`, `topic`, `title`) VALUES
-(1, 'Café', 'Haben Sie Fragen?');
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `image_modules`
+-- Tabellenstruktur für Tabelle `gallery_modules`
 --
 
-CREATE TABLE IF NOT EXISTS `image_modules` (
+CREATE TABLE IF NOT EXISTS `gallery_modules` (
 `id` int(11) NOT NULL,
   `title` varchar(255) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
-
---
--- Daten für Tabelle `image_modules`
---
-
-INSERT INTO `image_modules` (`id`, `title`) VALUES
-(1, 'Bildergallerie');
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `image_module_images`
+-- Tabellenstruktur für Tabelle `gallery_module_images`
 --
 
-CREATE TABLE IF NOT EXISTS `image_module_images` (
+CREATE TABLE IF NOT EXISTS `gallery_module_images` (
 `id` int(11) NOT NULL,
-  `image_module` int(11) NOT NULL,
+  `gallery_module` int(11) NOT NULL,
   `image_size` varchar(255) NOT NULL,
   `image_thumb_src` varchar(255) NOT NULL,
-  `image_src` varchar(255) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
-
---
--- Daten für Tabelle `image_module_images`
---
-
-INSERT INTO `image_module_images` (`id`, `image_module`, `image_size`, `image_thumb_src`, `image_src`) VALUES
-(1, 1, 'large', 'images/gallery/cafe/1.jpg', 'images/gallery/cafe/1.jpg'),
-(2, 1, 'small', 'images/gallery/cafe/2.jpg', 'images/gallery/cafe/2.jpg'),
-(3, 1, 'small', 'images/gallery/cafe/3.jpg', 'images/gallery/cafe/3.jpg'),
-(4, 1, 'small', 'images/gallery/cafe/4.jpg', 'images/gallery/cafe/4.jpg'),
-(5, 1, 'small', 'images/gallery/cafe/5.jpg', 'images/gallery/cafe/5.jpg'),
-(6, 1, 'small', 'images/gallery/cafe/6.jpg', 'images/gallery/cafe/6.jpg');
+  `image_src` varchar(255) NOT NULL,
+  `image_position` int(11) NOT NULL,
+  `image_thumb_square_src` varchar(255) NOT NULL,
+  `image_caption` text NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=266 DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `image_module_image_sizes`
+-- Tabellenstruktur für Tabelle `gallery_module_image_sizes`
 --
 
-CREATE TABLE IF NOT EXISTS `image_module_image_sizes` (
+CREATE TABLE IF NOT EXISTS `gallery_module_image_sizes` (
   `size` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Daten für Tabelle `image_module_image_sizes`
---
-
-INSERT INTO `image_module_image_sizes` (`size`) VALUES
-('large'),
-('small');
 
 -- --------------------------------------------------------
 
@@ -113,14 +82,7 @@ CREATE TABLE IF NOT EXISTS `instagram_modules` (
   `filter_out_tags` tinyint(1) NOT NULL DEFAULT '1',
   `filter_for_tags` tinyint(1) NOT NULL DEFAULT '0',
   `title` varchar(255) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
-
---
--- Daten für Tabelle `instagram_modules`
---
-
-INSERT INTO `instagram_modules` (`id`, `max_photos`, `filter_out_tags`, `filter_for_tags`, `title`) VALUES
-(1, 10, 1, 1, 'Aktuelle Bilder von Instagram');
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -132,15 +94,7 @@ CREATE TABLE IF NOT EXISTS `instagram_module_tags` (
 `id` int(11) NOT NULL,
   `instagram_module` int(11) NOT NULL,
   `tag` varchar(255) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
-
---
--- Daten für Tabelle `instagram_module_tags`
---
-
-INSERT INTO `instagram_module_tags` (`id`, `instagram_module`, `tag`) VALUES
-(1, 1, 'cafe'),
-(2, 1, 'café');
+) ENGINE=InnoDB AUTO_INCREMENT=56 DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -149,21 +103,9 @@ INSERT INTO `instagram_module_tags` (`id`, `instagram_module`, `tag`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `module_types` (
-  `type` varchar(255) NOT NULL,
+  `id` varchar(255) NOT NULL,
   `name` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Daten für Tabelle `module_types`
---
-
-INSERT INTO `module_types` (`type`, `name`) VALUES
-('contact_module', 'Kontaktformular'),
-('image_module', 'Bildergallerie'),
-('instagram_module', 'Instagram'),
-('parallax_module', 'Parallax'),
-('staff_module', 'Personal'),
-('text_module', 'Text');
 
 -- --------------------------------------------------------
 
@@ -174,23 +116,10 @@ INSERT INTO `module_types` (`type`, `name`) VALUES
 CREATE TABLE IF NOT EXISTS `pages` (
 `id` int(11) NOT NULL,
   `topic` varchar(255) NOT NULL,
-  `module_type` varchar(255) NOT NULL,
+  `module_type_id` varchar(255) NOT NULL,
   `module_id` int(11) NOT NULL,
   `y_index` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
-
---
--- Daten für Tabelle `pages`
---
-
-INSERT INTO `pages` (`id`, `topic`, `module_type`, `module_id`, `y_index`) VALUES
-(1, 'cafe', 'parallax_module', 1, 0),
-(2, 'cafe', 'text_module', 1, 1),
-(3, 'cafe', 'image_module', 1, 2),
-(4, 'cafe', 'parallax_module', 2, 3),
-(5, 'cafe', 'staff_module', 1, 4),
-(6, 'cafe', 'contact_module', 1, 5),
-(7, 'cafe', 'instagram_module', 1, 6);
+) ENGINE=InnoDB AUTO_INCREMENT=201 DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -202,17 +131,11 @@ CREATE TABLE IF NOT EXISTS `parallax_modules` (
 `id` int(11) NOT NULL,
   `title` varchar(255) NOT NULL,
   `caption` text NOT NULL,
-  `height` varchar(255) NOT NULL,
-  `bg_img_src` varchar(255) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
-
---
--- Daten für Tabelle `parallax_modules`
---
-
-INSERT INTO `parallax_modules` (`id`, `title`, `caption`, `height`, `bg_img_src`) VALUES
-(1, 'Sommercafé am Nohfels', 'Ein Stück Schweden in Bad Sobernheim', '100vh', 'images/parallax/cafe.jpg'),
-(2, 'Öffnungszeiten', 'Mo-Fr: 13:00-19:00 Uhr<br /> Sa+So: 12:00-19:00 Uhr', '500px', 'images/parallax/kuchen.jpg');
+  `height_num` int(5) NOT NULL,
+  `height_unit` varchar(2) NOT NULL,
+  `bg_img_src` varchar(255) NOT NULL,
+  `bg_img_thumb_src` varchar(255) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -223,39 +146,21 @@ INSERT INTO `parallax_modules` (`id`, `title`, `caption`, `height`, `bg_img_src`
 CREATE TABLE IF NOT EXISTS `staff_modules` (
 `id` int(11) NOT NULL,
   `title` varchar(255) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
-
---
--- Daten für Tabelle `staff_modules`
---
-
-INSERT INTO `staff_modules` (`id`, `title`) VALUES
-(1, 'Unser Team');
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `staff_module_images`
+-- Tabellenstruktur für Tabelle `staff_module_employees`
 --
 
-CREATE TABLE IF NOT EXISTS `staff_module_images` (
+CREATE TABLE IF NOT EXISTS `staff_module_employees` (
   `image_src` varchar(255) NOT NULL,
-  `caption` text NOT NULL,
+  `name` text NOT NULL,
   `staff_module` int(11) NOT NULL,
-  `position` int(11) NOT NULL
+  `position` int(11) NOT NULL,
+  `caption` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Daten für Tabelle `staff_module_images`
---
-
-INSERT INTO `staff_module_images` (`image_src`, `caption`, `staff_module`, `position`) VALUES
-('images/staff/uwe.jpg', 'Uwe Engelmann', 1, 0),
-('images/staff/lukas.jpg', 'Lukas Engelmann', 1, 1),
-('images/staff/marina.jpg', 'Marina Weidemaier', 1, 2),
-('images/staff/eva.jpg', 'Eva Becker', 1, 3),
-('images/staff/veronika.jpg', 'Veronika Scheffold', 1, 4),
-('images/staff/lisa.jpg', 'Lisa Bachmann', 1, 5);
 
 -- --------------------------------------------------------
 
@@ -267,14 +172,7 @@ CREATE TABLE IF NOT EXISTS `text_modules` (
 `id` int(11) NOT NULL,
   `title` varchar(255) NOT NULL,
   `content` text NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
-
---
--- Daten für Tabelle `text_modules`
---
-
-INSERT INTO `text_modules` (`id`, `title`, `content`) VALUES
-(1, 'Unser Angebot', 'Kaffee, Kuchen und Waffeln nach Hausfrauenart, Eisbecher, eine große Auswahl alkoholfreier Getränke, Wein von heimischen Winzern, Kirner Bier und vieles mehr.');
+) ENGINE=InnoDB AUTO_INCREMENT=128 DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -283,21 +181,23 @@ INSERT INTO `text_modules` (`id`, `title`, `content`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `topics` (
-  `name` varchar(255) NOT NULL
+  `id` varchar(255) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `position` int(11) NOT NULL,
+  `section` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+-- --------------------------------------------------------
+
 --
--- Daten für Tabelle `topics`
+-- Tabellenstruktur für Tabelle `users`
 --
 
-INSERT INTO `topics` (`name`) VALUES
-('cafe'),
-('contact'),
-('imprint'),
-('minigolf'),
-('nachtigallental'),
-('psgh'),
-('reisemobilstellplatz');
+CREATE TABLE IF NOT EXISTS `users` (
+`id` int(11) NOT NULL,
+  `email` varchar(255) COLLATE latin1_german1_ci NOT NULL,
+  `password` varchar(255) COLLATE latin1_german1_ci NOT NULL
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1 COLLATE=latin1_german1_ci;
 
 --
 -- Indizes der exportierten Tabellen
@@ -310,21 +210,21 @@ ALTER TABLE `contact_modules`
  ADD PRIMARY KEY (`id`);
 
 --
--- Indizes für die Tabelle `image_modules`
+-- Indizes für die Tabelle `gallery_modules`
 --
-ALTER TABLE `image_modules`
+ALTER TABLE `gallery_modules`
  ADD PRIMARY KEY (`id`);
 
 --
--- Indizes für die Tabelle `image_module_images`
+-- Indizes für die Tabelle `gallery_module_images`
 --
-ALTER TABLE `image_module_images`
- ADD PRIMARY KEY (`id`), ADD KEY `image_module` (`image_module`), ADD KEY `image_size` (`image_size`);
+ALTER TABLE `gallery_module_images`
+ ADD PRIMARY KEY (`id`), ADD KEY `gallery_module` (`gallery_module`), ADD KEY `image_size` (`image_size`);
 
 --
--- Indizes für die Tabelle `image_module_image_sizes`
+-- Indizes für die Tabelle `gallery_module_image_sizes`
 --
-ALTER TABLE `image_module_image_sizes`
+ALTER TABLE `gallery_module_image_sizes`
  ADD PRIMARY KEY (`size`);
 
 --
@@ -343,13 +243,13 @@ ALTER TABLE `instagram_module_tags`
 -- Indizes für die Tabelle `module_types`
 --
 ALTER TABLE `module_types`
- ADD PRIMARY KEY (`type`);
+ ADD PRIMARY KEY (`id`);
 
 --
 -- Indizes für die Tabelle `pages`
 --
 ALTER TABLE `pages`
- ADD PRIMARY KEY (`id`), ADD KEY `topic` (`topic`), ADD KEY `module_type` (`module_type`);
+ ADD PRIMARY KEY (`id`), ADD KEY `topic` (`topic`), ADD KEY `module_type_id` (`module_type_id`);
 
 --
 -- Indizes für die Tabelle `parallax_modules`
@@ -364,9 +264,9 @@ ALTER TABLE `staff_modules`
  ADD PRIMARY KEY (`id`);
 
 --
--- Indizes für die Tabelle `staff_module_images`
+-- Indizes für die Tabelle `staff_module_employees`
 --
-ALTER TABLE `staff_module_images`
+ALTER TABLE `staff_module_employees`
  ADD PRIMARY KEY (`staff_module`,`position`), ADD KEY `staff_module` (`staff_module`);
 
 --
@@ -379,7 +279,13 @@ ALTER TABLE `text_modules`
 -- Indizes für die Tabelle `topics`
 --
 ALTER TABLE `topics`
- ADD PRIMARY KEY (`name`);
+ ADD PRIMARY KEY (`id`);
+
+--
+-- Indizes für die Tabelle `users`
+--
+ALTER TABLE `users`
+ ADD PRIMARY KEY (`id`);
 
 --
 -- AUTO_INCREMENT für exportierte Tabellen
@@ -389,57 +295,62 @@ ALTER TABLE `topics`
 -- AUTO_INCREMENT für Tabelle `contact_modules`
 --
 ALTER TABLE `contact_modules`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=24;
 --
--- AUTO_INCREMENT für Tabelle `image_modules`
+-- AUTO_INCREMENT für Tabelle `gallery_modules`
 --
-ALTER TABLE `image_modules`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+ALTER TABLE `gallery_modules`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=16;
 --
--- AUTO_INCREMENT für Tabelle `image_module_images`
+-- AUTO_INCREMENT für Tabelle `gallery_module_images`
 --
-ALTER TABLE `image_module_images`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
+ALTER TABLE `gallery_module_images`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=266;
 --
 -- AUTO_INCREMENT für Tabelle `instagram_modules`
 --
 ALTER TABLE `instagram_modules`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=17;
 --
 -- AUTO_INCREMENT für Tabelle `instagram_module_tags`
 --
 ALTER TABLE `instagram_module_tags`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=56;
 --
 -- AUTO_INCREMENT für Tabelle `pages`
 --
 ALTER TABLE `pages`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=8;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=201;
 --
 -- AUTO_INCREMENT für Tabelle `parallax_modules`
 --
 ALTER TABLE `parallax_modules`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=13;
 --
 -- AUTO_INCREMENT für Tabelle `staff_modules`
 --
 ALTER TABLE `staff_modules`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=8;
 --
 -- AUTO_INCREMENT für Tabelle `text_modules`
 --
 ALTER TABLE `text_modules`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=128;
+--
+-- AUTO_INCREMENT für Tabelle `users`
+--
+ALTER TABLE `users`
 MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 --
 -- Constraints der exportierten Tabellen
 --
 
 --
--- Constraints der Tabelle `image_module_images`
+-- Constraints der Tabelle `gallery_module_images`
 --
-ALTER TABLE `image_module_images`
-ADD CONSTRAINT `image_module_images_ibfk_1` FOREIGN KEY (`image_module`) REFERENCES `image_modules` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-ADD CONSTRAINT `image_module_images_ibfk_2` FOREIGN KEY (`image_size`) REFERENCES `image_module_image_sizes` (`size`) ON UPDATE CASCADE;
+ALTER TABLE `gallery_module_images`
+ADD CONSTRAINT `gallery_module_images_ibfk_1` FOREIGN KEY (`gallery_module`) REFERENCES `gallery_modules` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+ADD CONSTRAINT `gallery_module_images_ibfk_2` FOREIGN KEY (`image_size`) REFERENCES `gallery_module_image_sizes` (`size`) ON UPDATE CASCADE;
 
 --
 -- Constraints der Tabelle `instagram_module_tags`
@@ -451,14 +362,14 @@ ADD CONSTRAINT `instagram_module_tags_ibfk_1` FOREIGN KEY (`instagram_module`) R
 -- Constraints der Tabelle `pages`
 --
 ALTER TABLE `pages`
-ADD CONSTRAINT `pages_ibfk_1` FOREIGN KEY (`topic`) REFERENCES `topics` (`name`) ON UPDATE CASCADE,
-ADD CONSTRAINT `pages_ibfk_2` FOREIGN KEY (`module_type`) REFERENCES `module_types` (`type`) ON UPDATE CASCADE;
+ADD CONSTRAINT `pages_ibfk_2` FOREIGN KEY (`module_type_id`) REFERENCES `module_types` (`id`) ON UPDATE CASCADE,
+ADD CONSTRAINT `pages_ibfk_3` FOREIGN KEY (`topic`) REFERENCES `topics` (`id`) ON UPDATE CASCADE;
 
 --
--- Constraints der Tabelle `staff_module_images`
+-- Constraints der Tabelle `staff_module_employees`
 --
-ALTER TABLE `staff_module_images`
-ADD CONSTRAINT `staff_module_images_ibfk_1` FOREIGN KEY (`staff_module`) REFERENCES `staff_modules` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `staff_module_employees`
+ADD CONSTRAINT `staff_module_employees_ibfk_1` FOREIGN KEY (`staff_module`) REFERENCES `staff_modules` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
