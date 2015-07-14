@@ -1,3 +1,5 @@
 <footer ng-controller="FooterCtrl">
-    <div class="container">© {{date | date:'yyyy'}} Am Nohfels | <a href="#/contact">Kontakt</a> | <a href="#/imprint">Impressum</a></div>
+    <div class="container">© {{date | date:'yyyy'}} {{company.name}}
+      <span ng-repeat="topic in topics">| <a href="#/{{topic.id}}">{{topic.name}}</a> </span>
+    </div>
 </footer>

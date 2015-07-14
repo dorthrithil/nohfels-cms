@@ -8,8 +8,11 @@
  * Controller of the webappApp
  */
 angular.module('amnohfelsClientApp')
-    .controller('NavigationCtrl', function ($scope, $location) {
-        $scope.isOnPath = function(path) {
-            return path === $location.path();
-        };
+  .controller('NavigationCtrl', function ($scope, $location, topicService) {
+    $scope.isOnPath = function (path) {
+      return path === $location.path();
+    };
+    topicService.getHeadTopics().then(function (topics) {
+      $scope.topics = topics;
     });
+  });
