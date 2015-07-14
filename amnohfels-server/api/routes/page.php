@@ -25,7 +25,7 @@ function getPage($topic)
                     case "parallax":
                         $modules[] = getParallaxModule($rs['module_id']);
                         break;
-                    case "image":
+                    case "gallery":
                         $modules[] = getGalleryModule($rs['module_id']);
                         break;
                     case "contact":

@@ -22,7 +22,7 @@ angular.module('amnohfelsBackendApp')
 
         $scope.dismissHook = function(){
           textAngularManager.unregisterEditor('content');
-        }
+        };
       }
     };
   })

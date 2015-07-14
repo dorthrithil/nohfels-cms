@@ -2,21 +2,20 @@
 
 /**
  * @ngdoc directive
- * @name amnohfelsBackendApp.directive:modalImageForm
+ * @name amnohfelsBackendApp.directive:modalGalleryForm
  * @description
- * # modalImageForm
+ * # modalGalleryForm
  */
 
-//TODO (1.0.1) refactoring: rename to gallery
 //TODO (1.0.1) bug (firefox, most probably also ie): after picture upload is finished the "server is processing" indication isn't shown
 //TODO (1.0.1) improvement: mechanism for automatically handling the bigger-option on pictures so no layout errors will occur
 //TODO (1.0.1) bug: firstUploadFinished logic doesn't make real sense. what about second uploads?
 //TODO (1.0.1) UI: optimise thumbnail caption toolbar
 
 angular.module('amnohfelsBackendApp')
-  .directive('modalImageForm', function (config, FileUploader, doorman) {
+  .directive('modalGalleryForm', function (config, FileUploader, doorman) {
     return {
-      templateUrl: 'views/modalimageform.html',
+      templateUrl: '../../views/modalgalleryform.html',
       restrict: 'E',
       controller: function ($scope) {
         // for form validation
@@ -119,7 +118,7 @@ angular.module('amnohfelsBackendApp')
         //restrict size
         uploader.filters.push({
           name: 'sizeFilter',
-          fn: function (item) {
+          fn: function (item) { //jshint ignore:line
             return true; //TODO (1.0.1) this has to go in a config file and hs to be set on server too
           }
         });

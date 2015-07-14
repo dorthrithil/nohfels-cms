@@ -6,22 +6,20 @@
  * Time: 20:25
  */
 
-//TODO (1.0.0) refactoring: refactor image to gallery in database...
-
 function createGalleryModule($page, $title, $images)
 {
     $connection = getConnection();
 
-    //create new image module
+    //create new gallery module
     try {
-        $result = $connection->query("INSERT INTO image_modules (title) VALUES  ('$title')");
+        $result = $connection->query("INSERT INTO gallery_modules (title) VALUES  ('$title')");
         if (!$result) {
             throw new Exception($connection->error);
         }
 
         //get id of created module
         $module_id = -1;
-        $result = $connection->query("SELECT id FROM image_modules GROUP BY id HAVING MAX(id)");
+        $result = $connection->query("SELECT id FROM gallery_modules GROUP BY id HAVING MAX(id)");
         if (!$result) {
             throw new Exception($connection->error);
         } else {
@@ -38,7 +36,7 @@ function createGalleryModule($page, $title, $images)
             $image_size = $image['imageSize'];
             // based on flag, decide to save or discard caption
             $image_caption = ($image['hasImageCaption']) ? $image['imageCaption'] : '';
-            $result = $connection->query("INSERT INTO image_module_images (image_src, image_thumb_src, image_thumb_square_src, image_size, image_module, image_position, image_caption) VALUES  ('$image_src', '$image_thumb_src', '$image_thumb_square_src', '$image_size', '$module_id', '$key', '$image_caption')");
+            $result = $connection->query("INSERT INTO gallery_module_images (image_src, image_thumb_src, image_thumb_square_src, image_size, gallery_module, image_position, image_caption) VALUES  ('$image_src', '$image_thumb_src', '$image_thumb_square_src', '$image_size', '$module_id', '$key', '$image_caption')");
             if (!$result) {
                 throw new Exception($connection->error);
             }
@@ -56,7 +54,7 @@ function createGalleryModule($page, $title, $images)
         }
 
         //register module for page
-        $result = $connection->query("INSERT INTO pages (topic, module_type_id, module_id, y_index) VALUES  ('$page', 'image', '$module_id', '$y_index')");
+        $result = $connection->query("INSERT INTO pages (topic, module_type_id, module_id, y_index) VALUES  ('$page', 'gallery', '$module_id', '$y_index')");
         if (!$result) {
             throw new Exception($connection->error);
         }
@@ -72,7 +70,7 @@ function getGalleryModule($id)
     $connection = getConnection();
     $data = new stdClass();
     try {
-        $result = $connection->query("SELECT id, title FROM image_modules WHERE id = '$id'");
+        $result = $connection->query("SELECT id, title FROM gallery_modules WHERE id = '$id'");
         if (!$result) {
             throw new Exception($connection->error);
         } else {
@@ -88,7 +86,7 @@ function getGalleryModule($id)
 
     $images = array();
     try {
-        $result = $connection->query("SELECT image_size, image_src, image_thumb_src, image_thumb_square_src, image_caption FROM image_module_images WHERE image_module = '$data->id' ORDER BY image_position");
+        $result = $connection->query("SELECT image_size, image_src, image_thumb_src, image_thumb_square_src, image_caption FROM gallery_module_images WHERE gallery_module = '$data->id' ORDER BY image_position");
         if (!$result) {
             throw new Exception($connection->error);
         } else {
@@ -120,13 +118,13 @@ function updateGalleryModule($id, $title, $images)
 
     try {
         //update module
-        $result = $connection->query("UPDATE image_modules SET title = '$title' WHERE id = '$id'");
+        $result = $connection->query("UPDATE gallery_modules SET title = '$title' WHERE id = '$id'");
         if (!$result) {
             throw new Exception($connection->error);
         }
 
         //update images (lazy)
-        $result = $connection->query("DELETE FROM image_module_images WHERE image_module = '$id'");
+        $result = $connection->query("DELETE FROM gallery_module_images WHERE gallery_module = '$id'");
         if (!$result) {
             throw new Exception($connection->error);
         }
@@ -139,7 +137,7 @@ function updateGalleryModule($id, $title, $images)
             $image_size = $image['imageSize'];
             // based on flag, decide to save or discard caption
             $image_caption = ($image['hasImageCaption']) ? $image['imageCaption'] : '';
-            $result = $connection->query("INSERT INTO image_module_images (image_src, image_thumb_src, image_thumb_square_src, image_size, image_module, image_position, image_caption) VALUES  ('$image_src', '$image_thumb_src', '$image_thumb_square_src', '$image_size', '$id', '$key', '$image_caption')");
+            $result = $connection->query("INSERT INTO gallery_module_images (image_src, image_thumb_src, image_thumb_square_src, image_size, gallery_module, image_position, image_caption) VALUES  ('$image_src', '$image_thumb_src', '$image_thumb_square_src', '$image_size', '$id', '$key', '$image_caption')");
             if (!$result) {
                 throw new Exception($connection->error);
             }
@@ -170,7 +168,7 @@ function deleteGalleryModule($id)
         }
 
         //delete pages entry
-        $result = $connection->query("DELETE FROM pages WHERE module_id = '$id' AND module_type_id = 'image'");
+        $result = $connection->query("DELETE FROM pages WHERE module_id = '$id' AND module_type_id = 'gallery'");
         if (!$result) {
             throw new Exception($connection->error);
         }
@@ -182,13 +180,13 @@ function deleteGalleryModule($id)
         }
 
         //delete module
-        $result = $connection->query("DELETE FROM image_modules WHERE id = '$id'");
+        $result = $connection->query("DELETE FROM gallery_modules WHERE id = '$id'");
         if (!$result) {
             throw new Exception($connection->error);
         }
 
         //delete images
-        $result = $connection->query("DELETE FROM image_module_images WHERE image_module = '$id'");
+        $result = $connection->query("DELETE FROM gallery_module_images WHERE gallery_module = '$id'");
         if (!$result) {
             throw new Exception($connection->error);
         }

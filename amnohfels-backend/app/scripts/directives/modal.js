@@ -17,8 +17,8 @@ angular.module('amnohfelsBackendApp')
       restrict: 'E',
       link: function postLink(scope, element) {
         switch (scope.modalVars.type.id) {
-          case 'image':
-            element.find('.modal-body').append($compile(angular.element('<modal-image-form></modal-image-form>'))(scope));
+          case 'gallery':
+            element.find('.modal-body').append($compile(angular.element('<modal-gallery-form></modal-gallery-form>'))(scope));
             break;
           case 'parallax':
             element.find('.modal-body').append($compile(angular.element('<modal-parallax-form></modal-parallax-form>'))(scope));

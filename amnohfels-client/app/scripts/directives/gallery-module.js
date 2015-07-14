@@ -2,18 +2,18 @@
 
 /**
  * @ngdoc directive
- * @name amnohfelsClientApp.directive:imageModule
+ * @name amnohfelsClientApp.directive:galleryModule
  * @description
- * # imageModule
+ * # galleryModule
  */
 
 //TODO (1.0.1) enhancement: put lightbox code into a lightbox service
 //TODO (1.0.1) refactoring: templates for spaghetti angular element definitions
 
 angular.module('amnohfelsClientApp')
-  .directive('imageModule', function ($compile, animator, $document, $timeout, config, usSpinnerService) {
+  .directive('galleryModule', function ($compile, animator, $document, $timeout, config, usSpinnerService) {
     return {
-      templateUrl: 'views/image-module.html',
+      templateUrl: 'views/gallery-module.html',
       restrict: 'E',
       scope: {
         data: '=',
