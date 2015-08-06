@@ -24,12 +24,15 @@ function createTextModule($page, $title, $content)
 
         //get y_index of new module
         $y_index = -1;
-        $result = $connection->query("SELECT y_index FROM pages WHERE topic = '$page' GROUP BY y_index HAVING MAX(y_index)");
+        $result = $connection->query("SELECT y_index FROM pages WHERE topic = '$page' ORDER BY y_index DESC LIMIT 1");
         if (!$result) {
             throw new Exception($connection->error);
+        } else if (mysqli_num_rows($result) == 0) {
+            $y_index = 0;
         } else {
             while ($rs = $result->fetch_array(MYSQLI_ASSOC)) {
                 $y_index = $rs['y_index'] + 1;
+                echo($y_index);
             }
         }
 

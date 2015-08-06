@@ -10,8 +10,8 @@
 angular.module('amnohfelsClientApp')
   .constant('config', {
     server: {
-      root: 'http://amnohfels.de/server/',//'http://schruemel.de/dev/',
-      api: 'http://amnohfels.de/server/api/'//'http://schruemel.de/dev/api/'
+      root: 'http://schruemel.de/dev/',
+      api: 'http://schruemel.de/dev/api/'
     },
     admin: {
       mail: 'felix@feblog.de'

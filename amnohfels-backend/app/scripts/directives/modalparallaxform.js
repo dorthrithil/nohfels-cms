@@ -7,16 +7,19 @@
  * # modalParallaxForm
  */
 
+//TODO (1.0.1) bug: "Bitte lade ein Bild hoch!" & "Bitte warte, bis der Upload vollständig ist!" at the same time
 //TODO (1.0.1) resource management: when uploading a new image: delete old image from server
 //TODO (1.0.1) UI: properly align error messages with preview image
 //TODO (1.0.1) bug: firstUploadFinished logic doesn't make real sense. what about second uploads?
 
 angular.module('amnohfelsBackendApp')
-  .directive('modalParallaxForm', function (config, FileUploader, doorman, textAngularManager) {
+  .directive('modalParallaxForm', function (config, FileUploader, doorman, textAngularManager, util) {
     return {
       templateUrl: 'views/modalparallaxform.html',
       restrict: 'E',
       controller: function ($scope) {
+
+        $scope.modifyHtml = util.taModifyHtml;
 
         //unregister textAngular editor
         $scope.dismissHook = function(){
@@ -79,23 +82,26 @@ angular.module('amnohfelsBackendApp')
         uploader.filters.push({
           name: 'sizeFilter',
           fn: function (item) {  //jshint ignore:line
-            return true;// item.size < 4050218; //TODO (1.0.1) this has to go in a config file and hs to be set on server too
+            if (config.settings.maxImageFilesize === 0) {
+              return true;
+            } else {
+              return item.size <= config.settings.maxImageFilesize;
+            }
           }
         });
 
         //warn when image dimensions are under 1000px*560px
         function testImageDimensions(file) {
           var reader = new FileReader(); //create file reader
+
           function onLoadFile(event) { //function to be executed when file reader reads file
             var img = new Image(); //create image object
-            img.onload = onLoadImage(img); //link dimension test function
+            img.onload = function() { //checks dimensions and warns user
+              if (img.height < 560 || img.width < 1000) {
+                $scope.$broadcast('show-image-dimension-warning'); //broadcast to ngfuerrorreporter
+              }
+            };
             img.src = event.target.result; //load image
-          }
-
-          function onLoadImage(img) { //checks dimensions and warns user
-            if (img.height < 560 || img.width < 1000) {
-              $scope.$broadcast('show-image-dimension-warning'); //broadcast to ngfuerrorreporter
-            }
           }
 
           reader.onload = onLoadFile;

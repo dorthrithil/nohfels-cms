@@ -9,6 +9,9 @@
  * Main module of the application.
  */
 
+//TODO (1.0.1) security: keep config vars in a seperate yaml and fetch them for build
+//TODO (1.0.1) bug: unsaved changes on logout after modal dismiss?
+//TODO (1.0.1) bug: invalid token when gallery modal stays open, but jwt refesh succeeded
 //TODO (1.0.1) UI: check padding in content pane (e.g. when there is a 500 in page directive)
 //TODO (1.0.1) improvement: use ng resource for rest communication
 //TODO (1.0.1) improvement: use different angular modules for different concerns

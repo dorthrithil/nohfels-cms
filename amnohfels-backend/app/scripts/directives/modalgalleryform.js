@@ -11,6 +11,7 @@
 //TODO (1.0.1) improvement: mechanism for automatically handling the bigger-option on pictures so no layout errors will occur
 //TODO (1.0.1) bug: firstUploadFinished logic doesn't make real sense. what about second uploads?
 //TODO (1.0.1) UI: optimise thumbnail caption toolbar
+//TODO (1.0.1) bug: don't add broken gallery image when upload on server fails
 
 angular.module('amnohfelsBackendApp')
   .directive('modalGalleryForm', function (config, FileUploader, doorman) {
@@ -119,7 +120,11 @@ angular.module('amnohfelsBackendApp')
         uploader.filters.push({
           name: 'sizeFilter',
           fn: function (item) { //jshint ignore:line
-            return true; //TODO (1.0.1) this has to go in a config file and hs to be set on server too
+            if (config.settings.maxImageFilesize === 0) {
+              return true;
+            } else {
+              return item.size <= config.settings.maxImageFilesize;
+            }
           }
         });
 

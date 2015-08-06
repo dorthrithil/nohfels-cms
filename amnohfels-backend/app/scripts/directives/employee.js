@@ -68,7 +68,11 @@ angular.module('amnohfelsBackendApp')
         uploader.filters.push({
           name: 'sizeFilter',
           fn: function (item) { //jshint ignore:line
-            return true;//item.size < 4050218; //TODO (1.0.1) this has to go in a config file and hs to be set on server too
+            if (config.settings.maxImageFilesize === 0) {
+              return true;
+            } else {
+              return item.size <= config.settings.maxImageFilesize;
+            }
           }
         });
 

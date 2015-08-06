@@ -8,7 +8,7 @@
  */
 
 angular.module('amnohfelsBackendApp')
-  .directive('modalTextForm', function (textAngularManager) {
+  .directive('modalTextForm', function (textAngularManager, util) {
     return {
       templateUrl: 'views/modaltextform.html',
       restrict: 'E',
@@ -23,6 +23,8 @@ angular.module('amnohfelsBackendApp')
         $scope.dismissHook = function(){
           textAngularManager.unregisterEditor('content');
         };
+
+        $scope.modifyHtml = util.taModifyHtml;
       }
     };
   })

@@ -7,49 +7,53 @@
  * # taFileuploadPopover
  */
 angular.module('textAngularModule')
-    .directive('taFileuploadPopover', function (config, FileUploader, doorman) {
-        return {
-            templateUrl: 'modules/textAngular/views/tafileuploadpopover.html',
-            restrict: 'E',
-            scope: {},
-            controller: function ($scope, $element) {
-                $scope.dismiss = function () {
-                    $element.parent().parent().popover('destroy');
-                    $scope.$destroy();
-                };
-
-                //file uploader
-                var uploader = $scope.uploader = new FileUploader({
-                    url: config.server.api + 'util/fileupload', //POST requests get send here
-                    autoUpload: true,
-                    headers: {
-                        'JWT': doorman.getJWT()
-                    }
-                });
-
-                //filters
-                //restrict size
-                uploader.filters.push({
-                    name: 'sizeFilter',
-                    fn: function (item) {  //jshint ignore:line
-                        return true;//item.size < 4050218; //TODO (1.0.1) this has to go in a config file and hs to be set on server too
-                    }
-                });
-
-                uploader.onAfterAddingFile = function () {
-                    if (uploader.queue.length > 1) {
-                        uploader.removeFromQueue(0); //only one file should be in the queue for the progress bar getting displayed properly
-                    }
-                };
-                uploader.onCompleteItem = function (fileItem, response) {
-                    //get buttonScope. because popovers are attached to the body, we can't simply navigate from $element
-                    //the button scope is the scope of textAngulars fileupload button
-                    var $buttonScope = jQuery('[name="fileupload"]').scope();
-                    $buttonScope.taFileUploadAccessPath = response.path;
-                    $buttonScope.performAction();
-                    $buttonScope.taFileUploadAccessPath = null;
-                    $scope.$destroy();
-                };
-            }
+  .directive('taFileuploadPopover', function (config, FileUploader, doorman) {
+    return {
+      templateUrl: 'modules/textAngular/views/tafileuploadpopover.html',
+      restrict: 'E',
+      scope: {},
+      controller: function ($scope, $element) {
+        $scope.dismiss = function () {
+          $element.parent().parent().popover('destroy');
+          $scope.$destroy();
         };
-    });
+
+        //file uploader
+        var uploader = $scope.uploader = new FileUploader({
+          url: config.server.api + 'util/fileupload', //POST requests get send here
+          autoUpload: true,
+          headers: {
+            'JWT': doorman.getJWT()
+          }
+        });
+
+        //filters
+        //restrict size
+        uploader.filters.push({
+          name: 'sizeFilter',
+          fn: function (item) {  //jshint ignore:line
+            if (config.settings.maxFilesize === 0) {
+              return true;
+            } else {
+              return item.size <= config.settings.maxFilesize;
+            }
+          }
+        });
+
+        uploader.onAfterAddingFile = function () {
+          if (uploader.queue.length > 1) {
+            uploader.removeFromQueue(0); //only one file should be in the queue for the progress bar getting displayed properly
+          }
+        };
+        uploader.onCompleteItem = function (fileItem, response) {
+          //get buttonScope. because popovers are attached to the body, we can't simply navigate from $element
+          //the button scope is the scope of textAngulars fileupload button
+          var $buttonScope = jQuery('[name="fileupload"]').scope();
+          $buttonScope.taFileUploadAccessPath = response.path;
+          $buttonScope.performAction();
+          $buttonScope.taFileUploadAccessPath = null;
+          $scope.$destroy();
+        };
+      }
+    };
+  });

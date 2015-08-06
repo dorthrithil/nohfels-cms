@@ -1,6 +1,6 @@
 <?php
 
-//TODO (1.0.1) module types in sql dump
+//TODO (1.0.1) module types & image sizes in sql dump
 //TODO (1.0.1) enhancement: check for resource existence on update-post & delete routes (swap, text edit update delete)
 //TODO (1.0.1) documentation: function descriptions
 //TODO (1.0.1) refactoring: camelCaseize everything

@@ -16,3 +16,6 @@ $conf_mysql_password = $config['mysql-password'];
 $conf_mysql_database = $config['mysql-database'];
 
 $conf_jwt_key = $config['jwt-key'];
+
+$conf_max_filesize = $config['max-filesize'];
+$conf_max_image_filesize = $config['max-image-filesize'];

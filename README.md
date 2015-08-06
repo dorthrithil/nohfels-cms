@@ -42,3 +42,11 @@ Configuration goes into a simple yaml file which must be located in the server r
   	#ywt
   	
   	ywt-key : YOUR_PRIVATE_YWT_KEY  #used for encryption & decryption of JSON Web Tokens
+  	
+  	# filesize restrictions
+
+	# set the maximal filesize of uploaded images and files in bytes. set to zero to allow any filesize.
+	# !! make sure to set this on the client too to prevent inconsistencies !!
+
+	max-filesize : 0
+	max-image-filesize : 0

@@ -35,9 +35,11 @@ function createStaffModule($page, $title, $employees)
 
         //get y_index of new module
         $y_index = -1;
-        $result = $connection->query("SELECT y_index FROM pages WHERE topic = '$page' GROUP BY y_index HAVING MAX(y_index)");
+        $result = $connection->query("SELECT y_index FROM pages WHERE topic = '$page' ORDER BY y_index DESC LIMIT 1");
         if (!$result) {
             throw new Exception($connection->error);
+        } else if (mysqli_num_rows($result) == 0) {
+            $y_index = 0;
         } else {
             while ($rs = $result->fetch_array(MYSQLI_ASSOC)) {
                 $y_index = $rs['y_index'] + 1;
@@ -186,6 +188,9 @@ function deleteStaffModule($id)
 
 function uploadEmployeeImage()
 {
+
+    global $conf_max_image_filesize;
+
     $image_typemap = array(
         'image/jpeg' => '.jpg',
         'image/gif' => '.gif',
@@ -196,9 +201,12 @@ function uploadEmployeeImage()
     if (empty($_FILES)) {
         header('HTTP/ 400 No file provided');
         echo 'No file provided!';
-    } else if (!validate_mime_type_image($_FILES)) {
+    } elseif (!validate_mime_type_image($_FILES)) {
         header('HTTP/ 400 Invalid filetype');
         echo 'Invalid filetype!';
+    } elseif ($conf_max_image_filesize != 0 && $_FILES['file']['size'] > $conf_max_image_filesize) {
+        header('HTTP/ 400 Filesize too high');
+        echo 'Filesize too high!';
     } else {
         $tempPath = $_FILES['file']['tmp_name'];
         $access_path = 'uploads' . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR . 'staff' . DIRECTORY_SEPARATOR . 'staff_' . uniqid() . $image_typemap[$_FILES['file']['type']];

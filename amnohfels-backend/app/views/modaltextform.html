@@ -6,7 +6,7 @@
   </div>
   <div class="form-group">
     <label for="text">Text</label>
-    <text-angular id="text" ng-model="modalVars.data.content" required></text-angular>
+    <text-angular id="text" ta-paste="modifyHtml($html)" ng-model="modalVars.data.content" required></text-angular>
   </div>
 
   <div ng-show="form.$submitted && !form.$valid" class="alert alert-warning">
