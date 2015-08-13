@@ -110,6 +110,16 @@ module.exports = function (grunt) {
       }
     },
 
+    // Toggle build and development environments via comments in config.js
+    toggleComments: {
+      customOptions: {
+        options: {
+          removeCommands: true
+        },
+        files: {'.tmp/concat/scripts/scripts.js': '.tmp/concat/scripts/scripts.js'}
+      }
+    },
+
     // Make sure code styles are up to par and there are no obvious mistakes
     jshint: {
       options: {
@@ -479,6 +489,7 @@ module.exports = function (grunt) {
     'preprocess:html', // Remove DEBUG code from production builds
     'ngAnnotate',
     'copy:dist',
+    'toggleComments',
     'cdnify',
     'cssmin',
     'uglify',

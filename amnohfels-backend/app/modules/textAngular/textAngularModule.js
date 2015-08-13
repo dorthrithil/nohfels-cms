@@ -25,10 +25,15 @@ angular
           var popoverContent = angular.element('<ta-fileupload-popover></ta-fileupload-popover>'); //create popover
           var $buttonScope = button.scope();
           $compile(popoverContent)($buttonScope); //compile it to the buttons scope
+
+          var editorFormGroup = button.parents('.form-group');
+
           button.popover({
-            content: popoverContent, //TODO (1.0.1) UI: optimise popover placement
+            content: popoverContent, //TODO (1.0.2) UI: optimise popover placement (// popovers may not work, use stackable modals: http://miles-by-motorcycle.com/static/bootstrap-modal/index.html)
             placement: 'bottom',
-            container: 'body',
+            container: editorFormGroup,
+            //viewport: editorFormGroup,
+            //container: 'body',
             viewport: button,
             html: true
           });

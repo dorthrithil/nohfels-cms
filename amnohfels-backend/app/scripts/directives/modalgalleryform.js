@@ -16,7 +16,7 @@
 angular.module('amnohfelsBackendApp')
   .directive('modalGalleryForm', function (config, FileUploader, doorman) {
     return {
-      templateUrl: '../../views/modalgalleryform.html',
+      templateUrl: 'views/modalgalleryform.html',
       restrict: 'E',
       controller: function ($scope) {
         // for form validation

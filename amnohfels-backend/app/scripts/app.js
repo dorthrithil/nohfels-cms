@@ -9,6 +9,7 @@
  * Main module of the application.
  */
 
+//TODO (1.0.1) bug: before uploaded image gets sent to server, refresh token. if it takes too long the token originally assigned to the request can be invalid
 //TODO (1.0.1) security: keep config vars in a seperate yaml and fetch them for build
 //TODO (1.0.1) bug: unsaved changes on logout after modal dismiss?
 //TODO (1.0.1) bug: invalid token when gallery modal stays open, but jwt refesh succeeded
@@ -28,6 +29,7 @@
 //TODO (1.0.1) UI: warning if instagram module follows after parallax (looks generally ugly)
 //TODO (1.0.1) bug: scenario: user opens image upload modal. does nothing until jwt is expired. jwt refreshes. modal does still have old jwt. user sends form while he is still logged in but gets a invalid token message
 
+//TODO (1.0.1) bug: auto logout: when modal is open, backdrop stays. add closing functions in a queue which gets processed once auto logof is triggered
 //TODO (1.0.2) enhancement: use HTML5 image preview instead of loading image from server after upload finished (parallax, employee, image)
 
 angular

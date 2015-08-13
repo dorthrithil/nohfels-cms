@@ -10,8 +10,12 @@
 angular.module('coreModule')
   .constant('config', {
     server: {
+      // <!-- comments:toggle // -->
       root: 'http://schruemel.de/dev/',
       api: 'http://schruemel.de/dev/api/'
+      //root: 'http://amnohfels.de/server/',
+      //api: 'http://amnohfels.de/server/api/'
+      // <!-- endcomments -->
     },
     admin: {
       mail: 'felix@feblog.de'
