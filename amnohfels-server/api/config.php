@@ -19,3 +19,5 @@ $conf_jwt_key = $config['jwt-key'];
 
 $conf_max_filesize = $config['max-filesize'];
 $conf_max_image_filesize = $config['max-image-filesize'];
+
+$conf_google_service_account_email = $config['google-service-account-email'];

@@ -347,7 +347,6 @@ $app->group('/auth', function () use ($app) {
 
 });
 
-
 //group for utility functions
 $app->group('/util', function () use ($app) {
 
@@ -356,6 +355,13 @@ $app->group('/util', function () use ($app) {
         fileupload();
     });
 
+});
+
+//TODO (1.0.1) secure this route with login jwt check
+//google auth
+$app->get('/googleauth', function () use ($app) {
+    $response = googleauth();
+    jsonResponse($response);
 });
 
 //run app

@@ -71,16 +71,22 @@
 <script src="bower_components/rangy-official/rangy-selectionsaverestore.js"></script>
 <script src="bower_components/rangy-official/rangy-serializer.js"></script>
 <script src="bower_components/rangy-official/rangy-textrange.js"></script>
+<script src="bower_components/Chart.js/Chart.js"></script>
 <!-- endbower -->
 <!-- endbuild -->
 
 <!-- build:js({.tmp,app}) scripts/scripts.js -->
+
+<script src="scripts/app.js"></script>
+
 <script src="modules/core/coreModule.js"></script>
 <script src="modules/core/services/doorman.js"></script>
 <script src="modules/core/services/config.js"></script>
+<script src="modules/core/services/util.js"></script>
+
 <script src="modules/textAngular/textAngularModule.js"></script>
 <script src="modules/textAngular/directives/tafileuploadpopover.js"></script>
-<script src="scripts/app.js"></script>
+
 <script src="scripts/controllers/navigation.js"></script>
 <script src="scripts/directives/page.js"></script>
 <script src="scripts/services/syncqueue.js"></script>
@@ -100,7 +106,10 @@
 <script src="scripts/directives/backgroundswitcher.js"></script>
 <script src="scripts/directives/ngfuerrorreporter.js"></script>
 <script src="scripts/services/translations.js"></script>
-<script src="modules/core/services/util.js"></script>
+<script src="scripts/services/googleapi.js"></script>
+<script src="scripts/controllers/welcome.js"></script>
+<script src="scripts/directives/chart.js"></script>
+<script src="scripts/services/weatherservice.js"></script>
 <!-- endbuild -->
 
 </body>

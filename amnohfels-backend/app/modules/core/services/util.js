@@ -9,6 +9,7 @@
  */
 angular.module('coreModule')
   .service('util', function util() {
+
     this.taModifyHtml = function($html){
       var DOMTree = jQuery(jQuery.parseHTML($html, null, false));
       jQuery.each(DOMTree, function(key, value){
@@ -16,4 +17,13 @@ angular.module('coreModule')
       });
       return jQuery('<div>').append(DOMTree).html();
     };
+
+    this.urlEncode = function (obj) {
+      var str = [];
+      for (var p in obj) {
+        str.push(encodeURIComponent(p) + '=' + encodeURIComponent(obj[p]));
+      }
+      return str.join('&');
+    };
+
   });

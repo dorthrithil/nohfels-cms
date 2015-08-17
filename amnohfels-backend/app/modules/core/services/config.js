@@ -25,5 +25,13 @@ angular.module('coreModule')
       // !! make sure to set this on the server too to prevent inconsistencies !!
       maxFilesize: 0,
       maxImageFilesize: 0
+    },
+    google:{ //TODO those infos have to be fetched from server with authentication
+      analyticsClientId: '446070086344-1a963b57gbms5pld1a3kicocuvier78f.apps.googleusercontent.com'
+    },
+    aerisapi:{ //TODO those infos have to be fetched from server with authentication
+      clientId: 'YHPvotXLiMIS8ioNiOKYA',
+      clientSecret: 'uGu3quJFZU9pXWvq3LqoxsmuiHNlxdyVqKNlQwyx',
+      placeId: 'bad+sobernheim,ger'
     }
   });

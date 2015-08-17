@@ -33,37 +33,41 @@
 //TODO (1.0.2) enhancement: use HTML5 image preview instead of loading image from server after upload finished (parallax, employee, image)
 
 angular
-    .module('amnohfelsBackendApp', ['ngRoute', 'textAngularModule', 'coreModule', 'ui.bootstrap-slider', 'ngTagsInput', 'angularFileUpload'])
+  .module('amnohfelsBackendApp', ['ngRoute', 'textAngularModule', 'coreModule', 'ui.bootstrap-slider', 'ngTagsInput', 'angularFileUpload'])
 
-    //configuration
-    .config(function ($routeProvider) {
-        //configure ngRoute
-        $routeProvider
-            .when('/login/:logoutReason?', {
-                controller: 'LoginCtrl',
-                templateUrl: 'views/login.html'
-            })
-            .when('/page/:pageTopic', {
-                controller: 'DynamicLinkerCtrl',
-                templateUrl: 'views/dynamiclinker.html'
-            })
-            .otherwise({
-                templateUrl: 'views/welcome.html'
-            });
-    })
+  //configuration
+  .config(function ($routeProvider) {
+    //configure ngRoute
+    $routeProvider
+      .when('/login/:logoutReason?', {
+        controller: 'LoginCtrl',
+        templateUrl: 'views/login.html'
+      })
+      .when('/page/:pageTopic', {
+        controller: 'DynamicLinkerCtrl',
+        templateUrl: 'views/dynamiclinker.html'
+      })
+      .when('/googleapi/oauth/', {
+        controller: 'GoogleapiCtrl',
+        templateUrl: 'views/dynamiclinker.html'
+      })
+      .otherwise({
+        templateUrl: 'views/welcome.html'
+      });
+  })
 
-    //check for login & instantiate the backgroundProvider
-    .run(function ($rootScope, $location, doorman) {
-        //register listener to watch route changes
-        $rootScope.$on('$routeChangeStart', function (event, next) {
-            if (!doorman.isLoggedIn()) {
-                //no logged user, we should be going to #login
-                if (next.templateUrl === 'views/login.html') {
-                    //already going to #login, no redirect needed
-                } else {
-                    //not going to #login, we should redirect now
-                    $location.path('/login');
-                }
-            }
-        });
+  //check for login & instantiate the backgroundProvider
+  .run(function ($rootScope, $location, doorman) {
+    //register listener to watch route changes
+    $rootScope.$on('$routeChangeStart', function (event, next) {
+      if (!doorman.isLoggedIn()) {
+        //no logged user, we should be going to #login
+        if (next.templateUrl === 'views/login.html') {
+          //already going to #login, no redirect needed
+        } else {
+          //not going to #login, we should redirect now
+          $location.path('/login');
+        }
+      }
     });
+  });

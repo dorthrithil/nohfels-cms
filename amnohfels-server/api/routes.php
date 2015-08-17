@@ -15,3 +15,5 @@ require_once __DIR__ . '/routes/page.php';
 require_once __DIR__ . '/routes/mail.php';
 require_once __DIR__ . '/routes/auth.php';
 require_once __DIR__ . '/routes/fileupload.php';
+
+require_once __DIR__ . '/routes/googleauth.php';
