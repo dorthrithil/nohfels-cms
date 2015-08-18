@@ -1,5 +1,7 @@
 <?php
 
+//TODO (1.0.0) update db.sql
+
 //TODO (1.0.1) module types & image sizes in sql dump
 //TODO (1.0.1) enhancement: check for resource existence on update-post & delete routes (swap, text edit update delete)
 //TODO (1.0.1) documentation: function descriptions
@@ -100,8 +102,39 @@ $app->group('/module', function () use ($app) {
         });
 
         //delete text module
-        $app->delete('/:id', 'authenticateUser', 'authenticateUser', function ($id) {
+        $app->delete('/:id', 'authenticateUser', function ($id) {
             deleteTextModule($id);
+        });
+
+    });
+
+    //group for youtube modules
+    $app->group('/youtube', function () use ($app) {
+
+        //create youtube module
+        $app->post('', 'authenticateUser', function () use ($app) {
+            $json = $app->request->getBody();
+            $data = json_decode($json, true);
+            createYoutubeModule($data['pageTopic'], $data['title'], $data['url']);
+        });
+
+        //get youtube module
+        $app->get('/:id', function ($id) use ($app) {
+            $response = getYoutubeModule($id);
+            if ($response == false) $app->notFound();
+            jsonResponse($response);
+        });
+
+        //update youtube module
+        $app->post('/:id', 'authenticateUser', function ($id) use ($app) {
+            $json = $app->request->getBody();
+            $data = json_decode($json, true);
+            updateYoutubeModule($id, $data['title'], $data['url']);
+        });
+
+        //delete youtube module
+        $app->delete('/:id', 'authenticateUser', function ($id) {
+            deleteYoutubeModule($id);
         });
 
     });

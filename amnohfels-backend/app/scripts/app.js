@@ -27,6 +27,7 @@
 //TODO (1.0.1) improvement: add page sorting & section functionality
 //TODO (1.0.1) improvement: handly auto logout (JWTrefresh) with unsaved changes
 //TODO (1.0.1) UI: warning if instagram module follows after parallax (looks generally ugly)
+//TODO (1.0.1) imrovement: clever form validation error reporting directive (especially for multiple possible errors)
 //TODO (1.0.1) bug: scenario: user opens image upload modal. does nothing until jwt is expired. jwt refreshes. modal does still have old jwt. user sends form while he is still logged in but gets a invalid token message
 
 //TODO (1.0.1) bug: auto logout: when modal is open, backdrop stays. add closing functions in a queue which gets processed once auto logof is triggered
@@ -45,10 +46,6 @@ angular
       })
       .when('/page/:pageTopic', {
         controller: 'DynamicLinkerCtrl',
-        templateUrl: 'views/dynamiclinker.html'
-      })
-      .when('/googleapi/oauth/', {
-        controller: 'GoogleapiCtrl',
         templateUrl: 'views/dynamiclinker.html'
       })
       .otherwise({

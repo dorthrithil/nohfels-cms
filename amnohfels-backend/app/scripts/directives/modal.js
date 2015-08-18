@@ -10,13 +10,15 @@
 //TODO (1.0.1) performance: destroy modal scopes on dismiss (need to be isolated)
 //TODO (1.0.1) make === undefined a util function
 
+//TODO (1.0.0) comment this
+
 angular.module('amnohfelsBackendApp')
   .directive('modal', function ($compile, syncQueue, doorman, translations) {
     return {
       templateUrl: 'views/modal.html',
       restrict: 'E',
       link: function postLink(scope, element) {
-        switch (scope.modalVars.type.id) {
+        switch (scope.modalVars.type.id) { //TODO (1.0.1) shorten this
           case 'gallery':
             element.find('.modal-body').append($compile(angular.element('<modal-gallery-form></modal-gallery-form>'))(scope));
             break;
@@ -34,6 +36,9 @@ angular.module('amnohfelsBackendApp')
             break;
           case 'instagram':
             element.find('.modal-body').append($compile(angular.element('<modal-instagram-form></modal-instagram-form>'))(scope));
+            break;
+          case 'youtube':
+            element.find('.modal-body').append($compile(angular.element('<modal-youtube-form></modal-youtube-form>'))(scope));
             break;
         }
         element.children().modal({backdrop: 'static'});

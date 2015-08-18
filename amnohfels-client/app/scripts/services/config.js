@@ -13,8 +13,8 @@ angular.module('amnohfelsClientApp')
     // <!-- comments:toggle // -->
     root: 'http://schruemel.de/dev/',
     api: 'http://schruemel.de/dev/api/'
-    //root: 'http://amnohfels.de/server/',
-    //api: 'http://amnohfels.de/server/api/'
+    // root: 'http://amnohfels.de/server/',
+    // api: 'http://amnohfels.de/server/api/'
     // <!-- endcomments -->
   },
   admin: {

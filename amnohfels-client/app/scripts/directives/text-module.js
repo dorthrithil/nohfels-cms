@@ -17,10 +17,9 @@ angular.module('amnohfelsClientApp')
       },
       controller: function ($scope) {
         $scope.data.title = $sce.trustAsHtml($scope.data.title);
-        //link uploaded files to server toot
+        //link uploaded files to server root
         $scope.data.content = $scope.data.content.replace(new RegExp('uploads/files/', 'g'), config.server.root + 'uploads/files/');
         $scope.data.content = $sce.trustAsHtml($scope.data.content);
-
       }
     };
   });

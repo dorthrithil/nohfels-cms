@@ -6,7 +6,6 @@
  * @description
  * # modalTextForm
  */
-
 angular.module('amnohfelsBackendApp')
   .directive('modalTextForm', function (textAngularManager, util) {
     return {

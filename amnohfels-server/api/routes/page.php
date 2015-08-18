@@ -37,6 +37,9 @@ function getPage($topic)
                     case "staff":
                         $modules[] = getStaffModule($rs['module_id']);
                         break;
+                    case "youtube":
+                        $modules[] = getYoutubeModule($rs['module_id']);
+                        break;
                 }
                 $type = new stdClass();
                 $type->name = $rs['name'];

@@ -1,0 +1,26 @@
+<form name="form" novalidate>
+  <div class="form-group">
+    <label for="title">Titel</label>
+    <input type="text" class="form-control" id="title" placeholder="Titel eingeben" ng-model="modalVars.data.title"
+           name="title" required>
+  </div>
+  <div class="form-group">
+    <label for="text">URL</label>
+    <input type="text" class="form-control" id="url" placeholder="URL eingeben" ng-model="modalVars.data.url"
+           name="url" required
+           pattern="^(?:https?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$">
+  </div>
+
+  <div ng-show="form.$submitted && !form.$valid" class="alert alert-warning">
+    <ul>
+      <li ng-show="form.url.$error.required || form.title.$error.required">
+        {{errorMessages.emptyField}}
+      </li>
+      <li ng-show="form.url.$error.pattern">
+        {{errorMessages.invalidYoutubeUrl}}
+      </li>
+    </ul>
+  </div>
+
+</form>
+

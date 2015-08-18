@@ -18,7 +18,7 @@ angular.module('amnohfelsBackendApp')
       link: function postLink(scope, element) {
 
         var context = jQuery('#chart', element).get(0).getContext('2d');
-        var chart = new Chart(context);
+        var chart = new Chart(context); //jshint ignore:line
         var barChart;
 
         var render = function () {

@@ -11,7 +11,7 @@ angular.module('amnohfelsClientApp')
     return {
       restrict: 'A',
       link: function (scope, element) {
-        var moduleTypes = ['contact', 'text', 'staff', 'gallery', 'parallax', 'instagram'];
+        var moduleTypes = ['contact', 'text', 'staff', 'gallery', 'parallax', 'instagram', 'youtube'];
 
         //TODO handle firstmodule and lastmodule flags
 

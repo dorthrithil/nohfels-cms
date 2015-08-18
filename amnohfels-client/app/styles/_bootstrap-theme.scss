@@ -21,3 +21,8 @@ body {
 h1, h2, h3, h4, h5, h6 {
   margin-top: 0;
 }
+
+// space out navbar text for logo
+.navbar-brand {
+  padding: $navbar-padding-vertical $navbar-padding-horizontal $navbar-padding-vertical ($navbar-padding-horizontal + $navbar-height - 10px);
+}
