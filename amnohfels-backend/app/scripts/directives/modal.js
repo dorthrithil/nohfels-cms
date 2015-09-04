@@ -40,6 +40,9 @@ angular.module('amnohfelsBackendApp')
           case 'youtube':
             element.find('.modal-body').append($compile(angular.element('<modal-youtube-form></modal-youtube-form>'))(scope));
             break;
+          case 'maps':
+            element.find('.modal-body').append($compile(angular.element('<modal-maps-form></modal-maps-form>'))(scope));
+            break;
         }
         element.children().modal({backdrop: 'static'});
       },

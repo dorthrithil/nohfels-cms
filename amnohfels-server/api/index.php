@@ -1,8 +1,11 @@
 <?php
 
 //TODO (1.0.0) update db.sql
+//TODO swap modules still buggy!!!!!!!
+//TODO (1.0.0) when creating the first ever module of a type (id is 0) the module id gets set to -1 in pages table and a "creating default object from empty value" gets thrown in getter method
 
 //TODO (1.0.1) module types & image sizes in sql dump
+//TODO (1.0.1) fixtures out of db (e.g. module types)
 //TODO (1.0.1) enhancement: check for resource existence on update-post & delete routes (swap, text edit update delete)
 //TODO (1.0.1) documentation: function descriptions
 //TODO (1.0.1) refactoring: camelCaseize everything
@@ -270,6 +273,65 @@ $app->group('/module', function () use ($app) {
         //delete instagram module
         $app->delete('/:id', 'authenticateUser', function ($id) {
             deleteInstagramModule($id);
+        });
+
+    });
+
+    //group for google maps modules
+    $app->group('/maps', function () use ($app) {
+
+        //create maps module
+        $app->post('', 'authenticateUser', function () use ($app) {
+            $json = $app->request->getBody();
+            $data = json_decode($json, true);
+            createMapsModule(
+                $data['pageTopic'],
+                $data['title'],
+                $data['description'],
+                $data['centerLatitude'],
+                $data['centerLongitude'],
+                $data['marker'],
+                $data['markerLatitude'],
+                $data['markerLongitude'],
+                $data['zoom'],
+                $data['mapTypeId'],
+                $data['mapTypeControl'],
+                $data['polyline'],
+                $data['polylinePath']
+            );
+        });
+
+        //get maps module
+        $app->get('/:id', function ($id) use ($app) {
+            $response = getMapsModule($id);
+            if ($response == false) $app->notFound();
+            jsonResponse($response);
+        });
+
+        //update maps module
+        $app->post('/:id', 'authenticateUser', function ($id) use ($app) {
+            $json = $app->request->getBody();
+            $data = json_decode($json, true);
+            updateMapsModule(
+                $id,
+                $data['title'],
+                $data['description'],
+                $data['centerLatitude'],
+                $data['centerLongitude'],
+                $data['marker'],
+                $data['markerLatitude'],
+                $data['markerLongitude'],
+                $data['zoom'],
+                $data['mapTypeId'],
+                $data['mapTypeControl'],
+                $data['polyline'],
+                $data['polylinePath']
+            );
+        });
+
+        //delete maps module
+        $app->delete('/:id', 'authenticateUser', function ($id) {
+            deleteMapsModule($id);
         });
 
     });

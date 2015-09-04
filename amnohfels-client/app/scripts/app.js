@@ -21,7 +21,14 @@
 //TODO (1.1.0) improvement: factor out page style elements in extra files to provide theme functionality
 
 angular
-  .module('amnohfelsClientApp', ['ngRoute', 'akoenig.deckgrid', 'angularSpinner', 'angular-google-analytics'])
+  .module('amnohfelsClientApp',
+  [
+    'ngRoute',
+    'akoenig.deckgrid',
+    'angularSpinner',
+    'angular-google-analytics',
+    'uiGmapgoogle-maps'
+  ])
   .config(function ($routeProvider, AnalyticsProvider, config) {
 
     // config route provider

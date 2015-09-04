@@ -1,0 +1,11 @@
+<div class="container">
+  <h3 ng-bind-html="data.title"></h3>
+  <span ng-bind-html="data.description"></span>
+  <ui-gmap-google-map center="map.center" zoom="map.zoom" options="map.options">
+    <ui-gmap-polyline path="polyline.path" stroke="polyline.stroke" visible='polyline.visible'
+                      geodesic='polyline.geodesic' fit="false" editable="polyline.editable"
+                      draggable="polyline.draggable" icons="polyline.icons"
+                      ng-if="data.polyline"></ui-gmap-polyline>
+    <ui-gmap-marker coords="marker.coords" idkey="marker.id" ng-if="data.marker"></ui-gmap-marker>
+  </ui-gmap-google-map>
+</div>

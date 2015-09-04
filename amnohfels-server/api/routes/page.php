@@ -40,6 +40,9 @@ function getPage($topic)
                     case "youtube":
                         $modules[] = getYoutubeModule($rs['module_id']);
                         break;
+                    case "maps":
+                        $modules[] = getMapsModule($rs['module_id']);
+                        break;
                 }
                 $type = new stdClass();
                 $type->name = $rs['name'];

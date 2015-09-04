@@ -1,0 +1,121 @@
+<form novalidate name="form">
+
+  <div class="form-group">
+    <label for="title">Titel</label>
+    <input type="text" class="form-control" id="title" placeholder="Titel eingeben" ng-model="modalVars.data.title"
+           name="title" required>
+  </div>
+
+  <div class="form-group">
+    <label for="text">Beschreibung</label>
+    <text-angular id="text" ta-paste="modifyHtml($html)" ng-model="modalVars.data.description" required></text-angular>
+  </div>
+
+  <div>
+    <label for="center">Kartenmittelpunkt</label>
+    <popover data="popovers.center"></popover>
+    <div class="form-group" id="center">
+      <div class="input-group">
+        <span class="input-group-addon" id="center-latitude-desc">Breitengrad</span>
+        <input type="text" class="form-control" id="center-latitude" placeholder="Breitengrad eingeben"
+               ng-model="modalVars.data.centerLatitude" name="center-latitude" required number-only-input
+               input-value="modalVars.data.centerLatitude">
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="input-group">
+        <span class="input-group-addon" id="center-langitude-desc">Längengrad</span>
+        <input type="text" class="form-control" id="center-longitude" placeholder="Höhengrad eingeben"
+               ng-model="modalVars.data.centerLongitude" name="center-longitude" required number-only-input
+               input-value="modalVars.data.centerLongitude">
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <label for="center">Marker</label>
+    <popover data="popovers.marker"></popover>
+    <div class="checkbox">
+      <label>
+        <input ng-model="modalVars.data.marker" ng-checked="modalVars.data.marker" type="checkbox">
+        Marker anzeigen
+      </label>
+    </div>
+    <div class="form-group" id="marker" ng-show="modalVars.data.marker">
+      <div class="input-group">
+        <span class="input-group-addon" id="marker-latitude-desc">Breitengrad</span>
+        <input type="text" class="form-control" id="marker-latitude" placeholder="Breitengrad eingeben"
+               ng-model="modalVars.data.markerLatitude" name="marker-latitude" required number-only-input
+               input-value="modalVars.data.markerLatitude">
+      </div>
+    </div>
+    <div class="form-group" ng-show="modalVars.data.marker">
+      <div class="input-group">
+        <span class="input-group-addon" id="marker-langitude-desc">Längengrad</span>
+        <input type="text" class="form-control" id="marker-longitude" placeholder="Höhengrad eingeben"
+               ng-model="modalVars.data.markerLongitude" name="marker-longitude" required number-only-input
+               input-value="modalVars.data.markerLongitude">
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label>Zoomlevel</label>
+    <popover data="popovers.zoom"></popover>
+    <div>
+      <span class="badge">{{modalVars.data.zoom}}</span>
+      <slider ng-model="modalVars.data.zoom" min="0" step="1" max="19" value="modalVars.data.zoom"
+              style="display: inline-block" tooltip="hide"></slider>
+      <!-- TODO styles in stylesheet (in instagram too) -->
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="mapTypeId">Kartentyp</label>
+    <popover data="popovers.mapTypeId"></popover>
+    <select class="form-control" id="mapTypeId" ng-model="modalVars.data.mapTypeId">
+      <option value="terrain">Terrain</option>
+      <option value="roadmap">Straßenkarte</option>
+      <option value="satellite">Satellite</option>
+      <option value="hybrid">Hybrid</option>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label>Optionen</label>
+
+    <div class="checkbox">
+      <label>
+        <input ng-model="modalVars.data.mapTypeControl" ng-checked="modalVars.data.mapTypeControl"
+               type="checkbox">
+        Karten Typ Kontroll-Button anzeigen
+        <popover data="popovers.mapTypeControl"></popover>
+      </label>
+    </div>
+
+    <div class="checkbox">
+      <label>
+        <input ng-model="modalVars.data.polyline" ng-checked="modalVars.data.polyline"
+               type="checkbox">
+        Polyline Pfad anzeigen (fortgeschritten)
+        <popover data="popovers.polyline"></popover>
+      </label>
+    </div>
+
+    <div ng-show="modalVars.data.polyline">
+      <label for="polylinePath">Polyline Pfaddefinition</label>
+      <textarea class="form-control" rows="3" id="polylinePath" ng-model="modalVars.data.polylinePath"></textarea>
+    </div>
+
+  </div>
+
+
+  <div ng-show="form.$submitted && !form.$valid" class="alert alert-warning">
+    <ul>
+      <li ng-show="form.$error.required">
+        {{errorMessages.emptyField}}
+      </li>
+    </ul>
+  </div>
+</form>
+

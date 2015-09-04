@@ -9,6 +9,7 @@ require_once __DIR__ . '/routes/module/contact.php';
 require_once __DIR__ . '/routes/module/instagram.php';
 require_once __DIR__ . '/routes/module/staff.php';
 require_once __DIR__ . '/routes/module/youtube.php';
+require_once __DIR__ . '/routes/module/maps.php';
 require_once __DIR__ . '/routes/module/swap.php';
 require_once __DIR__ . '/routes/module/types.php';
 
