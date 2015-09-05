@@ -1,7 +1,10 @@
-<div class="container">
-  <h3 ng-bind-html="data.title"></h3>
+<div class="full-width-wrapper">
+  <div class="container">
+    <h3 ng-bind-html="data.title"></h3>
+    <div class="underline"></div>
 
-  <div class="video-wrapper">
-    <iframe ng-src="{{data.url}}" frameborder="0" allowfullscreen></iframe>
+    <div class="video-wrapper">
+      <iframe ng-src="{{data.url}}" frameborder="0" allowfullscreen></iframe>
+    </div>
   </div>
 </div>

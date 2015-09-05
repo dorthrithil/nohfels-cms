@@ -1,26 +1,31 @@
-instagram-module{
-  .wrapper{
+instagram-module {
+  .full-width-wrapper {
+    margin: ($grid-gutter-width / 2) 0 ($grid-gutter-width / 2) 0;
     background-image: url('../images/instagram_module/fabric.png');
-    margin-top: $grid-gutter-width;
+    padding: 0;
+
+    .container {
+      padding: 0 0 0 0;
+      background-color: transparent;
+      border: none;
+    }
   }
-  .container{
-    padding: 0 0 0 0;
-  }
-  .instagram-carousel{
+
+  .instagram-carousel {
     max-width: 750px;
     margin: 0 auto 0 auto;
   }
 
-  .carousel-inner{
+  .carousel-inner {
     width: 80%;
     margin-left: 10%;
   }
 
-  .carousel-control.left, .carousel-control.right{
+  .carousel-control.left, .carousel-control.right {
     background: none;
   }
 
-  .carousel-control{
+  .carousel-control {
     width: 10%;
   }
 }

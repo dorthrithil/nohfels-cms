@@ -1,3 +1,5 @@
+<div class="footer-spacer"></div>
+
 <footer ng-controller="FooterCtrl">
     <div class="container">© {{date | date:'yyyy'}} {{company.name}}
       <span ng-repeat="topic in topics">| <a href="#/{{topic.id}}">{{topic.name}}</a> </span>

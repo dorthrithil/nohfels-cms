@@ -1,17 +1,21 @@
-//properties for sticky footer
+// properties for sticky footer
 body {
   height: 100%;
   margin: 0;
 }
 
 html {
-  padding-bottom: $grid-gutter-width + 50px;
+  padding-bottom: 51px;
   min-height: 100%;
   position: relative;
 }
 
-//footer styles
+// space content on top of footer
+.footer-spacer{
+  height: $grid-gutter-width / 2;
+}
 
+// footer styles
 footer {
   width: 100%;
   font-size: 12px;
@@ -19,7 +23,7 @@ footer {
   box-sizing: content-box;
   line-height: 50px;
   vertical-align: middle;
-  margin: $grid-gutter-width 0 0 0;
+  margin: 0 0 0 0;
   text-align: right;
   color: #777777;
   border-top: 1px solid #121212;

@@ -1,16 +1,19 @@
-<div class="container">
-  <h3>{{data.title}}</h3>
+<div class="full-width-wrapper">
+  <div class="container">
+    <h3>{{data.title}}</h3>
+    <div class="underline"></div>
 
-  <div deckgrid source="data.employees" class="deckgrid">
-    <div class="image-wrapper">
-      <div class="image-container"
-           ng-style="{'background-image' : 'url(' + card.imageSrc + ')'}"></div>
-      <div class="caption-container">
-        <h4>{{card.name}}</h4>
+    <div deckgrid source="data.employees" class="deckgrid">
+      <div class="image-wrapper">
+        <div class="image-container"
+             ng-style="{'background-image' : 'url(' + card.imageSrc + ')'}"></div>
+        <div class="caption-container">
+          <h4>{{card.name}}</h4>
 
-        <p>{{card.caption}}</p>
+          <p>{{card.caption}}</p>
+        </div>
       </div>
     </div>
-  </div>
 
+  </div>
 </div>

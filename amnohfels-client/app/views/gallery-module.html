@@ -1,15 +1,15 @@
-<div class="container">
+<div class="full-width-wrapper">
+  <div class="container">
     <div class="row">
-        <div class="col-xs-12 image-wrapper"
-             ng-repeat="image in data.images"
-             ng-class="{'col-md-4 col-sm-6 col-ms-6' : image.imageSize == 'small'}"
-             >
-            <div class="image-container"
-                 ng-style="{'background-image' : getImageSrc($index)}"
-                 ng-class="{'image-large' : image.imageSize == 'large'}"
-                 ng-click="lbOpen($index)"
-                 >
-            </div>
+      <div class="col-xs-12 image-wrapper"
+           ng-repeat="image in data.images"
+           ng-class="{'col-md-4 col-sm-6 col-ms-6' : image.imageSize == 'small'}">
+        <div class="image-container"
+             ng-style="{'background-image' : getImageSrc($index)}"
+             ng-class="{'image-large' : image.imageSize == 'large'}"
+             ng-click="lbOpen($index)">
         </div>
+      </div>
     </div>
+  </div>
 </div>

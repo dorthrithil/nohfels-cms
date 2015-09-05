@@ -1,9 +1,5 @@
 youtube-module {
 
-  .container{
-
-    margin-top: $grid-gutter-width;
-
     .video-wrapper {
       position: relative;
       padding-bottom: 56.25%; /* 16/9 ratio */
@@ -21,7 +17,5 @@ youtube-module {
       }
 
     }
-
-  }
 
 }

@@ -7,7 +7,7 @@
 }
 
 .parallax-module {
-  margin-top: $grid-gutter-width;
+  margin: ($grid-gutter-width / 2) 0 ($grid-gutter-width / 2) 0;
   display: block;
   position: relative;
   overflow: hidden;
@@ -72,7 +72,7 @@ $bfs: 55px;
       line-height: round($factor * $bfs);
     }
     .caption {
-      padding: round($factor * 0.5 * $bp) round($factor * 0.5 * $sp) round($factor * 0.5 * $sp) round($factor * 0.5 * $sp);
+      padding: round($factor * 0.5 * $bp) round($factor * 0.5 * $sp) round($factor * 0 * $sp) round($factor * 0.5 * $sp);
       font-size: round($factor * 0.5 * $bfs);
     }
   }

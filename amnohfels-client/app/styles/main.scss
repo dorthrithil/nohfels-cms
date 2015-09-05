@@ -1,12 +1,18 @@
+// define variables
+@import "_variables.scss";
+
 // replace some default bootstrap variables..
 @import "_bootstrap-theme-variables.scss";
+
 // ..include default bootstrap..
 // bower:scss
 @import "bootstrap-sass-official/assets/stylesheets/_bootstrap.scss";
 // endbower
+
 // ..and finally replace some bootstrap styles
 @import "_bootstrap-theme.scss";
 @import "_bootstrap-col-ms.scss";
+
 // import styles for views
 @import "_parallax-module.scss";
 @import "_gallery-module";
@@ -20,8 +26,11 @@
 @import "_lightbox.scss";
 @import "_modal.scss";
 @import "_navigation.scss";
+
 // fonts
 @import url(http://fonts.googleapis.com/css?family=Playfair+Display:400,400italic);
+@import url(https://fonts.googleapis.com/css?family=Cabin:400,400italic,700);
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:300,400,700);
 
 // for legacy browsers
 .browsehappy {
@@ -34,10 +43,10 @@
 // try to break only long words..
 body {
   -ms-word-break: break-all;
-  -ms-word-wrap: break-all;
+  -ms-word-wrap: break-word;
   -webkit-word-break: break-word;
   -webkit-word-wrap: break-word;
-  word-break: break-word;
+  word-break: break-all;
   word-wrap: break-word;
   -webkit-hyphens: auto;
   -moz-hyphens: auto;
@@ -46,4 +55,34 @@ body {
 
 .first-module {
   margin-top: 0 !important;
+}
+
+
+.full-width-wrapper{
+  padding: ($grid-gutter-width / 2) 0 ($grid-gutter-width / 2) 0;
+
+  .container{
+    padding: 15px;
+    border: 1px solid #e1ddd8;
+    border-bottom: 6px solid #d2cec9;
+    background-color: #ffffff;
+
+  }
+}
+
+// fixed width underlining for module titles
+.underline{
+  width: 100px;
+  height: 6px;
+  box-sizing: content-box;
+  background-color: $accent;
+  display: block;
+  margin-bottom: $grid-gutter-width / 2;
+  border-bottom: 6px solid $accent-light;
+}
+
+// set text font size outside of bootstrap
+body{
+  font-size: 18px;
+  font-weight: 300;
 }

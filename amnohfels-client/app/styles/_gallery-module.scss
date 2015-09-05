@@ -1,8 +1,4 @@
 gallery-module{
-  .container{
-    margin-top: $grid-gutter-width;
-    margin-bottom: -$grid-gutter-width; // images put a margin to the bottom => subtract it again
-  }
 
   .image-wrapper{
     text-align: center;
@@ -16,5 +12,11 @@ gallery-module{
     .image-large{
       height: 430px;
     }
+  }
+
+  // images put a margin to the bottom => remove it again (overflow hidden needed as overflow ranks higher than margin)
+  .row{
+    margin-bottom: -$grid-gutter-width;
+    overflow: hidden;
   }
 }

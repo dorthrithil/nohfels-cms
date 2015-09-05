@@ -1,5 +1,7 @@
 nav{
 
+  font-family: $font-headings;
+
   .logo{
     position: fixed;
     left: 6px;
@@ -10,4 +12,9 @@ nav{
       width: 54px;
     }
   }
+}
+
+// space out content for fixed nav
+body {
+  padding-top: $navbar-height;
 }
