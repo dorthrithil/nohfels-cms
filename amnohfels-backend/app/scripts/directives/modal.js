@@ -18,30 +18,42 @@ angular.module('amnohfelsBackendApp')
       templateUrl: 'views/modal.html',
       restrict: 'E',
       link: function postLink(scope, element) {
-        switch (scope.modalVars.type.id) { //TODO (1.0.1) shorten this
+        switch (scope.modalVars.type.id) { //TODO (1.0.1) refactor this
           case 'gallery':
-            element.find('.modal-body').append($compile(angular.element('<modal-gallery-form></modal-gallery-form>'))(scope));
+            element.find('.modal-body')
+              .append($compile(angular.element('<modal-gallery-form></modal-gallery-form>'))(scope));
             break;
           case 'parallax':
-            element.find('.modal-body').append($compile(angular.element('<modal-parallax-form></modal-parallax-form>'))(scope));
+            element.find('.modal-body')
+              .append($compile(angular.element('<modal-parallax-form></modal-parallax-form>'))(scope));
             break;
           case 'text':
-            element.find('.modal-body').append($compile(angular.element('<modal-text-form></modal-text-form>'))(scope));
+            element.find('.modal-body')
+              .append($compile(angular.element('<modal-text-form></modal-text-form>'))(scope));
             break;
           case 'contact':
-            element.find('.modal-body').append($compile(angular.element('<modal-contact-form></modal-contact-form>'))(scope));
+            element.find('.modal-body')
+              .append($compile(angular.element('<modal-contact-form></modal-contact-form>'))(scope));
             break;
           case 'staff':
-            element.find('.modal-body').append($compile(angular.element('<modal-staff-form></modal-staff-form>'))(scope));
+            element.find('.modal-body')
+              .append($compile(angular.element('<modal-staff-form></modal-staff-form>'))(scope));
             break;
           case 'instagram':
-            element.find('.modal-body').append($compile(angular.element('<modal-instagram-form></modal-instagram-form>'))(scope));
+            element.find('.modal-body')
+              .append($compile(angular.element('<modal-instagram-form></modal-instagram-form>'))(scope));
             break;
           case 'youtube':
-            element.find('.modal-body').append($compile(angular.element('<modal-youtube-form></modal-youtube-form>'))(scope));
+            element.find('.modal-body')
+              .append($compile(angular.element('<modal-youtube-form></modal-youtube-form>'))(scope));
             break;
           case 'maps':
-            element.find('.modal-body').append($compile(angular.element('<modal-maps-form></modal-maps-form>'))(scope));
+            element.find('.modal-body')
+              .append($compile(angular.element('<modal-maps-form></modal-maps-form>'))(scope));
+            break;
+          case 'infotile':
+            element.find('.modal-body')
+              .append($compile(angular.element('<modal-infotile-form></modal-infotile-form>'))(scope));
             break;
         }
         element.children().modal({backdrop: 'static'});
@@ -66,9 +78,16 @@ angular.module('amnohfelsBackendApp')
               return $scope.employeesValid();
             }
           };
+          var infotilesCondition = function(){
+            if(typeof($scope.infotilesValid) === 'undefined'){
+              return true;
+            } else {
+              return $scope.infotilesValid();
+            }
+          };
           if ($scope.form.$valid && (typeof($scope.firstUploadFinished) === 'undefined' || $scope.firstUploadFinished) &&
             (typeof($scope.uploader) === 'undefined' || !$scope.uploader.isUploading) && tagsCondition() &&
-          employeesCondition()) {
+          employeesCondition() && infotilesCondition()) {
             //TODO (1.0.1) improvement: when syncQueue is containing promises, we can let the server respond with a single element which just was generated on create or update. we can add this to the model and skip updating the whole model like we do now
             switch ($scope.modalVars.action) {
               case 'create':

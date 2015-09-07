@@ -43,6 +43,9 @@ function getPage($topic)
                     case "maps":
                         $modules[] = getMapsModule($rs['module_id']);
                         break;
+                    case "infotile":
+                        $modules[] = getInfotileModule($rs['module_id']);
+                        break;
                 }
                 $type = new stdClass();
                 $type->name = $rs['name'];

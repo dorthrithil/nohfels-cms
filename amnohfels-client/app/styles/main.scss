@@ -1,3 +1,6 @@
+//TODO no borders of boxes in small screes
+
+
 // define variables
 @import "_variables.scss";
 
@@ -19,6 +22,7 @@
 @import "_contact-module.scss";
 @import "_instagram-module.scss";
 @import "_text-module.scss";
+@import "_infotile-module.scss";
 @import "_staff-module.scss";
 @import "_youtube-module.scss";
 @import "_maps-module.scss";
@@ -40,24 +44,11 @@
   padding: 0.2em 0;
 }
 
-// try to break only long words..
-body {
-  -ms-word-break: break-all;
-  -ms-word-wrap: break-word;
-  -webkit-word-break: break-word;
-  -webkit-word-wrap: break-word;
-  word-break: break-all;
-  word-wrap: break-word;
-  -webkit-hyphens: auto;
-  -moz-hyphens: auto;
-  hyphens: auto;
-}
-
 .first-module {
   margin-top: 0 !important;
 }
 
-
+// wrapper for all modules. this styles the overall tile look
 .full-width-wrapper{
   padding: ($grid-gutter-width / 2) 0 ($grid-gutter-width / 2) 0;
 
@@ -65,7 +56,7 @@ body {
     padding: 15px;
     border: 1px solid #e1ddd8;
     border-bottom: 6px solid #d2cec9;
-    background-color: #ffffff;
+    background-color: $box-background-color;
 
   }
 }

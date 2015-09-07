@@ -1,0 +1,96 @@
+<!--TODO find a good looking solution for image dislaying (escecially what to do with the space before the image exists)-->
+
+<ng-form name="innerForm">
+
+  <div class="infotile-image" ng-style="{'background-image' : 'url(' + imageSrc + ')'}"
+       ng-show="imageSrc"></div>
+
+  <div class="infotile-main">
+    <div class="form-group">
+      <label>Titel</label>
+      <input type="text" name="title" class="form-control" placeholder="Titel eingeben" ng-model="data.title" required>
+    </div>
+
+    <div class="form-group">
+      <label>Text</label>
+      <textarea rows="3" name="text" class="form-control" placeholder="Text eingeben" ng-model="data.text"
+                required></textarea>
+    </div>
+
+    <div class="form-group">
+      <label>Bild</label>
+      <input type="file" nv-file-select uploader="uploader"/><br/>
+
+      <div ng-show="uploader.isHTML5">
+        <div class="progress" style="margin-bottom: 0"
+             ng-style="{'visibility': uploader.isUploading ? 'visible' : 'hidden'}">
+          <!--TODO remove styles here and in employee -->
+          <div class="progress-bar" role="progressbar"
+               ng-style="{ 'width': uploader.queue[uploader.queue.length - 1].progress + '%' }"
+               ng-class="{'progress-bar-striped active' : uploader.queue[uploader.queue.length - 1].progress == 100 &&
+                        !uploader.queue[uploader.queue.length - 1].isSuccess,
+                        'progress-bar-success' : uploader.queue[uploader.queue.length - 1].isSuccess}"></div>
+        </div>
+      </div>
+
+    </div>
+
+    <!--TODO this looks ugly. i have to redesign this modals UI-->
+    <div class="form-group">
+      <label>Optionen</label>
+
+      <div class="checkbox">
+        <label>
+          <input ng-model="data.urlEnabled" ng-checked="data.urlEnabled"
+                 type="checkbox">
+          Kachel verlinken
+        </label>
+      </div>
+    </div>
+
+    <div class="form-group" ng-show="data.urlEnabled">
+      <label>URL</label>
+      <input type="url" class="form-control" placeholder="URL eingeben" ng-model="data.url" name="url">
+    </div>
+
+  </div>
+
+  <div class="infotile-actions">
+    <div class="form-group">
+      <label class="block-label">Aktionen</label>
+
+      <div class="btn-group" role="group">
+        <button type="button" class="btn btn-default" ng-click="swapDown(index - 1)" ng-disabled="index == 0">
+          <span class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span>
+        </button>
+        <button type="button" class="btn btn-default" ng-click="swapDown(index)"
+                ng-disabled="isLastInfotile">
+          <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
+        </button>
+      </div>
+
+      <button type="button" class="btn btn-default" ng-click="remove()" ng-class="{'btn-danger' : showConfirmDeletion}">
+        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+        <span ng-hide="showConfirmDeletion">Löschen</span>
+        <span ng-show="showConfirmDeletion">Löschen bestätigen</span>
+      </button>
+    </div>
+  </div>
+
+  <div
+    ng-show="$parent.form.$submitted && (!innerForm.url.$valid || innerForm.text.$error.required ||
+    innerForm.title.$error.required || (data.urlEnabled && data.url == ''))"
+    class="alert alert-warning">
+    <ul>
+      <li ng-show="!innerForm.url.$valid">{{$parent.errorMessages.invalidUrl}}</li>
+      <li
+        ng-show="innerForm.text.$error.required || innerForm.title.$error.required ||
+        (data.urlEnabled && data.url == '')">
+        {{$parent.errorMessages.emptyField}}
+      </li>
+    </ul>
+  </div>
+
+  <ng-fu-error-reporter></ng-fu-error-reporter>
+
+</ng-form>

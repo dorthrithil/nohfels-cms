@@ -6,7 +6,6 @@
  * @description
  * # staffModule
  */
-
 angular.module('amnohfelsClientApp')
   .directive('staffModule', function (config) {
     return {

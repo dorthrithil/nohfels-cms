@@ -1,7 +1,7 @@
-<div class="full-width-wrapper">
+<div class="full-width-wrapper" ng-show="images.length > 0">
     <div class="container">
         <div id="instagram-carousel" class="carousel slide instagram-carousel" data-ride="carousel"
-             data-interval="false" ng-show="images">
+             data-interval="false">
             <!-- Indicators -->
             <ol class="carousel-indicators" ng-show="images.length > 1">
                 <li data-target="#instagram-carousel" ng-class="{'active' : $index == 0}" ng-repeat="image in images"

@@ -1,0 +1,47 @@
+<div class="full-width-wrapper">
+  <div class="container">
+    <h3>{{data.title}}</h3>
+
+    <div class="underline"></div>
+
+  </div>
+
+  <div class="container deckgrid-wrapper">
+    <div deckgrid source="data.infotiles" class="deckgrid">
+      <div class="card-wrapper">
+
+        <div ng-show="card.urlEnabled" class="link-icon">
+          <span class="glyphicon glyphicon-link" aria-hidden="true"></span>
+        </div>
+
+        <!-- TODO (1.0.2) ng-switch would be cleaner. but it doesn't work as `card is not available when this compiles. is there a workaround -->
+
+        <div class="image-wrapper" ng-show="!card.urlEnabled">
+          <!--<div class="image-container"-->
+               <!--ng-style="{'background-image' : 'url(' + card.imageSrc + ')'}"></div>-->
+          <img ng-src="{{card.imageSrc}}" alt="Bild zu {{card.title}}">
+          <div class="caption-container">
+            <h4>{{card.title}}</h4>
+
+            <p>{{card.text}}</p>
+          </div>
+        </div>
+
+        <a ng-href="{{card.url}}" target="_blank" ng-show="card.urlEnabled">
+          <div class="image-wrapper">
+            <!--<div class="image-container"-->
+                 <!--ng-style="{'background-image' : 'url(' + card.imageSrc + ')'}"></div>-->
+            <img ng-src="{{card.imageSrc}}" alt="Bild zu {{card.title}}">
+            <div class="caption-container">
+              <h4>{{card.title}}</h4>
+
+              <p>{{card.text}}</p>
+            </div>
+          </div>
+        </a>
+
+      </div>
+
+    </div>
+  </div>
+</div>

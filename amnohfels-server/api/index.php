@@ -16,6 +16,8 @@
 
 //TODO (1.0.1) one single upload script with better security type checking. e.g. don't use the typemap for extension but pathinfo
 
+//TODO (1.0.1) because i use cascade on delete in foreign key constraints some of the database actions are redundant
+
 //set headers
 
 header('Access-Control-Allow-Origin: *');
@@ -368,6 +370,42 @@ $app->group('/module', function () use ($app) {
         //upload employee image
         $app->post('/employee/image', 'authenticateUser', function () use ($app) {
             uploadEmployeeImage();
+        });
+
+    });
+
+    //group for infotile modules
+    $app->group('/infotile', function () use ($app) {
+
+        //create infotile module
+        $app->post('', 'authenticateUser', function () use ($app) {
+            $json = $app->request->getBody();
+            $data = json_decode($json, true);
+            createInfotileModule($data['pageTopic'], $data['title'], $data['infotiles']);
+        });
+
+        //get infotile module
+        $app->get('/:id', function ($id) use ($app) {
+            $response = getInfotileModule($id);
+            if ($response == false) $app->notFound();
+            jsonResponse($response);
+        });
+
+        //update infotile module
+        $app->post('/:id', 'authenticateUser', function ($id) use ($app) {
+            $json = $app->request->getBody();
+            $data = json_decode($json, true);
+            updateInfotileModule($id, $data['title'], $data['infotiles']);
+        });
+
+        //delete infotile module
+        $app->delete('/:id', 'authenticateUser', function ($id) {
+            deleteInfotileModule($id);
+        });
+
+        //upload infotile image
+        $app->post('/tile/image', 'authenticateUser', function () use ($app) {
+            uploadInfotileImage();
         });
 
     });

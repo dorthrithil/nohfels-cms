@@ -1,0 +1,35 @@
+infotile {
+
+  padding-bottom: 15px;
+  display: block;
+
+  .infotile-image {
+    display: inline-block;
+    width: 192px;
+    padding: 20px;
+    min-height: 128px;
+    margin-top: 10px;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    vertical-align: top;
+  }
+
+  .infotile-main {
+    display: inline-block;
+    vertical-align: top;
+    padding: 10px 0 0 10px;
+  }
+
+  .infotile-actions {
+    display: inline-block;
+    vertical-align: top;
+    padding: 10px 0 0 10px;
+
+    .block-label {
+      display: block;
+    }
+
+  }
+
+}

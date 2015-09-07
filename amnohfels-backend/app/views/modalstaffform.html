@@ -21,8 +21,11 @@
   <div ng-show="form.$submitted && (!form.$valid || !employeesValid())"
        class="alert alert-warning">
     <ul>
-      <li ng-show="form.title.$error.required || !employeesValid()">
+      <li ng-show="form.title.$error.required || form.text.$error.required || !employeesValid()">
         {{errorMessages.emptyField}}
+      </li>
+      <li ng-show="form.url.$valid == false">
+        {{errorMessages.invalidUrl}}
       </li>
     </ul>
   </div>

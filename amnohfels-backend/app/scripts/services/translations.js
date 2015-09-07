@@ -21,6 +21,7 @@ angular.module('amnohfelsBackendApp')
         badLoginCredentials: 'Diese Kombination aus Passwort und E-Mail Adresse existiert nicht!',
         invalidEmail: 'Die angegebene E-Mail Adresse ist nicht gültig.',
         invalidYoutubeUrl: 'Die angegebene Youtube-URL ist ungültig!',
+        invalidUrl: 'Die angegebene URL ist ungültig!',
         emptyField: 'Bitte fülle alle Felder aus!',
         noImageUploaded: 'Bitte lade ein Bild hoch!',
         uploaderIsUploading: 'Bitte warte, bis der Upload vollständig ist!',
