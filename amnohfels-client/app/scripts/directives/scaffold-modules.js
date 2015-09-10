@@ -23,7 +23,7 @@ angular.module('amnohfelsClientApp')
           'infotile'
         ];
 
-        //TODO handle firstmodule and lastmodule flags
+        //TODO handle firstmodule and lastmodule flags (last module style exists but is not added in yet. it is e.g. needed in a parallax module when nothing else follows)
 
         scope.$on('compile-modules', function () {
           var compileStream = '';

@@ -7,7 +7,8 @@
 
   <div class="form-group">
     <label for="text">Text</label>
-    <text-angular ta-paste="modifyHtml($html)" id="text" ng-model="modalVars.data.caption" required name="caption"></text-angular>
+    <text-angular ta-paste="modifyHtml($html)" id="text" ng-model="modalVars.data.caption"
+                  name="caption"></text-angular>
   </div>
 
   <div>
@@ -27,11 +28,13 @@
 
           <div class="input-group-btn">
             <button type="button" class="btn"
-                    ng-class="{'btn-primary' : modalVars.data.heightUnit == 'px', 'btn-default' : modalVars.data.heightUnit == 'vh'}"
+                    ng-class="{'btn-primary' : modalVars.data.heightUnit == 'px',
+                               'btn-default' : modalVars.data.heightUnit == 'vh'}"
                     ng-click="setHeightUnit('px')">px
             </button>
             <button type="button" class="btn"
-                    ng-class="{'btn-primary' : modalVars.data.heightUnit == 'vh', 'btn-default' : modalVars.data.heightUnit == 'px'}"
+                    ng-class="{'btn-primary' : modalVars.data.heightUnit == 'vh',
+                               'btn-default' : modalVars.data.heightUnit == 'px'}"
                     ng-click="setHeightUnit('vh')">vh
             </button>
           </div>
@@ -47,8 +50,9 @@
                ng-style="{'visibility': uploader.isUploading ? 'visible' : 'hidden'}">
             <div class="progress-bar" role="progressbar"
                  ng-style="{ 'width': uploader.queue[uploader.queue.length - 1].progress + '%' }"
-                 ng-class="{'progress-bar-striped active' : uploader.queue[uploader.queue.length - 1].progress == 100 && !uploader.queue[uploader.queue.length - 1].isSuccess,
-                     'progress-bar-success' : uploader.queue[uploader.queue.length - 1].isSuccess}"></div>
+                 ng-class="{'progress-bar-striped active' : uploader.queue[uploader.queue.length - 1].progress == 100 &&
+                   !uploader.queue[uploader.queue.length - 1].isSuccess,
+                   'progress-bar-success' : uploader.queue[uploader.queue.length - 1].isSuccess}"></div>
           </div>
         </div>
 
@@ -58,10 +62,12 @@
     </div>
   </div>
 
-  <div ng-show="form.$submitted && (!form.$valid || !firstUploadFinished || uploader.isUploading)" class="alert alert-warning">
+  <div ng-show="form.$submitted && (!form.$valid || !firstUploadFinished || uploader.isUploading)"
+       class="alert alert-warning">
     <ul>
-      <li ng-show="form.title.$error.required || form.caption.$error.required || form.heightNum.$error.required">
+      <li ng-show="form.title.$error.required || form.heightNum.$error.required">
         {{errorMessages.emptyField}}
+        <!--TODO mark required fields seperately fot this error message to make sense when not all fields are required-->
       </li>
       <li ng-show="!firstUploadFinished">
         {{errorMessages.noImageUploaded}}

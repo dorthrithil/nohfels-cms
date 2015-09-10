@@ -1,95 +1,107 @@
-.parallax-image {
-  transform: translate3d(0px, 0px, 0px);
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-}
+//
+// basic module layout
+// --------------------------------------------------
 
-.parallax-module {
+// overall container
+.parallax {
   margin: ($grid-gutter-width / 2) 0 ($grid-gutter-width / 2) 0;
   display: block;
   position: relative;
   overflow: hidden;
 
+  // the parallaxing image
+  .parallax-image {
+    transform: translate3d(0px, 0px, 0px);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+  }
+
+  // wrapper for caption and title
   .wrapper {
     position: absolute;
     top: $grid-gutter-width * 2;
     left: 0;
     max-width: 90%;
 
+    // caption & title
     > * {
-      background-color: $gray-dark;
       display: table;
-      font-family: 'Playfair Display', serif;
-      font-weight: 400;
-      font-style: normal;
       margin: 0 0 0 $grid-gutter-width * 2;
-      color: $gray-super-light;
+      font-family: $font-accent;
+      font-style: normal;
+      @include parallax-caption-title-scrollhint();
     }
 
+    // title
     .title {
-      margin-bottom: $grid-gutter-width ;
-      font-family: 'Playfair Display', serif;
-      font-weight: 400;
-      font-style: italic;
+      margin-bottom: $grid-gutter-width;
+      @include parallax-title();
     }
   }
 
+  // the scroll hint which appears on 100vh modules
   .scroll-hint {
     position: absolute;
-    bottom: 15px;
+    bottom: $grid-gutter-width / 2;
     left: 50%;
-    margin-left: -25px;
-    height: 50px;
-    width: 50px;
-    background-color: $gray-dark;
-    border-radius: 25px;
-    line-height: 63px;
+    margin-left: -$grid-gutter-width;
+    height: $grid-gutter-width * 2;
+    width: $grid-gutter-width * 2;
+    border-radius: $grid-gutter-width;
+    line-height: $grid-gutter-width * 2.6;
     text-align: center;
     transition: opacity 0.7s ease;
+    @include parallax-caption-title-scrollhint();
 
+    // the scroll hints arrow
     .glyphicon {
-      color: $bright;
-      font-size: 23px;
+      font-size: $grid-gutter-width;
     }
   }
 
 }
 
-$bp: 14px;
-//base padding (because font isn't spaced symmetrically)
-$sp: $bp * 1.4;
-//spaced padding
-$bfs: 55px;
-//base font-size
+//
+// make title & caption responsive
+// --------------------------------------------------
+
+// padding, font-size & line-height shrink on smaller screens
+
+// base padding
+$base-padding: $grid-gutter-width / 2;
+// spaced padding (because in most cases font isn't spaced symmetrically on top & bottom)
+$spaced-padding: $base-padding * 1.4;
+// base font-size
+$base-font-size: $font-size * 3.4;
 
 @mixin parallax-module($factor) {
-  .parallax-module {
+  .parallax {
     .title {
-      padding: round($factor * $bp) round($factor * $sp) round($factor * $sp) round($factor * $sp);
-      font-size: round($factor * $bfs);
-      line-height: round($factor * $bfs);
+      padding: round($factor * $base-padding) round($factor * $spaced-padding) round($factor * $spaced-padding) round($factor * $spaced-padding);
+      font-size: round($factor * $base-font-size);
+      line-height: round($factor * $base-font-size);
     }
     .caption {
-      padding: round($factor * 0.5 * $bp) round($factor * 0.5 * $sp) round($factor * 0 * $sp) round($factor * 0.5 * $sp);
-      font-size: round($factor * 0.5 * $bfs);
+      padding: round($factor * 0.5 * $base-padding) round($factor * 0.5 * $spaced-padding) round($factor * 0 * $spaced-padding) round($factor * 0.5 * $spaced-padding);
+      font-size: round($factor * 0.5 * $base-font-size);
     }
   }
 }
 
-@media(max-width: 767px) {
+@media(max-width: $screen-xs-max) {
   @include parallax-module(0.56);
 }
 
-@media(min-width: 768px) {
+@media(min-width: $screen-sm-min) {
   @include parallax-module(0.64);
 }
 
-@media(min-width: 992px) {
+@media(min-width: $screen-md-min) {
   @include parallax-module(0.826666);
 }
 
-@media(min-width: 1200px) {
+@media(min-width: $screen-lg-min) {
   @include parallax-module(1);
 }

@@ -1,5 +1,12 @@
 //TODO (1.0.1) calculate width with glyphicon width + variables
 
+//
+// main lightbox layout
+// --------------------------------------------------
+
+// opacity is zero everywhere, as everything fades in
+
+// backdrop
 .lb-backdrop{
   position: absolute;
   top: 0;
@@ -10,6 +17,7 @@
   z-index: 9997;
   opacity: 0;
 
+  // lightbox image
   img{
     position: fixed;
     margin: auto;
@@ -21,6 +29,7 @@
     right: 0;
   }
 
+  // spinner container
   .loading{
     position: fixed;
     margin: auto;
@@ -34,6 +43,7 @@
     width: 16px;
   }
 
+  // image caption container
   .caption{
     position: fixed;
     margin: auto;
@@ -48,31 +58,40 @@
   }
 }
 
+//
+// lightbox navigation layout
+// --------------------------------------------------
 
+// lightbox navigation variables
 $lb-navigation-width: 76px;
 $lb-navigation-bg: #0b0b0b;
 $lb-navigation-bg-hover: #222;
 
+// navigation wrapper
 .lb-navigation-wrapper{
   position: relative;
   height: 100%;
 
+  // right/left spinner
   .spinner{
     position: relative;
     height: 19px;
     width: 16px;
   }
 
+  // container to center navigation elements vertically
   .lb-navigation-center{
     position: absolute;
     top: 50%;
 
+    // left/right icons
     .glyphicon{
       color: $gray-light;
     }
   }
 }
 
+// outmost wrapper for left and right navigation
 @mixin lb-navigation(){
   z-index: 9998;
   height: 100%;
@@ -86,32 +105,34 @@ $lb-navigation-bg-hover: #222;
   transition: background-color linear 0.1s;
 }
 
+// next image navigation element
 .lb-next-image{
   @include lb-navigation();
   right: 0;
 
+  // add right padding to center it
   .lb-navigation-center{
     right: 30px;
   }
 }
 
+// previous image navigation element
 .lb-previous-image{
   @include lb-navigation();
   left: 0;
 
+  // add left padding to center it
   .lb-navigation-center{
     left: 30px;
   }
 }
 
-.lb-next-image:hover{
+// hover color for navigation containers
+.lb-next-image:hover, .lb-previous-image:hover{
   background-color: $lb-navigation-bg-hover;
 }
 
-.lb-previous-image:hover{
-  background-color: $lb-navigation-bg-hover;
-}
-
+// close button
 .lb-close{
   z-index: 9999;
   top: 0;
@@ -121,12 +142,14 @@ $lb-navigation-bg-hover: #222;
   height: $lb-navigation-width;
   cursor: pointer;
 
+  // position the cross icon wrapper
   .lb-navigation-center{
     right: 30px;
     top: 30px;
   }
 }
 
+// hover color for close button
 .lb-close:hover{
   .glyphicon{
     color: red;

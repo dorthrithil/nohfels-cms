@@ -1,20 +1,15 @@
-// remove navbar border
-.navbar-fixed-top {
-  border-width: 0 !important;
-}
+//
+// changes on bootstrap defaults which are not possible via variables
+// --------------------------------------------------
 
-// responsive: portrait tablets and up
+// change the standard `.container` width
 @media screen and (min-width: 768px) {
   .container {
-    max-width: 1000px;
+    max-width: $box-width-max;
   }
 }
 
+// remove top margin from headings to have them more in flow
 h1, h2, h3, h4, h5, h6 {
   margin-top: 0;
-}
-
-// space out navbar text for logo
-.navbar-brand {
-  padding: $navbar-padding-vertical $navbar-padding-horizontal $navbar-padding-vertical ($navbar-padding-horizontal + $navbar-height - 10px);
 }

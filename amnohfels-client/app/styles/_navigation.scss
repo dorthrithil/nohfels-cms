@@ -1,12 +1,18 @@
-nav{
+//
+// basic layout
+// --------------------------------------------------
 
+// navigation
+nav{
   font-family: $font-headings;
 
+  // logo container
   .logo{
     position: fixed;
     left: 6px;
     top: 6px;
 
+    // logo image
     img{
       height: 54px;
       width: 54px;
@@ -14,7 +20,21 @@ nav{
   }
 }
 
+//
+// additional styles
+// --------------------------------------------------
+
 // space out content for fixed nav
 body {
   padding-top: $navbar-height;
+}
+
+// space out navbar text for logo
+.navbar-brand {
+  padding: $navbar-padding-vertical $navbar-padding-horizontal $navbar-padding-vertical ($navbar-padding-horizontal + $navbar-height - 10px);
+}
+
+// remove navbar border
+.navbar-fixed-top {
+  border-width: 0 !important;
 }

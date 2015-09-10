@@ -1,7 +1,14 @@
+//
+// basic module layout
+// --------------------------------------------------
+
+// contact module
 contact-module {
 
+  // initial state of validation alerts
   alert {
     display: none;
-    height: 0px;
+    height: 0;
   }
+
 }

@@ -1,34 +1,37 @@
-$icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/bootstrap/";
-$dark: #333;
-$bright: #fff;
+//
+// change bootstrap variables without touching bower dependency
+// --------------------------------------------------
 
-$gray-base:              #000;
-$gray-darker:            lighten($gray-base, 13.5%);
-$gray-dark:              lighten($gray-base, 20%) ;
-$gray-mid-dark:          lighten($gray-base, 26%) ;
-$gray:                   lighten($gray-base, 33.5%) ;
-$gray-light:             lighten($gray-base, 46.7%) ;
-$gray-lighter:           lighten($gray-base, 93.5%);
-$gray-super-light: #fff;
-
+// navigation
 $navbar-height: 66px;
-$navbar-default-bg: $gray-dark;
-$navbar-default-link-color: $gray-super-light;
-$navbar-default-link-hover-bg: $gray-mid-dark;
-$navbar-default-link-hover-color: $gray-super-light;
-$navbar-default-link-active-color: $gray-dark;
-$navbar-default-link-active-bg: $gray-super-light;
+$navbar-default-link-hover-bg: lighten($box-background-color-alt, 4%);
+$navbar-default-link-active-color: $box-background-color-alt;
+$navbar-default-bg: $box-background-color-alt;
+$navbar-default-link-active-bg: $font-color-alt;
+$navbar-default-link-hover-color: $font-color-alt;
+$navbar-default-link-color: $font-color-alt;
 
-$font-size-base: 16px;
+// path for glyphicon icon font
+$icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/bootstrap/";
+
+// colors
+$body-bg: $background-color;
+$headings-color: $accent;
+$text-color: $font-color;
+
+// fonts
+$font-size-base: $font-size;
 $font-family-sans-serif: $font-text;
 $headings-font-family: $font-headings;
 
-$headings-color: $accent;
+// navbar collapse breakpoint
+// point at which the navbar becomes uncollapsed. as navbar contains a `.container` element which will be 100% width at
+// `$screen-md-min`, this needs to be set to `$screen-md-min + 1`. if a user has too many links in his navbar, this
+// value can be directly changed in `_theme-variables.scss`
+// -- `$screen-md-min` can't be used here as `_variables.scss` is imported after. so 992px has to be used directly
+$grid-float-breakpoint: 992px + 1px;
 
-$body-bg: $background-color;
-
-// Navbar collapse
-//** Point at which the navbar becomes uncollapsed.
-$screen-md:                  992px !default;
-$screen-md-min:              $screen-md !default;
-$grid-float-breakpoint:     $screen-md-min;
+// container widths
+// make `.container` have 100% width for smaller screens. additionally media queries are added in `_module.scss` to
+// remove left & right borders of `.container` on these screen sizes (so there's no border directly at the edge of the screen)
+$container-sm: 100%;

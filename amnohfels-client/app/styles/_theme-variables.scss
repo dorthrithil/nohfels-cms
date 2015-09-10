@@ -1,0 +1,64 @@
+//
+// theme colors
+// --------------------------------------------------
+
+// accent color (e.g. for headings)
+$accent: rgb(53, 102, 150);
+
+// accent color, brighter alternative (currently only used in `.underline`)
+$accent-light: #FFFD38;
+
+// accent color, darker alternative (e.g. in linked infotile hover effect)
+$accent-dark: #F58470;
+
+// body background color
+$background-color: #e9e5e1;
+
+// color of boxes
+$box-background-color: #ffffff;
+
+// alternative colored boxes
+$box-background-color-alt: #333;
+
+// standard font color
+$font-color: $box-background-color-alt;
+
+// font color for font on alternative colored boxes (`$box-background-color-alt`)
+$font-color-alt: #ffffff;
+
+
+//
+// theme fonts
+// --------------------------------------------------
+
+// font for headings
+$font-headings: 'Cabin', sans-serif;
+
+// font for standard text
+$font-text: 'Open Sans', sans-serif;
+
+// font for special heaings and text (e.g. in parallax module)
+$font-accent: 'Playfair Display', serif;
+
+// basic font size from which the scale is built
+$font-size: 16px;
+
+// load fonts
+// TODO (1.0.1) do i need all these font weights?
+@import url(https://fonts.googleapis.com/css?family=Playfair+Display:400,400italic);
+@import url(https://fonts.googleapis.com/css?family=Cabin:400,400italic,700);
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:300,400,700);
+
+//
+// theme sizes
+// --------------------------------------------------
+
+// maximum width of container boxes
+$box-width-max: 1000px;
+
+// height of footer
+$footer-height: 132px;
+
+// if you have too many links in your navbar (so it doesn't collapse although it's overflowing) you have to manually
+// set this value
+/* $grid-float-breakpoint: 993px; */

@@ -1,31 +1,41 @@
+//
+// basic module layout
+// --------------------------------------------------
+
+// instagram module
 instagram-module {
+
+  // wrapper. change standard styles to make it a non-box module but still keep it in grid-gutter flow
   .full-width-wrapper {
     margin: ($grid-gutter-width / 2) 0 ($grid-gutter-width / 2) 0;
-    background-image: url('../images/instagram_module/fabric.png');
     padding: 0;
+    @include instagram();
 
+    // container for carousel
     .container {
       padding: 0 0 0 0;
       background-color: transparent;
       border: none;
     }
+
   }
 
+  // the carousel
   .instagram-carousel {
     max-width: 750px;
     margin: 0 auto 0 auto;
   }
 
+  // let image have 80% of overall carousel width
   .carousel-inner {
     width: 80%;
     margin-left: 10%;
   }
 
+  // left & right control have each 10% overall carousel width and transparent background
   .carousel-control.left, .carousel-control.right {
     background: none;
-  }
-
-  .carousel-control {
     width: 10%;
   }
+
 }

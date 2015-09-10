@@ -1,13 +1,23 @@
-modal{
-  .error{
+//
+// basic modal layout
+// --------------------------------------------------
+
+// modal
+modal {
+
+  // styles for error modal (e.g. unsuccessful sent contact mail warning)
+  .error {
     background-color: $alert-danger-bg;
     color: $alert-danger-text;
 
-    .modal-footer{
+    .modal-footer {
       border-top-color: lighten($alert-danger-text, 35);
     }
-    .modal-header{
+
+    .modal-header {
       border-bottom-color: lighten($alert-danger-text, 35);
     }
+
   }
+
 }

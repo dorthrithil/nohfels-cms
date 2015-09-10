@@ -1,7 +1,15 @@
+//
+// basic module layout
+// --------------------------------------------------
+
+// gallery module
 gallery-module{
 
+  // wrapper for gallery images
   .image-wrapper{
     text-align: center;
+
+    // container for image (realised as a background cover image to make it responsive)
     .image-container {
       height: 200px;
       background-size: cover;
@@ -9,9 +17,12 @@ gallery-module{
       margin-bottom: $grid-gutter-width;
       cursor: pointer;
     }
+
+    // large image
     .image-large{
       height: 430px;
     }
+
   }
 
   // images put a margin to the bottom => remove it again (overflow hidden needed as overflow ranks higher than margin)
@@ -19,4 +30,5 @@ gallery-module{
     margin-bottom: -$grid-gutter-width;
     overflow: hidden;
   }
+
 }

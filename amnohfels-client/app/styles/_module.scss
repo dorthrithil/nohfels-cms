@@ -1,0 +1,45 @@
+//
+// basic module layout
+// --------------------------------------------------
+
+// wrapper for all box-modules. this styles the overall look around the boxes
+.full-width-wrapper {
+  padding: ($grid-gutter-width / 2) 0 ($grid-gutter-width / 2) 0;
+
+  // this styles the box
+  .container {
+    padding: ($grid-gutter-width / 2);
+    @include box-style();
+
+    // remove left & right borders on small screens (`.container` has width 100% on these)
+    // -1 needed as `.container-sm` is defined for "`$screen-sm-min` and up".
+    @media (max-width: $screen-md-min - 1) {
+      border-right: none;
+      border-left: none;
+    }
+
+    // fixed width underlining for module titles
+    .underline {
+      box-sizing: content-box;
+      display: block;
+      margin-bottom: $grid-gutter-width / 2;
+      @include underline();
+    }
+
+  }
+
+}
+
+//
+// some tweaks
+// --------------------------------------------------
+
+// make the first non-box-module stick directly under the navigation
+.first-module {
+  margin-top: 0 !important;
+}
+
+// remove margin-bottom from last non-box-module, so there is no space between the modul and the footer
+.last-module {
+  margin-bottom: 0 !important;
+}

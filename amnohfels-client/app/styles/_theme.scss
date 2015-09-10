@@ -1,0 +1,57 @@
+//
+// you can change these mixins to style the main elements of the Nohfels CMS
+// --------------------------------------------------
+
+// this styles the content boxes most modules live in
+@mixin box-style() {
+  border: 1px solid #e1ddd8;
+  border-bottom: 6px solid #d2cec9;
+  background-color: $box-background-color;
+}
+
+// this styles the underlining of the module titles
+@mixin underline() {
+  width: 100px;
+  height: 6px;
+  background-color: $accent;
+  border-bottom: 6px solid $accent-light;
+}
+
+// this styles the background of instagram modules
+@mixin instagram() {
+  background-image: url('../images/instagram_module/fabric.png');
+}
+
+// this styles the basic parallax title & caption box
+@mixin parallax-caption-title-scrollhint() {
+  background-color: $gray-dark;
+  color: $font-color-alt;
+}
+
+// this styles exclusively the basic parallax title box
+@mixin parallax-title() {
+  font-style: italic;
+}
+
+// this styles the footer
+@mixin footer() {
+  background-color: $box-background-color-alt;
+  color: $font-color-alt;
+  font-size: $font-size - 2;
+  text-align: right;
+
+  // this all the links inside the footer
+  .footer-link, .footer-link:visited, .footer-link:hover, .footer-link:active{
+    color: $font-color-alt;
+  }
+}
+
+//
+// if you need more custom changes, add the css rules here
+// --------------------------------------------------
+
+// set text font size outside of bootstrap (just changing `$font-size` would make headings too big)
+body {
+  font-size: $font-size * 1.125;
+  font-weight: 300;
+}

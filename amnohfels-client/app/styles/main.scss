@@ -1,20 +1,24 @@
-//TODO no borders of boxes in small screes
+//
+// main scss file. imports everything
+// --------------------------------------------------
 
-
-// define variables
-@import "_variables.scss";
+// import theme variables
+@import "_theme-variables";
 
 // replace some default bootstrap variables..
 @import "_bootstrap-theme-variables.scss";
 
-// ..include default bootstrap..
+// include default bootstrap
 // bower:scss
 @import "bootstrap-sass-official/assets/stylesheets/_bootstrap.scss";
 // endbower
 
-// ..and finally replace some bootstrap styles
+// replace and add some bootstrap styles
 @import "_bootstrap-theme.scss";
 @import "_bootstrap-col-ms.scss";
+
+// import Nohfels CMS theme
+@import "_theme.scss";
 
 // import styles for views
 @import "_parallax-module.scss";
@@ -26,54 +30,12 @@
 @import "_staff-module.scss";
 @import "_youtube-module.scss";
 @import "_maps-module.scss";
-@import "_footer.scss";
-@import "_lightbox.scss";
-@import "_modal.scss";
+
 @import "_navigation.scss";
+@import "_module.scss";
+@import "_footer.scss";
+@import "_modal.scss";
 
-// fonts
-@import url(http://fonts.googleapis.com/css?family=Playfair+Display:400,400italic);
-@import url(https://fonts.googleapis.com/css?family=Cabin:400,400italic,700);
-@import url(https://fonts.googleapis.com/css?family=Open+Sans:300,400,700);
-
-// for legacy browsers
-.browsehappy {
-  margin: 0.2em 0;
-  background: #ccc;
-  color: #000;
-  padding: 0.2em 0;
-}
-
-.first-module {
-  margin-top: 0 !important;
-}
-
-// wrapper for all modules. this styles the overall tile look
-.full-width-wrapper{
-  padding: ($grid-gutter-width / 2) 0 ($grid-gutter-width / 2) 0;
-
-  .container{
-    padding: 15px;
-    border: 1px solid #e1ddd8;
-    border-bottom: 6px solid #d2cec9;
-    background-color: $box-background-color;
-
-  }
-}
-
-// fixed width underlining for module titles
-.underline{
-  width: 100px;
-  height: 6px;
-  box-sizing: content-box;
-  background-color: $accent;
-  display: block;
-  margin-bottom: $grid-gutter-width / 2;
-  border-bottom: 6px solid $accent-light;
-}
-
-// set text font size outside of bootstrap
-body{
-  font-size: 18px;
-  font-weight: 300;
-}
+@import "_lightbox.scss";
+@import "_deckgrid.scss";
+@import "_browse-happy.scss";

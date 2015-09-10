@@ -12,7 +12,7 @@ angular.module('amnohfelsBackendApp')
 
     //TODO client secret on client side is not the best idea
 
-    var requestURL = 'http://api.aerisapi.com/observations/summary/' + config.aerisapi.placeId +
+    var requestURL = 'https://api.aerisapi.com/observations/summary/' + config.aerisapi.placeId +
       '?from=-30days&plimit=30&client_id=' + config.aerisapi.clientId +
       '&client_secret=' + config.aerisapi.clientSecret;
 

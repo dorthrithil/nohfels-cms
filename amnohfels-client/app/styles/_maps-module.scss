@@ -1,5 +1,11 @@
+//
+// basic module layout
+// --------------------------------------------------
+
+// maps module
 maps-module {
 
+  // the map container
   .angular-google-map-container {
     height: 400px;
   }

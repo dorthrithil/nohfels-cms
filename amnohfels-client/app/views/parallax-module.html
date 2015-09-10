@@ -1,10 +1,12 @@
-<div class="parallax-module parallax-section">
-    <img src="" class="parallax-image">
-    <div class="wrapper">
-        <div class="title" ng-bind-html="data.title"></div>
-        <div class="caption" ng-bind-html="data.caption"></div>
-    </div>
-    <div class="scroll-hint" ng-show="firstModule && data.heightNum == 100 && data.heightUnit == 'vh'" ng-style="getScrollHintOpacity()">
-        <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
-    </div>
+<div class="parallax">
+  <img src="" class="parallax-image">
+
+  <div class="wrapper">
+    <div class="title" ng-bind-html="data.title"></div>
+    <div class="caption" ng-bind-html="data.caption" ng-show="data.caption != ''"></div>
+  </div>
+  <div class="scroll-hint" ng-show="firstModule && data.heightNum == 100 && data.heightUnit == 'vh'"
+       ng-style="getScrollHintOpacity()">
+    <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
+  </div>
 </div>

@@ -111,7 +111,7 @@ angular.module('amnohfelsClientApp')
       // the element containing the caption
       var caption = section.find('.caption');
       // the actual parallax container element
-      var sectionInner = section.find('.parallax-section');
+      var sectionInner = section.find('.parallax');
       // set the height of the section excluding navbar height from vh measurement
       var sectionInnerHeight = util.convertVh(images[index].height);
       sectionInner.css('height', sectionInnerHeight);
@@ -145,7 +145,7 @@ angular.module('amnohfelsClientApp')
         //init
         var stretchedImgHeight,
           stretchedImgWidth,
-          sectionHeight = images[i].section.find('.parallax-section').height(), //height of the section
+          sectionHeight = images[i].section.find('.parallax').height(), //height of the section
           scrollHeight = (sectionHeight > window.innerHeight) ? sectionHeight : window.innerHeight, // user larger value for size calculation
           minHeight =  scrollHeight * parallaxRatio * 2 + scrollHeight, //image needs to be as high as the viewport + height for scrolling in and out in parallax speed
           minWidth = window.innerWidth; //image needs to be as broad as the viewport
