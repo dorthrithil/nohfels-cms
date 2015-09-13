@@ -35,7 +35,6 @@ angular.module('amnohfelsBackendApp')
           $scope.modalVars.data.infotiles.splice(index, 1);
         };
 
-        //TODO bugged
         $scope.swapDownInfotile = function (index) {
           var tempInfotile = $scope.modalVars.data.infotiles[index];
           $scope.modalVars.data.infotiles[index] = $scope.modalVars.data.infotiles[index + 1];

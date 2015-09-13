@@ -7,7 +7,7 @@
  * # DynamiclinkerCtrl
  * Controller of the amnohfelsClientApp
  */
-angular.module('amnohfelsClientApp')
+var DynamicLinkerCtrl = angular.module('amnohfelsClientApp')
   .controller('DynamicLinkerCtrl', function ($scope, $routeParams, $http, config) {
     $http.get(config.server.api + 'page/' + $routeParams.pageTopic)
       .success(function (response) {
@@ -24,3 +24,13 @@ angular.module('amnohfelsClientApp')
         }
       });
   });
+
+DynamicLinkerCtrl.resolve = {
+  delay: function($q) {
+    return $q(function(resolve, reject) {
+      setTimeout(function() {
+        resolve();
+      }, 3000);
+    });
+  }
+};

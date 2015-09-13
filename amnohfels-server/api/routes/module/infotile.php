@@ -84,7 +84,7 @@ function getInfotileModule($id)
 
     $infotiles = array();
     try {
-        $result = $connection->query("SELECT image_src, title, text, url, url_enabled FROM infotile_module_tiles WHERE infotile_module = '$id'");
+        $result = $connection->query("SELECT image_src, title, text, url, url_enabled FROM infotile_module_tiles WHERE infotile_module = '$id' ORDER BY position");
         if (!$result) {
             throw new Exception($connection->error);
         } else {

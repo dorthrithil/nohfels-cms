@@ -11,6 +11,7 @@
 //TODO (1.0.1) performance: throttle
 //TODO (1.0.1) UI: image onload fadeIn
 //TODO (1.0.1) improvement: navbar height doesn't need to be included in height calculations => more visible image content
+//TODO (1.0.1) bug: load a page with 100vh parallax. change the tab. download something to trigger the download bar to open. switch back to other tab. parallax container is ~3 times of original height..?
 
 angular.module('amnohfelsClientApp')
   .service('parallax', function parallax($window, util, $timeout, config, $rootScope) {

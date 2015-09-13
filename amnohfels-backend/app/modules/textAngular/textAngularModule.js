@@ -9,6 +9,8 @@
  * A small module to encapsulate my custom testAngular setup
  */
 
+// TODO (1.0.2) insertImage tool with uploader
+
 angular
   .module('textAngularModule', ['ngRoute', 'textAngular', 'ui.bootstrap-slider', 'ngTagsInput', 'angularFileUpload'])
 
@@ -131,7 +133,7 @@ angular
         ['h4','h5','h6'],
         ['bold', 'italics', 'underline', 'strikeThrough', 'ul', 'ol', 'redo', 'undo'],
         ['justifyLeft', 'justifyCenter', 'justifyRight', 'indent', 'outdent'],
-        ['insertLink2', 'fileupload'],
+        ['insertImage', 'insertLink2', 'fileupload'],
         ['html']
       ];
       return taOptions;

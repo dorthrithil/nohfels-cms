@@ -39,7 +39,8 @@ angular
       })
       .when('/:pageTopic', {
         controller: 'DynamicLinkerCtrl',
-        templateUrl: 'views/dynamiclinker.html'
+        templateUrl: 'views/dynamiclinker.html'//,
+        //resolve: DynamicLinkerCtrl.resolve
       });
 
     // config google analytics
@@ -59,4 +60,3 @@ angular
   // inject analytics for automatic page tracking
   .run(function (Analytics) { //jshint ignore:line
   });
-

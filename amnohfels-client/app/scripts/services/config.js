@@ -21,7 +21,7 @@ angular.module('amnohfelsClientApp')
     mail: 'felix@feblog.de'
   },
   instagram: {
-    accessToken: '1693418525.1fb234f.fc30d26a0f214e83a5378cb56be78617'
+    accessToken: '1693418525.1fb234f.fc30d26a0f214e83a5378cb56be78617' //TODO (1.0.0) why are there photos from two accounts appearing?
   },
   analytics: {
     id: 'UA-64482637-1'
