@@ -68,6 +68,7 @@ function getMapsModule($id)
 {
     $connection = getConnection();
     $data = new stdClass();
+    $imagePreloadArray = array();
     try {
         $result = $connection->query("SELECT * FROM maps_modules WHERE id = '$id'");
         if (!$result) {
@@ -96,6 +97,7 @@ function getMapsModule($id)
 
     $response = new stdClass();
     $response->data = $data;
+    $response->imagePreloadArray = $imagePreloadArray;
     $connection->close();
     return $response;
 }

@@ -71,6 +71,7 @@ function getGalleryModule($id)
 {
     $connection = getConnection();
     $data = new stdClass();
+    $imagePreloadArray = array();
     try {
         $result = $connection->query("SELECT id, title FROM gallery_modules WHERE id = '$id'");
         if (!$result) {
@@ -97,7 +98,10 @@ function getGalleryModule($id)
                 $image->imageSize = $rs['image_size'];
                 $image->imageSrc = $rs['image_src'];
                 $image->imageThumbSrc = $rs['image_thumb_src'];
+                array_push($imagePreloadArray, $rs['image_thumb_src']);
                 $image->imageThumbSquareSrc = $rs['image_thumb_square_src'];
+                array_push($imagePreloadArray, $rs['image_thumb_square_src']);
+                //TODO which image am i using? i don't need to add both
                 $image->imageCaption = $rs['image_caption'];
                 $images[] = $image;
             }
@@ -110,6 +114,7 @@ function getGalleryModule($id)
 
     $response = new stdClass();
     $response->data = $data;
+    $response->imagePreloadArray = $imagePreloadArray;
     $connection->close();
     return $response;
 }

@@ -62,6 +62,7 @@ function getStaffModule($id)
 {
     $connection = getConnection();
     $data = new stdClass();
+    $imagePreloadArray = array();
     try {
         $result = $connection->query("SELECT id, title FROM staff_modules WHERE id = '$id'");
         if (!$result) {
@@ -87,6 +88,7 @@ function getStaffModule($id)
                 $employee = new stdClass();
                 $employee->name = $rs['name'];
                 $employee->imageSrc = $rs['image_src'];
+                array_push($imagePreloadArray, $rs['image_src']);
                 $employee->caption = $rs['caption'];
                 $employees[] = $employee;
             }
@@ -99,6 +101,7 @@ function getStaffModule($id)
 
     $response = new stdClass();
     $response->data = $data;
+    $response->imagePreloadArray = $imagePreloadArray;
     $connection->close();
     return $response;
 }

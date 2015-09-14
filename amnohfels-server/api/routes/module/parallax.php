@@ -48,10 +48,13 @@ function createParallaxModule($page, $title, $caption, $heightNum, $heightUnit, 
     $connection->close();
 }
 
+
+//TODO why is there a thumb src? am i using this?
 function getParallaxModule($id)
 {
     $connection = getConnection();
     $data = new stdClass();
+    $imagePreloadArray = array();
     try {
         $result = $connection->query("SELECT id, title, caption, height_num, height_unit, bg_img_src, bg_img_thumb_src FROM parallax_modules WHERE id = '$id'");
         if (!$result) {
@@ -65,6 +68,7 @@ function getParallaxModule($id)
                 $data->heightNum = $rs['height_num'];
                 $data->heightUnit = $rs['height_unit'];
                 $data->bgImgSrc = $rs['bg_img_src'];
+                array_push($imagePreloadArray, $rs['bg_img_src']);
                 $data->bgImgThumbSrc = $rs['bg_img_thumb_src'];
             }
         }
@@ -73,6 +77,7 @@ function getParallaxModule($id)
     }
     $response = new stdClass();
     $response->data = $data;
+    $response->imagePreloadArray = $imagePreloadArray;
     $connection->close();
     return $response;
 }

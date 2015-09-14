@@ -54,7 +54,7 @@ angular.module('amnohfelsClientApp')
         },
         src: config.server.root + bgImgSrc
       });
-      images[images.length - 1].image.attr('src', config.server.root + bgImgSrc); //TODO (1.0.1) do that later for fadein
+      //images[images.length - 1].image.attr('src', config.server.root + bgImgSrc); //TODO (1.0.1) do that later for fadein
       initDimensions(images.length - 1);
     };
 
@@ -93,6 +93,7 @@ angular.module('amnohfelsClientApp')
 
     //initializes the dimensions of the parallaxing image and the section
     function initDimensions(index) {
+      setSectionHeights(index); //TODO this is now called two times in initialisation. can i remove the call in setImageSizes?
       var bgImg = new Image(); //create a temporary image
       bgImg.onload = function () { //and hook the function for reading the dimensions as soon as the image has loaded
         images[index].dimensions.height = this.height; //cache height..

@@ -21,6 +21,7 @@ angular.module('amnohfelsClientApp')
       },
       link: {
         pre: function (scope, element) {
+          //element.children().css('height',scope.data.heightNum + scope.data.heightUnit);
           parallax.add(element, scope.data.bgImgSrc, scope.data.heightNum + scope.data.heightUnit);
           if(scope.firstModule){
             element.children().addClass('first-module');
@@ -32,6 +33,8 @@ angular.module('amnohfelsClientApp')
         //link uploaded files to server toot
         $scope.data.caption = $scope.data.caption.replace(new RegExp('uploads/files/', 'g'), config.server.root + 'uploads/files/');
         $scope.data.caption = $sce.trustAsHtml($scope.data.caption);
+
+        $scope.imgSrc = config.server.root + $scope.data.bgImgSrc;
 
         //let the scroll hint vanish on first scroll event
         $scope.scrollHintOpacity = 1; //initial opacity

@@ -1,0 +1,21 @@
+//
+// basic pageLoadingBar layout
+// --------------------------------------------------
+
+page-loading-bar {
+
+  .page-loading-bar-container {
+    position: fixed;
+    top: $navbar-height;
+    width: 100%;
+    z-index: 9999;
+
+    .page-loading-bar {
+      height: 2px;
+      background-color: $accent-dark;
+      width: 0%;
+    }
+
+  }
+
+}

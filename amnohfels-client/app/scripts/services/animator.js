@@ -80,6 +80,7 @@ angular.module('amnohfelsClientApp')
     }
 
     this.fadeOut = function ($element, delay) {
+      delay = delay || 0;
       var args = {
         concreteSettings: {
           delay: delay,
@@ -93,6 +94,7 @@ angular.module('amnohfelsClientApp')
     };
 
     this.fadeIn = function ($element, delay) {
+      delay = delay || 0;
       var properties = {
         opacity: 1
       };
@@ -106,6 +108,7 @@ angular.module('amnohfelsClientApp')
     };
 
     this.slideInLeft = function ($element, delay) {
+      delay = delay || 0;
       var properties = {
         right: '0',
         left: '0',
@@ -125,6 +128,7 @@ angular.module('amnohfelsClientApp')
     };
 
     this.slideInRight = function ($element, delay) {
+      delay = delay || 0;
       var properties = {
         right: '0',
         left: '0',
@@ -144,9 +148,10 @@ angular.module('amnohfelsClientApp')
     };
 
     this.slideOutLeft = function ($element, delay) {
+      delay = delay || 0;
       var properties = {
         opacity: 0,
-        left: -parseInt($element.css('width')) + 'px', //'0px',
+        left: -parseInt($element.css('width')) + 'px',
         right: $window.innerWidth - parseInt($element.css('width')) + 'px'
       };
       var args = {
@@ -159,9 +164,10 @@ angular.module('amnohfelsClientApp')
     };
 
     this.slideOutRight = function ($element, delay) {
+      delay = delay || 0;
       var properties = {
         opacity: 0,
-        right: -parseInt($element.css('width')) + 'px',//'0px',
+        right: -parseInt($element.css('width')) + 'px',
         left: $window.innerWidth - parseInt($element.css('width')) + 'px'
       };
       var args = {
@@ -174,6 +180,7 @@ angular.module('amnohfelsClientApp')
     };
 
     this.expandHeightTo = function ($element, height, delay) {
+      delay = delay || 0;
       var properties = {
         height: height
       };
@@ -196,6 +203,7 @@ angular.module('amnohfelsClientApp')
     };
 
     this.shrinkHeightTo = function ($element, height, delay) {
+      delay = delay || 0;
       var properties = {
         height: height
       };
@@ -209,6 +217,20 @@ angular.module('amnohfelsClientApp')
         },
         concreteSettings: {
           duration: animationStepDuration,
+          delay: delay
+        }
+      };
+      return animation($element, properties, args);
+    };
+
+    this.increaseWidthTo = function ($element, width, delay, duration) {
+      delay = delay || 0;
+      var properties = {
+        width: width
+      };
+      var args = {
+        concreteSettings: {
+          duration: duration,
           delay: delay
         }
       };
