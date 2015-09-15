@@ -27,9 +27,9 @@ angular.module('amnohfelsClientApp')
 
         scope.$on('compile-modules', function () {
           var compileStream = '';
-          angular.forEach(scope.response, function (value, key) {
+          angular.forEach(scope.pageData, function (value, key) {
             if (value.type !== undefined && moduleTypes.indexOf(value.type.id) !== -1) {
-              compileStream += '<' + value.type.id + '-module key="' + key + '" data="response[' + key +
+              compileStream += '<' + value.type.id + '-module key="' + key + '" data="pageData[' + key +
                 '].data" first-module="' + (key === 0) + '"></' + value.type.id + '-module>';
             } else {
               compileStream += '<error-module data=""><h3>Error 400: Bad Request</h3><p>Es konnte kein passendes ' +

@@ -6,22 +6,25 @@
  * @description
  * # DynamiclinkerCtrl
  * Controller of the amnohfelsClientApp
+ * Receives `dataObject` with the preloaded page data from `routeProviders` resolve option. Passes this data to
+ * `scaffoldModules` by attaching it to the scope. Handles eventual 404 error through a broadcast to `scaffoldModules`.
  */
 
 //TODO (1.0.1) improvement: as this is the same page, i could use a function instead of broadcast events?
 //TODO (1.0.1) handle other statuses
-//TODO (1.0.0) this needs to be renamed now with the new routing logic. better: put it all in a controller in scaffold modules directive (when it can then still be referenced via string in routeProvider)
 
 angular.module('amnohfelsClientApp')
-  .controller('DynamicLinkerCtrl', function ($scope, $routeParams, $http, config, dataObject, $timeout) {
+  .controller('DynamicLinkerCtrl', function ($scope, dataObject, $timeout) {
 
+    // either request to compile the requested page or to compile the 404 page, depending on status
     if (dataObject.status === 404) {
       // broadcast when child controller is instantiated
       $timeout(function () {
         $scope.$broadcast('status404');
       });
     } else {
-      $scope.response = dataObject.data.modules;
+      // `scaffoldModules` will pick that data up
+      $scope.pageData = dataObject.data.modules;
       // broadcast when child controller is instantiated
       $timeout(function () {
         $scope.$broadcast('compile-modules');

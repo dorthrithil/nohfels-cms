@@ -8,6 +8,8 @@
  * broadcasts 'lbImageLoaded' to rootScope, to notify listeners, that image has finished loading.
  */
 
+//TODO (1.0.1) can i use imgfadeinonload directive for this?
+
 angular.module('amnohfelsClientApp')
   .directive('preloadable', function ($rootScope) {
     return {

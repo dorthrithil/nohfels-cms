@@ -1,19 +1,19 @@
 //
-// basic pageLoadingBar layout
+// basic preloadBar layout
 // --------------------------------------------------
 
-page-loading-bar {
+preload-bar {
 
-  .page-loading-bar-container {
+  .preload-bar-container {
     position: fixed;
     top: $navbar-height;
     width: 100%;
     z-index: 9999;
 
-    .page-loading-bar {
+    .preload-bar {
       height: 2px;
       background-color: $accent-dark;
-      width: 0%;
+      width: 0;
     }
 
   }

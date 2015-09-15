@@ -1,6 +1,6 @@
 'use strict';
 
-describe('Service: preloadStatus', function () {
+describe('Service: preloadStatusAnimationService', function () {
 
   // load the service's module
   beforeEach(module('amnohfelsClientApp'));

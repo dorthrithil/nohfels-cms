@@ -36,15 +36,17 @@ angular
     // config route provider
 
     $routeProvider
+      // define starting page
       .when('/', {
         redirectTo: '/cafe'
       })
+      // standard page logic
       .when('/:pageTopic', {
         controller: 'DynamicLinkerCtrl',
         templateUrl: 'views/dynamiclinker.html',
         resolve: {
-          dataObject: function(preloadData) {
-            return preloadData.getDataObject();
+          dataObject: function(preload) {
+            return preload.getDataObject();
           }
         }
       });
@@ -65,20 +67,12 @@ angular
   })
   // inject analytics for automatic page tracking & set up 404 routing
   .run(function (Analytics, $rootScope, $location) { //jshint ignore:line
+    // this gets fired, when the resolve in `routeProvider` is unsuccessful
     $rootScope.$on('$routeChangeError', function(angularEvent, current, previous, rejection){
+      // most probably the reason is a 404
       if(rejection.status === 404) {
         $location.url('/404');
       }
       //TODO (1.0.1) handle other statuses
     });
-
-    //TODO (1.0.1) think of a solution without broadcasts
-    //$rootScope.$on('$routeChangeStart', function(angularEvent, current) {
-    //  if (current.$$route && current.$$route.resolve) {
-    //    $rootScope.$broadcast('show-page-loading-bar');
-    //  }
-    //});
-    //$rootScope.$on('$routeChangeSuccess', function() {
-    //  $rootScope.$broadcast('hide-page-loading-bar');
-    //});
   });
