@@ -1,7 +1,19 @@
 <div class="footer-spacer"></div>
 
-<footer ng-controller="FooterCtrl">
-    <div class="container"><a href="https://github.com/dorthrithil/amnohfels" class="footer-link">powered by Nohfels CMS</a> | © {{date | date:'yyyy'}} {{company.name}}
-      <span ng-repeat="topic in topics">| <a class="footer-link" href="#/{{topic.id}}">{{topic.name}}</a> </span>
+<div class="footer-outer">
+  <div class="footer-inner">
+    <div class="container high-priority">
+      <div class="footer-element" ng-repeat="topic in topics">
+        <a class="footer-link" href="#/{{topic.id}}">{{topic.name}}</a>
+      </div>
     </div>
-</footer>
+    <div class="container low-priority">
+      <div class="footer-element">
+        <a href="https://github.com/dorthrithil/amnohfels" target="_blank">powered by Nohfels CMS</a>
+      </div>
+      <div class="footer-element">
+        © {{date | date:'yyyy'}} {{company.name}}
+      </div>
+    </div>
+  </div>
+</div>

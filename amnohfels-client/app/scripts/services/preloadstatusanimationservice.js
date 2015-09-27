@@ -121,6 +121,7 @@ angular.module('amnohfelsClientApp')
         config.animatingMutex = true;
         animator.increaseWidthTo($preloadBar, '50%', 0, 500)
           .then(function () {
+            config.animatingMutex = false;
             // when animation has not yet started and steps have been set, start step animation
             if (config.stepsSet && !config.animatingMutex) {
               performAnimationStep();

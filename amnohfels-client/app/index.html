@@ -36,7 +36,7 @@
 
 <div ng-include src="'views/navigation.html'"></div>
 <div ng-view="" autoscroll="true"></div>
-<div ng-include src="'views/footer.html'"></div>
+<footer></footer>
 
 <!-- build:js(.) scripts/oldieshim.js -->
 <!--[if lt IE 9]>
@@ -64,7 +64,6 @@
 
 <!-- build:js({.tmp,app}) scripts/scripts.js -->
 <script src="scripts/app.js"></script>
-<script src="scripts/controllers/footer.js"></script>
 <script src="scripts/controllers/navigation.js"></script>
 <script src="scripts/directives/parallax-module.js"></script>
 <script src="scripts/directives/text-module.js"></script>
@@ -96,6 +95,7 @@
 <script src="scripts/directives/preloadbar.js"></script>
 <script src="scripts/directives/imgfadeinonload.js"></script>
 <script src="scripts/services/preloadstatusanimationservice.js"></script>
+<script src="scripts/directives/footer.js"></script>
 <!-- endbuild -->
 </body>
 </html>

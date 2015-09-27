@@ -7,6 +7,8 @@
  * # parallaxModule
  */
 
+//TODO 100vh doesn't work on small screens when page is requested over naviagtion. only after resize or as initial site
+
 //TODO (1.0.1) enhancement (UI): fadeIn image onload
 //TODO (1.0.1) better pass module id in each module than firstModule in only this one
 

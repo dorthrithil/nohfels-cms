@@ -9,25 +9,31 @@
  */
 angular.module('amnohfelsClientApp')
   .constant('config', {
-  server: {
-    // <!-- comments:toggle // -->
-    root: 'http://schruemel.de/dev/',
-    api: 'http://schruemel.de/dev/api/'
-    // root: 'https://amnohfels.de/server/',
-    // api: 'https://amnohfels.de/server/api/'
-    // <!-- endcomments -->
-  },
-  admin: {
-    mail: 'felix@feblog.de'
-  },
-  instagram: {
-    accessToken: '1693418525.1fb234f.fc30d26a0f214e83a5378cb56be78617' //TODO (1.0.0) why are there photos from two accounts appearing?
-  },
-  analytics: {
-    id: 'UA-64482637-1'
-  },
-  company:{
-    name: 'Am Nohfels'
-  }
-});
+    server: {
+      // <!-- comments:toggle // -->
+      root: 'http://schruemel.de/dev/',
+      api: 'http://schruemel.de/dev/api/'
+      //root: 'https://amnohfels.de/server/',
+      //api: 'https://amnohfels.de/server/api/'
+      // <!-- endcomments -->
+    },
+    admin: {
+      // <!-- comments:toggle // -->
+      mail: 'felix@feblog.de'
+      //mail: 'am_nohfels@web.de'
+      // <!-- endcomments -->
+    },
+    instagram: {
+      userId: '1693418525' //TODO change in docs
+    },
+    analytics: {
+      // <!-- comments:toggle // -->
+      id: 'UA-64482637-1'
+      //id: 'UA-64482637-3'
+      // <!-- endcomments -->
+    },
+    company: {
+      name: 'Am Nohfels'
+    }
+  });
 

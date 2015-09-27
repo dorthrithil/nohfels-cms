@@ -4,19 +4,44 @@
 
 // footer styles
 footer {
-  width: 100%;
-  height: $footer-height;
-  line-height: $footer-height;
-  box-sizing: border-box;
-  vertical-align: middle;
-  margin: 0 0 0 0;
-  position: absolute;
-  bottom: 0;
-  @include footer();
 
-  // remove padding, so text can be on the full right or left
-  .container {
-    padding: 0;
+  .footer-outer {
+    width: 100%;
+
+    .footer-inner {
+      width: 100%;
+      position: absolute;
+      bottom: 0;
+      padding: $grid-gutter-width 0 $grid-gutter-width 0;
+      box-sizing: border-box;
+      @include footer();
+
+      .low-priority {
+        color: #999999;
+        border-top: 1px solid #666666;
+        text-align: center;
+        margin-top: $grid-gutter-width;
+        padding-top: $grid-gutter-width / 2;
+
+        a, a:active, a:hover, a:visited {
+          color: #999999;
+        }
+
+      }
+
+      .high-priority{
+        text-align: right;
+        padding: 0 !important;
+      }
+
+      // link container elements
+      .footer-element {
+        display: inline-block;
+        padding: 0 ($grid-gutter-width / 2) 0 ($grid-gutter-width / 2);
+      }
+
+    }
+
   }
 
 }
@@ -32,7 +57,6 @@ body {
 }
 
 html {
-  padding-bottom: $footer-height;
   min-height: 100%;
   position: relative;
 }

@@ -42,9 +42,9 @@ angular.module('amnohfelsClientApp')
         }
 
         // configure instagram api path
-        var accessToken = config.instagram.accessToken;
-        var requestUrl = 'https://api.instagram.com/v1/users/self/feed?access_token=' + accessToken +
-          '&callback=JSON_CALLBACK';
+        var userId = config.instagram.userId;
+        var requestUrl = 'https://api.instagram.com/v1/users/' + userId +
+          '/media/recent?client_id=358e5c279ec049b1abb1c2b0ec60863a&callback=JSON_CALLBACK';
         // default ng-show to hide section
         $scope.images = false;
         // do the http call
