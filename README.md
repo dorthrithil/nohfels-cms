@@ -53,6 +53,6 @@ Configuration goes into a simple yaml file which must be located in the server r
 	
 	# -- google api auth --
 
-    	# please follow the github wiki to fully setup the api authentication
+    # please follow the github wiki to fully setup the api authentication
 
-	 google-service-account-email : YOUR_SERVICE_ACC_EMAIL
+    google-service-account-email : YOUR_SERVICE_ACC_EMAIL
