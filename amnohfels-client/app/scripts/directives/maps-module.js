@@ -8,9 +8,10 @@
  */
 
 //TODO (1.0.1) height variable
+//TODO (1.0.1) panControl on mobile devices (somehow this is not working..)
 
 angular.module('amnohfelsClientApp')
-  .directive('mapsModule', function ($sce) {
+  .directive('mapsModule', function ($sce, util) {
     return {
       templateUrl: 'views/maps-module.html',
       restrict: 'E',
@@ -31,7 +32,9 @@ angular.module('amnohfelsClientApp')
           options: {
             mapTypeId: $scope.data.mapTypeId,
             mapTypeControl: $scope.data.mapTypeControl,
-            streetViewControl: false
+            streetViewControl: false,
+            scrollwheel: false,
+            draggable: !util.isOnMobileBrowser()
           }
         };
 

@@ -5,25 +5,4 @@
 // youtube module
 youtube-module {
 
-  // wrapper for video iframe
-  // to make the video responsive the padding trick is used. 56.25% results in a 16/9 ratio. sadly there's no way in css
-  // to make it work in all ratios
-  .video-wrapper {
-    position: relative;
-    width: 100%;
-    padding-bottom: 56.25%;
-    height: 0;
-    overflow: hidden;
-
-    // actual video
-    iframe {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-    }
-
-  }
-
 }

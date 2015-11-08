@@ -1,5 +1,7 @@
 <?php
 
+//TODO when the passwor is wrong, clients dosen't display an error page
+
 function sendContactMail($name, $email, $message, $topic, $termsOfService, $homepage)
 {
     // check for filled out bot trap fields

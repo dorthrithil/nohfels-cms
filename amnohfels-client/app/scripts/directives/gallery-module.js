@@ -11,7 +11,7 @@
 //TODO (1.0.1) refactoring: templates for spaghetti angular element definitions
 
 angular.module('amnohfelsClientApp')
-  .directive('galleryModule', function ($compile, animator, $document, $timeout, config, usSpinnerService) {
+  .directive('galleryModule', function ($compile, animator, $document, $timeout, config, usSpinnerService, util) {
     return {
       templateUrl: 'views/gallery-module.html',
       restrict: 'E',
@@ -49,36 +49,39 @@ angular.module('amnohfelsClientApp')
 
         //appends lightbox to dom with animation
         scope.lbOpen = function (index) {
-          image = angular.element('<img alt="" index="' + index + '" src="' + config.server.root + scope.data.images[index].imageSrc + '" ng-click="lbChangeImage(\'right\')" no-propagation lb-calc-dimensions preloadable/>');
-          backdrop.append(image);
-          caption = angular.element('<div class="caption">' + scope.data.images[index].imageCaption + '</div>');
-          backdrop.append(caption);
-          body.append($compile(backdrop)(scope)); //compiling is necessary to wire up the used directives
-          $document.bind('keyup', lbMapKeyup);
-          animator.stagger().fadeIn(backdrop);
-          var startLoadingAnimation = true;
-          var loadingAnimationStarted = false;
-          $timeout(function () { //if loading the image takes long, indicate with spinning glyphicon
-            if (startLoadingAnimation) {
-              backdrop.append(loadingIcon);
-              usSpinnerService.spin('middle');
-              loadingAnimationStarted = true;
-              animator.stagger().fadeIn(loadingIcon);
-            }
-          }, 500);
-          var performAnimation = function () {
-            unbindLbImageLoaded();
-            startLoadingAnimation = false;
-            if (loadingAnimationStarted) { //remove spinning icon
-              animator.stagger().fadeOut(loadingIcon).then(function () {
-                usSpinnerService.stop('middle');
-                loadingIcon.remove();
-              });
-            }
-            animator.stagger().fadeIn(image);
-            animator.stagger().fadeIn(caption);
-          };
-          var unbindLbImageLoaded = scope.$on('lbImageLoaded', performAnimation);
+          // open lightbox only on desktop devices
+          if(!util.isOnMobileBrowser()) {
+            image = angular.element('<img alt="" index="' + index + '" src="' + config.server.root + scope.data.images[index].imageSrc + '" ng-click="lbChangeImage(\'right\')" no-propagation lb-calc-dimensions preloadable/>');
+            backdrop.append(image);
+            caption = angular.element('<div class="caption">' + scope.data.images[index].imageCaption + '</div>');
+            backdrop.append(caption);
+            body.append($compile(backdrop)(scope)); //compiling is necessary to wire up the used directives
+            $document.bind('keyup', lbMapKeyup);
+            animator.stagger().fadeIn(backdrop);
+            var startLoadingAnimation = true;
+            var loadingAnimationStarted = false;
+            $timeout(function () { //if loading the image takes long, indicate with spinning glyphicon
+              if (startLoadingAnimation) {
+                backdrop.append(loadingIcon);
+                usSpinnerService.spin('middle');
+                loadingAnimationStarted = true;
+                animator.stagger().fadeIn(loadingIcon);
+              }
+            }, 500);
+            var performAnimation = function () {
+              unbindLbImageLoaded();
+              startLoadingAnimation = false;
+              if (loadingAnimationStarted) { //remove spinning icon
+                animator.stagger().fadeOut(loadingIcon).then(function () {
+                  usSpinnerService.stop('middle');
+                  loadingIcon.remove();
+                });
+              }
+              animator.stagger().fadeIn(image);
+              animator.stagger().fadeIn(caption);
+            };
+            var unbindLbImageLoaded = scope.$on('lbImageLoaded', performAnimation);
+          }
         };
 
         //removes all lightbox from dom with animation

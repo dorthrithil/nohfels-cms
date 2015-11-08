@@ -3,8 +3,8 @@
     <h3 ng-bind-html="data.title"></h3>
     <div class="underline"></div>
 
-    <div class="video-wrapper">
-      <iframe ng-src="{{data.url}}" frameborder="0" allowfullscreen></iframe>
+    <div class="embed-responsive embed-responsive-16by9">
+      <iframe ng-src="{{data.url}}" frameborder="0" allowfullscreen class="embed-responsive-item"></iframe>
     </div>
   </div>
 </div>
