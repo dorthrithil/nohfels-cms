@@ -60,9 +60,3 @@ html {
   min-height: 100%;
   position: relative;
 }
-
-// space content on top of footer
-// TODO (1.0.1) this doesn't go well with the last-module thing
-.footer-spacer {
-  height: $grid-gutter-width / 2;
-}

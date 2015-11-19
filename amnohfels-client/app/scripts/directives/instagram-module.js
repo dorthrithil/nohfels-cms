@@ -17,8 +17,7 @@ angular.module('amnohfelsClientApp')
       templateUrl: 'views/instagram-module.html',
       restrict: 'E',
       scope: {
-        data: '=',
-        firstModule: '='
+        data: '='
       },
 
       link: function postLink(scope, element) {

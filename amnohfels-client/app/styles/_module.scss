@@ -4,7 +4,6 @@
 
 // wrapper for all box-modules. this styles the overall look around the boxes
 .full-width-wrapper {
-  padding: ($grid-gutter-width / 2) 0 ($grid-gutter-width / 2) 0;
 
   // this styles the box
   .container {
@@ -30,16 +29,7 @@
 
 }
 
-//
-// some tweaks
-// --------------------------------------------------
-
-// make the first non-box-module stick directly under the navigation
-.first-module {
-  margin-top: 0 !important;
-}
-
-// remove margin-bottom from last non-box-module, so there is no space between the modul and the footer
-.last-module {
-  margin-bottom: 0 !important;
+// spacer for making boxes grid compatible
+.spacer{
+  height: $grid-gutter-width;
 }

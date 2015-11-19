@@ -1,34 +1,23 @@
 <div class="full-width-wrapper" ng-cloak>
+
   <div class="container">
     <h3>{{data.title}}</h3>
-
     <div class="underline"></div>
-
   </div>
 
   <div class="container deckgrid-wrapper">
     <div deckgrid source="data.infotiles" class="deckgrid">
       <div class="tile-wrapper">
 
-        <!--TODO this has to be linked too-->
-        <div ng-show="card.urlEnabled" class="link-icon">
-          <span class="glyphicon glyphicon-link" aria-hidden="true"></span>
-        </div>
-
-        <!-- TODO (1.0.2) ng-switch would be cleaner. but it doesn't work as `card` is not available when this compiles. is there a workaround -->
-
-        <div class="tile-content-wrapper" ng-show="!card.urlEnabled">
-          <img ng-src="{{card.imageSrc}}" alt="Bild zu {{card.title}}">
-          <div class="title-text-container">
-            <h4>{{card.title}}</h4>
-
-            <p>{{card.text}}</p>
-          </div>
-        </div>
-
-        <a ng-href="{{card.url}}" target="_blank" ng-show="card.urlEnabled">
+        <a ng-href="{{card.url}}" target="_blank" wrap-if="{{card.urlEnabled}}">
           <div class="tile-content-wrapper">
+
+            <div class="link-icon" ng-show="card.urlEnabled">
+              <span class="glyphicon glyphicon-link" aria-hidden="true"></span>
+            </div>
+
             <img ng-src="{{card.imageSrc}}" alt="Bild zu {{card.title}}">
+
             <div class="title-text-container">
               <h4>{{card.title}}</h4>
 
@@ -38,7 +27,7 @@
         </a>
 
       </div>
-
     </div>
   </div>
+
 </div>

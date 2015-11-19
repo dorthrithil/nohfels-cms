@@ -7,7 +7,6 @@ instagram-module {
 
   // wrapper. change standard styles to make it a non-box module but still keep it in grid-gutter flow
   .full-width-wrapper {
-    margin: ($grid-gutter-width / 2) 0 ($grid-gutter-width / 2) 0;
     padding: 0;
     @include instagram();
 
