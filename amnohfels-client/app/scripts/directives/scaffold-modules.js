@@ -60,10 +60,11 @@ angular.module('amnohfelsClientApp')
           element.append($compile(compileStream)(scope));
         });
 
-        scope.$on('status404', function () {
-          var status404 = angular.element('<status404></status404>');
-          element.append($compile(status404)(scope));
+        // empty element when a routing error occured, as error messages are shown then
+        scope.$on('$routeChangeError', function(){
+           element.empty();
         });
+
       }
     };
   });

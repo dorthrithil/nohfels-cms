@@ -65,14 +65,6 @@ angular
     AnalyticsProvider.useAnalytics(true);
 
   })
-  // inject analytics for automatic page tracking & set up 404 routing
-  .run(function (Analytics, $rootScope, $location) { //jshint ignore:line
-    // this gets fired, when the resolve in `routeProvider` is unsuccessful
-    $rootScope.$on('$routeChangeError', function(angularEvent, current, previous, rejection){
-      // most probably the reason is a 404
-      if(rejection.status === 404) {
-        $location.url('/404');
-      }
-      //TODO (1.0.1) handle other statuses
-    });
+  // inject analytics for automatic page tracking
+  .run(function (Analytics) { //jshint ignore:line
   });

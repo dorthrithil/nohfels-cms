@@ -166,7 +166,7 @@ angular.module('amnohfelsClientApp')
     }
 
     /**
-     * finishes the animation in one ste and hides the `$preloadBar`
+     * finishes the animation in one step and hides the `$preloadBar`
      */
     function quickFinishAnimation() {
       animator.increaseWidthTo($preloadBar, '100%', 0, 200)
