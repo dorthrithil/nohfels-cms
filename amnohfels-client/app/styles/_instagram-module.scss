@@ -31,6 +31,15 @@ instagram-module {
     margin-left: 10%;
   }
 
+  // style caption font
+  .carousel-caption{
+    span{
+      background-color: $box-background-color;
+      color: $font-color;
+      text-shadow: none;
+    }
+  }
+
   // left & right control have each 10% overall carousel width and transparent background
   .carousel-control.left, .carousel-control.right {
     background: none;

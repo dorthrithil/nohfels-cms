@@ -16,7 +16,7 @@
                              height="{{image.dimensions.height}}" alt="{{image.caption}}">
                     </a>
                     <div class="carousel-caption">
-                        {{image.caption}} <!--TODO (1.0.1) ui-bug: handle caption overflow-->
+                        <span ng-show="image.caption.length < captionOverflow">{{image.caption}}</span>
                     </div>
                 </div>
             </div>

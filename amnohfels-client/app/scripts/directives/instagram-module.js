@@ -28,6 +28,8 @@ angular.module('amnohfelsClientApp')
       },
 
       controller: function ($scope, $element) {
+        // maximum size of captions to prevent overflow
+        $scope.captionOverflow = 200;
 
         // conditionally set data object defaults
         if (typeof $scope.data.maxPhotos === 'undefined') {
