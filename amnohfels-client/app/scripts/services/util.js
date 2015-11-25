@@ -77,7 +77,7 @@ angular.module('amnohfelsClientApp')
     this.convertVh = function (h) {
       if (h.charAt(h.length - 2) === 'v' && h.charAt(h.length - 1) === 'h') {
         var numeral = h.substring(0, h.length - 2);
-        var navBarHeight = angular.element.find('nav')[0].offsetHeight;
+        var navBarHeight = $('.navbar-header').height();
         return (numeral / 100) * window.innerHeight - navBarHeight + 'px';
       } else {
         return h;

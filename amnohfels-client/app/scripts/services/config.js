@@ -24,7 +24,7 @@ angular.module('amnohfelsClientApp')
       // <!-- endcomments -->
     },
     instagram: {
-      userId: '1693418525' //TODO change in docs
+      userId: '1693418525'
     },
     analytics: {
       // <!-- comments:toggle // -->

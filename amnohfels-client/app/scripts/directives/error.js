@@ -21,9 +21,8 @@ angular.module('amnohfelsClientApp')
         // add error content on unsuccessful route change
         scope.$on('$routeChangeError', function(angularEvent, current, previous, rejection){
           if(rejection.status === 404) {
-            console.log('error');
             var status404 = angular.element('<status404></status404>');
-            element.append($compile(status404)($scope));
+            element.append($compile(status404)(scope));
           }
         });
 

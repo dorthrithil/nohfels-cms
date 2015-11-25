@@ -20,7 +20,7 @@ angular.module('amnohfelsClientApp')
 
     // default data Object. Gets populated by getDataObject
     var dataObject = {
-      status: 200, //TODO id ont need the status here anymore
+      status: 200, //TODO i don't need the status here anymore
       data: null
     };
 

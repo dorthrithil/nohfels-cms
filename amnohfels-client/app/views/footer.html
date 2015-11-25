@@ -4,7 +4,12 @@
   <div class="footer-inner">
     <div class="container high-priority">
       <div class="footer-element" ng-repeat="topic in topics">
-        <a class="footer-link" href="#/{{topic.id}}">{{topic.name}}</a>
+        <a class="footer-link"
+           href="#/{{topic.id}}"
+           data-toggle="collapse"
+           data-target=".navbar-collapse.in">
+          {{topic.name}}
+        </a>
       </div>
     </div>
     <div class="container low-priority">
