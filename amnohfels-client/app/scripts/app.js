@@ -43,7 +43,7 @@ angular
         controller: 'DynamicLinkerCtrl',
         templateUrl: 'views/dynamiclinker.html',
         resolve: {
-          dataObject: function(preload) {
+          data: function(preload) {
             return preload.getDataObject();
           }
         }

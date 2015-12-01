@@ -7,39 +7,30 @@
  * # preload
  * Factory in the amnohfelsClientApp.
  * Preloads page JSON and all contained image before route change is performed. Passes progress to
- * `preloadStatusAnimationService`. Finally the `dataObject` containing the JSON is passed to `scaffoldModules` which
- * compiles the new page.
+ * `preloadStatusAnimationService`. Finally the servers response data object containing the JSON is passed to
+ * `scaffoldModules` (via the dynamic linker) which compiles the new page.
  */
 
 //TODO handle unresolved images
 
 //TODO abort functionality! requesting a different page while another one is still loading is not possible at the moment
 
+//TODO q can not be canceled -> register promise in preloadservice as current promise and always check that its the newest before animating
+
 angular.module('amnohfelsClientApp')
   .factory('preload', function ($http, config, $route, $q, preloadStatusAnimationService) {
-
-    // default data Object. Gets populated by getDataObject
-    var dataObject = {
-      status: 200, //TODO i don't need the status here anymore
-      data: null
-    };
 
     return {
       // `routeProvider` calls this for every requested page
       getDataObject: function () {
 
         return $q(function (resolve, reject) {
+
           // start the animation
           preloadStatusAnimationService.startInitialAnimation();
           // get JSON
           $http.get(config.server.api + 'page/' + $route.current.params.pageTopic)
             .then(function (response) {
-
-              // populate dataObject with the loaded data & success status
-              dataObject = {
-                status: 200,
-                data: response.data
-              };
 
               // preload images
               var images = [];
@@ -59,7 +50,7 @@ angular.module('amnohfelsClientApp')
                 preloadStatusAnimationService.incrementCompletedSteps();
                 // the promise gets resolved when all images are loaded (this triggers the route change)
                 if (imagesLoaded === images.length) {
-                  resolve(dataObject);
+                  resolve(response.data);
                 }
               };
 
@@ -72,7 +63,7 @@ angular.module('amnohfelsClientApp')
 
               // if there are no images, resolve immediately
               if (images.length === 0) {
-                resolve(dataObject);
+                resolve(response.data);
               }
 
             }, function (response) {
@@ -83,7 +74,6 @@ angular.module('amnohfelsClientApp')
               preloadStatusAnimationService.incrementCompletedSteps();
             });
         });
-
       }
     };
   });
