@@ -13,9 +13,29 @@
 angular.module('amnohfelsClientApp')
   .service('preloadStatusAnimationService', function preloadStatusAnimationService(animator) {
 
+    /**
+     * Reference to original `this`.
+     * @type {amnohfelsClientApp.preloadStatusAnimationService}
+     */
     var self = this;
+
+    /**
+     * The preloadbar DOM element. Wrapped as an angular element.
+     * @type {Object}
+     */
     var $preloadBar = null;
+
+    /**
+     * The current config Object.
+     * @type {Object}
+     */
     var config = null;
+
+    /**
+     * The id of the newest route change promise. Only the calls of this promise get animated.
+     * @type {int}
+     */
+    var currentIssuer = null;
 
     /**
      * Get the default Config object. Contains all variables necessary to control the animation.
@@ -70,49 +90,65 @@ angular.module('amnohfelsClientApp')
       $preloadBar = $element;
       // if `startInitialAnimation` was already called without the `$preloadBar` set, call it again
       if (config.animationStartRequested) {
-        self.startInitialAnimation();
+        self.startInitialAnimation(currentIssuer);
       }
     };
 
     /**
      * set the number of steps the animation will have
      * @param {number} stepsToSet - the number of steps the animation will have
+     * @param {int} issuer - the id of the calling preload promise.
      */
-    this.setSteps = function (stepsToSet) {
-      // +1 because there is always one extra step after the animation for the initial step. (imagine a page with no
-      // images on it. only the JSON get's preloaded which is animated by the bar progressing 50%. then the second half
-      // has to be animated too. thus, +1)
-      config.steps = stepsToSet + 1;
-      // the second half of the `$preloadBar` in equal parts
-      config.stepWidth = 50 / config.steps;
-      // needed because there could also be 0 steps (better explenation in `getDefaultConfig()`)
-      config.stepsSet = true;
-      // if initial step was finished before the number of steps was set, start animating the steps
-      if (config.animationStepsRequested) {
-        performAnimationStep();
+    this.setSteps = function (stepsToSet, issuer) {
+      if(issuer === currentIssuer) {
+        // +1 because there is always one extra step after the animation for the initial step. (imagine a page with no
+        // images on it. only the JSON get's preloaded which is animated by the bar progressing 50%. then the second half
+        // has to be animated too. thus, +1)
+        config.steps = stepsToSet + 1;
+        // the second half of the `$preloadBar` in equal parts
+        config.stepWidth = 50 / config.steps;
+        // needed because there could also be 0 steps (better explenation in `getDefaultConfig()`)
+        config.stepsSet = true;
+        // if initial step was finished before the number of steps was set, start animating the steps
+        if (config.animationStepsRequested) {
+          performAnimationStep();
+        }
       }
     };
 
     /**
      * increment the number of already completed staps (meaning how many elements have finished loading)
+     * @param {int} issuer - the id of the calling preload promise.
      */
-    this.incrementCompletedSteps = function () {
-      config.completedSteps++;
-      // if everything is loaded, request the animation to be finished in one part quickly
-      if (config.completedSteps === config.steps) {
-        config.animationFinishRequested = true;
-      }
-      // if currently nothing is being animated, start the animation
-      if (!config.animatingMutex) {
-        performAnimationStep();
+    this.incrementCompletedSteps = function (issuer) {
+      if(issuer === currentIssuer) {
+        config.completedSteps++;
+        // if everything is loaded, request the animation to be finished in one part quickly
+        if (config.completedSteps === config.steps) {
+          config.animationFinishRequested = true;
+        }
+        // if currently nothing is being animated, start the animation
+        if (!config.animatingMutex) {
+          performAnimationStep();
+        }
       }
     };
 
     /**
      * starts the initial animation, meaning that the first 50% of the bar are getting animated while the page json is
      * loading
+     * @param {int} issuer - the id of the calling preload promise.
      */
-    this.startInitialAnimation = function () {
+    this.startInitialAnimation = function (issuer) {
+
+      // stop previous animation, if it could possibly exist
+      if ($preloadBar !== null) {
+        animator.finish($preloadBar);
+        $preloadBar.css('width', '0%');
+      }
+
+      currentIssuer = issuer;
+
       // get a fresh config object
       config = getDefaultConfig();
       // if the `$preloadBar` dom node is already set, perform the initial animation
@@ -143,24 +179,29 @@ angular.module('amnohfelsClientApp')
       config.animatingMutex = true;
       // the point (in %) to which the `$preloadBar` will be animated
       var stepMargin = 50 + (1 + config.completedStepsAnimated) * config.stepWidth;
+      // remember the current issuer at call time, as this function calls itself recursively and the real
+      // current issuer can change
+      var currentIssuerInternal = currentIssuer;
       animator.increaseWidthTo($preloadBar, stepMargin + '%', 0, 500 / config.steps)
         .then(function () {
-          config.completedStepsAnimated++;
-          // when not all steps which have been completed are yet animated
-          if (config.completedStepsAnimated < config.completedSteps) {
-            // go on animating or finish the whole animation
-            if (!config.animationFinishRequested) {
-              performAnimationStep();
+          if(currentIssuerInternal === currentIssuer) {
+            config.completedStepsAnimated++;
+            // when not all steps which have been completed are yet animated
+            if (config.completedStepsAnimated < config.completedSteps) {
+              // go on animating or finish the whole animation
+              if (!config.animationFinishRequested) {
+                performAnimationStep();
+              } else {
+                quickFinishAnimation();
+              }
+            } else if (config.completedSteps === config.completedStepsAnimated &&
+              config.completedSteps === config.steps) {
+              // if everything had been animated chronologically, hide `$preloadBar`
+              $preloadBar.css('width', '0%');
             } else {
-              quickFinishAnimation();
+              // when there is still something to animate but the elements have not been loaded yet
+              config.animatingMutex = false;
             }
-          } else if (config.completedSteps === config.completedStepsAnimated &&
-            config.completedSteps === config.steps) {
-            // if everything had been animated chronologically, hide `$preloadBar`
-            $preloadBar.css('width', '0%');
-          } else {
-            // when there is still something to animate but the elements have not been loaded yet
-            config.animatingMutex = false;
           }
         });
     }

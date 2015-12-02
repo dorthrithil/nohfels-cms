@@ -13,12 +13,8 @@
 
 //TODO handle unresolved images
 
-//TODO abort functionality! requesting a different page while another one is still loading is not possible at the moment
-
-//TODO q can not be canceled -> register promise in preloadservice as current promise and always check that its the newest before animating
-
 angular.module('amnohfelsClientApp')
-  .factory('preload', function ($http, config, $route, $q, preloadStatusAnimationService) {
+  .factory('preload', function ($http, config, $route, $q, preloadStatusAnimationService, $timeout) {
 
     return {
       // `routeProvider` calls this for every requested page
@@ -26,8 +22,11 @@ angular.module('amnohfelsClientApp')
 
         return $q(function (resolve, reject) {
 
+          // use the timestamp as issuer id to make sure that only the newest route change promise gets animated
+          var issuerId = Date.now();
+
           // start the animation
-          preloadStatusAnimationService.startInitialAnimation();
+          preloadStatusAnimationService.startInitialAnimation(issuerId);
           // get JSON
           $http.get(config.server.api + 'page/' + $route.current.params.pageTopic)
             .then(function (response) {
@@ -42,12 +41,12 @@ angular.module('amnohfelsClientApp')
               });
 
               // now that we know how many images there are to preload, we can set the preload steps
-              preloadStatusAnimationService.setSteps(images.length);
+              preloadStatusAnimationService.setSteps(images.length, issuerId);
 
               // this function handles the actions which need to be performed after an image is loaded
               var preloadImage = function () {
                 imagesLoaded++;
-                preloadStatusAnimationService.incrementCompletedSteps();
+                preloadStatusAnimationService.incrementCompletedSteps(issuerId);
                 // the promise gets resolved when all images are loaded (this triggers the route change)
                 if (imagesLoaded === images.length) {
                   resolve(response.data);
@@ -70,8 +69,8 @@ angular.module('amnohfelsClientApp')
               // in case of error: reject and finish preload animation. error directive will show an error via
               // routeChangeError
               reject(response);
-              preloadStatusAnimationService.setSteps(1);
-              preloadStatusAnimationService.incrementCompletedSteps();
+              preloadStatusAnimationService.setSteps(1, issuerId);
+              preloadStatusAnimationService.incrementCompletedSteps(issuerId);
             });
         });
       }

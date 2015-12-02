@@ -79,6 +79,10 @@ angular.module('amnohfelsClientApp')
       });
     }
 
+    this.finish = function($element){
+      $element.velocity('finish');
+    };
+
     this.fadeOut = function ($element, delay) {
       delay = delay || 0;
       var args = {
