@@ -8,6 +8,9 @@
  * fades in an image when it's completely loaded. for this directive to work the src attribute of the image must be
  * empty. instead the image source path must be passed as attribute value for `img-fade-in-onload`.
  */
+
+//TODO (1.0.0) am i using this?
+
 angular.module('amnohfelsClientApp')
   .directive('imgFadeInOnload', function (animator) {
     return {

@@ -9,6 +9,9 @@
  * Main module of the application.
  */
 
+//TODO (1.0.0) show "loading" text on initial load (for slow connections)
+
+//TODO (1.0.1) show dummys for unresolved images
 //TODO (1.0.1) security: keep config vars in a seperate yaml and fetch them for build
 //TODO (1.0.1) improvement: use ng resource for rest communication
 //TODO (1.0.1) improvement: use different angular modules for different concerns

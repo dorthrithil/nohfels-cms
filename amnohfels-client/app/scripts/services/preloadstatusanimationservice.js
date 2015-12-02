@@ -10,6 +10,9 @@
  * gathered about the current status of each element which needs to be preloaded. If the approximation is too slow, the
  * animation gets finished quickly by `quickFinishAnimation()`.
  */
+
+//TODO (1.0.1) animate gradient on preloadbar between step animations so the user sees that smth is happening
+
 angular.module('amnohfelsClientApp')
   .service('preloadStatusAnimationService', function preloadStatusAnimationService(animator) {
 

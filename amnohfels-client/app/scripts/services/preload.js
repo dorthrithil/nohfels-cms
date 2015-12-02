@@ -11,8 +11,6 @@
  * `scaffoldModules` (via the dynamic linker) which compiles the new page.
  */
 
-//TODO handle unresolved images
-
 angular.module('amnohfelsClientApp')
   .factory('preload', function ($http, config, $route, $q, preloadStatusAnimationService, $timeout) {
 
@@ -57,6 +55,7 @@ angular.module('amnohfelsClientApp')
               for (var i = 0; i < images.length; i++) {
                 var bgImg = new Image();
                 bgImg.onload = preloadImage;
+                bgImg.onerror = preloadImage;
                 bgImg.src = config.server.root + images[i];
               }
 
