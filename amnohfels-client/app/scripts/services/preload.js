@@ -47,6 +47,7 @@ angular.module('amnohfelsClientApp')
                 preloadStatusAnimationService.incrementCompletedSteps(issuerId);
                 // the promise gets resolved when all images are loaded (this triggers the route change)
                 if (imagesLoaded === images.length) {
+                  jQuery('init-loading-spinner').remove();
                   resolve(response.data);
                 }
               };

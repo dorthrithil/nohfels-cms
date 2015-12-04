@@ -7,6 +7,7 @@
  * # parallaxModule
  */
 
+//TODO (1.0.1) img fadein after size comutation
 //TODO (1.0.1) enhancement (UI): fadeIn image onload
 //TODO (1.0.1) better pass module id in each module than firstModule in only this one
 

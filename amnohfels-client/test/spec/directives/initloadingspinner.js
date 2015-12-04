@@ -1,6 +1,6 @@
 'use strict';
 
-describe('Directive: imgFadeInOnload', function () {
+describe('Directive: initLoadingSpinner', function () {
 
   // load the directive's module
   beforeEach(module('amnohfelsClientApp'));
@@ -13,8 +13,8 @@ describe('Directive: imgFadeInOnload', function () {
   }));
 
   it('should make hidden element visible', inject(function ($compile) {
-    element = angular.element('<img-fade-in-onload></img-fade-in-onload>');
+    element = angular.element('<init-loading-spinner></init-loading-spinner>');
     element = $compile(element)(scope);
-    expect(element.text()).toBe('this is the imgFadeInOnload directive');
+    expect(element.text()).toBe('this is the initLoadingSpinner directive');
   }));
 });
