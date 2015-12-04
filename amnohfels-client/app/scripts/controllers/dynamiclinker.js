@@ -14,8 +14,6 @@
 // or better the routeChangeSuccess event (take a look at routeChangeError, i think i can even pass the dataObject
 // via the event, then i dont need to set a property on the shared scope)
 
-//TODO better use the directives controller option, this way i have the scope in one file
-
 angular.module('amnohfelsClientApp')
   .controller('DynamicLinkerCtrl', function ($scope, data, $timeout) {
 

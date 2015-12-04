@@ -8,6 +8,7 @@
  * Service in the amnohfelsClientApp.
  */
 
+//TODO (1.0.1) performance: if there are instagram & parallax & other asynchronous height changing elements, find a way to give them a definite compiling order. right now the window resize event triggers some parallax functions to often
 //TODO (1.0.1) performance: throttle
 //TODO (1.0.1) UI: image onload fadeIn
 //TODO (1.0.1) improvement: navbar height doesn't need to be included in height calculations => more visible image content
@@ -52,7 +53,8 @@ angular.module('amnohfelsClientApp')
           width: null,
           ratio: null
         },
-        src: config.server.root + bgImgSrc
+        src: config.server.root + bgImgSrc,
+        initDimensionsFinished: false
       });
       //images[images.length - 1].image.attr('src', config.server.root + bgImgSrc); //TODO (1.0.1) do that later for fadein
       initDimensions(images.length - 1);
@@ -93,7 +95,7 @@ angular.module('amnohfelsClientApp')
 
     //initializes the dimensions of the parallaxing image and the section
     function initDimensions(index) {
-      setSectionHeights(index); //TODO this is now called two times in initialisation. can i remove the call in setImageSizes?
+      setSectionHeights(index);
       var bgImg = new Image(); //create a temporary image
       bgImg.onload = function () { //and hook the function for reading the dimensions as soon as the image has loaded
         images[index].dimensions.height = this.height; //cache height..
@@ -102,6 +104,7 @@ angular.module('amnohfelsClientApp')
         $timeout(function () { //wait for all actions being performed, then initialize image sizes & scrolling positions
           setImageSizes();
           parallaxScroll();
+          images[index].initDimensionsFinished = true;
         });
       };
       bgImg.src = images[index].src; //set the src of the temporary image for starting the above process
@@ -142,7 +145,9 @@ angular.module('amnohfelsClientApp')
     //resizes all images to a size where maximum information is shown while being able to parallax scroll it
     function setImageSizes() {
       for (var i = 0; i < images.length; i++) {
-        setSectionHeights(i); //section heights need to be reset on window resize and refresh()
+        if(images[i].initDimensionsFinished) { //call set section height only one time during init
+          setSectionHeights(i); //section heights need to be reset on window resize and refresh()
+        }
 
         //init
         var stretchedImgHeight,
