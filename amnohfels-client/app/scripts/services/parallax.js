@@ -5,7 +5,8 @@
  * @name amnohfelsClientApp.parallax
  * @description
  * # parallax
- * Service in the amnohfelsClientApp.
+ * Service for initializing the size of parallax images, resizing them on window resize and performing the parallax
+ * scroll on scroll events.
  */
 
 //TODO (1.0.1) performance: if there are instagram & parallax & other asynchronous height changing elements, find a way to give them a definite compiling order. right now the window resize event triggers some parallax functions to often
@@ -17,10 +18,32 @@
 angular.module('amnohfelsClientApp')
   .service('parallax', function parallax($window, util, $timeout, config, $rootScope) {
 
+    /**
+     * Reference to `this`, as it is overridden in image onload functions.
+     * //TODO i can set `this` with some method. check you don't know js, there's a chapter on it somewhere
+     * @type {amnohfelsClientApp.parallax}
+     */
     var self = this;
-
-    var images = [],
-      parallaxRatio = 0.25;
+    /**
+     * The pool of parallax images.
+     * @type {Array}
+     */
+    var images = [];
+    /**
+     * The ration with which the image is parallaxing.
+     * @type {number}
+     */
+    var parallaxRatio = 0.25;
+    /**
+     * Last initialized parallax image. Defaults to -1 as on service start no image has been initialized.
+     * @type {number}
+     */
+    var lastInit = -1;
+    /**
+     * Mutex flag for locking the initialization cycle after adding an image to the paralax image pool.
+     * @type {boolean}
+     */
+    var initMutex = false;
 
     /**
      * @name refresh()
@@ -32,6 +55,7 @@ angular.module('amnohfelsClientApp')
       setImageSizes();
       parallaxScroll();
     };
+
 
     /**
      * @name add()
@@ -57,17 +81,23 @@ angular.module('amnohfelsClientApp')
         initDimensionsFinished: false
       });
       //images[images.length - 1].image.attr('src', config.server.root + bgImgSrc); //TODO (1.0.1) do that later for fadein
-      initDimensions(images.length - 1);
+      // If the initialization cycle hasn't started yet, start by initializing the first image
+      if (!initMutex) {
+        initMutex = true;
+        initDimensions(lastInit + 1);
+      }
     };
 
     /**
      * @name clear()
      * @attrs none
      * @description
-     * clears the serviced elements
+     * Clears serviced elements and resets initialization queue.
      */
     this.clear = function () {
       images = [];
+      initMutex = false;
+      lastInit = -1;
     };
 
     //initializes the watchers for scrolling and window resize, handles flaws with mobile devices
@@ -105,6 +135,13 @@ angular.module('amnohfelsClientApp')
           setImageSizes();
           parallaxScroll();
           images[index].initDimensionsFinished = true;
+          // after finished initialization, start to initialize next image if requested
+          lastInit++;
+          if (lastInit < images.length) {
+            initDimensions(lastInit + 1);
+          } else {
+            initMutex = false;
+          }
         });
       };
       bgImg.src = images[index].src; //set the src of the temporary image for starting the above process
@@ -145,7 +182,7 @@ angular.module('amnohfelsClientApp')
     //resizes all images to a size where maximum information is shown while being able to parallax scroll it
     function setImageSizes() {
       for (var i = 0; i < images.length; i++) {
-        if(images[i].initDimensionsFinished) { //call set section height only one time during init
+        if (images[i].initDimensionsFinished) { //call set section height only one time during init
           setSectionHeights(i); //section heights need to be reset on window resize and refresh()
         }
 
@@ -154,7 +191,7 @@ angular.module('amnohfelsClientApp')
           stretchedImgWidth,
           sectionHeight = images[i].section.find('.parallax').height(), //height of the section
           scrollHeight = (sectionHeight > window.innerHeight) ? sectionHeight : window.innerHeight, // user larger value for size calculation
-          minHeight =  scrollHeight * parallaxRatio * 2 + scrollHeight, //image needs to be as high as the viewport + height for scrolling in and out in parallax speed
+          minHeight = scrollHeight * parallaxRatio * 2 + scrollHeight, //image needs to be as high as the viewport + height for scrolling in and out in parallax speed
           minWidth = window.innerWidth; //image needs to be as broad as the viewport
 
         //calculate dimensions depending on original image size
