@@ -67,7 +67,7 @@
     <ul>
       <li ng-show="form.title.$error.required || form.heightNum.$error.required">
         {{errorMessages.emptyField}}
-        <!--TODO mark required fields seperately fot this error message to make sense when not all fields are required-->
+        <!--TODO (1.0.0) mark required fields seperately fot this error message to make sense when not all fields are required-->
       </li>
       <li ng-show="!firstUploadFinished">
         {{errorMessages.noImageUploaded}}

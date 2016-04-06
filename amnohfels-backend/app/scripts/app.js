@@ -34,7 +34,8 @@
 //TODO (1.0.2) enhancement: use HTML5 image preview instead of loading image from server after upload finished (parallax, employee, image)
 
 angular
-  .module('amnohfelsBackendApp', ['ngRoute', 'textAngularModule', 'coreModule', 'ui.bootstrap-slider', 'ngTagsInput', 'angularFileUpload'])
+  .module('amnohfelsBackendApp', ['ngRoute', 'textAngularModule', 'coreModule', 'ui.bootstrap-slider',
+                                  'ngTagsInput', 'angularFileUpload', 'ui.bootstrap.datetimepicker'])
 
   //configuration
   .config(function ($routeProvider) {
@@ -54,7 +55,9 @@ angular
   })
 
   //check for login & instantiate the backgroundProvider
-  .run(function ($rootScope, $location, doorman) {
+  .run(function ($rootScope, $location, doorman, $window) {
+    //Set moment locale
+    $window.moment.locale('de');
     //register listener to watch route changes
     $rootScope.$on('$routeChangeStart', function (event, next) {
       if (!doorman.isLoggedIn()) {

@@ -20,7 +20,8 @@ angular.module('amnohfelsClientApp')
           'instagram',
           'youtube',
           'maps',
-          'infotile'
+          'infotile',
+          'calendar'
         ];
 
         var nonBoxModuleTypes = [

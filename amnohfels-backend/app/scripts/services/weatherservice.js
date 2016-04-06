@@ -10,7 +10,7 @@
 angular.module('amnohfelsBackendApp')
   .service('weatherService', function weatherService($q, $http, config) {
 
-    //TODO client secret on client side is not the best idea
+    //TODO (1.0.0) client secret on client side is not the best idea
 
     var requestURL = 'https://api.aerisapi.com/observations/summary/' + config.aerisapi.placeId +
       '?from=-30days&plimit=30&client_id=' + config.aerisapi.clientId +
@@ -22,7 +22,7 @@ angular.module('amnohfelsBackendApp')
           .then(function (response) {
             resolve(response.data.response[0].periods);
           }, function () {
-            reject('aeris API request failed'); //TODO proper error handling
+            reject('aeris API request failed'); //TODO (1.0.0) proper error handling
           });
       });
     };

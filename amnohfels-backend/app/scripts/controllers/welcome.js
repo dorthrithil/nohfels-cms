@@ -10,8 +10,9 @@
 angular.module('amnohfelsBackendApp')
   .controller('WelcomeCtrl', function ($scope, googleAPI, weatherService) {
 
-    //TODO comment
-    //TODO weather hidden for standard?
+    //TODO (1.0.0) comment
+    //TODO (1.0.0) weather hidden for standard?
+    //TODO (1.0.0) different charts in different directives
 
     $scope.analyticsData = null;
     $scope.weatherHistoryData = null;

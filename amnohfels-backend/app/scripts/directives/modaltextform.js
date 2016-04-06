@@ -23,7 +23,7 @@ angular.module('amnohfelsBackendApp')
           textAngularManager.unregisterEditor('content');
         };
 
-        $scope.modifyHtml = util.taModifyHtml; //TODO is this defined in every editor?
+        $scope.modifyHtml = util.taModifyHtml; //TODO (1.0.0) is this defined in every editor?
       }
     };
   })

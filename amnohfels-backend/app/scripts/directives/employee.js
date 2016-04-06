@@ -8,7 +8,7 @@
  */
 
 //TODO (1.0.1) UI: set right breakpoints on small devices for view
-//TODO (10.01) bug: unnecessary 404 errors after file upload failed (because of empty path - check status first)
+//TODO (1.0.1) bug: unnecessary 404 errors after file upload failed (because of empty path - check status first)
 
 angular.module('amnohfelsBackendApp')
   .directive('employee', function (config, FileUploader, doorman) {

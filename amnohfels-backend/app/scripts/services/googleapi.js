@@ -8,8 +8,8 @@
  * Service in the amnohfelsBackendApp.
  */
 
-//TODO caching
-//TODO comment
+//TODO (1.0.0) caching
+//TODO (1.0.0) comment
 
 angular.module('amnohfelsBackendApp')
   .service('googleAPI', function googleAPI(config, $http, $q, util) {
@@ -21,7 +21,7 @@ angular.module('amnohfelsBackendApp')
           .then(function (response) {
             resolve(response.data.jwt);
           }, function () {
-            reject('google auth request failed'); //TODO proper error handling
+            reject('google auth request failed'); //TODO (1.0.0) proper error handling
           });
       });
     }
@@ -43,7 +43,7 @@ angular.module('amnohfelsBackendApp')
           .then(function (response) {
             resolve(response.data.access_token); // jshint ignore:line
           }, function (response) {
-            reject(response); //TODO proper error handling
+            reject(response); //TODO (1.0.0) proper error handling
           });
 
       });
@@ -69,7 +69,7 @@ angular.module('amnohfelsBackendApp')
               then(function (response) {
                 resolve(response.data);
               }, function (response) {
-                reject(response);//TODO proper error handling
+                reject(response);//TODO (1.0.0) proper error handling
               });
 
           });

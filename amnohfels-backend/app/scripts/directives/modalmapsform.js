@@ -7,7 +7,7 @@
  * # modalMapsForm
  */
 
-//TODO build all default modal vars as objects..
+//TODO (1.0.0) build all default modal vars as objects..
 //TODO (1.0.1) polyline path with comfortable
 //TODO (1.0.2) use an example map for all the settings with custom events which export the location comfortably in the model (no switching between nohfels & gmaps needed anymore)
 

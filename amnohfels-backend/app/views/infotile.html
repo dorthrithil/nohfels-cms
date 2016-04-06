@@ -1,4 +1,4 @@
-<!--TODO find a good looking solution for image dislaying (escecially what to do with the space before the image exists)-->
+<!--TODO (1.0.0) find a good looking solution for image dislaying (escecially what to do with the space before the image exists)-->
 
 <ng-form name="innerForm">
 
@@ -24,7 +24,7 @@
       <div ng-show="uploader.isHTML5">
         <div class="progress" style="margin-bottom: 0"
              ng-style="{'visibility': uploader.isUploading ? 'visible' : 'hidden'}">
-          <!--TODO remove styles here and in employee -->
+          <!--TODO (1.0.0) remove styles here and in employee -->
           <div class="progress-bar" role="progressbar"
                ng-style="{ 'width': uploader.queue[uploader.queue.length - 1].progress + '%' }"
                ng-class="{'progress-bar-striped active' : uploader.queue[uploader.queue.length - 1].progress == 100 &&
@@ -35,7 +35,7 @@
 
     </div>
 
-    <!--TODO this looks ugly. i have to redesign this modals UI-->
+    <!--TODO (1.0.0) this looks ugly. i have to redesign this modals UI-->
     <div class="form-group">
       <label>Optionen</label>
 

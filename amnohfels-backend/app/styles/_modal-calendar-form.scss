@@ -1,0 +1,16 @@
+modal-calendar-form {
+
+  .list-group-item{
+    line-height: 30px;
+  }
+
+  .form-control[readonly]{
+    cursor: text;
+    background-color: #fff !important;
+  }
+
+  .btn-spacer{
+    height: 34px;
+  }
+
+}

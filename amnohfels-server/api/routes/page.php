@@ -46,6 +46,9 @@ function getPage($topic)
                     case "infotile":
                         $modules[] = getInfotileModule($rs['module_id']);
                         break;
+                    case "calendar":
+                        $modules[] = getCalendarModule($rs['module_id']);
+                        break;
                 }
                 $type = new stdClass();
                 $type->name = $rs['name'];

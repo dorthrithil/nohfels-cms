@@ -144,6 +144,37 @@ $app->group('/module', function () use ($app) {
 
     });
 
+    //group for calendar modules
+    $app->group('/calendar', function () use ($app) {
+
+        //create calendar module
+        $app->post('', 'authenticateUser', function () use ($app) {
+            $json = $app->request->getBody();
+            $data = json_decode($json, true);
+            createCalendarModule($data['pageTopic'], $data['title'], $data['calendaritems']);
+        });
+
+        //get calendar module
+        $app->get('/:id', function ($id) use ($app) {
+            $response = getCalendarModule($id);
+            if ($response == false) $app->notFound();
+            jsonResponse($response);
+        });
+
+        //update calendar module
+        $app->post('/:id', 'authenticateUser', function ($id) use ($app) {
+            $json = $app->request->getBody();
+            $data = json_decode($json, true);
+            updateCalendarModule($id, $data['title'], $data['calendaritems']);
+        });
+
+        //delete calendar module
+        $app->delete('/:id', 'authenticateUser', function ($id) {
+            deleteCalendarModule($id);
+        });
+
+    });
+
     //group for parallax modules
     $app->group('/parallax', function () use ($app) {
 

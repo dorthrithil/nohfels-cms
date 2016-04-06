@@ -7,7 +7,7 @@
  * # modalInfotileForm
  */
 
-//TODO absätze im text
+//TODO (1.0.0) absätze im text
 
 angular.module('amnohfelsBackendApp')
   .directive('modalInfotileForm', function () {

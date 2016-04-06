@@ -9,6 +9,7 @@
  * Main module of the application.
  */
 
+//TODO (1.0.1) bug: analytics: filter out "/" path as it always gets redirected immediately
 //TODO (1.0.1) show dummys for unresolved images
 //TODO (1.0.1) security: keep config vars in a seperate yaml and fetch them for build
 //TODO (1.0.1) improvement: use ng resource for rest communication

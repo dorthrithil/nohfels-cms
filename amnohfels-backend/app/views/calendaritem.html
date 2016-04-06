@@ -1,0 +1,47 @@
+<ng-form name="innerForm">
+
+  <div class="calendaritem-main">
+
+    <div class="form-group">
+      <label>Titel des Termins</label> <span class="text-muted">Pflichtfeld</span>
+      <input type="text" name="title" class="form-control" placeholder="Titel eingeben" ng-model="data.title" required>
+    </div>
+
+    <div class="form-group">
+      <label>Beschreibung des Termins</label>
+      <textarea rows="3" name="text" class="form-control" placeholder="Beschreibung eingeben"
+                ng-model="data.description"></textarea>
+    </div>
+
+    <div class="form-group">
+      <label>Datum und Uhrzeit</label> <span class="text-muted">Pflichtfeld</span>
+
+      <div class="dropdown">
+        <div class="input-group" ng-click="showCalendar()" data-toggle="dropdown">
+          <input type="text" class="form-control" ng-model="data.datetime" required ng-readonly="true">
+          <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+        </div>
+        <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+          <datetimepicker data-ng-model="data.datetime" data-datetimepicker-config="{dropdownSelector:'#dropdown2'}"
+                          data-on-set-time="hideCalendar()"></datetimepicker>
+        </ul>
+      </div>
+    </div>
+
+
+  </div>
+
+
+  <div class="btn-spacer">
+    <button type="button" class="btn btn-success pull-right" ng-click="finishEditing()">
+      <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+      <span>Zurück zur Terminübersicht</span>
+    </button>
+  </div>
+
+  <div ng-show="finishEditingRequested && (data.datetime == '' || innerForm.title.$error.required)"
+       class="alert alert-warning">
+    {{$parent.errorMessages.emptyRequiredField}}
+  </div>
+
+</ng-form>

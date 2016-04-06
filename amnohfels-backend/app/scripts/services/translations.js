@@ -25,7 +25,8 @@ angular.module('amnohfelsBackendApp')
         emptyField: 'Bitte fülle alle Felder aus!',
         noImageUploaded: 'Bitte lade ein Bild hoch!',
         uploaderIsUploading: 'Bitte warte, bis der Upload vollständig ist!',
-        noTagsProvided: 'Gib mindestens einen Tag an oder deaktiviere die Funktion!'
+        noTagsProvided: 'Gib mindestens einen Tag an oder deaktiviere die Funktion!',
+        emptyRequiredField: 'Bitte fülle alle Pflichtfelder aus!'
       }
     };
 

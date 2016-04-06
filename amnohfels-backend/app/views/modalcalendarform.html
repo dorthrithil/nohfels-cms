@@ -1,0 +1,34 @@
+<form novalidate name="form">
+  <div class="form-group" ng-hide="editingActive">
+    <label for="title">Titel</label> <span class="text-muted">Pflichtfeld</span>
+    <input type="text" class="form-control" id="title" placeholder="Titel eingeben" ng-model="modalVars.data.title"
+           name="title" required>
+  </div>
+
+  <div class="form-group" ng-hide="editingActive">
+    <label for="title">Termine</label>
+
+    <div>
+      <button type="button" class="btn btn-default" ng-click="addCalendaritem()">
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Termin hinzufügen
+      </button>
+    </div>
+  </div>
+
+  <ul class="list-group" ng-hide="editingActive">
+    <li class="list-group-item" ng-repeat="calendaritem in modalVars.data.calendaritems | orderBy:'datetimeSort':reverse">
+      {{calendaritem.datetime}} - <strong>{{calendaritem.title}}</strong>
+      <div class="btn-group pull-right calendaritem-btngroup" role="group" aria-label="actions">
+        <button type="button" class="btn btn-primary btn-sm" ng-click="editCalendaritem($index)">Bearbeiten</button>
+        <button type="button" class="btn btn-danger btn-sm" ng-click="deleteCalendaritem($index)">Löschen</button>
+      </div>
+    </li>
+  </ul>
+
+  <calendaritem data="activeCalendaritem" ng-show="editingActive"></calendaritem>
+
+  <div ng-show="form.$submitted && form.title.$error.required" class="alert alert-warning">
+    {{errorMessages.emptyRequiredField}}
+  </div>
+
+</form>
