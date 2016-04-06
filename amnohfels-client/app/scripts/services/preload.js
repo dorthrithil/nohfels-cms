@@ -62,6 +62,7 @@ angular.module('amnohfelsClientApp')
 
               // if there are no images, resolve immediately
               if (images.length === 0) {
+                jQuery('init-loading-spinner').remove();
                 resolve(response.data);
               }
 
