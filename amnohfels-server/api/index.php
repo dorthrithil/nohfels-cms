@@ -1,6 +1,7 @@
 <?php
 
 //TODO (1.0.0) update db.sql
+//TODO (1.0.0) use mysqli_real_escape_string everywhere
 //TODO swap modules still buggy!!!!!!!
 //TODO (1.0.0) when creating the first ever module of a type (id is 0) the module id gets set to -1 in pages table and a "creating default object from empty value" gets thrown in getter method
 

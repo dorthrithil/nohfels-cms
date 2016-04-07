@@ -6,6 +6,8 @@
  * @description
  * # infotile
  */
+
+//TODO (1.0.0) comment
 angular.module('amnohfelsBackendApp')
   .directive('calendaritem', function ($filter) {
     return {

@@ -1,7 +1,15 @@
 <div class="full-width-wrapper" ng-cloak>
   <div class="container">
-    <h3 ng-bind-html="data.title"></h3>
+    <h3>{{data.title}}</h3>
     <div class="underline"></div>
-    <span ng-bind-html="data.description"></span>
+
+    <div ng-repeat="calendaritem in data.calendaritems">
+      {{calendaritem.datetime}}
+      <h4>{{calendaritem.title}}</h4>
+      {{calendaritem.description}}
+      <hr/>
+    </div>
+
+    <div ng-show="data.calendaritems.length == 0">Aktuell gibt es keine bevorstehenden Termine.</div>
   </div>
 </div>

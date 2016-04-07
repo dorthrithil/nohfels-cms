@@ -24,10 +24,10 @@ function createCalendarModule($page, $title, $calendaritems)
 
         //write infotiles
         foreach ($calendaritems as $key => $calendaritem) {
-            $itemTitle = $calendaritem['title'];
-            $description = $calendaritem['description'];
+            $itemTitle = mysqli_real_escape_string($connection, $calendaritem['title']);
+            $description = mysqli_real_escape_string($connection, $calendaritem['description']);
             $parsedDate = date_parse_from_format("d.m.Y * H:i *", $calendaritem['datetime']);
-            $datetime = date("Y-m-d H:i:s", mktime($parsedDate['hour'], $parsedDate['minute'], 0, $parsedDate['day'], $parsedDate['month'], $parsedDate['year']));
+            $datetime = date("Y-m-d H:i:s", mktime($parsedDate['hour'], $parsedDate['minute'], 0, $parsedDate['month'], $parsedDate['day'], $parsedDate['year']));
             $result = $connection->query("INSERT INTO calendar_module_items (title, calendar_module, description, datetime)
                                             VALUES  ('$itemTitle', '$module_id', '$description', '$datetime')");
             if (!$result) {
@@ -81,7 +81,10 @@ function getCalendarModule($id)
 
     $calendaritems = array();
     try {
-        $result = $connection->query("SELECT title, description, datetime FROM calendar_module_items WHERE calendar_module = '$id' ORDER BY datetime DESC");
+        $result = $connection->query("SELECT title, description, datetime
+                                      FROM calendar_module_items
+                                      WHERE calendar_module = '$id' AND datetime >= NOW()
+                                      ORDER BY datetime ASC");
         if (!$result) {
             throw new Exception($connection->error);
         } else {
@@ -90,8 +93,8 @@ function getCalendarModule($id)
                 $item->title = $rs['title'];
                 $item->description = $rs['description'];
                 $parsedDate = date_parse_from_format("Y-m-d H:i:s", $rs['datetime']);
-                $date = date("d.m.Y", mktime($parsedDate['hour'], $parsedDate['minute'], 0, $parsedDate['day'], $parsedDate['month'], $parsedDate['year']));
-                $time = date("H:i", mktime($parsedDate['hour'], $parsedDate['minute'], 0, $parsedDate['day'], $parsedDate['month'], $parsedDate['year']));
+                $date = date("d.m.Y", mktime($parsedDate['hour'], $parsedDate['minute'], 0, $parsedDate['month'], $parsedDate['day'], $parsedDate['year']));
+                $time = date("H:i", mktime($parsedDate['hour'], $parsedDate['minute'], 0, $parsedDate['month'], $parsedDate['day'], $parsedDate['year']));
                 $item->datetime = $date . ' um ' . $time . ' Uhr';
                 $item->datetimeSort = date("YmdHi", mktime($parsedDate['hour'], $parsedDate['minute'], 0, $parsedDate['day'], $parsedDate['month'], $parsedDate['year']));;
                 $calendaritems[] = $item;
@@ -105,6 +108,7 @@ function getCalendarModule($id)
 
     $response = new stdClass();
     $response->data = $data;
+    $response->imagePreloadArray = array();
     $connection->close();
     return $response;
 }
@@ -127,10 +131,10 @@ function updateCalendarModule($id, $title, $calendaritems)
         }
         //write tiles
         foreach ($calendaritems as $key => $calendaritem) {
-            $itemTitle = $calendaritem['title'];
-            $description = $calendaritem['description'];
+            $itemTitle = mysqli_real_escape_string($connection, $calendaritem['title']);
+            $description = mysqli_real_escape_string($connection, $calendaritem['description']);
             $parsedDate = date_parse_from_format("d.m.Y * H:i *", $calendaritem['datetime']);
-            $datetime = date("Y-m-d H:i:s", mktime($parsedDate['hour'], $parsedDate['minute'], 0, $parsedDate['day'], $parsedDate['month'], $parsedDate['year']));
+            $datetime = date("Y-m-d H:i:s", mktime($parsedDate['hour'], $parsedDate['minute'], 0, $parsedDate['month'], $parsedDate['day'], $parsedDate['year']));
             $result = $connection->query("INSERT INTO calendar_module_items (title, calendar_module, description, datetime)
                                           VALUES  ('$itemTitle', '$id', '$description', '$datetime')");
             if (!$result) {

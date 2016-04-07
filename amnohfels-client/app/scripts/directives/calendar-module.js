@@ -7,7 +7,7 @@
  * # calendar
  */
 angular.module('amnohfelsClientApp')
-  .directive('calendar', function ($sce) {
+  .directive('calendarModule', function ($sce) {
     return {
       templateUrl: 'views/calendar-module.html',
       restrict: 'E',
@@ -16,9 +16,6 @@ angular.module('amnohfelsClientApp')
         firstModule: '='
       },
       controller: function ($scope) {
-        $scope.data.date = $sce.trustAsHtml($scope.data.date);
-        $scope.data.title = $sce.trustAsResourceUrl($scope.data.title);
-        $scope.data.description = $sce.trustAsResourceUrl($scope.data.description);
       }
     };
   });

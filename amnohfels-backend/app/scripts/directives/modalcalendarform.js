@@ -6,6 +6,8 @@
  * @description
  * # modalcalendarform
  */
+
+//TODO (1.0.0) comment
 angular.module('amnohfelsBackendApp')
   .directive('modalCalendarForm', function () {
     return {
@@ -40,29 +42,16 @@ angular.module('amnohfelsBackendApp')
           $scope.editingActive = true;
           $scope.activeCalendaritem = $scope.modalVars.data.calendaritems[$scope.modalVars.data.calendaritems.length - 1];
         };
-        $scope.deleteCalendaritem = function (index) {
-          $scope.modalVars.data.calendaritems.splice(index, 1);
+        $scope.deleteCalendaritem = function (calendaritem) {
+          $scope.modalVars.data.calendaritems.splice($scope.modalVars.data.calendaritems.indexOf(calendaritem),1);
         };
-
-        // form validation: calendaritems
-        $scope.calendaritemsValid = function () {
-          for (var i = 0; i < $scope.modalVars.data.calendaritems.length; i++) {
-            if ($scope.modalVars.data.calendaritems[i].title === '' ||
-              $scope.modalVars.data.calendaritems[i].description === '') {
-              return false;
-            }
-          }
-          return true;
-        };
-
-
 
         $scope.finishEditing = function(){
           $scope.editingActive = false;
         };
 
-        $scope.editCalendaritem = function(index){
-          $scope.activeCalendaritem = $scope.modalVars.data.calendaritems[index];
+        $scope.editCalendaritem = function(calendaritem){
+          $scope.activeCalendaritem = calendaritem;
           $scope.editingActive = true;
         }
 
