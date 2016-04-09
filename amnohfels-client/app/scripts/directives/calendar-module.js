@@ -14,8 +14,6 @@ angular.module('amnohfelsClientApp')
       scope: {
         data: '=',
         firstModule: '='
-      },
-      controller: function ($scope) {
       }
     };
   });

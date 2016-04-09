@@ -176,6 +176,68 @@ $app->group('/module', function () use ($app) {
 
     });
 
+    //group for blog modules
+    $app->group('/blog', function () use ($app) {
+
+        //create blog module
+        $app->post('', 'authenticateUser', function () use ($app) {
+            $json = $app->request->getBody();
+            $data = json_decode($json, true);
+            createBlogModule($data['pageTopic'], $data['title'], $data['maxEntries']);
+        });
+
+        //get blog module
+        $app->get('/:id', function ($id) use ($app) {
+            $response = getBlogModule($id);
+            if ($response == false) $app->notFound();
+            jsonResponse($response);
+        });
+
+        //update blog module
+        $app->post('/:id', 'authenticateUser', function ($id) use ($app) {
+            $json = $app->request->getBody();
+            $data = json_decode($json, true);
+            updateBlogModule($id, $data['title'], $data['maxEntries']);
+        });
+
+        //delete blog module
+        $app->delete('/:id', 'authenticateUser', function ($id) {
+            deleteBlogModule($id);
+        });
+
+    });
+
+    //group for blog entries
+    $app->group('/blogentry', function () use ($app) {
+
+        //create blog entry
+        $app->post('', 'authenticateUser', function () use ($app) {
+            $json = $app->request->getBody();
+            $data = json_decode($json, true);
+            createBlogEntry($data['blogModule'], $data['title'], $data['text'], $data['datetime']);
+        });
+
+        //get blog entries
+        $app->get('/:blogModule/:page', function ($blogModule, $page) use ($app) {
+            $response = getBlogEntries($blogModule, $page);
+            if ($response == false) $app->notFound();
+            jsonResponse($response);
+        });
+
+        //update blog entry
+        $app->post('/:id', 'authenticateUser', function ($id) use ($app) {
+            $json = $app->request->getBody();
+            $data = json_decode($json, true);
+            updateBlogEntry($id, $data['title'], $data['text'], $data['datetime']);
+        });
+
+        //delete blog entry
+        $app->delete('/:id', 'authenticateUser', function ($id) {
+            deleteBlogEntry($id);
+        });
+
+    });
+
     //group for parallax modules
     $app->group('/parallax', function () use ($app) {
 
