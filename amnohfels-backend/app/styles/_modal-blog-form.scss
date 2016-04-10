@@ -12,4 +12,13 @@ modal-blog-form {
     }
   }
 
+  .btn-spacer{
+    height: 34px;
+  }
+
+  .form-control[readonly]{
+    cursor: text;
+    background-color: #fff !important;
+  }
+
 }

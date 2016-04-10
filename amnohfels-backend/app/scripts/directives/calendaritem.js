@@ -45,10 +45,10 @@ angular.module('amnohfelsBackendApp')
 
         $scope.finishEditing = function(){
           $scope.finishEditingRequested = true;
-          if(!($scope.data.datetime == '' || $scope.innerForm.title.$error.required)){
+          if(!($scope.data.datetime === '' || $scope.innerForm.title.$error.required)){
             $scope.$parent.finishEditing(); //delegate to modal
           }
-        }
+        };
 
       }
     };

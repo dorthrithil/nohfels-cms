@@ -22,6 +22,9 @@ angular.module('amnohfelsBackendApp')
       },
       link: function postLink(scope, element) {
 
+        // flag for hiding modal buttons on multi step modals
+        scope.hideModalButtons = false;
+
         // creates a new module
         scope.createModule = function (moduleType) {
           // this data determines which modal in which state will be shown

@@ -96,7 +96,7 @@ function getCalendarModule($id)
                 $date = date("d.m.Y", mktime($parsedDate['hour'], $parsedDate['minute'], 0, $parsedDate['month'], $parsedDate['day'], $parsedDate['year']));
                 $time = date("H:i", mktime($parsedDate['hour'], $parsedDate['minute'], 0, $parsedDate['month'], $parsedDate['day'], $parsedDate['year']));
                 $item->datetime = $date . ' um ' . $time . ' Uhr';
-                $item->datetimeSort = date("YmdHi", mktime($parsedDate['hour'], $parsedDate['minute'], 0, $parsedDate['day'], $parsedDate['month'], $parsedDate['year']));;
+                $item->datetimeSort = date("YmdHi", mktime($parsedDate['hour'], $parsedDate['minute'], 0, $parsedDate['day'], $parsedDate['month'], $parsedDate['year']));
                 $calendaritems[] = $item;
             }
         }

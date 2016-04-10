@@ -1,12 +1,12 @@
-<form novalidate name="form">
+<form novalidate name="form" ng-hide="editingActive">
 
-  <div class="form-group" ng-hide="editingActive">
+  <div class="form-group">
     <label for="title">Titel</label> <span class="text-muted">Pflichtfeld</span>
     <input type="text" class="form-control" id="title" placeholder="Titel eingeben" ng-model="modalVars.data.title"
            name="title" required>
   </div>
 
-  <div class="form-group" ng-hide="editingActive">
+  <div class="form-group">
     <label>Einträge pro Seite</label>
 
     <div>
@@ -17,7 +17,7 @@
     </div>
   </div>
 
-  <div class="form-group" ng-hide="editingActive">
+  <div class="form-group">
     <label for="title">Einträge</label>
 
     <div>
@@ -27,7 +27,7 @@
     </div>
   </div>
 
-  <ul class="list-group" ng-hide="editingActive">
+  <ul class="list-group">
     <li class="list-group-item" ng-repeat="entry in entries">
       {{entry.datetime}} - <strong>{{entry.title}}</strong>
 
@@ -52,10 +52,59 @@
     </ul>
   </nav>
 
-  <!--<blogentry data="activeCalendaritem" ng-if="editingActive"></blogentry>-->
-
   <div ng-show="form.$submitted && form.title.$error.required" class="alert alert-warning">
     {{errorMessages.emptyRequiredField}}
+  </div>
+
+</form>
+
+
+<form name="entryForm" novalidate ng-show="editingActive">
+
+  <div class="form-group">
+    <label for="title">Titel</label> <span class="text-muted">Pflichtfeld</span>
+    <input type="text" class="form-control" id="entry-title" placeholder="Titel eingeben" ng-model="entrydata.title"
+           name="title" required>
+  </div>
+
+  <div class="form-group">
+    <label>Datum und Uhrzeit</label> <span class="text-muted">Pflichtfeld</span>
+
+    <div class="dropdown">
+      <div class="input-group" ng-click="showCalendar()" data-toggle="dropdown">
+        <input type="text" class="form-control" ng-model="entrydata.datetime" required ng-readonly="true">
+        <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+      </div>
+      <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+        <datetimepicker data-ng-model="entrydata.datetime" data-datetimepicker-config="{dropdownSelector:'#dropdown2'}"
+                        data-on-set-time="hideCalendar()"></datetimepicker>
+      </ul>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="text">Text</label> <span class="text-muted">Pflichtfeld</span>
+    <text-angular id="text" ta-paste="modifyHtml($html)" ng-model="entrydata.text" name="text" required></text-angular>
+  </div>
+
+  <div ng-show="entryForm.$submitted && !entryForm.$valid" class="alert alert-warning">
+    <span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span>
+    <span ng-show="entryForm.text.$error.required || entryForm.title.$error.required">
+      {{errorMessages.emptyField}}
+    </span>
+  </div>
+
+  <div class="btn-spacer">
+    <div class="pull-right">
+      <button type="button" class="btn btn-danger" ng-click="abort()">
+        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+        <span>Abbrechen</span>
+      </button>
+      <button type="button" class="btn btn-success" ng-click="saveEntry()">
+        <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+        <span>Speichern</span>
+      </button>
+    </div>
   </div>
 
 </form>

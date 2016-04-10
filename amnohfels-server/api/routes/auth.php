@@ -98,7 +98,7 @@ function generateAuthInfo()
 
     $token = array(
         "sub" => "amnohfels authentification",
-        "exp" => time() + 60 * 10,
+        "exp" => time() + 60 * 60 * 7,
         "nbf" => time()
     );
     $jwt = JWT::encode($token, $conf_jwt_key);

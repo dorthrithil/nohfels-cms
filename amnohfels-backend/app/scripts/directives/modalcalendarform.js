@@ -40,20 +40,24 @@ angular.module('amnohfelsBackendApp')
             datetimeSort:''
           });
           $scope.editingActive = true;
+          $scope.hideModalButtons = true;
           $scope.activeCalendaritem = $scope.modalVars.data.calendaritems[$scope.modalVars.data.calendaritems.length - 1];
         };
+
         $scope.deleteCalendaritem = function (calendaritem) {
           $scope.modalVars.data.calendaritems.splice($scope.modalVars.data.calendaritems.indexOf(calendaritem),1);
         };
 
         $scope.finishEditing = function(){
           $scope.editingActive = false;
+          $scope.hideModalButtons = false;
         };
 
         $scope.editCalendaritem = function(calendaritem){
           $scope.activeCalendaritem = calendaritem;
           $scope.editingActive = true;
-        }
+          $scope.hideModalButtons = true;
+        };
 
       }
     };
