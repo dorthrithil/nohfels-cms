@@ -218,8 +218,8 @@ $app->group('/module', function () use ($app) {
         });
 
         //get blog entries
-        $app->get('/:blogModule/:page', function ($blogModule, $page) use ($app) {
-            $response = getBlogEntries($blogModule, $page);
+        $app->get('/:blogModule/:page(/:maxEntries)', function ($blogModule, $page, $maxEntries = 0) use ($app) {
+            $response = getBlogEntries($blogModule, $page, $maxEntries);
             if ($response == false) $app->notFound();
             jsonResponse($response);
         });

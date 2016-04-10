@@ -1,19 +1,58 @@
 <form novalidate name="form">
+
   <div class="form-group" ng-hide="editingActive">
     <label for="title">Titel</label> <span class="text-muted">Pflichtfeld</span>
     <input type="text" class="form-control" id="title" placeholder="Titel eingeben" ng-model="modalVars.data.title"
            name="title" required>
   </div>
 
-  <div class="form-group">
+  <div class="form-group" ng-hide="editingActive">
     <label>Einträge pro Seite</label>
 
     <div>
       <span class="badge">{{modalVars.data.maxEntries}}</span>
       <slider ng-model="modalVars.data.maxEntries" min="1" step="1" max="10" value="modalVars.data.maxEntries"
-              style="display: inline-block" tooltip="hide"></slider><!--TODO (1.0.0) no inline styles (also in insta module)-->
+              style="display: inline-block" tooltip="hide"></slider>
+      <!--TODO (1.0.0) no inline styles (also in insta module)-->
     </div>
   </div>
+
+  <div class="form-group" ng-hide="editingActive">
+    <label for="title">Einträge</label>
+
+    <div>
+      <button type="button" class="btn btn-default" ng-click="newEntry()">
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Neuer Blogeintrag
+      </button>
+    </div>
+  </div>
+
+  <ul class="list-group" ng-hide="editingActive">
+    <li class="list-group-item" ng-repeat="entry in entries">
+      {{entry.datetime}} - <strong>{{entry.title}}</strong>
+
+      <div class="btn-group pull-right calendaritem-btngroup" role="group" aria-label="actions">
+        <button type="button" class="btn btn-primary btn-sm" ng-click="editEntry(entry)">Bearbeiten</button>
+        <button type="button" class="btn btn-danger btn-sm" ng-click="deleteEntry(entry)">Löschen</button>
+      </div>
+    </li>
+  </ul>
+
+  <nav>
+    <ul class="pagination">
+      <li ng-class="{disabled: actualPage == 0}">
+        <span ng-click="changePage(actualPage - 1)">&laquo;</span>
+      </li>
+      <li ng-repeat="i in range(numberOfPages) track by $index">
+        <span ng-click="changePage($index)">{{$index + 1}}</span>
+      </li>
+      <li ng-class="{disabled: actualPage == numberOfPages - 1}">
+        <span ng-click="changePage(actualPage + 1)">&raquo;</span>
+      </li>
+    </ul>
+  </nav>
+
+  <!--<blogentry data="activeCalendaritem" ng-if="editingActive"></blogentry>-->
 
   <div ng-show="form.$submitted && form.title.$error.required" class="alert alert-warning">
     {{errorMessages.emptyRequiredField}}

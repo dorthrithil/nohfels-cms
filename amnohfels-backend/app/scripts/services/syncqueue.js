@@ -28,11 +28,11 @@ angular.module('amnohfelsBackendApp')
          * @param {String} method - HTTP method, "delete" or "post"
          * @param {String} route - The relative route to the servers API
          * @param {Object} [data] - The data which will be passed to the server
-         * @param {Boolean} critical - deprecated: indicates is an immediate
+         * @param {Boolean} critical: indicates that an immediate
          * model sync with server is necessary after successful HTTP call TODO (1.0.1) see above, will be obsolete
          */
         this.push = function (method, route, data, critical) {
-            data = data || {};
+          data = data || {};
             critical = critical || false;
             queue.push({
                 method: method,
@@ -63,7 +63,7 @@ angular.module('amnohfelsBackendApp')
             switch (queue[0].method) {
                 // delete item from server
                 case 'delete':
-                    $http.delete(config.server.api + queue[0].route, securityHeader)
+                  $http.delete(config.server.api + queue[0].route, securityHeader)
                         .success(function () {
                             successRoutine();
                         })
@@ -96,6 +96,8 @@ angular.module('amnohfelsBackendApp')
             if (queue[0].critical){
                 $rootScope.$broadcast('sq-update-model');
             }
+            // Broadcast success
+            $rootScope.$broadcast('sq-success');
             // remove item from queue
             queue.shift();
             // decrement unsaved changes counter

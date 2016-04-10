@@ -16,14 +16,14 @@
   </div>
 
   <ul class="list-group" ng-hide="editingActive">
-    <li class="list-group-item" ng-repeat="calendaritem in modalVars.data.calendaritems | orderBy:'datetimeSort':reverse">
-      {{calendaritem.datetime}} - <strong>{{calendaritem.title}}</strong>
-      <div class="btn-group pull-right calendaritem-btngroup" role="group" aria-label="actions">
-        <button type="button" class="btn btn-primary btn-sm" ng-click="editCalendaritem(calendaritem)">Bearbeiten</button>
-        <button type="button" class="btn btn-danger btn-sm" ng-click="deleteCalendaritem(calendaritem)">Löschen</button>
-      </div>
-    </li>
-  </ul>
+  <li class="list-group-item" ng-repeat="calendaritem in modalVars.data.calendaritems | orderBy:'datetimeSort':reverse">
+    {{calendaritem.datetime}} - <strong>{{calendaritem.title}}</strong>
+    <div class="btn-group pull-right calendaritem-btngroup" role="group" aria-label="actions">
+      <button type="button" class="btn btn-primary btn-sm" ng-click="editCalendaritem(calendaritem)">Bearbeiten</button>
+      <button type="button" class="btn btn-danger btn-sm" ng-click="deleteCalendaritem(calendaritem)">Löschen</button>
+    </div>
+  </li>
+</ul>
 
   <calendaritem data="activeCalendaritem" ng-if="editingActive"></calendaritem>
 

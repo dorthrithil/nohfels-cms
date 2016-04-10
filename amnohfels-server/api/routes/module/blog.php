@@ -58,7 +58,7 @@ function getBlogModule($id)
         if (!$result) {
             throw new Exception($connection->error);
         } else {
-            if(mysqli_num_rows($result) == 0) return false;
+            if (mysqli_num_rows($result) == 0) return false;
             while ($rs = $result->fetch_array(MYSQLI_ASSOC)) {
                 $data->id = $rs['id'];
                 $data->title = $rs['title'];
@@ -68,6 +68,21 @@ function getBlogModule($id)
     } catch (Exception $e) {
         echo $e->getMessage();
     }
+
+    // Get number of entries
+    try {
+        $result = $connection->query("SELECT id
+                                      FROM blog_module_entries
+                                      WHERE blog_module = '$id'");
+        if (!$result) {
+            throw new Exception($connection->error);
+        } else {
+            $data->entryCount = mysqli_num_rows($result);
+        }
+    } catch (Exception $e) {
+        echo $e->getMessage();
+    }
+
     $response = new stdClass();
     $response->data = $data;
     $response->imagePreloadArray = $imagePreloadArray;
@@ -136,28 +151,6 @@ function deleteBlogModule($id)
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 function createBlogEntry($blogModule, $title, $text, $datetime)
 {
     $connection = getConnection();
@@ -166,7 +159,7 @@ function createBlogEntry($blogModule, $title, $text, $datetime)
 
     //create new blog entry
     try {
-        $result = $connection->query("INSERT INTO blog_entries (blog_module, title, text, datetime) VALUES  ('$blogModule','$title', '$text', '$datetime')");
+        $result = $connection->query("INSERT INTO blog_module_entries (blog_module, title, text, datetime) VALUES  ('$blogModule','$title', '$text', '$datetime')");
         if (!$result) {
             throw new Exception($connection->error);
         }
@@ -177,24 +170,25 @@ function createBlogEntry($blogModule, $title, $text, $datetime)
     $connection->close();
 }
 
-function getBlogEntries($blogModule, $page)
+function getBlogEntries($blogModule, $page, $maxEntries)
 {
     $connection = getConnection();
 
     // Get maxEntries
-    $maxEntries = 3;
-    try {
-        $result = $connection->query("SELECT max_entries FROM blog_modules WHERE id = '$blogModule'");
-        if (!$result) {
-            throw new Exception($connection->error);
-        } else {
-            if(mysqli_num_rows($result) == 0) return false;
-            while ($rs = $result->fetch_array(MYSQLI_ASSOC)) {
-                $maxEntries = $rs['maxEntries'];
+    if ($maxEntries == 0) {
+        try {
+            $result = $connection->query("SELECT max_entries FROM blog_modules WHERE id = '$blogModule'");
+            if (!$result) {
+                throw new Exception($connection->error);
+            } else {
+                if (mysqli_num_rows($result) == 0) return false;
+                while ($rs = $result->fetch_array(MYSQLI_ASSOC)) {
+                    $maxEntries = $rs['max_entries'];
+                }
             }
+        } catch (Exception $e) {
+            echo $e->getMessage();
         }
-    } catch (Exception $e) {
-        echo $e->getMessage();
     }
 
     $data = array();
@@ -202,23 +196,22 @@ function getBlogEntries($blogModule, $page)
     try {
         $offset = $page * $maxEntries;
         $result = $connection->query("SELECT id, title, text, datetime
-                                      FROM blog_entries
+                                      FROM blog_module_entries
                                       WHERE blog_module = '$blogModule'
-                                      LIMIT $$maxEntries OFFSET $$offset");
+                                      LIMIT $offset, $maxEntries");
         if (!$result) {
             throw new Exception($connection->error);
         } else {
-            if(mysqli_num_rows($result) == 0) return false;
+            if (mysqli_num_rows($result) == 0) return false;
             while ($rs = $result->fetch_array(MYSQLI_ASSOC)) {
 
                 //TODO convert datetime
-
                 $entry = new stdClass();
                 $entry->id = $rs['id'];
                 $entry->title = $rs['title'];
                 $entry->text = $rs['text'];
                 $entry->datetime = $rs['datetime'];
-                $date[] = $entry;
+                $data[] = $entry;
             }
         }
     } catch (Exception $e) {
@@ -241,7 +234,7 @@ function updateBlogEntry($id, $title, $text, $datetime)
 
         //TODO convert datetime
 
-        $result = $connection->query("UPDATE blog_entries
+        $result = $connection->query("UPDATE blog_module_entries
                                       SET title = '$title', text = '$text', datetime = '$datetime'
                                       WHERE id = '$id'");
         if (!$result) {
@@ -261,7 +254,7 @@ function deleteBlogEntry($id)
     $connection = getConnection();
 
     try {
-        $result = $connection->query("DELETE FROM blog_entries WHERE id = '$id'");
+        $result = $connection->query("DELETE FROM blog_module_entries WHERE id = '$id'");
         if (!$result) {
             throw new Exception($connection->error);
         }
