@@ -14,6 +14,7 @@ require_once __DIR__ . '/routes/module/maps.php';
 require_once __DIR__ . '/routes/module/swap.php';
 require_once __DIR__ . '/routes/module/types.php';
 require_once __DIR__ . '/routes/module/calendar.php';
+require_once __DIR__ . '/routes/module/blog.php';
 
 require_once __DIR__ . '/routes/page.php';
 require_once __DIR__ . '/routes/mail.php';
