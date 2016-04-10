@@ -49,6 +49,9 @@ function getPage($topic)
                     case "calendar":
                         $modules[] = getCalendarModule($rs['module_id']);
                         break;
+                    case "blog":
+                        $modules[] = getBlogModule($rs['module_id']);
+                        break;
                 }
                 $type = new stdClass();
                 $type->name = $rs['name'];

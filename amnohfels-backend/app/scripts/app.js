@@ -8,7 +8,7 @@
  *
  * Main module of the application.
  */
-
+//TODO (1.0.1) add muted "pflichtfeld" tags in every modal
 //TODO (1.0.1) bug: before uploaded image gets sent to server, refresh token. if it takes too long the token originally assigned to the request can be invalid
 //TODO (1.0.1) security: keep config vars in a seperate yaml and fetch them for build
 //TODO (1.0.1) bug: unsaved changes on logout after modal dismiss?

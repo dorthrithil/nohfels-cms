@@ -62,7 +62,7 @@ function getBlogModule($id)
             while ($rs = $result->fetch_array(MYSQLI_ASSOC)) {
                 $data->id = $rs['id'];
                 $data->title = $rs['title'];
-                $data->max_entries = $rs['maxEntries'];
+                $data->maxEntries = $rs['max_entries'];
             }
         }
     } catch (Exception $e) {
@@ -210,6 +210,9 @@ function getBlogEntries($blogModule, $page)
         } else {
             if(mysqli_num_rows($result) == 0) return false;
             while ($rs = $result->fetch_array(MYSQLI_ASSOC)) {
+
+                //TODO convert datetime
+
                 $entry = new stdClass();
                 $entry->id = $rs['id'];
                 $entry->title = $rs['title'];
@@ -235,6 +238,9 @@ function updateBlogEntry($id, $title, $text, $datetime)
 
     //update entry
     try {
+
+        //TODO convert datetime
+
         $result = $connection->query("UPDATE blog_entries
                                       SET title = '$title', text = '$text', datetime = '$datetime'
                                       WHERE id = '$id'");
