@@ -1,0 +1,36 @@
+<div class="full-width-wrapper" ng-cloak>
+  <div class="container">
+    <h3>{{data.title}}</h3>
+
+    <div class="underline"></div>
+
+    <ul class="list-group" id="{{scrollId}}">
+      <div ng-repeat="entry in entries">
+        <div class="blog-entry">
+          <h3 class="entry-title">{{entry.title}}</h3>
+
+          <div class="entry-date">vom <strong>{{formatDate(entry.datetime)}}</strong></div>
+          <div class="entry-text" ng-bind-html="entry.text"></div>
+        </div>
+        <hr/>
+      </div>
+    </ul>
+
+    <nav>
+      <ul class="pagination">
+        <li ng-class="{disabled: actualPage == 0}">
+          <span ng-click="changePage(actualPage - 1)">&laquo;</span>
+        </li>
+        <li ng-repeat="i in range(numberOfPages) track by $index">
+          <span ng-click="changePage($index)">{{$index + 1}}</span>
+        </li>
+        <li ng-class="{disabled: actualPage == numberOfPages - 1}">
+          <span ng-click="changePage(actualPage + 1)">&raquo;</span>
+        </li>
+      </ul>
+    </nav>
+
+    <div ng-show="false">Dieser Blog hat leider noch keine Einträge.</div>
+    <!--TODO-->
+  </div>
+</div>

@@ -18,7 +18,7 @@ angular.module('amnohfelsBackendApp')
       },
       controller: function ($scope) {
 
-        $scope.datetimeView = $scope.$parent.formatDate($scope.data.datetime); 
+        $scope.datetimeView = $scope.$parent.formatDate($scope.data.datetime);
 
         //actions
         $scope.showConfirmDeletion = false;

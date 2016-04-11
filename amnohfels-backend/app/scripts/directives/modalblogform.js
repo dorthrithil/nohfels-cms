@@ -7,8 +7,6 @@
  * # modalBlogForm
  */
 
-// TODO (1.0.0) angezeigtes datum darf nicht in der selben variable wie model gespeichert werden. das bringt den picker durcheinander
-
 // TODO (1.0.1) handle too many pages which would cause an ugly linebreak
 // TODO (1.0.1) lock delete button
 

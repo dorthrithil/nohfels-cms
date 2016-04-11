@@ -38,7 +38,7 @@ angular
     $routeProvider
       // define starting page
       .when('/', {
-        redirectTo: '/cafe'
+        redirectTo: '/testseite'
       })
       // standard page logic
       .when('/:pageTopic', {
@@ -66,5 +66,7 @@ angular
 
   })
   // inject analytics for automatic page tracking
-  .run(function (Analytics) { //jshint ignore:line
+  .run(function (Analytics, $anchorScroll) { //jshint ignore:line
+    $anchorScroll.yOffset = 66; // Scolls an extra of 66px. The value has to match the navbar height!
   });
+

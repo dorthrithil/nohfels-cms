@@ -1,0 +1,32 @@
+//
+// basic module layout
+// --------------------------------------------------
+
+// blog module
+blog-module {
+
+  .blog-entry {
+
+    overflow: auto;
+
+    .entry-date {
+      font-size: 12px;
+    }
+    .entry-title {
+
+    }
+    .entry-text {
+      margin-top: 20px;
+    }
+
+  }
+
+  .pagination{
+    margin: 0;
+
+    span{
+      cursor: pointer;
+    }
+  }
+
+}
