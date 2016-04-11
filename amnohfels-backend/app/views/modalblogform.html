@@ -29,7 +29,7 @@
 
   <ul class="list-group">
     <li class="list-group-item" ng-repeat="entry in entries">
-      {{entry.datetime}} - <strong>{{entry.title}}</strong>
+      {{formatDate(entry.datetime)}} - <strong>{{entry.title}}</strong>
 
       <div class="btn-group pull-right calendaritem-btngroup" role="group" aria-label="actions">
         <button type="button" class="btn btn-primary btn-sm" ng-click="editEntry(entry)">Bearbeiten</button>
@@ -72,7 +72,7 @@
 
     <div class="dropdown">
       <div class="input-group" ng-click="showCalendar()" data-toggle="dropdown">
-        <input type="text" class="form-control" ng-model="entrydata.datetime" required ng-readonly="true">
+        <input type="text" class="form-control" ng-model="datetimeView" required ng-readonly="true">
         <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
       </div>
       <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">

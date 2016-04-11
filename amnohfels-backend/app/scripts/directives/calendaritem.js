@@ -18,6 +18,8 @@ angular.module('amnohfelsBackendApp')
       },
       controller: function ($scope) {
 
+        $scope.datetimeView = $scope.$parent.formatDate($scope.data.datetime); 
+
         //actions
         $scope.showConfirmDeletion = false;
         $scope.remove = function () {
@@ -36,9 +38,7 @@ angular.module('amnohfelsBackendApp')
 
         $scope.hideCalendar = function () {
           jQuery('[data-toggle="dropdown"]').parent().removeClass('open');
-          var buffer = $scope.data.datetime;
-          $scope.data.datetime = $filter('date')(buffer, 'dd.MM.yyyy \'um\' hh:mm \'Uhr\'');
-          $scope.data.datetimeSort = $filter('date')(buffer, 'yyyyMMddhhmm');
+          $scope.datetimeView = $filter('date')($scope.data.datetime, 'dd.MM.yyyy \'um\' hh:mm \'Uhr\'');
         };
 
         $scope.finishEditingRequested = false;

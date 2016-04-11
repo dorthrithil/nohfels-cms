@@ -157,7 +157,7 @@ function createBlogEntry($blogModule, $title, $text, $datetime)
 
     //create new blog entry
     try {
-        $parsedDate = date_parse_from_format("d.m.Y * H:i *", $datetime);
+        $parsedDate = date_parse_from_format("Y.m.d H:i:s", $datetime);
         $datetime = date("Y-m-d H:i:s", mktime($parsedDate['hour'], $parsedDate['minute'], 0, $parsedDate['month'], $parsedDate['day'], $parsedDate['year']));
         $result = $connection->query("INSERT INTO blog_module_entries (blog_module, title, text, datetime) VALUES  ('$blogModule','$title', '$text', '$datetime')");
         if (!$result) {
@@ -211,9 +211,8 @@ function getBlogEntries($blogModule, $page, $maxEntries)
                 $entry->title = $rs['title'];
                 $entry->text = $rs['text'];
                 $parsedDate = date_parse_from_format("Y-m-d H:i:s", $rs['datetime']);
-                $date = date("d.m.Y", mktime($parsedDate['hour'], $parsedDate['minute'], 0, $parsedDate['month'], $parsedDate['day'], $parsedDate['year']));
-                $time = date("H:i", mktime($parsedDate['hour'], $parsedDate['minute'], 0, $parsedDate['month'], $parsedDate['day'], $parsedDate['year']));
-                $entry->datetime = $date . ' um ' . $time . ' Uhr';
+                $entry->datetime = date("Y.m.d H:i:s", mktime($parsedDate['hour'], $parsedDate['minute'], 0,
+                    $parsedDate['month'], $parsedDate['day'], $parsedDate['year']));
                 $data[] = $entry;
             }
         }
@@ -234,7 +233,7 @@ function updateBlogEntry($id, $title, $text, $datetime)
 
     //update entry
     try {
-        $parsedDate = date_parse_from_format("d.m.Y * H:i *", $datetime);
+        $parsedDate = date_parse_from_format("Y.m.d H:i:s", $datetime);
         $datetime = date("Y-m-d H:i:s", mktime($parsedDate['hour'], $parsedDate['minute'], 0, $parsedDate['month'], $parsedDate['day'], $parsedDate['year']));
         $result = $connection->query("UPDATE blog_module_entries
                                       SET title = '$title', text = '$text', datetime = '$datetime'

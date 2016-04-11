@@ -20,8 +20,7 @@ angular.module('amnohfelsBackendApp')
           $scope.modalVars.data.calendaritems.push({
             title: '',
             description: '',
-            datetime: '',
-            datetimeSort:''
+            datetime: ''
           });
           $scope.editingActive = true;
           $scope.activeCalendaritem = $scope.modalVars.data.calendaritems[0];
@@ -36,8 +35,7 @@ angular.module('amnohfelsBackendApp')
           $scope.modalVars.data.calendaritems.push({
             title: '',
             description: '',
-            datetime: '',
-            datetimeSort:''
+            datetime: ''
           });
           $scope.editingActive = true;
           $scope.hideModalButtons = true;
@@ -45,18 +43,28 @@ angular.module('amnohfelsBackendApp')
         };
 
         $scope.deleteCalendaritem = function (calendaritem) {
-          $scope.modalVars.data.calendaritems.splice($scope.modalVars.data.calendaritems.indexOf(calendaritem),1);
+          $scope.modalVars.data.calendaritems.splice($scope.modalVars.data.calendaritems.indexOf(calendaritem), 1);
         };
 
-        $scope.finishEditing = function(){
+        $scope.finishEditing = function () {
           $scope.editingActive = false;
           $scope.hideModalButtons = false;
         };
 
-        $scope.editCalendaritem = function(calendaritem){
+        $scope.editCalendaritem = function (calendaritem) {
           $scope.activeCalendaritem = calendaritem;
           $scope.editingActive = true;
           $scope.hideModalButtons = true;
+        };
+
+
+        /**
+         * Formats th passed date to a german readable format.
+         * @param date The date to format
+         * @returns String The formatted date string.
+         */
+        $scope.formatDate = function (date) {
+          return dateFormat(date, 'dd.mm.yyyy "um" HH:MM "Uhr"');
         };
 
       }

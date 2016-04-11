@@ -26,7 +26,7 @@ function createCalendarModule($page, $title, $calendaritems)
         foreach ($calendaritems as $key => $calendaritem) {
             $itemTitle = mysqli_real_escape_string($connection, $calendaritem['title']);
             $description = mysqli_real_escape_string($connection, $calendaritem['description']);
-            $parsedDate = date_parse_from_format("d.m.Y * H:i *", $calendaritem['datetime']);
+            $parsedDate = date_parse_from_format("Y.m.d H:i:s", $calendaritem['datetime']);
             $datetime = date("Y-m-d H:i:s", mktime($parsedDate['hour'], $parsedDate['minute'], 0, $parsedDate['month'], $parsedDate['day'], $parsedDate['year']));
             $result = $connection->query("INSERT INTO calendar_module_items (title, calendar_module, description, datetime)
                                             VALUES  ('$itemTitle', '$module_id', '$description', '$datetime')");
@@ -93,10 +93,8 @@ function getCalendarModule($id)
                 $item->title = $rs['title'];
                 $item->description = $rs['description'];
                 $parsedDate = date_parse_from_format("Y-m-d H:i:s", $rs['datetime']);
-                $date = date("d.m.Y", mktime($parsedDate['hour'], $parsedDate['minute'], 0, $parsedDate['month'], $parsedDate['day'], $parsedDate['year']));
-                $time = date("H:i", mktime($parsedDate['hour'], $parsedDate['minute'], 0, $parsedDate['month'], $parsedDate['day'], $parsedDate['year']));
-                $item->datetime = $date . ' um ' . $time . ' Uhr';
-                $item->datetimeSort = date("YmdHi", mktime($parsedDate['hour'], $parsedDate['minute'], 0, $parsedDate['day'], $parsedDate['month'], $parsedDate['year']));
+                $item->datetime = date("Y.m.d H:i:s", mktime($parsedDate['hour'], $parsedDate['minute'], 0,
+                    $parsedDate['month'], $parsedDate['day'], $parsedDate['year']));
                 $calendaritems[] = $item;
             }
         }
@@ -133,7 +131,7 @@ function updateCalendarModule($id, $title, $calendaritems)
         foreach ($calendaritems as $key => $calendaritem) {
             $itemTitle = mysqli_real_escape_string($connection, $calendaritem['title']);
             $description = mysqli_real_escape_string($connection, $calendaritem['description']);
-            $parsedDate = date_parse_from_format("d.m.Y * H:i *", $calendaritem['datetime']);
+            $parsedDate = date_parse_from_format("Y.m.d H:i:s", $calendaritem['datetime']);
             $datetime = date("Y-m-d H:i:s", mktime($parsedDate['hour'], $parsedDate['minute'], 0, $parsedDate['month'], $parsedDate['day'], $parsedDate['year']));
             $result = $connection->query("INSERT INTO calendar_module_items (title, calendar_module, description, datetime)
                                           VALUES  ('$itemTitle', '$id', '$description', '$datetime')");

@@ -57,6 +57,15 @@ angular.module('amnohfelsBackendApp')
         };
 
         /**
+         * Formats th passed date to a german readable format.
+         * @param date The date to format
+         * @returns String The formatted date string.
+         */
+        $scope.formatDate = function (date) {
+          return dateFormat(date, 'dd.mm.yyyy "um" HH:MM "Uhr"');
+        };
+
+        /**
          * Utility for ng-repeat to work with numbers.
          * @param num Number of repeats.
          * @returns {Array} Array to iterate over.
@@ -82,9 +91,10 @@ angular.module('amnohfelsBackendApp')
           $scope.entrydata = {
             title: '',
             text: '',
-            datetime: dateFormat(now, 'dd.mm.yyyy "um" HH:MM:ss "Uhr"'),
+            datetime: $scope.formatDate(now),
             blogModule: $scope.modalVars.data.id
           };
+          $scope.datetimeView = dateFormat(now, 'dd.mm.yyyy "um" HH:MM:ss "Uhr"');
           $scope.action = 'new';
           $scope.editingActive = true;
           $scope.hideModalButtons = true;
@@ -96,6 +106,7 @@ angular.module('amnohfelsBackendApp')
          */
         $scope.editEntry = function (entry) {
           $scope.entrydata = entry;
+          $scope.datetimeView = dateFormat(entry.datetime, 'dd.mm.yyyy "um" HH:MM:ss "Uhr"');
           $scope.action = 'update';
           $scope.editingActive = true;
           $scope.hideModalButtons = true;
@@ -145,8 +156,7 @@ angular.module('amnohfelsBackendApp')
          */
         $scope.hideCalendar = function () {
           jQuery('[data-toggle="dropdown"]').parent().removeClass('open');
-          var buffer = $scope.entrydata.datetime;
-          $scope.entrydata.datetime = $filter('date')(buffer, 'dd.MM.yyyy \'um\' hh:mm \'Uhr\'');
+          $scope.datetimeView = $filter('date')($scope.entrydata.datetime, 'dd.MM.yyyy \'um\' hh:mm \'Uhr\'');
         };
 
         /**
