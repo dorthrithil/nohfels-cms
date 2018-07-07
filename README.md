@@ -1,7 +1,5 @@
 # Nohfels CMS
 
-This project exists mainly for creating the new web appearance of Am Nohfels @https://amnohfels.de<br>
-
 ## See it in action
 
 See the system working here https://amnohfels.de. 
