@@ -1,8 +1,8 @@
 # Nohfels CMS
 
-## See it in action
+Custom CMS system for running https://amnohfels.de and https://kulturforum-bad-sobernheim.de/
 
-See the system working here https://amnohfels.de. 
+This project is abandoned and will no longer be maintained.
 
 ## Used technologies
 
